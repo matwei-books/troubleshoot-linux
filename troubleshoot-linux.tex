@@ -1,0 +1,94 @@
+%% Hauptdatei für das Buch Troubleshooting Linux Servers
+%%
+\documentclass[%
+%draft,                        %% um später den Zeilenumbruch zu
+%kontrollieren
+%a4paper,                       %% DIN A4-Papier
+a5paper,                       %% DIN A5-Papier
+BCOR4mm,                       %% Bindekorrektur 4 mm
+DIVcalc,                       %% Satzspiegel berechnen
+11pt,                          %% Schriftgröße
+bibtotoc,                      %% Literaturverzeichnis ins Inhaltsverzeichnis
+idxtotoc,                      %% Index ins Inhaltsverzeichnis
+tablecaptionabove,             %% Tabellenüber``= statt unterschriften
+]{scrbook}                     %% KOMA-Skript Book als Klasse
+
+\usepackage{versions}          %% bedingte Kompilierung
+\usepackage{ifthen}            %% für \ifthenelse
+\usepackage[utf8]{inputenc}    %% UTF8 muss sein
+
+%% bedingte Kompilierung via Makefile
+\newcommand{\enableversions}[4]{
+  \ifthenelse{\equal{#1}{on}}{
+    \newenvironment{abstractsec}{\begin{quotation}\noindent\textbf{Zusammenfassung:}}{\end{quotation}}
+  }{\excludeversion{abstractsec}}
+  \ifthenelse{\equal{#2}{on}}{\includeversion{normaltext}
+  }{\excludeversion{normaltext}}
+  \ifthenelse{\equal{#3}{on}}{
+    \newenvironment{notes}{\par\hrulefill{}\emph{Ungeordnete partielle
+        Ideensammlung (nicht im Druck):}\hrulefill{}\begin{itemize*}}{\end{itemize*}}
+  }{\excludeversion{notes}}
+  \ifthenelse{\equal{#4}{on}}{\def\svnfinal{final}\includeversion{finalversion}
+  }{\def\svnfinal{}\excludeversion{finalversion}}
+}
+\newcommand{\versionabstracts}{\enableversions{on}{off}{off}{off}}
+\newcommand{\versionnotes}{\enableversions{off}{off}{on}{off}}
+\newcommand{\versionabstractstext}{\enableversions{on}{on}{off}{off}}
+\newcommand{\versiontext}{\enableversions{off}{on}{off}{off}}
+\newcommand{\versiontextnotes}{\enableversions{off}{on}{on}{off}}
+\newcommand{\versionfinal}{\enableversions{off}{on}{off}{on}}
+
+%% Wählen, was erzeugt werden soll:
+\providecommand{\selectversion}{
+%\versionabstracts
+%\versionnotes
+%\versionabstractstext
+%\versiontext
+%\versiontextnotes
+\versionfinal
+}
+
+\AtBeginDocument{%
+%  \selectlanguage{ngerman}%
+%  \renewcommand*{\freffigname}{\figurename}
+%  \renewcommand*{\freftabname}{\tablename}
+  \selectversion{}
+}
+
+%% Hier beginnt das eigentliche Dokument
+\begin{document}
+
+%% Die Eckdaten des Dokuments, wegen Babel erst nach \begin{document}
+\author{Mathias Weidner}
+\title{Troubleshooting Linux Servers}
+
+\maketitle
+
+\include{tl-vorwort}
+%% allgemeiner Teil
+\include{tl-wie-vorgehen}
+\include{tl-dokumentation}
+%% lokale Probleme
+\include{tl-klassifikation-lokal}
+\include{tl-programmprobleme}
+\include{tl-mount-probleme}
+\include{tl-dateiprobleme}
+%% Netzwerkprobleme
+\include{tl-klassifikation-netzwerk}
+\include{tl-totalausfall}
+\include{tl-teilweiser-ausfall}
+\include{tl-netz-performance}
+\include{tl-netz-hilfsmittel}
+%% Vorbereitung auf das nächste Problem
+\include{tl-lernen}
+\include{tl-syslog}
+\include{tl-monitoring}
+
+\bibliography{literatur}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
