@@ -3,8 +3,9 @@
 
 DOCBASENAME=troubleshoot-linux
 PDFLATEX=pdflatex
+BIBTEX=-bibtex
 
-OBJFILES = tl-vorwort
+OBJFILES = tl-vorwort tl-lokal-werkzeuge
 
 ifdef VERSION
   TEXPREFILE:=$(TEXPREFILE)\newcommand{\selectversion}{\version$(VERSION)}
@@ -22,8 +23,15 @@ $(DOCBASENAME).pdf: $(TEXFILES)
 ## Implicit Document Rules
 
 %.pdf : %.tex
-	$(PDFLATEX) -job-name=$* '$(TEXPREFILE)$<'
+	$(PDFLATEX) -jobname=$* '$(TEXPREFILE)$<'
+	$(BIBTEX) $*
+	$(PDFLATEX) -jobname=$* '$(TEXPREFILE)$<'
+	$(PDFLATEX) -jobname=$* '$(TEXPREFILE)$<'
+	$(PDFLATEX) -jobname=$* '$(TEXPREFILE)$<'
 
 
 clean:
 	rm -f $(INTERMEDIATE)
+
+distclean: clean
+	rm -f *.pdf *.ps
