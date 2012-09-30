@@ -1,51 +1,51 @@
-%% Beispielgerüst für große Dokumente, für den Artikel aus DTK 2/2007
+%% BeispielgerÃ¼st fÃ¼r groÃŸe Dokumente, fÃ¼r den Artikel aus DTK 2/2007
 %% basierend auf:
-%% Vorlage einer längeren wissenschaftlichen Arbeit für das Buch
+%% Vorlage einer lÃ¤ngeren wissenschaftlichen Arbeit fÃ¼r das Buch
 %% "Wissenschaftliche Arbeiten schreiben mit LaTeX"
 %% von Joachim Schlosser, 2006
 %%
-%% Sie dürfen dieses Dokument frei verteilen, verändern und verwenden.
+%% Sie dÃ¼rfen dieses Dokument frei verteilen, verÃ¤ndern und verwenden.
 %%
 %% Dies ist nur eine Vorlage. 
-%% Zwei Kommentarzeichen (%%) bedeuten, dass eine Erläuterung folgt.
+%% Zwei Kommentarzeichen (%%) bedeuten, dass eine ErlÃ¤uterung folgt.
 %% Ein Kommentarzeichen heisst, dass die Zeile deaktiviert wurde
 %% Die meisten Pakete sind deaktiviert, Sie aktivieren Sie, indem Sie
 %% das Kommentarzeichen am Beginn der Zeile entfernen.
 %% Aktivieren Sie nur, was Sie wirklich brauchen!
 %% Lesen Sie in l2tabu nach, ob nicht einige Pakete mittlerweile
-%% veraltet sind, wenn Sie diese Vorlage erst 2008 oder später verwenden!
+%% veraltet sind, wenn Sie diese Vorlage erst 2008 oder spÃ¤ter verwenden!
 
 \RequirePackage{fix-cm}        %% Korrektur der Computer Modern Schriftfamilien
 \documentclass[%
-%draft,                        %% um später den Zeilenumbruch zu kontrollieren
+%draft,                        %% um spÃ¤ter den Zeilenumbruch zu kontrollieren
 %a5paper,                       %% DIN A4-Papier
 a4paper,                       %% DIN A4-Papier
 BCOR4mm,                       %% Bindekorrektur 4 mm
 DIVcalc,                       %% Satzspiegel berechnen
-11pt,                          %% Schriftgröße
+11pt,                          %% SchriftgrÃ¶ÃŸe
 %bibtotoc,                      %% Literaturverzeichnis ins Inhaltsverzeichnis
 %idxtotoc,                      %% Index ins Inhaltsverzeichnis
-tablecaptionabove,             %% Tabellenüber"= statt unterschriften
-%]{scrbook}                    %% KOMA-Skript Buch für das Endprodukt
+tablecaptionabove,             %% TabellenÃ¼ber"= statt unterschriften
+%]{scrbook}                    %% KOMA-Skript Buch fÃ¼r das Endprodukt
 ]{scrreprt}                    %% KOMA-Skript Report als Klasse
 \usepackage{geometry}          %% damit auch das Papierformat passt
 \usepackage[english,german,ngerman]{babel}  %% Deutsch (neue Rechtschreibung) als Hauptsprache
-\input{dehyphtex.tex}          %% zusätzliche deutsche Trennmuster
+\input{dehyphtex.tex}          %% zusÃ¤tzliche deutsche Trennmuster
 %\usepackage{microtype}         %% Optischer Randausgleich mit pdfLaTeX
-\usepackage[T1]{fontenc}       %% Schriftkodierung, die nativ Umlaute unterstützt
-\usepackage[latin1]{inputenc}  %% Umlaute direkt eingeben
+\usepackage[T1]{fontenc}       %% Schriftkodierung, die nativ Umlaute unterstÃ¼tzt
+\usepackage[utf8]{inputenc}    %% Umlaute direkt eingeben
 % \usepackage[osf]{mathpazo}    %% Palatino als Brotschrift, mit Minuskelziffern
-% \linespread{1.08}             %% Palatino braucht größeren Zeilenabstand
+% \linespread{1.08}             %% Palatino braucht grÃ¶ÃŸeren Zeilenabstand
 % \usepackage[scaled=.87]{luximono} %% anderer Monotype-Font
 \usepackage{textcomp}          %% besondere Textzeichen
 \usepackage{amssymb}           %% Mathesymbole
 \usepackage{amsmath}           %% erweiterte Mathemakros
-%\usepackage{paralist}          %% Aufzählungen im Fließtext
-\usepackage{mdwlist}           %% engere Aufzählungen und Nummerierungen
-%\usepackage{filecontents}      %% eingebundene Dateien (für ltxtable)
+%\usepackage{paralist}          %% AufzÃ¤hlungen im FlieÃŸtext
+\usepackage{mdwlist}           %% engere AufzÃ¤hlungen und Nummerierungen
+%\usepackage{filecontents}      %% eingebundene Dateien (fÃ¼r ltxtable)
 %\usepackage{ltxtable}          %% lange Tabellen mit flexibler Spaltenbreite
 %\usepackage{tabularx}          %% Tabellen mit flexibler Spaltenbreite 
-\usepackage{booktabs}          %% schönere Tabellenlinien
+\usepackage{booktabs}          %% schÃ¶nere Tabellenlinien
 \usepackage{graphicx}          %% Graphiken einbinden
 \providecommand\pstpdfinactive{inactive}%inactive
 \usepackage[\pstpdfinactive]{pst-pdf}
@@ -56,11 +56,11 @@ tablecaptionabove,             %% Tabellenüber"= statt unterschriften
 % \fi
 
 \usepackage{versions}          %% bedingte Kompilierung
-%% Literaturverzeichnisse: Hier ist Babelbib gewählt. Wählen Sie, was
+%% Literaturverzeichnisse: Hier ist Babelbib gewÃ¤hlt. WÃ¤hlen Sie, was
 %% Sie brauchen.
 \usepackage{babelbib}          %% Mehrsprachiges Literaturverzeichnis
-\usepackage[german,vario]{fancyref} %% "plain" für einfachere Querverweise, ",vario" für Seitenzahl
-%% Anpassung für Querverweiserkennung: Kapitel durch "cha:" anstatt "chap:"
+\usepackage[german,vario]{fancyref} %% "plain" fÃ¼r einfachere Querverweise, ",vario" fÃ¼r Seitenzahl
+%% Anpassung fÃ¼r Querverweiserkennung: Kapitel durch "cha:" anstatt "chap:"
 \fancyrefchangeprefix{\fancyrefchaplabelprefix}{cha}
 %\fancyrefaddcaptions{german}{%
 \newcommand*{\Freflstname}{Listing}%
@@ -80,15 +80,15 @@ tablecaptionabove,             %% Tabellenüber"= statt unterschriften
   bookmarksnumbered=true,      %% Lesezeichen numerieren
 %  pagebackref,                 %% Links von Literatur in Text
   pdfusetitle,                 %% LaTeX-Titelei als Metainfo nehmen
-  pdfstartpage={1},            %% mit welcher Seite das PDF öffnen
+  pdfstartpage={1},            %% mit welcher Seite das PDF Ã¶ffnen
   pdfstartview={FitH},         %% Zoom auf Seitenbreite
-  pdfkeywords={},              %% Stichwörter fürs PDF, kommagetrennt
+  pdfkeywords={},              %% StichwÃ¶rter fÃ¼rs PDF, kommagetrennt
   pdfsubject={},               %% Themenbeschreibung kurz
   pdfcreator={LaTeX with KOMA-Script and hyperref package},
 %   pdfpagelabels,               %% Seitenzahlen wie im Dokument...
 %   plainpages=false,            %% ...und nicht wie sonst
-  hyperfootnotes=true,         %% Links auf Fußnoten
-  hyperindex=true,             %% Indexeinträge verweisen auf Text
+  hyperfootnotes=true,         %% Links auf FuÃŸnoten
+  hyperindex=true,             %% IndexeintrÃ¤ge verweisen auf Text
   linkbordercolor={0 1 1},     %% Rahmenfarbe interne Links
   menubordercolor={0 1 1},     %% Rahmenfarbe Literaturlinks
   urlbordercolor={1 0 0}       %% Rahmenfarbe externe Links
@@ -97,11 +97,11 @@ tablecaptionabove,             %% Tabellenüber"= statt unterschriften
 
 \pagestyle{headings}           %% lebende Kolumnentitel
 
-%% Makro für Randnotizen
+%% Makro fÃ¼r Randnotizen
 \newcommand{\notiz}[1]{\marginpar{\raggedright\footnotesize #1}}
 
 
-%% Alles für die bedingte Kompilierung via Makefile
+%% Alles fÃ¼r die bedingte Kompilierung via Makefile
 \newcommand{\enableversions}[4]{
   \ifthenelse{\equal{#1}{on}}{
     \newenvironment{abstractsec}{\begin{quotation}\noindent\textbf{Zusammenfassung:}}{\end{quotation}}
@@ -133,7 +133,7 @@ tablecaptionabove,             %% Tabellenüber"= statt unterschriften
   \renewcommand{\notiz}[1]{}
 }
 
-%% Wählen, was erzeugt werden soll:
+%% WÃ¤hlen, was erzeugt werden soll:
 \providecommand{\selectversion}{
 %\versionabstracts
 %\versionnotes
@@ -159,7 +159,7 @@ tablecaptionabove,             %% Tabellenüber"= statt unterschriften
 
 %\setcounter{secnumdepth}{3}    %% Nummerierung bis zur Ebene subsubsection
 %\setcounter{tocdepth}{3}       %% Inhaltsverzeichnis bis zur Ebene subsubsection 
-%% Anpassungen für das Layout: Float-Pages
+%% Anpassungen fÃ¼r das Layout: Float-Pages
 %\renewcommand{\floatpagefraction}{.7}  % vorher: .5
 
 %% Gegen die meisten Overfull hboxes, aus
@@ -179,8 +179,8 @@ tablecaptionabove,             %% Tabellenüber"= statt unterschriften
 \author{Mathias Weidner}
 \title{Fehlersuche bei Linux-Server und -Netzwerkproblemen}
 %\subject{Masterarbeit}
-%\publishers{Technische Universität Musterstadt\\
-%  Fakultät für angewandte Wissenschaft}
+%\publishers{Technische UniversitÃ¤t Musterstadt\\
+%  FakultÃ¤t fÃ¼r angewandte Wissenschaft}
 %\date{24.\,12.~2006}
 
 %% Titel daraus erzeugen
@@ -200,24 +200,28 @@ tablecaptionabove,             %% Tabellenüber"= statt unterschriften
 
 \include{tl-vorwort}
 
-\part{Grundlegende Herangehensweisen}
+%\part{Grundlegende Herangehensweisen}
+\include{tl-part1}
 \include{tl-methoden}
 \include{tl-heuristiken}
 \include{tl-herangehen}
 
-\part{Lokale Probleme}
+%\part{Lokale Probleme}
+\include{tl-part2}
 \include{tl-lokal-werkzeuge}
 \include{tl-lokal-bootprobleme}
 \include{tl-lokal-programmfehler}
 \include{tl-lokal-performance}
 
-\part{Netzwerkprobleme}
+%\part{Netzwerkprobleme}
+\include{tl-part3}
 \include{tl-netz-werkzeuge}
 \include{tl-netz-totalausfall}
 \include{tl-netz-teilausfall}
 \include{tl-netz-performance}
-\part{Vorbereitung auf das nächste Problem}
 
+%\part{Vorbereitung auf das nÃ¤chste Problem}
+\include{tl-part4}
 \include{tl-ausblick}
 
 \bibliographystyle{babalpha}
