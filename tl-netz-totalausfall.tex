@@ -29,16 +29,30 @@
 %\item und auch das
 %\end{notes}
 
-\section{Ein komplettes Netzsegment ist nicht erreichbar}
+\section{Ein oder mehrere Netzsegmente sind nicht erreichbar}
 \label{sec:ausfall-netzsegment}
 
-%\subsection{Schnittstelle zu A}
-%\label{sec:schnittstelle-zu}
+\begin{notes}
+\item Entscheidungsbaum!
+\end{notes}
 
-%\begin{notes}
-%\item Syntax
-%\item Semantik
-%\end{notes}
+\subsection{Routen zu diesen Netzen fehlen}
+\label{sec:routen fehlen}
+
+\begin{notes}
+\item Routingprotokolle
+\item OSPF: BDR hatte falschen Neighbor (openbsd, GeNUScreen)
+\item Routersoftware quagga
+\end{notes}
+
+\subsection{Rückroute fehlt}
+\label{sec:rueckroute-fehlt}
+
+\begin{notes}
+\item Problem: Routen scheinen zu stimmen, keine Antwortpakete
+\item Analyse: traceroute, analyse des letzten Hops und desjenigen danach
+\item Ursache: Rückroute fehlt
+\end{notes}
 
 %\subsection{Schnittstelle zu B}
 %\label{sec:schnittstelle-zu-b}
