@@ -19,33 +19,18 @@ comma:= ,
 empty:=
 space:= $(empty) $(empty)
 
-#OBJFILES=\
-#  tl-vorwort \
-#  tl-methoden \
-#  tl-heuristiken \
-#  tl-herangehen \
-#  tl-lokal-werkzeuge \
-#  tl-lokal-bootprobleme \
-#  tl-lokal-programmfehler \
-#  tl-lokal-performance \
-#  tl-netz-werkzeuge \
-#  tl-netz-totalausfall \
-#  tl-netz-teilausfall \
-#  tl-netz-performance \
-#  tl-ausblick \
-#
-
-# Alle TeX-Quelldateien definieren (Beispiel für zweistufige Hierarchien)
+# Alle TeX-Quelldateien definieren (Beispiel fÃ¼r zweistufige Hierarchien)
 FRONTMATTER = tl-vorwort
-TLGRUNDLAGEN = tl-methoden tl-heuristiken tl-herangehen
-TLLOKAL = tl-lokal-werkzeuge tl-lokal-bootprobleme tl-lokal-programmfehler \
-  tl-lokal-performance
-TLNETZ = tl-netz-werkzeuge tl-netz-totalausfall tl-netz-teilausfall \
+TLPART1 = tl-part1 tl-methoden tl-heuristiken tl-herangehen
+TLPART2 = tl-part2 tl-lokal-werkzeuge tl-lokal-bootprobleme \
+  tl-lokal-programmfehler tl-lokal-performance
+TLPART3 = tl-part3 tl-netz-werkzeuge tl-netz-totalausfall tl-netz-teilausfall \
   tl-netz-performance
-TLAUSBLICK = tl-ausblick
+TLPART4 = tl-part4 tl-ausblick
 BACKMATTER = anhang
 
-OBJFILES = $(DOCBASENAME) $(FRONTMATTER) $(TLGRUNDLAGEN) $(TLLOKAL) $(TLNETZ) $(TLAUSBLICK) $(BACKMATTER)
+OBJFILES = $(DOCBASENAME) $(FRONTMATTER) $(TLPART1) $(TLPART2) $(TLPART3) \
+  $(TLPART4) $(BACKMATTER)
 
 # Kapitel zusammen erzeugen
 ifdef ONLY
@@ -55,7 +40,7 @@ override ONLY := $(subst elemente-kap,$(TLLOKAL),$(ONLY))
 override ONLY := $(subst fertigstellen-kap,$(TLNETZ),$(ONLY))
 endif
 
-# Vorbereiten für diff: suffix für Dateinamen, auch bei ONLY
+# Vorbereiten fÃ¼r diff: suffix fÃ¼r Dateinamen, auch bei ONLY
 ifeq (${MAKECMDGOALS},diff)
 override FILESUFFIX:=-diff
 TEXPREFILE :=\newcommand{\includesuffix}{$(FILESUFFIX)}$(TEXPREFILE)
@@ -63,18 +48,18 @@ ifdef ONLY
 override ONLY := $(addsuffix $(FILESUFFIX), $(subst $(comma),$(space),$(ONLY)))
 endif
 endif
-# Mechanismus für Erzeugen verschiedener Inhaltsversionen
+# Mechanismus fÃ¼r Erzeugen verschiedener Inhaltsversionen
 ifdef VERSION
 TEXPREFILE:=$(TEXPREFILE)\newcommand{\selectversion}{\version$(VERSION)}
 endif
 TEXPREFILE:=$(TEXPREFILE)\input 
-# Mechanismus für Erzeugen einzelner Dokumentteile
+# Mechanismus fÃ¼r Erzeugen einzelner Dokumentteile
 ifdef ONLY
-# erster Lauf: nur gewählte + Anhang (Literatur) erzeugen, für BibTeX-Aufruf
+# erster Lauf: nur gewÃ¤hlte + Anhang (Literatur) erzeugen, fÃ¼r BibTeX-Aufruf
 TEXPREFILE1:=\includeonly{$(subst $(space),$(comma),$(ONLY) $(BACKMATTER))}$(TEXPREFILE)
 # zweiter Lauf: alles erzeugen, damit Verweise auf Seitenzahlen und Seitenzahlen stimmen
 TEXPREFILE2:=$(TEXPREFILE)
-# dritter Lauf: nur gewählte erzeugen. Seitenzahlen sind korrekt.
+# dritter Lauf: nur gewÃ¤hlte erzeugen. Seitenzahlen sind korrekt.
 TEXPREFILE3:=\includeonly{$(subst $(space),$(comma),$(ONLY))}$(TEXPREFILE)
 else
 # bei Gesamtdokument sind alle teilstufen gleich
