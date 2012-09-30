@@ -159,7 +159,7 @@ $(DOCBASENAME)-diff.pdf: $(DIFFFILES) $(DOCBASENAME)-diff.ps
 	ps2pdf $(DOCBASENAME)-diff.ps
 
 $(DOCBASENAME)-pics.pdf: $(DOCBASENAME).tex
-	$(LATEX) -job-name=$(DOCBASENAME) '\def\pstpdfinactive{}$(TEXPREFILE3)$(DOCBASENAME).tex'
+	$(LATEX) -jobname=$(DOCBASENAME) '\def\pstpdfinactive{}$(TEXPREFILE3)$(DOCBASENAME).tex'
 	dvips -Ppdf -o $(DOCBASENAME)-pics.ps $(DOCBASENAME).dvi
 	ps2pdf $(DOCBASENAME)-pics.ps
 
@@ -203,27 +203,27 @@ endif
 ## Implicit Document Rules
 
 %.pdf : %.tex
-	$(PDFLATEX) -job-name=$* '\def\pstpdfinactive{}$(TEXPREFILE1)$<'; 
+	$(PDFLATEX) -jobname=$* '\def\pstpdfinactive{}$(TEXPREFILE1)$<'; 
 ifndef QUICK
 	if test -f $*.idx; then $(MAKEINDEX) $*; fi; 
 	if test -f $*.pdx; then $(MAKEINDEX) -o $*.pnd $*.pdx; fi; 
 	$(BIBTEX) $*
-	$(PDFLATEX) -job-name=$* '\def\pstpdfinactive{}$(TEXPREFILE2)$<'; 
-	$(PDFLATEX) -job-name=$* '\def\pstpdfinactive{}$(TEXPREFILE2)$<'; 
-	$(PDFLATEX) -job-name=$* '\def\pstpdfinactive{}$(TEXPREFILE3)$<'; 
+	$(PDFLATEX) -jobname=$* '\def\pstpdfinactive{}$(TEXPREFILE2)$<'; 
+	$(PDFLATEX) -jobname=$* '\def\pstpdfinactive{}$(TEXPREFILE2)$<'; 
+	$(PDFLATEX) -jobname=$* '\def\pstpdfinactive{}$(TEXPREFILE3)$<'; 
 endif
 
 %.ps : %.dvi
 	dvips -o $@ -Ppdf $<
 
 %.dvi : %.tex
-	-$(LATEX) -job-name=$* '$(TEXPREFILE1)$<'
+	-$(LATEX) -jobname=$* '$(TEXPREFILE1)$<'
 ifndef QUICK
 	if test -f $*.idx; then $(MAKEINDEX) $*; fi
 	$(BIBTEX) $*
-	-$(LATEX) -job-name=$* '$(TEXPREFILE2)$<'
-	-$(LATEX) -job-name=$* '$(TEXPREFILE2)$<'
-	$(LATEX) -job-name=$* '$(TEXPREFILE3)$<'
+	-$(LATEX) -jobname=$* '$(TEXPREFILE2)$<'
+	-$(LATEX) -jobname=$* '$(TEXPREFILE2)$<'
+	$(LATEX) -jobname=$* '$(TEXPREFILE3)$<'
 endif
 
 %.pdf: %.ps
