@@ -172,6 +172,38 @@ tablecaptionabove,             %% Tabellenüber"= statt unterschriften
 \vfuzz \hfuzz
 \raggedbottom
 
+% Definition Textkasten / Exkursbox
+\RequirePackage{color}
+\RequirePackage{hhline}
+\RequirePackage{multirow}
+\RequirePackage{colortbl}
+\RequirePackage{eso-pic,calc}           %% Zum Zeichnen des Rahmens um die Seite
+\RequirePackage[bordercolor=SteelBlue]{todonotes} %% Zum Malen der farbigen Boxen
+
+\newlength{\iconwidth}
+\setlength{\iconwidth}{1cm}
+
+\definecolor{boxheadcol}{gray}{.6}
+\definecolor{boxcol}{gray}{.9}
+
+\newenvironment{displaybox}[2]{%
+  \begin{center}
+    \setlength\arrayrulewidth{0.75pt}%
+    \arrayrulecolor{white}%
+    \renewcommand{\arraystretch}{1.3}%
+    \begin{tabular} {p{\iconwidth}p{\linewidth-4\tabcolsep-\iconwidth}}
+      \multirow{2}{*}{#2}&\cellcolor{boxheadcol}\textbf{\sffamily\color{white}#1} \\%
+      \hhline{~-}%
+      &\cellcolor{boxcol}%
+}{%
+    \end{tabular}
+  \end{center}
+}
+
+\newenvironment{Exkursbox}[1]{%
+\begin{displaybox}{#1}{}\sffamily\small}%
+{\end{displaybox}}
+
 %% Hier beginnt das eigentliche Dokument
 \begin{document}
 
