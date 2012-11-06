@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
 \begin{document}
+\subsubsection*{Allgemeiner Entscheidungsbaum}
 \begin{tikzpicture}
 [every node/.style={fill=black!10,rounded corners,align=center},
 grow=south, level distance=2cm,
@@ -10,16 +11,17 @@ level 2/.style={sibling distance=4.5cm},
 ]
 
 \node{Ist der Fehler reproduzierbar zu beobachten?}
-  child{node{Intermittierendes\\Problem}
-  edge from parent node{nein}}
+  child{node[draw,fill=white]{Intermittierendes\\Problem}
+  edge from parent node[fill=black!10]{nein}}
   child{node{Funktioniert überhaupt etwas?}
-    child{node{Totalausfall} edge from parent node{nein}}
+    child{node[draw,fill=white]{Totalausfall} edge from parent node{nein}}
     child{node{Funktioniert im Prinzip alles?}
-      child{node{Teilausfall} edge from parent node{nein}}
+      child{node[draw,fill=white]{Teilausfall} edge from parent node{nein}}
       child{node{Ist es schnell genug?}
-        child{node{Performanceproblem} edge from parent node{nein}}
+        child{node[draw,fill=white]{Performanceproblem}
+        edge from parent node{nein}}
         child{node{Kein Problem, Danke}
-	edge from parent node{ja}}
+        edge from parent node{ja}}
       edge from parent node{ja}}
     edge from parent node{ja}}
   edge from parent node{ja}};
