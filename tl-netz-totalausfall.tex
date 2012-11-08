@@ -165,12 +165,36 @@ dem Netz zuwenden.
 \section{Ein oder mehrere Netzsegmente sind nicht erreichbar}
 \label{sec:ausfall-netzsegment}
 
+\begin{normaltext}
+  Beim Ausfall eines oder mehrerer Netzsegmente unterscheide ich zunächst, ob
+  ich mich in einem der betroffenden Segmente befinde, oder nicht.
+
+  Bin ich direkt in dem betroffenen Netzsegment - zum Beispiel, wenn der
+  Ausfall mir von außerhalb gemeldet wird - untersuche ich zunächst, ob ich
+  innerhalb des Netzsegmentes, vor allem zum Gateway Verbindung habe.
+  Dabei kann ich gegebenenfalls auf das Vorgehen aus
+  \ref{sec:gar-kein-netz} zurückgreifen.
+  Anschließend versuche ich Kontakt zu dem Netzsegment zu bekommen, aus dem
+  die Meldung kam. Bekomme ich keinen Kontakt, vermute ich ein Routingproblem.
+
+  Bin ich außerhalb der betroffenen Netzsegmente, schaue ich als erstes, ob
+  die Routen dorthin in Ordnung sind. Dabei kann mir das Programm traceroute
+  helfen. Genauere Auskunft bekomme ich auf den Gateways oder anderen
+  Rechnern, die an den Routingprotokollen teilnehmen. Fehlen die Routen, oder
+  weisen sie in die falsche Richtung, muss ich das Routingproblem untersuchen.
+  Sind die Routen in Ordnung, aber ich bekomme keine Verbindung, versuche ich
+  vom Gateway des betreffenden Netzsegmentes eine Verbindung zu den Rechnern
+  zu bekommen. Ist das möglich, dann handelt es sich möglicherweise um ein
+  Konfigurationsproblem der betreffenden Rechner - dieses kann auch durch
+  fehlerhafte Angaben vom DHCP-Server kommen.
+\end{normaltext}
+
 \begin{notes}
 \item Entscheidungsbaum!
 \end{notes}
 
-\subsection{Routen zu diesen Netzen fehlen}
-\label{sec:routen fehlen}
+\subsection{Routingprobleme}
+\label{sec:routingprobleme}
 
 \begin{notes}
 \item Routingprotokolle
