@@ -8,7 +8,7 @@
   um einen partiellen Ausfall im Netz.
 \end{abstractsec}
 
-\section{instabile Routen}
+\section{Instabile Routen}
 \label{sec:instabile-routen}
 
 \begin{notes}
@@ -23,8 +23,56 @@
 %  Blablabla
 %\end{normaltext}
 
-%\subsection{Seiteneffekte}
-%\label{sec:seiteneffekte}
+\subsection{OSPF}
+\label{sec:ospf}
+
+\begin{normaltext}
+  \begin{Beispiel}{statische Route in OSPF}
+    Das ist ein Beispiel für ein selbstgemachtes Problem.
+
+    % Hier Bild vom Netzwerk
+
+    In dem angedeuteten Netzwerk wurde der Router C umgeschwenkt vom direkten
+    Anschluß im Core-Netz auf einen Anschluß via Router D. Im Core-Netz wurde
+    OSPF für das Routing verwendet, zwischen D und C sowie zwischen B und D
+    wurde RIP verwendet.
+
+    Später wurde das Core-Netz erweitert und Router D in die Area mit
+    aufgenommen. D bekam die Route von C immer noch via RIP. Trotzdem hatte D
+    in seiner Routingtabelle B als Router zu C. B hingegen hatte gar keine
+    Route zu C.
+
+    Erst ein Blick in die OSPF Route Database (\verb?show ip ospf database?)
+    zeigte, dass Router A eine statische Route zu C via B einspeiste.
+    Da die Übergabe der Route von RIP nach OSPF zunächst nicht
+    richtig funktionierte, wurde auf Router A eine statische Route zu C
+    eingespeist, die B als Router auswies. Das funktionierte, weil zu dem
+    Zeitpunkt B Borderrouter war und die externe Route über ihn ging. Mit dem
+    Ausweiten der Area war B aber nicht mehr Borderrouter und die Notlösung
+    mit der statischen Route verursachte den Fehler.
+
+    Insgesamt lassen sich folgende Ursachen, die in diesem Fall zusammen den
+    Fehler auftreten ließen, angeben:
+    \begin{enumerate}
+      \item Das Einspeisen der statischen Route war per se ein Fehler. Besser
+        wäre die genaue Diagnose des ursprünglichen Routingproblems. Dieses
+        Problem wurde kaschiert, weil B Borderrouter war und die korrekte
+        Route auf anderem Weg erfuhr. Erschwerend kam hinzu, dass die
+        statische Route nicht auf dem Gateway selbst, sondern auf einem
+        anderen Router (der als zentraler Punkt für das Einspeisen von
+        statischen Routen gedacht war) erfolgte.
+      \item Durch das Erweitern der OSPF-Area war B auf einmal kein
+        Borderrouter mehr und konnte die korrekte Route durch den Wegfall von
+        RIP auch nicht mehr auf anderem Weg lernen.
+      \item Die OSPF-Route hatte auf D eine höhere Priorität als die
+        RIP-Route. Darum stellte D sein Routing zu C in Richtung B um und
+        konnte das Netz hinter C nicht mehr erreichen.
+    \end{enumerate}
+    Merke: Bei der Verwendung von Routingprotokollen, sollten statische Routen
+    nur in wohlbegründeten Ausnahmefällen eingespeist werden und vor allem -
+    wenn möglich - auf dem Router, der für die Route zuständig ist.
+  \end{Beispiel}
+\end{normaltext}
 
 %\subsection{Einschränkung der Umsetzung}
 %\label{sec:einschr-der-umsetz}
