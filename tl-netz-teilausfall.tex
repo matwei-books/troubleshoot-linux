@@ -8,6 +8,48 @@
   um einen partiellen Ausfall im Netz.
 \end{abstractsec}
 
+\begin{normaltext}
+  Wenn ich einen Teilausfall eines Netzes bemerke beziehungsweise mitgeteilt
+  bekomme, interessiert mich als erstes, ob ich in dem betreffenden
+  Netzsegment bin oder aussen. In dem Segment bin ich zum Beispiel, wenn der
+  erste verfügbare Rechner an das betreffende Segment angeschlossen ist. In
+  diesem Fall kann ich meist so vorgehen, prüfe ich als erstes, wie in
+  Abschnitt \ref{sec:gar-kein-netz} beschrieben, ob das problematische
+  Netzsegment in sich funktioniert. Habe ich mich von der Funktionisfähigkeit
+  des Netzsegmentes überzeugt oder es funktionsfähig gemacht, kommt als
+  nächstes die Verbindung zu anderen Netzen dran.
+
+  Außerhalb des betreffenden Netzsegmentes bin ich, wenn der nächste Rechner
+  in diesem so weit weg ist, dass ich zunächst auf alle Möglichen Arten
+  versuche über das Netzwerk an das Netzsegment heran zu kommen, bevor ich
+  mich auf den Weg mache. Nun wird ein Ausfall eines Netzsegmentes im
+  Allgemeinen dadurch gekennzeichnet, dass das Segment nicht via Netz
+  erreichbar ist. Was ich aber tun kann und sollte, ist, mich zu überzeugen,
+  dass das auch wirklich so ist und nicht nur so scheint. Das kann ich, indem
+  ich mir einen Überblick beschaffe, ob in den Routingprotokollen der Gateways
+  eine Übersicht über die bekannten Routen im Netzwerk verschaffe. Taucht die
+  Route zu dem Netz dort auf, habe ich eventuell gute Chancen, zumindest das
+  Gateway dort zu erreichen und von diesem aus das Netzsegment zu analysieren.
+  Taucht die Route dort nicht auf, ist das zwar ein schlechtes Zeichen, aber
+  ich kann immer noch versuchen, von einem Router zum nächsten zu hangeln um
+  so nah wie möglich an das Netz heranzukommen. Dazu brauche ich aber eine
+  genaue Kenntnis des Gesamtnetzwerkes. Dabei kann ich mir unterwegs die Sicht
+  jedes einzelnen Gateways auf das Gesamtnetz und seine Routen ansehen und
+  eventuell mögliche Routingprobleme finden. Das letzte erreichbare Gateway
+  vor dem ausgefallene Netz kann bereits Hinweise auf die Ursache des Ausfalls
+  liefern.
+
+  Habe ich mich über das Netzwerk bis zum Gateway an das ausgefallene Netzwerk
+  vorgearbeitet, dann prüfe ich mit diesem die grundlegende Funktionsweise des
+  Netzsegments, wie in Abschnitt \ref{sec:gar-kein-netz} beschrieben.
+  Funktioniert das Netzsegment grundsätzlich, arbeite ich mich  nach oben und
+  überprüfe die verschiedenen Netzdienste, wie DHCP, Namensauflösung,
+  Zeitserver, Netzanmeldung, soweit vorhanden und eingesetzt.
+
+  \begin{Exkursbox}{Loopback-Adressen}
+  \end{Exkursbox}
+\end{normaltext}
+
 \section{Instabile Routen}
 \label{sec:instabile-routen}
 
@@ -19,9 +61,6 @@
 %\begin{abstractsec}
 %  Die Aufteilung der Umsetzung wird hier gegliedert in verschiedene Aspekte
 %\end{abstractsec}
-%\begin{normaltext}
-%  Blablabla
-%\end{normaltext}
 
 \subsection{OSPF}
 \label{sec:ospf}
