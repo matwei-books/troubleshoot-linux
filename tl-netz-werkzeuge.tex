@@ -15,15 +15,117 @@
 \item[traceroute] zur Pfadkontrolle
 \end{notes}
 
-%\section{Konzept der Umsetzung}
-%\label{sec:konz-der-umsetz}
+\section{netstat}
+%\label{sec:netz-werkzeuge-netstat}
 
-%\begin{abstractsec}
-%  Die Aufteilung der Umsetzung wird hier gegliedert in verschiedene Aspekte
-%\end{abstractsec}
-%\begin{normaltext}
-%  Blablabla
-%\end{normaltext}
+\begin{abstractsec}
+  Mit netstat ist es möglich essentielle Informationen zur
+  Netzwerkkonfiguration und zum aktuellen Zustand der Netzwerksockets und
+  Verbindungen eines Rechners zu erfahren.
+\end{abstractsec}
+\begin{normaltext}
+  Ein Werkzeug, dass ich auch bei der Analyse von lokalen Rechnerproblemen
+  einsetze und dort bereits vorgestellt habe, ist netstat. Im Bereich
+  Netzwerkprobleme kann es viele Informationen liefern, die mir, je nach
+  Problemfall weiterhelfen können.
+
+  \subsection{Sockets}
+  \label{sec:netz-werkzeuge-netstat-sockets}
+
+  Rufe ich \verb?netstat? ohne Argumente auf, liefert es mir eine Liste der
+  offenen und aktiven Sockets aller konfigurierten Adressfamilien, das
+  heisst, der bestehenden Verbindungen.
+
+  Meist interessieren mich nicht alle Adressfamilien, sondern nur ganz
+  bestimmte. Dann kann ich diese zum Beispiel mit der Option
+  \verb?--protocol=$familie? einschränken. Für \verb?$familie? kan ich in
+  einer kommaseparierten Liste die folgenden angeben: \verb?unix?,
+  \verb?inet?, \verb?ipx?, \verb?ax25?, \verb?netrom?, \verb?ddp?. Alternativ
+  kann ich jeden gewünschten Familiennamen einzeln als Option übergeben:
+  \verb?--unix?, \verb?--inet?, \ldots
+
+  In diesem Teil der Buches interessiert mich vor allem die Familie
+  \verb?--inet?. Diese kann ich weiter eingrenzen. Mit der Option \verb?-4?
+  beziehungsweise \verb?-6? beschränke ich die Ausgabe auf die entsprechende
+  Version des Internet Protokolls.
+
+  Außerdem verwende ich
+  \begin{itemize}
+    \item[--raw oder -w] wenn ich an Raw-Sockets interessiert bin,
+    \item[--tcp oder -t] für TCP-Sockets, und
+    \item[--udp oder -u] für UDP-Sockets.
+  \end{itemize}
+
+  Bin ich nur daran interessiert, ob überhaupt ein Prozess an einem bestimmten
+  Socket wartet, verwende ich die Option \verb?--listening? beziehungsweise
+  \verb?-l?. Diese werden bei der normalen Ausgabe weggelassen. Will ich
+  hingegen sowohl die aktiven als auch die lauschenden Sockets erfassen,
+  verwende ich die Option \verb?--all? beziehungsweise \verb?-a?.
+
+  \subsection{Routen}
+  \label{sec:netz-werkzeuge-netstat-routen}
+
+  Wenn ich statt an den Sockets eher an den Routen interessiert bin, verwende
+  ich die Option \verb?--routes? beziehungsweise \verb?-r?. Damit bekomme ich
+  die gleiche Ausgabe, wei mit dem Befehl \verb?route -e?. Auch hier kann ich
+  mit \verb?-4? oder \verb?-6? die Protokollversion einschränken.
+
+  Füge ich die Option \verb?-C? hinzu, bekomme ich Informationen aus dem
+  Routencache, mit der Option \verb?-F? stattdessen aus der Forwarding
+  Information Base (der Routentabelle), aber das ist sowieso die
+  Voreinstellung.
+
+  \subsection{Interfaces}
+  \label{sec:netz-werkzeuge-netstat-interfaces}
+
+  Mit der Option \verb?--interfaces? oder \verb?-i? kann ich Informationen
+  über die Netzwerk-Interfaces bekommen.
+
+  Ein einfaches \verb?netstat -i? liefert mir in einer übersichtlichen Tabelle
+  zu jedem aktiven Interface unter anderem die MTU, die Anzahl der gesendeten
+  und empfangenen Datenpakete sowie die Anzahl der Sende- beziehungweise
+  Empfangsfehler.
+
+  Kombiniere ich das mit \verb?-e?, bekomme ich die gleiche Ausgabe wie vom
+  Program \verb?ifconfig?. Kombiniert mit \verb?-a? werden auch Interfaces
+  angezeigt, die nicht im Zustand \verb?UP? sind.
+
+  \subsection{Multicast-Gruppen}
+  \label{sec:netz-werkzeuge-netstat-groups}
+  Die Option \verb?--groups? beziehungsweise \verb?-g? liefert mir
+  Informationen zur Mitgliedschaft des Rechners in Multicast-Gruppen.
+
+  Auch diese kann ich mit \verb?-4? oder \verb?-6? einschränken.
+
+  \subsection{Statistiken}
+  \label{sec:netz-werkzeuge-netstat-statistics}
+
+  Mit der Option \verb?--statistics? beziehungsweise \verb?-s? zeigt netstat
+  zusammengefasste Statistiken für alle Protokolle.
+
+  \subsection{allgemeine Optionen}
+  \label{sec:netz-werkzeuge-netstat-allgemein}
+
+  Abschließen möchte ich diese kleine Vorstellung von netstat mit ein paar
+  allgemeinen Optionen, mit denen ich die Ausgabe modifizieren kann.
+
+  Die von mir wohl am meisten eingesetzte Option ist \verb?--numeric?, kurz
+  \verb?-n?. Mit dieser Option zeigt netstat numerische statt symbolischer
+  Informationen an und das ist insbesondere bei Netzwerkadressen ein immenser
+  Geschwindigkeitsvorteil, da sonst unter Umständen etliche DNS-Anfragen mit
+  den entsprechenden Verzögerungen gestellt werden, bevor die Ausgabe
+  angezeigt werden kann. Natürlich kann man das auch selektiv einstellen mit
+  \verb?--numeric-hosts?, \verb?--numeric-ports? und \verb?--numeric-users?.
+
+  Mit der Option \verb?--verbose? oder \verb?-v? kann ich mehr Informationen
+  bekommen, insbesondere zu nicht konfigurierten Adressfamilien.
+
+  Ähnliches bietet die Option \verb?--extend? oder \verb?-e?, die zusätzliche
+  Informationen zum Beispiel bei Interfaces liefert.
+
+  Gebe ich die Option \verb?--continuos? oder \verb?-c? an, bekomme ich die
+  Informationen aller Sekunde ausgegeben.
+\end{normaltext}
 
 %\subsection{Seiteneffekte}
 %\label{sec:seiteneffekte}
