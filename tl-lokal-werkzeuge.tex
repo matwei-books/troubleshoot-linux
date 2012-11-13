@@ -26,17 +26,91 @@
 \item ifconfig
 \item iproute
 \item lsof
-\item netstat
+\item ltrace
 \item perl
 \item shell
 \end{notes}
 
-\section{strace}
-%\label{sec:lokal-werkzeug-strace}
+\section{netstat}
+\label{sec:lokal-werkzeuge-netstat}
+\begin{abstractsec}
+  In den meisten Fällen setze ich netstat bei Netzwerkproblemen ein.
+  Wenn ich jedoch Probleme mit UNIX-Sockets vermute oder den Prozess, der
+  einen bestimmten Socket verwendet ermitteln will, hilft es mir auch bei der
+  lokalen Fehlersuche.
+\end{abstractsec}
+\begin{normaltext}
+  Ein Werkzeug, das sowohl bei der lokalen, als auch bei der Fehlersuche im
+  Netzwerk behilflich sein kann, ist netstat. Auf den Aspekt
+  Netzwerkfehlersuche gehe ich im Abschnitt \ref{sec:netz-werkzeuge-netstat}
+  näher ein. Hier konzentriere ich mich auf die Fehlersuche bei lokalen
+  Problemen.
 
-%\begin{abstractsec}
-%  Die Aufteilung der Umsetzung wird hier gegliedert in verschiedene Aspekte
-%\end{abstractsec}
+  Dafür verwende ich vor allem die Optionen \verb?--protocol=unix?
+  (alternativ: \verb?-A unix?) oder \verb?--unix? (\verb?-x?) um mir die
+  UNIX-Sockets ausgeben zu lassen.
+  Bin ich an den Prozessen interessiert, die die Netzwerksockets verwenden,
+  kann ich diese stattdessen mit \verb?--inet?, \verb?--ipx?, \verb?--tcp?,
+  \ldots selektieren. Das ist ausführlicher in Abschnitt
+  \ref{sec:netz-werkzeuge-netstat} beschrieben.
+
+  Mit \verb?--program? (\verb?-p?) erhalte ich die PID und den Namen des
+  Prozesses, der den Socket benutzt. Dafür benötige ich Superuser-Privilegien.
+  Mit dieser PID kann ich dann zum Beispiel den Prozess mit strace näher
+  betrachten.
+
+  Normalerweise zeigt netstat nur aktive, das heißt verbundene Sockets an. Mit
+  der Option \verb?--listening? (\verb?-l?) kann ich dagegen nur die Sockets
+  ausgeben lassen, die auf eine Verbindung warten oder mit \verb?--all?
+  (\verb?-a?) alle.
+
+  Mehr Informationen kann ich bekommen, wenn ich zusätzlich die Optionen
+  \verb?--verbose? (\verb?-v?) oder \verb?--extend? (\verb?-e?) angebe.
+
+  Die Ausgabe von netstat kommt als Tabelle, deren Spalten die folgende
+  Bedeutung haben:
+  \begin{description}
+    \item[RefCnt] Zeigt die Anzahl der Prozesse, die sich mit dem Socket
+      verbunden haben.
+    \item[Flags] geben zusätzliche Informationen zum Zustand des Sockets aus:
+      \begin{description}
+        \item[ACC] - der Socket wartet auf eine Verbindung
+        \item[W] - der Socket wartet auf Daten
+        \item[N] - der Socket hat im Moment nicht genug Platz zum Schreiben
+      \end{description}
+    \item[Typ] kann stehen für
+      \begin{description}
+        \item[DGRAM] für verbindungslose Sockets
+        \item[STREAM] für verbundene Sockets
+        \item[RAW] für rohe ungefilterte Sockets %XXX FIXME
+        \item[RDM] für zuverlässig ausgelieferte Nachrichten (Reliable
+          Delivered Messages)
+        \item[SEQPACKETS] für nacheinander folgende Pakete %XXX FIXME
+        \item[PACKET] für rohe Interface-Sockets %XXX FIXME
+      \end{description}
+    \item[State] kann für einen der folgenden Zustände des Sockets stehen:
+      \begin{description}
+        \item[Free] - nicht allozierte Sockets %XXX FIXME
+        \item[Listening] - nicht verbundene Sockets
+        \item[Connecting, Connected, Disconnected] - die Phasen einer
+          Socketverbindung
+        \item[(empty)] für unverbundene Sockets %XXX FIXME
+      \end{description}
+    \item[PID] enthält die Prozess-ID und den Namen des Prozesses
+    \item[Path] zeigt den Pfad zum Socket vom Prozess aus an, relativ zum
+      Arbeitsverzeichnis des Prozesses
+  \end{description}
+\end{normaltext}
+
+\section{strace}
+\label{sec:lokal-werkzeuge-strace}
+
+\begin{abstractsec}
+  Mit strace kann ich die Interaktion eines Programmes mit dem Linux-Kernel
+  beobachten. Dieses verwende ich zum Beispiel um unvorhergesehene
+  Programmabrüche oder unerklärliches Verhalten eines Binärprogrammes zu
+  analysieren.
+\end{abstractsec}
 \begin{normaltext}
   Strace ist ein Werkzeug, dass ich einsetze, wenn mir das Verhalten eines
   Programmes unklar ist. Wenn ich Probleme mit Zugriffsrechten vermute, aber
