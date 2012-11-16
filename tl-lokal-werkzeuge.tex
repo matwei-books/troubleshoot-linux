@@ -31,6 +31,131 @@
 \item shell
 \end{notes}
 
+\section{lsof}
+\label{sec:lokal-werkzeuge-lsof}
+\begin{abstractsec}
+  Ein Werkzeug, dass in keinem Werkzeugkasten für die lokale Fehlersuche fehlen
+  sollte, ist lsof. Dieses Programm zeigt Informationen zu Dateien, die von
+  Prozessen geöffnet sind, an.
+\end{abstractsec}
+\begin{normaltext}
+  Ein Werkzeug, dass in meinem Werkzeugkasten für die lokale Fehlersuche nicht
+  fehlen darf, ist lsof. Dieses Programm zeigt Informationen zu Dateien, die
+  von laufenden Prozessen geöffnet sind, an.
+
+  Ich habe dieses Programm erfolgreich beim Untersuchen von Mount-Problemen
+  eingesetzt.
+  Auch beim Aufspüren und Untersuchen von Sicherheitsproblemen leistet es
+  wertvolle Dienste.
+
+  Außer für Linux gibt es dieses Programm auch für andere UNIX-Derivate, bei
+  denen einige Optionen eine andere Bedeutung haben. Aus diesem Grund und weil
+  ich hier nicht alle Optionen erläutern werde, ist ein Blick in die
+  entsprechende Handbuchseite unumgänglich.
+
+  Offene Dateien, die lsof auflistet können
+  \begin{itemize}
+    \item reguläre Dateien,
+    \item Verzeichnisse,
+    \item block- oder zeichenorientierte Spezialdateien,
+    \item Verweise auf ausführbaren Code,
+    \item Bibliotheken,
+    \item UNIX- oder Netzwerksockets sein.
+  \end{itemize}
+
+  In einigen Aspekten überschneidet sich die Funktionialität von lsof mit der
+  von netstat, welches ich weiter hinten in 
+  Sektion \ref{sec:lokal-werkzeuge-netstat}
+  beschreibe. Meist entscheide ich je nach vorliegendem Problem, zu welchem
+  der Programme ich greife.
+
+  Es ist möglich, von lsof statt einer einmaligen Ausgabe, automatisch in
+  bestimmten Abständen neue Schnappschüsse der angeforderten Informationen zu
+  erhalten und die Ausgabe dazu so umzuformen, dass sie gut von einem Skript
+  oder sonstigem Programm überwacht werden kann.
+
+  Rufe ich lsof ohne Optionen und Argumente auf, bekomme ich eine Liste aller
+  Dateien, die alle laufenden Prozesse im Moment geöffnet haben. Bin ich nur
+  an wenigen Dateien interessiert, gebe ich diese als Argumente auf der
+  Kommandozeile an. Bin ich nur an bestimmten Aspekten oder an Dateien, die
+  ich zwar selbst nicht genau kenne, aber deren Eigenschaften, so
+  spezifiziere ich das mit Optionen. Einige dieser Optionen will ich hier
+  vorstellen.
+  
+  Selektiere ich mit einer Option eine definierte Menge von
+  Dateien, dann werden nur die Dateien, die dieser Selektion genögen,
+  angezeigt. Gebe ich mehrere Selektoren an, dann werden alle Dateien
+  angezeigt, die irgendeinem dieser Selektoren entsprechen. Das heißt, die
+  Menge der angezeigten Dateien entspricht der ODER-Verknüpfung der einzelnen
+  Selektoren. Dazu gibt es folgende Ausnahme: wenn ich mit einer Option
+  bestimmte Dateien deselektiere (zum Beispiel durch vorangestelltes \verb?^?
+  bei Auswahllisten), dann werden diese Dateien auch nicht angezeigt, wenn sie
+  nach einem anderen Selektor drann wären. Außerdem kann ich die Verknüpfung
+  der Selektionskriterien mit der Option \verb?-a? von ODER auf UND umstellen.
+  Gebe ich mehrmals die gleiche Option mit verschiedenen Selektoren an, so
+  werden diese vor der ODER- beziehungsweise UND-Verknüpfung zu einem Selektor
+  zusammengefasst.
+  Wenn ich zum Beispiel nur an allen Internetsockets interessiert bin, die von
+  Prozessen mit UID xyz geöffnet sind, dann schreibe ich:
+  \begin{verbatim}
+    lsof -a -i -u xyz
+  \end{verbatim}
+  
+  Nun zu den Optionen.
+
+  Mit Option \verb?-c name? selektiere ich Prozesse, deren Name mit \verb?name?
+  beginnt. Fängt \verb?name? selbst mit \verb?^? an, dann werden genau diese
+  Prozesse ignoriert. Beginnt und endet \verb?name? mit einem Schrägstrich
+  (\verb?/?), dann wird er als regulärer Ausdruck interpretiert.
+
+  Mit der Option \verb?+d s? bekomme ich alle geöffneten Dateien direkt im
+  Verzeichnis \verb?s?. Demgegenüber liefert \verb?+D s? auch die Dateien und
+  Verzeichnisse in den Unterverzeichnissen von \verb?s?, die von Prozessen
+  geöffnet sind. Beide Optionen kann ich mit \verb?-x? kombinieren, damit lsof
+  symbolischen Links folgen und Mountpoints überqueren soll, was es ansonsten
+  nicht machen würde.
+
+  Die Option \verb?-d s? erwartet eine Liste von Dateideskriptoren (diese
+  stehen in der Ausgabe in Spalte FD), die ich einschließen, oder mit \verb?^?
+  ausschließen kann. Möchte ich zwar das Arbeitsverzeichnis, aber nicht die
+  Standardeingabe, -ausgabe und -fehlerausgabe von Prozessen wissen, dann
+  drücke ich das so aus:
+  \begin{verbatim}
+    lsof -d cwd,^0,^1,^2
+  \end{verbatim}
+
+  Mit der Option \verb?-i [m]? bekomme ich Internetsockets und zwar speziell
+  für TCP oder UDP angezeigt. Optional kann ich diese mit dem Muster \verb?m?
+  genauer spezifizieren. Dazu gebe ich \verb?m? in der folgenden Form
+  \verb?[46][protocol][@hostname|hostaddr][:service|port]? an. Hierbei steht
+  \begin{description}
+    \item[4] für die Beschränkung auf IPv4
+    \item[6] für die Beschränkung auf IPv6
+    \item[protocol] für den Protokollnamen TCP oder UDP
+    \item[hostname] für einen Internet-Hostnamen oder alternativ
+    \item[hostaddr] für eine numerische Adresse
+    \item[service] für einen Servicenamen aus /etc/services oder alternativ
+    \item[port] für die Portnummer
+  \end{description}
+  Demgegenüber kann ich mit \verb?-U? UNIX-Domain-Sockets auswählen.
+
+  Die Option \verb?-n? unterdrückt die Umwandlung von Netzadressen in Namen,
+  \verb?-P? die Umwandlung von Portnummern in Servicenamen und schließlich
+  \verb?-l? die Umwandlung von UID in Benutzernamen. Diese Optionen verwende
+  ich, wenn ich mehr Klarheit haben will, oder wenn diese Umwandlung
+  ihrerseits die Ausführung von lsof verzögert, weil DNS- oder NIS-Anfragen
+  für die Auflösung notwendig sind.
+
+  Mit der Option \verb?-u s? lassen sich die Prozesse nach UID oder
+  Benutzernamen auswählen, während ich mit \verb?-p s? die Prozesse direkt
+  nach PID auswählen kann.
+
+  Starte ich lsof mit Otion \verb?-r [t]?, so liefert es die Informationen
+  wiederholt in dem mit \verb?t? spezifizierten Zeitabstand (ohne Angabe 15
+  Sekunden). Diese Option kann ich mit \verb?-F f? kombinieren um die Ausgabe
+  für die einfachere Verarbeitung in einem Skript zu modifizieren.
+\end{normaltext}
+
 \section{netstat}
 \label{sec:lokal-werkzeuge-netstat}
 \begin{abstractsec}
