@@ -44,12 +44,45 @@ beachten, dass diese Beziehung kausal sein kann aber nicht muss. Im
 mathematischen Sinne beschreibt die Korrelation einen statistischen
 Zusammenhang im Gegensatz zur Proportionalität, die einen festes Verhältnis
 beschreibt.
+
+Im einfachsten Fall kann ich eine Korrelation selbst sehen, zum Beispiel, wenn
+immer die Verbindung zum Netz A wegfällt, sobald ich die Verbindung zum Netz B
+umschalte.
+Das sagt zwar nichts aus über die eigentliche Ursache, aber es gibt mir zum
+einen die Möglichkeit, das Problem kurzfristig temporär aus dem Weg zu
+schaffen und zum anderen, wenn die Zeit geeignet ist, das Problem
+hervorzurufen, um es gründlich zu studieren.
+
+\begin{notes}
+\item besseres Beispiel
+\end{notes}
+
+Eine andere Klasse von Problemen, bei denen mir Korrelationen zumindest
+weiterhelfen, sind sogenannte intermittierende Probleme, die sich dem
+andersartigen Zugang entziehen.
+Bei diesen Problem hilft mir am Anfang nur, so viele Daten über das betroffene
+Gesamtsystem wie möglich zu sammeln.
+Bei der Analyse dieser Daten hilft mir dann die Kovarianzanalyse, das heisst,
+ich vergleiche jeweils paarweise verschiedene beobachtete Systemvariablen und
+ermittle die Kovarianz oder den Korrelationskoeffizienten.
+Wichtig dabei ist, dass ich immer die zusammengehörigen Daten in Beziehung
+setze.
+Da das meist über die Uhrzeit passiert, sorge ich also entweder im Vorfeld für
+gleichlaufende Uhren, oder ich muss den Zeitoffset bestimmen und rausrechnen.
+
+Ein Programm, das sehr hilfreich für die Kovarianzanalyse ist, wurde in
+\cite{springerlink:10.1007/s00287-011-0541-z} beschrieben.
+
+Wichtig bei allen Korrelationsanalysen ist, sich vor Augen zu halten, dass
+uanbhängige Merkmale immer eine Kovarianz von 0 haben.
+
 \end{normaltext}
 
 \begin{notes}
+\item Definition von Korrelationskoeffizient, Kovarianz
+\item Berechnung davon
 \item Zeitliche Korrelation: Wann trat der Fehler erstmalig auf und was wurde
   zu dieser Zeit geändert?
-\item geht auch nicht
 \end{notes}
 
 \section{Abkürzungen und Umwege}
