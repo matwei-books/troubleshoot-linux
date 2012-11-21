@@ -21,15 +21,93 @@
 
 \begin{notes}
 \item hdparm
-\item fuser
 \item gdb
 \item ifconfig
 \item iproute
-\item lsof
 \item ltrace
 \item perl
 \item shell
 \end{notes}
+
+\section{fuser}
+\label{sec:lokal-werkzeuge-fuser}
+\begin{abstractsec}
+  Das Programm fuser setze ich ein, wenn ich schnell Informationen darüber
+  haben will, welche Prozesse bestimmte Dateien oder Netzwerksockets geöffnet
+  haben.
+\end{abstractsec}
+\begin{normaltext}
+  Das Programm fuser setzte ich ein, wenn ich schnell Informationen darüber
+  haben will, welche Prozesse bestimmte Dateien oder Netzwerksockets geöffnet
+  haben, um sie dann mit anderen Programmen näher zu untersuchen.
+  Zwar kann ich die ermittelten Prozesse dann gleich von fuser beenden lassen,
+  aber in diesem Buch geht es vor allem um die Fehleranalyse und dafür wäre
+  das dann meist doch etwas zu grobschlächtig.
+
+  Was mich vor allem interessiert, sind die Prozesse und die Art und Weise,
+  wie diese die betreffenden Dateien verwenden.
+  Diese bekomme ich von fuser in einer Tabelle angezeigt. In der ersten Spalte
+  steht die Datei, dahinter die PID. Mit der Option -v kann ich diese Ausgabe
+  erweitern, so dass fuser für jeden Prozess den Benutzer (USER), die PID, den
+  Zugriff (ACCESS) und den Namen des Prozesses (COMMAND) anzeigt.
+
+  Von diesen ist ACCESS für viele Analysen interessant. Diese Spalte kann die
+  folgenden Merkmale haben:
+  \begin{description}
+    \item[c] CWD, das Arbeitsverzeichnis des Prozesses,
+    \item[e] Executable, die Datei wird als Programm ausgeführt
+    \item[f] File, die Datei ist als normale Datei geöffnet
+    \item[F] File, die Datei ist zum Schreiben geöffnet
+    \item[r] Root, die Datei ist Wurzelverzeichnis
+    \item[m] MMAP, die Datei ist in den Speicherbereich des Prozesses
+      eingeblendet (zum Beispiel als Bibliothek)
+  \end{description}
+  Mit diesen Merkmalen bekomme ich heraus, wie ein Prozess eine Datei
+  verwendet. Allerdings kann ich das nur für Dateien sehen, die noch im
+  Dateisystem verlinkt sind. Dateien, die zwar geöffnet, aber nicht mehr im
+  Dateisystem verlinkt sind, kann ich damit nicht finden. Dazu benötige ich
+  andere Programme, wie zum Beispiel lsof. Mit der Option \verb?--mount?
+  (\verb?-m?) bekomme ich aber zumindest die PID dieser Prozesse, und kann
+  diese dann mit lsof näher untersuchen.
+
+  Dazu muss ich folgende Besonderheit der Ausgabe von fuser beachten. Das
+  Programm schreibt nur die PIDs an die Standardausgabe, alles andere kommt
+  über die Fehlerausgabe. Damit kann ich die Ausgabe von fuser sehr bequem in
+  Scripts weiterverarbeiten:
+  \begin{verbatim}
+for p in $(fuser -m /); do
+    lsof -p $p
+done
+  \end{verbatim}
+  Will ich die Ausgabe allerdings in einem Pager betrachten, oder
+  dokumentieren, so schreibe ich:
+  \begin{verbatim}
+fuser -m / 2>&1 | less
+  \end{verbatim}
+
+  Außer bei Dateien in Dateisystemen kann ich mit fuser auch die Prozesse
+  ermitteln, die bestimmte Sockets geöffnet haben. Dazu wähle ich den
+  entsprechenden Namensraum mit der Option \verb?--namespace SPACE?
+  (\verb?-n SPACE?) aus. Fuser kennt die folgenden Namensräume:
+  \begin{description}
+    \item[file] ist der Standardnamensraum, der nicht extra angegeben werden
+      muss.
+    \item[tcp] steht für TCP-Sockets
+    \item[udp] steht für UDP-Sockets
+  \end{description}
+  Sockets werden nach dem folgenden Schema angegeben:
+  \begin{verbatim}
+[local port][,[remote host][,[remote port]]][/namespace]
+  \end{verbatim}
+  Den Namensraum kann ich angeben, wenn die Angabe eindeutig ist und ich
+  diesen nicht explizit mit \verb?--namespace? angeben will.
+  Die Komma sind wichtig. So zeigt \verb?fuser ssh/tcp? alle Prozesse, die mit
+  dem lokalen Port 22 arbein, währen \verb?fuser ,,ssh/tcp? alle Prozesse mit
+  abgehender SSH-Verbindung an.
+
+  Mit der Option \verb?-4? beziehungsweise \verb?-6? kann ich die Ausgabe auf
+  die entsprechende Version des Internetprotokolls eingrenzen.
+\end{normaltext}
 
 \section{lsof}
 \label{sec:lokal-werkzeuge-lsof}
