@@ -85,6 +85,15 @@ done
 fuser -m / 2>&1 | less
   \end{verbatim}
 
+  Neben den Prozessen, die auf bestimmte Dateien zugreifen, bin ich manchmal
+  an allen Prozessen interessiert, die irgendeine Datei in einem Dateisystem
+  geöffnet haben. Dafür verwende ich die Option \verb?--mount? (\verb?-m?).
+  Das ist auch der einzige Weg, wie ich mit fuser Prozesse finden kann, die
+  bereits im Dateisystem gelöschte Dateien noch offen halten. Welche Prozesse
+  das konkret sind, kann ich zwar damit noch nicht sagen, aber das kann ich
+  zum Beispiel ermitteln, wenn ich die mit fuser ermittelten Prozesse mit lsof
+  näher betrachte.
+
   Außer bei Dateien in Dateisystemen kann ich mit fuser auch die Prozesse
   ermitteln, die bestimmte Sockets geöffnet haben. Dazu wähle ich den
   entsprechenden Namensraum mit der Option \verb?--namespace SPACE?
@@ -107,6 +116,32 @@ fuser -m / 2>&1 | less
 
   Mit der Option \verb?-4? beziehungsweise \verb?-6? kann ich die Ausgabe auf
   die entsprechende Version des Internetprotokolls eingrenzen.
+
+  Eine Option, die ich eher selten anwende ist \verb?--kill? (\verb?-k?), mit
+  der fuser ein Signal (ohne weitere Angaben: \verb?SIGKILL?) an die
+  ermittelten Prozesse sendet. Das Signal kann ich mit einem vorangestellten
+  Bindestrich (\verb?-?) angeben, eine Liste der Signale bekomme ich mit
+  \verb?--list-signals? (\verb?-l?). Zum Beispiel könnte ich mit
+  \begin{verbatim}
+fuser -k -HUP 22/tcp
+  \end{verbatim}
+  alle SSH-Anmeldungen an diesem Rechner beenden. War ich selbst via SSH
+  angemeldet, dann habe ich mich damit selbst hinausgeworfen. Oder, falls ich
+  ein Dateisystem aushängen will, beende ich mit
+  \begin{verbatim}
+fuser -k -m /media/cdrom
+  \end{verbatim}
+  alle Prozesse, die auf die eingehängte CD-ROM zugreifen. Falls aber unter
+  /media/cdrom kein Dateisystem eingehängt war, werden alle Prozesse, die das
+  nächsthöhere Dateisystem (meist /) verwenden, beendet. Das kommt einem
+  Ausschalten des Rechners schon sehr nahe. Darum gibt es, quasi als
+  Sicherheitsgurt für solche Fälle, die Option \verb?--ismountpoint?
+  (\verb?-M?), mit der alle Aktionen nur dann ausgeführt werden, wenn der
+  angegebene Dateiname ein Mountpoint ist. Außerdem kann ich mit der Option
+  \verb?-w? das Senden des Signals auf Prozesse einschränken, die eine Datei
+  zum Schreiben geöffnet haben. Das ist dann interessant, wenn ich das Datei
+  von read-write auf read-only umhängen will.
+
 \end{normaltext}
 
 \section{lsof}
