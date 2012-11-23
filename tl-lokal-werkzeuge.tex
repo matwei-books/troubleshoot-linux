@@ -20,6 +20,7 @@
 \end{normaltext}
 
 \begin{notes}
+\item Wie installiere ich Software?
 \item hdparm
 \item gdb
 \item ifconfig
@@ -28,7 +29,6 @@
 \item perl
 \item shell
 \item sysstat
-\item vmstat
 \end{notes}
 
 \section{fuser}
@@ -419,14 +419,128 @@ fuser -k -m /media/cdrom
   Damit bekomme ich meist genügend Informationen, um das Problem zu lösen.
   Natürlich darf ich am Ende nicht vergessen, das Skript wieder durch das
   Originalprogramm zu ersetzen.
+
+  \begin{notes}
+  \item Was für eine Kernelschnittstelle nutzt strace?
+  \item Strace-Skript: Datum, Kommandozeile, Umgebung, Benutzer,
+    Standardeingabe, Strace-Ausgabe
+  \end{notes}
+
 \end{normaltext}
 
-\begin{notes}
-\item Was für eine Kernelschnittstelle nutzt strace?
-\item Strace-Skript: Datum, Kommandozeile, Umgebung, Benutzer,
-  Standardeingabe, Strace-Ausgabe
-\end{notes}
+\section{vmstat}
+\label{sec:lokal-werkzeuge-vmstat}
 
+\begin{abstractsec}
+  Das Programm vmstat verwende ich, um bei lokalen Performanceengpässen einen
+  Überblick über das Gesamtsystem zu bekommen. Es liefert mir statistische
+  Informationen über Prozesse, Speicher, I/O, Platen- und CPU-Aktivitäten.
+\end{abstractsec}
+\begin{normaltext}
+  Das Programm vmstat verwende ich, um bei lokalen Performanceengpässen einen
+  Überblick über das Gesamtsystem zu bekommen. Es liefert mir statistische
+  Informationen über Prozesse, Speicher, I/O, Platen- und CPU-Aktivitäten.
+  Durch die kompakte Darstellung kann ich im Wiederholungsmodus  ein Gefühl
+  für die normale Aktivität des Gesamtsystems bekommen und sehe dann, wenn ein
+  Performanceengpass auftritt, manchmal sofort, ob es ein allgemeines
+  Ressourcenproblem ist (zuwenig Speicher, zu schwache CPU, zu langsame
+  Platte, \ldots) oder ob ich mich doch eher mit dem betreffenden Programm
+  beschäftigen muss.
+
+  Für die meisten Optionen sind keine speziellen Privilegien erforderlich, das
+  heißt, ich kann mit vmstat auch als normaler Benutzer mal eben nachsehen,
+  wie es dem System geht.
+  
+  Im Wiederholungsmodus zeigt das Programm in der ersten Zeile für alle Werte
+  den Durchschnitt seit Systemstart an und in den folgenden Zeilen die Werte
+  für die betreffende Abtastperiode. Diesen Modus verwende ich am häufigsten:
+  \begin{verbatim}
+vmstat [-a] [-n] [periode [anzahl]]
+  \end{verbatim}
+  Lasse ich die beiden Zahlen für \verb?periode? und \verb?anzahl? weg, dann
+  bekomme ich nur die Durchschnittswerte seit Systemstart angezeigt. Das
+  brauche ich eigentlich nur, wenn ich das System sehr gut kenne oder mehrere
+  ähnliche Systeme vergleichen will.
+
+  Gebe ich eine Zahl für \verb?periode? an, dann verwendet vmstat diese als Länge der
+  Periode in Sekunden mit der es kontinuierlich die Werte der letzten Periode
+  ausgibt. Auch hier steht in der ersten Zeile der Durchschnitt seit
+  Systemstart, so dass ich gleich ab der zweiten Zeile sehen kann, womit das
+  System besonders beschäftigt ist.
+
+  Gebe ich auch eine Zahl für \verb?anzahl? an, dann beendet sich vmstat nach
+  soviel Perioden, wie angegeben.
+
+  Die Ausgabe von vmstat in diesem Modus bedeutet folgendes:
+  \begin{description}
+    \item[Procs] Unter \verb?r? steht hier die Anzahl der Prozesse, die laufen
+      können und unter \verb?b? steht die Anzahl der Prozesse in
+      uninteruptible sleep, das heißt der Prozesse, die im Kernelcode auf I/O
+      warten.
+    \item[Memory] Hier habe ich unter \verb?swpd? die Menge des verwendeten
+      virtuellen Speichers (des ausgelagerten Hauptspeichers). Unter
+      \verb?free? finde ich den unbenutzten Speicher, unter \verb?buff?
+      Speicher, der für Datei- und Socketpuffer verwendet wird. Der unter
+      \verb?cache? aufgeführte Speicher wird für zwischengespeicherte Daten
+      von Blockdevices verwendet.
+
+      Habe ich die Option \verb?-a? angegeben, wird statt \verb?buffer/cache?
+      aktiver und inaktiver Speicher angezeigt.
+    \item[IO] Unter des Spalte \verb?bi? finde ich die Anzahl der von
+      Blockdevices gelesenen Blöcke (blocks in) und unter \verb?bo? die
+      geschriebenen (blocks out).
+    \item[System] Hier finde ich unter \verb?in? die Anzahl der Interrupts pro
+      Sekunde und unter \verb?cs? die Anzahl der Kontextwechsel pro Sekunde.
+    \item[CPU] Diese Spalten zeigen prozentual, wie die CPU ihre Zeit
+      verbringt. Unter\verb?us? steht der Anteil, den die CPU mit Code in
+      Benutzerprogrammen verbringt. Unter \verb?sy? steht die Zeit für das
+      Abarbeiten von Systemaufrufen und unter \verb?id? die untätige (idle)
+      Zeit. Bis zum Kernel 2.5.41 zählte auch die Zeit, in der die CPU auf I/O
+      wartete hierzu, ab dann gab es dafür die Spalte \verb?wa?.
+  \end{description}
+  \begin{notes}
+  \item Was bedeutet aktive / inactive bei Memory?
+  \end{notes}
+
+  Im Wiederholungsmodus kann ich mit Option \verb?-a? die Anzeige des Speichers von
+  buffer/cache auf inactive/active umschalten und mit \verb?-n? die
+  wiederholte Anzeige der Kopfzeilen abschalten. Letztere sind insbesondere
+  bei länger laufender Ausgabe praktisch, wenn ich nicht genau im Kopf habe,
+  welche Spalte was anzeigt. Daher verwende ich \verb?-n? so gut wie nie.
+
+  Mit Option \verb?-m?, die Superuserprivilegien erfordert, zeigt vmstat
+  Informationen zum Slab Allocator an. Das ist ein Verfahren zur Verwaltung
+  des Arbeitsspeichers. Weitere Informationen hierzu finden sich in
+  \cite{Bonwick:1994:SAO:1267257.1267263}.
+
+  Mit Option \verb?-d? zeigt vmstat einmalig Diskstatistiken für alle Disk
+  Devices (das können auch RAM-Disks und Loop Devices sein) an.
+  Dabei bedeuten:
+  \begin{description}
+    \item[Reads/Writes] für Lese-/Schreib-Zugriffe:
+      \begin{description}
+        \item[total] alle erfolgreichen Zugriffe
+        \item[merged] gruppierte Zugriffe, die in einem I/O-Vorgang resultieren
+        \item[sectors] erfolgreich gelesene/geschriebene Sektoren
+        \item[ms] Anzahl der lesend/schreiben verbrachten Millisekunden
+      \end{description}
+    \item[I/O] Unter \verb?cur? die gerade laufende I/O und unter \verb?s? die
+      Sekunden, die das System mit I/O verbracht hat.
+  \end{description}
+
+  Mit Option \verb?-D? zeigt vmstat einmalig zusammengefasste Statistiken zu
+  allen Disks.
+
+  Und mit \verb?-p partition? schließlich zeigt vmstat einmalig Statistiken fü
+  diese Partition. Hierbei bedeuten in der Ausgabe:
+  \begin{description}
+    \item[reads] die Gesamtzahl der Lesezugriffe auf diese Partition
+    \item[read sectors] die Gesamtzahl der gelesenen Sektoren dieser Partition
+    \item[writes] die Gesamtzahl der Schreibzugriffe auf diese Partition
+    \item[requested writes] die Gesamtzahl der Schreibanforderungen für diese
+      Partition
+  \end{description}
+\end{normaltext}
 %\subsection{Seiteneffekte}
 %\label{sec:seiteneffekte}
 
