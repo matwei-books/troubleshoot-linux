@@ -27,8 +27,6 @@
 \item iproute
 \item ltrace
 \item perl
-\item shell
-\item sysstat
 \end{notes}
 
 \section{fuser}
@@ -340,6 +338,127 @@ fuser -k -m /media/cdrom
     \item[Path] zeigt den Pfad zum Socket vom Prozess aus an, relativ zum
       Arbeitsverzeichnis des Prozesses
   \end{description}
+\end{normaltext}
+
+\section{perl}
+\label{sec:lokal-werkzeuge-perl}
+\begin{abstractsec}
+  Für knifflige Probleme, die ich mit den spezialisierten Werkzeugen nicht zu
+  fassen kriege und denen mit einfacher Shell-Programmierung auch nicht
+  beizukommen ist, benötige ich eine Programmiersprache, die mächtiger als die
+  Shell ist, mit der ich aber trotzdem mit wenig Aufwand ein passendes
+  Programm schreiben kann. Für mich ist das Perl.
+\end{abstractsec}
+\begin{normaltext}
+  Zwischen den vielen Spezialwerkzeugen für die Fehlersuche und der Shell als
+  Kommandozentrale benötige ich hin und wieder ein Werkzeug, mit dem sich auch
+  kniffligere Probleme angehen lassen, die so vielleicht vorher noch gar nicht
+  untersucht worden sind. Etwas, das sich etwa so schnell wie die Shell
+  programmieren läßt, aber ausdrucksstärker ist und auch sehr komplexe
+  Probleme angehen kann. Für micht ist das Perl. Für andere vielleicht Python,
+  das in vielem Perl ähnlich nicht, aber auf keinem Fall in der Syntax.
+
+  Die Programmiersprache Perl umfasst Konzepte von einfachen Werkzeugen wie sed
+  oder awk bis hin zu anspruchsvollen Programmiersprachen wie C oder Lisp. Es
+  gibt umfangreiche Fachliteratur sowohl offline als auch online sowie
+  Communities, an die man sich bei Problemen wenden kann.
+
+  Was Perl aber heraushebt gegenüber vielen anderen Skriptsprachen ist CPAN,
+  das Comprehensive Perl Archive Network, ein so umfangreiches Reservoir an
+  Softwaremodulen für fast alle erdenklichen Zwecke, das es möglich macht, die
+  meisten Skripts auf wenige Zeilen zu beschränken. Die besten und meist
+  verwendeten Module schaffen es mit der Zeit in die Standarddistribution und
+  stehen dann nach der Installation von Perl gleich zur Verfügung. In vielen
+  Fällen muß Perl auch gar nicht installiert werden, weil es bereits
+  Bestandteil des Systems ist.
+
+  Ganz besonders hilfreich bei der Problemlösung mit Perl ist das Perl
+  Kochbuch von Tom Christiansen und Nathan Torkington. In diesem sind Lösungen
+  für viele Probleme in Rezeptform aufbereitet und vor allen Dingen erläutert.
+  Die Codebeispiele aus dem Kochbuch sind Online verfügbar, den meisten Wert
+  zieht man jedoch aus den Erläuterungen im Buch.
+
+  \subsection{HTTP Injector}
+
+  Vor einiger Zeit hatte ich ein Problem, bei dem 502-Fehler von
+  einem Webservice abhängig waren von der Zeit für die
+  Anfrage. Der Betreiber des Webservices stritt das ab und um das
+  Problem zu verifizieren benötigte ich die Möglichkeit HTTP-Anfragen gezielt
+  zu verzögern.
+  
+  Ich kam mit Hilfe des Kochbuches zu folgendem Programm:
+  \begin{verbatim}
+01:#!/usr/bin/perl
+02:use Getopt::Long;
+03:use IO::Socket;
+04:use Time::HiRes qw(sleep);
+05:
+06:my %opt = ( delay => 0 );
+07:
+08:GetOptions( \%opt, 'delay=i');
+09:
+10:my $server = shift;
+11:my $port   = shift || 80;
+12:
+13:my $socket = IO::Socket::INET->new(PeerAddr => $server,
+14:                                   PeerPort => $port,
+15:                                   Proto    => 'tcp',
+16:                                   Type     => SOCK_STREAM);
+17:
+18:my @in = <>;
+19:my $del = $opt{delay} / ( 1.0 + scalar @in );
+20:foreach (@in) {
+21:    s/[\r\n]+$//;
+22:    sleep $del;
+23:    print $socket $_, "\r\n";
+24:}
+25:sleep $del;
+26:print $socket "\r\n";
+27:
+28:while (my $line = <$socket>) {
+29:    print $line;
+30:}
+  \end{verbatim}
+  In den Zeilen 2-4 lade ich die benötigten Module. \verb?Getopt::Long? ist
+  für die Verarbeitung der Kommandozeilenoptionen und sichert ab, dass ich mit
+  \verb?--delay? einen Integerwert angebe. \verb?IO::Socket? stellt die
+  Socketfunktionalität bereit, so dass ich diesen Socket wie eine Datei
+  verwenden kann. \verb?Time::HiRes? stellt mir eine verbesserte
+  \verb?sleep()? Funktion bereit, die mit Gleitkommazahlen zurechtkommt.
+
+  In Zeile 6 stelle ich die Option \verb?--delay? auf den Wert 0 ein, falls
+  sie nicht explizit angegeben wird. In Zeile 8 werden die Optionen
+  eingelesen.
+
+  Zeile 10 und 11 entnehmen den Server und gegebenenfalls den Port der
+  Kommandozeile und in Zeile 13 öffne ich mit diesen Angaben den Socket.
+
+  In Zeile 18 lese ich die gesamte Eingabe in ein Array ein. Dies benötige
+  ich, da ich die Anzahl der Zeilen wissen muss, denn ich verzögere das Senden
+  zeilenweise um jeweils einen Bruchteil der Gesamtverzögerung. Die Zeilen
+  20-25 schließlich bereiten die Zeilenenden auf und senden die modifizierten
+  Zeilen verzögert über den Socket. Zeile 26 schickt die Leerzeile, nach der
+  der Server antwortet.
+
+  In Zeile 28-30 liest das Skript die Antwort des Servers vom Socket und
+  schreibt sie zur Standardausgabe.
+
+  Dieses Skript kann ich nun wie folgt aufrufen:
+  \begin{verbatim}
+time ./http-injector.pl --delay 5 localhost 80 < request > reply
+
+real  0m5.072s
+user  0m0.056s
+sys   0m0.012s
+  \end{verbatim}
+  Dabei steht in der Datei request die HTTP-Anfrage, die ich an den Server
+  sende.
+  Nach fünf Sekunden ist die Anfrage beim Server, und die Antwort landet in
+  der Datei reply.
+
+  Damit konnte ich nachweisen, dass dieselbe Anfrage einen Fehler
+  lieferte, wenn sie mehr als drei Sekunden zur Übertragung brauchte und
+  fehlerfrei beantwortet wurde, wenn sie weniger als drei Sekunden brauchte.
 \end{normaltext}
 
 \section{shell}
