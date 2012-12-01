@@ -25,8 +25,6 @@
 \item gdb
 \item ifconfig
 \item iproute
-\item ltrace
-\item perl
 \end{notes}
 
 \section{fuser}
@@ -267,6 +265,69 @@ fuser -k -m /media/cdrom
   wiederholt in dem mit \verb?t? spezifizierten Zeitabstand (ohne Angabe 15
   Sekunden). Diese Option kann ich mit \verb?-F f? kombinieren um die Ausgabe
   für die einfachere Verarbeitung in einem Skript zu modifizieren.
+\end{normaltext}
+
+\section{ltrace}
+\label{sec:lokal-werkzeuge-ltrace}
+\begin{abstractsec}
+  Ltrace ist, ähnlich strace, ein Programm, mit dem ich einem Prozess bei der
+  Arbeit zusehen kann. Im Gegensatz zu strace, welches nur die
+  Kernel-Schnittstelle beobachtet, zeigt ltrace den Aufruf von
+  Bibliotheksfunktionen.
+\end{abstractsec}
+\begin{normaltext}
+  Ltrace ist, ähnlich strace
+  (siehe Abschnitt \ref{sec:lokal-werkzeuge-strace}),
+  ein Programm, mit dem ich einem Prozess bei der
+  Arbeit zusehen kann. Im Gegensatz zu strace, welches nur die
+  Kernel-Schnittstelle beobachtet, zeigt ltrace den Aufruf von
+  Bibliotheksfunktionen.
+
+  Beim Start eines Programmes via ltrace läßt dieses den Prozess laufen, bis
+  es endet. Dabei fängt ltrace Aufrufe von Bibliotheksfunktionen durch den
+  Prozess und Signale an den Prozess ab und zeigt sie auf STDERR an. Das ist
+  in etwa das Gleiche, was auch strace macht. Da aber ltrace
+  Bibliotheksaufrufe abfängt, ist die Ausgabe viel feiner granuliert und
+  umfangreicher.
+
+  Die folgenden Optionen sind für die Fehlersuche mit ltrace interessant. Für
+  eine komplette Liste der Optionen verweise ich auf die Handbuchseite.
+  \begin{description}
+    \item[-S] Mit dieser Option zeigt ltrace zusätzlich zu den
+      Bibliotheksaufrufen auch Systemaufrufe an der Kernelschnittstelle.
+      Diesen wird in der Ausgabe \verb?SYS_? vorangestellt.
+    \item[-L] Diese Option ist nur zusammen mit \verb?-S? sinnvoll, da sie die
+      Ausgabe der Bibliotheksaufrufe unterdrückt. Mit beiden Optionen zusammen
+      zeigt ltrace etwa das gleiche an wie strace, der einzige Unterschied ist
+      das vorangestellte \verb?SYS_? bei ltrace.
+    \item[-e expr] Damit kann ich die Ereignisse/Funktionen, die angezeigt
+      werden sollen, einschränken. Funktionen, die ich nicht sehen will,
+      kennzeichne ich mit vorangestelltem \verb?!?. So kann ich zum Beispiel
+      mit \verb?ltrace -e malloc,free? nachschauen, ob angeforderter Speicher
+      auch wieder freigegeben wird, was insbesondere bei langlaufenden
+      Prozessen von Belang ist.
+    \item[-f] Diese Option bewirkt, genau wie bei strace, das auch
+      Kindprozesse mit beobachtet werden.
+    \item[-o dateiname] Das bewirkt, ebenfalls wie bei strace, das die Ausgabe
+      von ltrace in die angegebene Datei anstatt zu STDERR ausgegeben wird.
+    \item[-p pid] Mit dieser Option kann ich, wie bei strace, einen bereits
+      laufenden Prozess untersuchen.
+    \item[-i] Mit dieser Option zeigt ltrace den Befehlszeiger zu jedem
+      Funktionsaufruf.
+    \item[-r] Damit fügt ltrace relative Zeitstempel in die Ausgabe, mit denen
+      ich zum Beispiel die Verzögerungen durch Timeouts genauer eingrenzen
+      kann.
+    \item[-T] Mit dieser Option zeigt ltrace die Zeit, die für die
+      Funktionsaufrufe benötigt wurde.
+    \item[-l dateiname] Diese Option erlaubt mir die Beobachtung
+      einzuschränken auf Funktionsaufrufe aus dieser Bibliothek. Ich muss den
+      kompletten Pfad zur Bibliothek angeben. Welche Bibliotheken ein Programm
+      verwendet, bekomme ich mit ldd heraus. Wenn ich an mehreren Bibliotheken
+      interessiert bin, kann ich diese Option mehrfach angeben.
+  \end{description}
+  \begin{notes}
+  \item Diskussion: wann ltrace, wann strace
+  \end{notes}
 \end{normaltext}
 
 \section{netstat}
