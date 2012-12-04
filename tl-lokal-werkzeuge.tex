@@ -156,9 +156,59 @@ fuser -k -m /media/cdrom
   Ein Werkzeug, dass in keinem Werkzeugkasten für die lokale Fehlersuche fehlen
   Iproute ist ein Softwarepaket, dass ich am häufigsten bei Netzwerkproblemen
   einsetze. Zwei Programme daraus, ip und ss, nutze ich auch bei lokalen
-  Problemen, daher stelle ich sie bereits hier vor. Im Kapitel über Werkzeuge
+  Problemen, daher stelle ich sie bereits hier vor. Diese beiden Programme
+  überschneiden sich in der Funktionalität der Programme mit ifconfig, route,
+  netstat und arp.
+  
+  Im Kapitel über Werkzeuge
   für Netzwerkprobleme (\ref{cha:netz-werkzeuge}) gehe ich noch etwas
-  ausführlicher auf iproute ein.
+  ausführlicher auf iproute ein. 
+
+  \subsection*{ip}
+
+  Das Programm \verb?ip? funktioniert nach dem Schema
+  \begin{verbatim}
+ip [optionen] objekt befehl
+  \end{verbatim}
+  Die komplette Syntax ist in der Handbuchseite beschrieben. Ich bin bei der
+  lokalen Fehlersuche vor allem an folgenden Objekten interessiert:
+  \begin{description}
+    \item[link] Schnittstellenparameter
+    \item[addr] IP-Adressen
+    \item[neigh] ARP- und NDISC-Caches
+    \item[route] IP-Routingtabellen
+  \end{description}
+  Zu allen Objekten kann ich mit
+  \begin{verbatim}
+ip objekt help
+  \end{verbatim}
+  eine Kurzübersicht der möglichen Befehle und Optionen bekommen.
+
+  Bei der lokalen Fehlersuche verwende ich am häufigsten den Befehl show, um
+  mir den momentanen Zustand anzusehen. Die anderen Objekte und Befehle
+  benötige ich eher selten zur Fehlersuche.
+
+  \subsection*{ss}
+
+  Das Programm \verb?ss? (show sockets) zeigt Informationen über Sockets an.
+  Dabei kann ich auswählen, ob ich mit
+  \begin{description}
+    \item[-t] TCP-Sockets, mit
+    \item[-u] UDP-Sockets, oder mit
+    \item[-x] UNIX-Sockets
+  \end{description}
+  betrachten will.
+
+  Die Ausgabe kann ich mit folgenden Optionen beeinflussen:
+  \begin{description}
+    \item[-n] schaltet die Namensauflösung ab.
+    \item[-r] schaltet die Namensauflösung ein.
+    \item[-l] zeigt Listening Sockets anstelle von Connected Sockets.
+    \item[-a] zeigt sowohl Listening als auch Connected Sockets.
+    \item[-p] zeigt die Prozesse, die einen Socket verwenden.
+  \end{description}
+
+  Auch hier helfen die Handbuchseiten weiter.
 \end{normaltext}
 
 \section{lsof}
