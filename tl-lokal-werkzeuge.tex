@@ -22,10 +22,109 @@
 \begin{notes}
 \item Wie installiere ich Software?
 \item hdparm
-\item gdb
-\item ifconfig
-\item iproute
 \end{notes}
+
+\section{GDB der GNU Debugger}
+\label{sec:lokal-werkzeuge-gdb}
+\begin{abstractsec}
+  GDB ist ein sehr mächtiges Werkzeug, das eher in extrem schwierigen Fällen
+  zum Einsatz kommt. Vorzugsweise, wenn ich nachträglich die Ursache eines
+  Programmabsturzes ermitteln will oder wenn ich einen Programmfehler vermute
+  und finden will.
+\end{abstractsec}
+\begin{normaltext}
+  GDB ist ein sehr mächtiges Werkzeug, das eher in extrem schwierigen Fällen
+  zum Einsatz kommt. Vorzugsweise, wenn ich nachträglich die Ursache eines
+  Programmabsturzes ermitteln will oder wenn ich einen Programmfehler vermute
+  und finden will.
+
+  Um mit dem Debugger zu arbeiten benötige ich Zugriff auf die Quellen, aus
+  denen das betreffende Programm übersetzt wurde.
+  \footnote{Zwar ist es auch möglich, direkt die Maschinenbefehle zu verfolgen,
+  aber das liegt definitiv jenseits des Horizonts dieses Buches.}
+  Außerdem brauche ich die Symboltabellen des Programms damit der Debugger die
+  Maschinenbefehle des Binärprogramms den Quellcodezeilen zuordnen kann. Diese
+  bekomme ich, wenn zum Beispiel beim Übersetzen des Programms mit dem
+  Compiler gcc die Option \verb?-g? angegeben wurde. Bei vielen Softwarpaketen
+  kann ich die Symboltabellen über das entsprechende Paket mit der Option
+  \verb?-dbg? (zum Beispiel \verb?avahi-dbg? für \verb?avahi?) installieren.
+
+  Um einen Prozess postmortal zu analysieren, muss ich das System anweisen ein
+  sogenanntes Corefile zu schreiben, das den Zustand des Prozesses beim
+  Programmabsturz enthält. Dazu kann ich in der Bash mit dem Befehl
+  \verb?ulimit -c size? die maximale Größe des Corefiles festlegen, die das
+  Betriebssystem schreibt. Diese muss ich hoch genug wählen, damit das
+  Corefile für den gewünschten Prozess reicht.
+
+  Ich kann den GNU Debugger auf verschiedene Arten starten:
+  \begin{description}
+    \item[gdb options program core] So starte ich, wenn ich einen
+      Prozess postmortal analysieren will (mit \verb?core?) oder, wenn ich
+      ein Programm nur beim Ablauf verfolgen will (ohne \verb?core?). Dabei
+      ist \verb?program? der Name der Programmdatei und \verb?core? der Name
+      des Corefiles.
+    \item[gdb options --args program arguments] Hier gebe ich dem
+      Programm, dass ich beobachten will gleich die Kommandozeilenargumente
+      beim Aufrauf des GDB mit.
+    \item[gdbtui options] Das startet den GDB mit einer
+      Textbenutzeroberfläche, bei der im oberen Teil der aktuelle Quelltext
+      angezeigt wird und im unteren Teil die Befehle und Ausgaben des GDB.
+  \end{description}
+
+  Von den Optionen, die GDB beim Aufruf mitgegeben werden können, sind die
+  folgenden für die Fehlersuche relevant, weitere können der Handbuchseite,
+  der GDB-Texinfo-Datei oder \verb?gdb -help? entnommen werden:
+  \begin{description}
+    \item[-c file | -core file] Damit gebe ich das Corefile bei den Optionen
+      an und brauche es nicht mehr nach dem Programmnamen anzugeben.
+    \item[-e file | -exec file] Gibt das ausführbare Programm an.
+    \item[-s file | -symbols file] Gibt die Datei mit den Symboltabellen an.
+      Die Optionen \verb?-s? und \verb?-e? können auch zu \verb?-se?
+      zusammengefasst werden, wenn die Symboltabellen noch in der
+      Binärprogrammdatei enthalten sind.
+    \item[-help] Listed alle Optionen mit einer kurzen Erläuterung auf.
+  \end{description}
+
+  Nachdem ich GDB gestartet habe, steuere ich den Ablauf der Sitzung mit
+  Textbefehlen. Alle diese Befehle können soweit abgekürzt werden, wie sie
+  noch eindeutig sind.
+  Die wichtigsten dieser Befehle für die Fehlersuche sind:
+  \begin{description}
+    \item[break function | break file:function] So ziemlich als erstes rufe
+      ich in einer Debuggingsitzung \verb?break main? auf, damit der Debugger
+      an dieser Funktion anhält und ich anschließend das Programm in Ruhe
+      analysieren kann. Vor einer Funktion kann ich, durch \verb?:? getrennt
+      die Datei angeben, falls der Debugger momentan eine andere geladen hat.
+    \item[run | run arglist] Damit starte ich das Programm im Debugger.
+      Optional kann ich dem Prozess mit \verb?arglist? einige
+      Kommandozeilenargumente mitgeben.
+    \item[bt] Dieser Befehl zeigt den Programmstack an. Bei einer postmortalen
+      Analyse eines Prozesses rufe ich diesen Befehl als erstes auf, um
+      herauszubekommen, wo genau das Programm abgestürzt ist.
+    \item[print expr] Mit \verb?print? lasse ich mir die Werte in den
+      Variablen und verschiedene andere Datein ausgeben. Dabei kann
+      \verb?expr? ein komplexer C-Ausdruck sein.
+    \item[c] Mit \verb?c? (continue) läuft das Programm weiter bis zum
+      nächsten Haltepunkt oder bis zum Programmende.
+    \item[next] Dieser Befehl arbeitet die nächste Zeile im Quelltext ab.
+      Dabei werden Funktionsaufrufe ausgeführt und übersprungen.
+    \item[step] Auch dieser Befehl arbeitet die nächste Zeile im Quelltext ab,
+      der Debugger folgt hier allerdings Funktionsaufrufen in das Innere der
+      Funktion.
+    \item[list | list function | list file:function] Zeigt die aktuelle
+      Programmumgebung beziehungsweise die angegebene Funktion im Quelltext.
+    \item[help befehl] Gibt die Hilfe zu dem angegebenen Befehl aus.
+    \item[quit] Beendet die Debuggingsitzung.
+  \end{description}
+
+  GDB ist ein sehr mächtiges Werkzeug für die Fehlersuche und auch sehr
+  komplex in der Anwendung. Da die Bedienung nicht einfach ist und es auch
+  einiger Vorkehrungen für den erfolgreichen Einsatz bedarf, setze ich ihn
+  eher selten ein, quasi als Ultima Ratio. Trotzdem ist es sinnvoll, sich
+  gelegentlich hinzusetzen und testweise das eine oder andere Programm im
+  Debugger zu beobachten und zu analysieren, damit es im Ernstfall, wenn man
+  darauf angewiesen ist, einfacher von der Hand geht.
+\end{normaltext}
 
 \section{fuser}
 \label{sec:lokal-werkzeuge-fuser}
