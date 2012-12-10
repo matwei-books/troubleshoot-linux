@@ -24,6 +24,70 @@
 \item hdparm
 \end{notes}
 
+\section{hdparm}
+\label{sec:lokal-werkzeuge-hdparm}
+\begin{abstractsec}
+  Mit hdparm kann ich von der Kommandozeile aus Einfluß nehmen auf die
+  Schnittstelle zur Festplatte des Rechners. Ich verwende das Programm zum
+  Feintuning der Festplattenzugriffe aber auch zum Verifizieren und Beheben
+  von Plattenfehlern.
+\end{abstractsec}
+\begin{normaltext}
+  Mit hdparm kann ich von der Kommandozeile aus Einfluß nehmen auf die
+  Schnittstelle zur Festplatte des Rechners. Ich verwende das Programm zum
+  Feintuning der Festplattenzugriffe aber auch zum Verifizieren und Beheben
+  von Plattenfehlern. Es arbeitet mit der Kernelschnittstelle des SATA-, PATA-
+  und SAS-Subsystems zusammen. Auch bei manchen USB-Festplatten kann ich
+  Parameter mit hdparm verändern. Für einige der Optionen benötige ich eine
+  aktuelle Kernelversion.
+
+  Allgemein sieht der Aufruf von hdparm wie folgt aus:
+  \begin{verbatim}
+hdparm [optionen] [geraet ..]
+  \end{verbatim}
+  Es gibt Optionen, mit denen ich Parameter sowohl abfragen als auch setzen
+  kann (get/set). Bei diesen Optionen gilt, dass sie ohne weiteres Argument
+  den Parameter abfragen und mit zusätzlichem Argument den Wert entsprechend
+  setzen.
+
+  Rufe ich hdparm ganz ohne Parameter auf, verhält es sich,
+  als hätte ich die Optionen \verb?-acdgkmur? angegeben.
+
+  In der Datei \verb?/etc/hdparm.conf? kann ich die Default-Konfiguration für
+  hdparm systemweit hinterlegen.
+
+  Nachfolgend beschreibe ich die, aus meiner Sicht, wichtigsten Optionen.
+  Weitere Informationen gibt es, wie fast immer, in den Handbuchseiten.
+  \begin{description}
+    \item[-a] (get/set) Anzahl der Sektoren für das Vorauslesen (read-ahead)
+      im Dateisystem. Damit verbessert sich die Performance beim sequentiellen
+      Lesen großer Dateien. Es gibt noch eine, davon separate,
+      Read-Ahead-Funktion der Festplatte, diese Funktion unterstützt.
+    \item[-A] (get/set) Ein- oder Ausschalten der Vorauslesefunktion der
+      Festplatte. Mit \verb?-A0? wird es ausgeschaltet, mit \verb?-A1?
+      eingeschaltet.
+    \item[-B] (get/set) Einstellen Advanced Power Management (APM)
+      Eigenschaften der Platte, soweit diese das unterstützt. Gültig sind
+      Werte von 1 (meiste Energieeinsparung) bis 254 (höchste
+      I/O-Performance), mit dem Wert 255 wird es ganz abgeschaltet. Werte von
+      1-127 erlauben einen Spin-Down der Festplatte, Werte von 128-254
+      erlauben das nicht.
+    \item[-c] (get/set) 32-Bit-Support für (E)IDE ein- oder ausschalten.
+      Mit 0 wird dieser Ausgeschaltet, 1 schaltet ihn ein und 3 schaltet den
+      32-bit-Support mit speziellem Sync.
+
+      Es geht hierbei um den Transfer via PCI oder VLB zum Hostadapter. Das
+      Kabel zur Festplatte hat immer 16 Bit.
+    \item[--fibmap dateiname] Gibt eien Liste von Blockextents
+      (Sektorbereichen), den die Datei auf der Platte belegt.
+
+      Damit kann ich mir die Fragmentierung einer Datei auf der Platte
+      ansehen, oder die Blöcke für Fehlertests bestimmen.
+
+      Wenn diese Option verwendet wird, muss sie die einzige sein.
+  \end{description}
+\end{normaltext}
+
 \section{GDB der GNU Debugger}
 \label{sec:lokal-werkzeuge-gdb}
 \begin{abstractsec}
