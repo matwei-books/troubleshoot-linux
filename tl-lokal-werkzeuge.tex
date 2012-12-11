@@ -85,7 +85,51 @@ hdparm [optionen] [geraet ..]
       ansehen, oder die Blöcke für Fehlertests bestimmen.
 
       Wenn diese Option verwendet wird, muss sie die einzige sein.
+    \item[-g] Zeigt die Laufwerksgeometrie (Zylinder, Köpfe, Sektoren), die
+      Größe des Gerätes in Sektoren und den Startoffset von Beginn der Platte.
+    \item[-i] Zeigt Identifizierungsinformationen, die die Kerneltreiber
+      während des Systemstarts und der Konfiguration gesammelt haben.
+    \item[-I] Zeigt die Identifizierungsinformationen, die das Laufwerk
+      liefert.
+    \item[-m] (get/set) Die Anzahl der Sektoren für multiple Sektor I/O. Mit
+      dem Wert 0 wird das abgeschaltet. Die meisten IDE-Festplatten erlauben
+      die Übertragung von mehreren Sektoren pro Interrupt. Damit läßt sich der
+      System Overhead für Disk I/O um typisch 30 bis 50 Prozent reduzieren. Es
+      kann allerdings in seltenen Fällen zu massiven Dateisystemfehlern
+      führen.
+    \item[--read-sector sektornummer] Liest den angegebenen Sektor und
+      schreibt den Inhalt in Hex-Darstellung zum Standardausgang. Die
+      Sektornummer muss als Dezimalzahl angegeben werden. Hdparm führt einen
+      Low-Level-Read für diesen Sektor  aus. Damit kann diese Funktion als
+      definitiver Test, ob ein Sektor schlecht ist, genommen werden. Um den
+      Sektor durch die Platte ersetzen zu lassen, kann man die Option
+      \verb?--write-sector? verwenden.
+    \item[-t] Nimmt die Zeit von Lesezugriffen für Benchmarks und
+      Vergleichsmessungen. Um brauchbare Werte zu erhalten, muss man diese
+      Funktion mindestens zwei mal bei einem ansonsten inaktiven System (keine
+      anderen aktiven Prozesse) und genügend freiem Hauptspeicher ausführen. 
+      Diese Funktion zeigt, wie schnell Daten ohne den Overhead des
+      Dateisystems gelesen werden können.
+    \item[-T] Nimmt die Zeit von Cache-Read-Zugriffen. Auch diese Funktion
+      sollte mindestens zwei mal bei ansonsten inaktivem System wiederholt
+      werden. Das zeigt den Durchsatz von Prozessor, Cache und RAM.
+    \item[--write-sector sektornummer] Schreibt Nullen in den Sektor. {\bf
+      Sehr gefährlich!} Irrt man
+      sich in der Sektornummer, werden möglicherweise vitale Informationen des
+      Dateisystems überschrieben. Die Sektornummer wird als Dezimalzahl
+      angegeben.
+      Diese Funktion kann zum Anstoßen der automatischen
+      Reparatur des Sektors durch die Festplatte verwendet werden.
+      Sinnvollerweise vergewissert man sich vorher mit der Option
+      \verb?--read-sector?, das man es wirklich mit einem defekten Sektor zu
+      tun hat.
+    \item[-W] (get/set) Zeigt beziehungsweise modifiziert das Write Caching
+      des IDE/SATA Laufwerks. 1 bedeutet, dass es eingeschaltet ist.
+    \item[-z] Zwingt den Kernel, die Partitionstabelle neu zu lesen.
   \end{description}
+  In der Datei /etc/hdparm.conf kann die Default-Konfiguration für hdparm
+  hinterlegt werden. Diese Datei ist gut kommentiert, so dass ich mir weitere
+  Erläuterungen hier spare.
 \end{normaltext}
 
 \section{GDB der GNU Debugger}
