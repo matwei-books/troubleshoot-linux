@@ -21,8 +21,81 @@
 
 \begin{notes}
 \item Wie installiere ich Software?
-\item hdparm
 \end{notes}
+
+\section{bonnie++}
+\label{sec:lokal-werkzeuge-bonnie}
+\begin{abstractsec}
+  Bei jeglicher Art von Performance Tuning ist es essentiell, eine
+  Bestandsaufnahme vor den Tuning-Maßnahmen und danach zu machen, um sich von
+  der Wirkung des Tunings zu überzeugen.
+  Bonnie++ ist ein Programm, mit dem ich die Performance der Lese- und
+  Schreiboperationen im Dateisystem in Zahlen ausdrücken und damit dann
+  vergleichen kann.
+\end{abstractsec}
+\begin{normaltext}
+  Bei jeglicher Art von Performance Tuning ist es essentiell, eine
+  Bestandsaufnahme vor den Tuning-Maßnahmen und danach zu machen, um sich von
+  der Wirkung des Tunings zu überzeugen.
+  Bonnie++ ist ein Programm, mit dem ich die Performance der Lese- und
+  Schreiboperationen im Dateisystem in Zahlen ausdrücken und damit dann
+  vergleichen kann.
+
+  Dabei gibt das Programm für jeden Test, den es durchführt, zwei Kennzahlen
+  aus: die geschaffte Arbeit (je mehr, um so besser) und die dafür benötigte
+  CPU-Zeit (je weniger, umso besser).
+
+  Die Tests teilen sich grob in zwei Abschnitte, die man gegebenenfalls auch
+  überspringen kann. In einem Abschnitt testet bonnie++ den I/O-Durchsatz mit
+  relativ großen Dateien, wie er ähnlich auch bei Datenbankanwendungen
+  vorkommt. Im anderen Abschnitt geht es um das Erzeugen, Lesen und Löschen
+  vieler relativ kleiner Dateien, wie es ähnlich auf Proxy-, Mail- und
+  News-Servern vorkommt.
+
+  In den meisten Fällen ist man eher daran interessiert, das I/O-Verhalten bei
+  einzelnen Dateisystemen zu beobachten. Bei bestimmten Problemen möchte man
+  jedoch den Einfluss von gleichzeitigen Dateizugriffen bewerten. Zu diesem
+  Zweck ist es möglich, mehrere bonnie++ Prozesse synchron zu starten.
+
+  Die Ausgabe von bonnie++ kommt, wie schon beim Vorgängerprogramm bonnie als
+  achtzigspaltiger Text. Zusätzlich gibt bonnie++ die Werte auch noch als
+  kommaseparierte Werte (CSV) aus, die einfacher weiterverarbeitet werden
+  können und mehr als 80 Zeichen pro Zeile einnehmen können. Für diese
+  CSV-Daten gibt es zwei Programme (\verb?bon_csv2html?, \verb?bon_csv2txt?),
+  die die Daten für die HTML-Ausgabe beziehungsweise das bekannte Textformat
+  aufbereiten. In deren Handbuchseiten sind die Felder der CSV-Daten
+  beschrieben.
+
+  Eine Warnung will ich noch vorwegschicken, bevor ich mich den Optionen
+  zu wende, die, wie üblich, in den Handbuchseiten ausführlicher beschrieben
+  werden.
+  {\bf Bonnie++ sollte niemals auf aktiven Produktionsmaschinen laufen, da die
+  Performance durch die Tests sehr stark beeinträchtigt wird.}
+
+  \subsection*{Optionen}
+  \begin{description}
+    \item[-d dir] Das Verzeichnis, in dem die Testdateien angelegt werden.
+      Ohne Angabe dieser Option werden die Testdateien im aktuellen
+      Verzeichnis angelegt.
+    \item[-s size] Die Größe der Dateien für die I/O-Performance-Tests. Mit
+      einer Größe von 0 wird dieser Test übersprungen.
+    \item[-n number] Die Anzahl der Dateien für den Dateierzeugungstest. Die
+      Anzahl wird als Vielfache von 1024 angegeben. Ist die Anzahl 0, wird
+      dieser Test übersprungen. Per Default werden leere Dateien angelegt. Es
+      ist möglich, die maximale und minimale Größe der Dateien und die Anzahl
+      der Verzeichnisse durch Doppelpunkt getrennt gemeinsam mit der Anzahl
+      anzugeben. Details stehen in den Handbuchseiten.
+    \item[-x number] Anzahl der Testläufe. Damit ist es möglich,
+      hintereinander weg mehrere Tests zu machen, die Ergebnisse kommen
+      kontinuierlich als CSV-Daten.
+    \item[-u user] Der Benutzer, unter dem der bonnie++ Prozess laufen soll.
+      Bonnie++ kann als normaler Nutzer gestartet werden. Startet man es als
+      root, gibt man mit dieser Option besser einen anderen Benutzer vor, um
+      Fehler am Dateisystem zu vermeiden.
+    \item[-q] Mit dieser Option gibt bonnie++ nur die CSV-Daten an STDOUT aus.
+      Dateien angelegt.
+  \end{description}
+\end{normaltext}
 
 \section{hdparm}
 \label{sec:lokal-werkzeuge-hdparm}
