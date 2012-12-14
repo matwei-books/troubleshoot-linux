@@ -21,6 +21,7 @@
 
 \begin{notes}
 \item Wie installiere ich Software?
+\item acct
 \end{notes}
 
 \section{bonnie++}
@@ -94,7 +95,47 @@
       Fehler am Dateisystem zu vermeiden.
     \item[-q] Mit dieser Option gibt bonnie++ nur die CSV-Daten an STDOUT aus.
       Dateien angelegt.
+    \item[-f | -f size] Fast Mode Control, überspringt den zeichenweisen
+      I/O-Test, wenn kein Parameter ansonsten gibt es die Testgröße für
+      zeichenweisen I/O-Test vor (default 20M)
+    \item[-b] Keine Pufferung der Schreiboperationen, das heisst es wird
+      \verb?fsync()? nach jedem Schreiben aufgerufen.
+    \item[-q] Quiet Mode. Es wird ein Teil der Ausgabe unterdrückt, an STDOUT
+      werden nur die CSV-Daten ausgegeben, alles andere an STDERR. Damit ist
+      es einfacher, die Ausgabe weiter zu verarbeiten.
+    \item[-p number] Die Anzahl der der Prozesse, für die Semaphore
+      reseerviert werden sollen. Alle Prozesse, die Semaphore mit Option
+      \verb?-ys? verwenden, starten synchron.
+    \item[-y s] Durch Semaphor synchronisiert starten
+    \item[-y p] Mit Prompt synchronisieren. Bonnie++ startet erst, wenn
+      \verb?<RETURN>? eingegeben wurde.
+    \item[-D] Direct-I/O (\verb?O_DIRECT?) für Massen-I/O-Tests verwenden.
+    \item[-z seed] Die Startzahl für den Zufallsgenerator angeben, um den
+      gleichen Test zu wiederholen.
+    \item[-Z file] Zufallsdaten aus der angegebenen Datei verwenden.
   \end{description}
+
+  \subsection*{Synchrone Tests}
+  Um mehrere Prozesse mit bonnie++ synchron zu starten, kann ich wie folgt
+  vorgehen:
+  \begin{verbatim}
+$ bonnie++ -p3
+$ bonnie++ [weitere Optionen] -ys > out1 &
+$ bonnie++ [weitere Optionen] -ys > out2 &
+$ bonnie++ [weitere Optionen] -ys > out3 &
+  \end{verbatim}
+
+  \subsection*{Signale}
+  Bonnie++ kann mitunter recht lange laufen, vor allem wenn es mit Option
+  \verb?-x?  seine Tests wiederholt.
+
+  Mit SIGINT kann man die Ausführung abbrechen, bonnie++ räumt dann wieder
+  auf, das heißt, es entfernt die temporären Dateien und Verzeichnisse. Das
+  kann auch etwas dauern. Durch wiederholtes Senden von SIGINT bricht es auch
+  das Aufräumen ab.
+
+  SIGHUP wird ignoriert, das heißt, wenn es im Hintergrund läuft, bricht es
+  auch nicht nach Abmelden vom Terminal ab.
 \end{normaltext}
 
 \section{hdparm}
