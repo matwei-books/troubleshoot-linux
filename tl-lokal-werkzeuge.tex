@@ -85,12 +85,31 @@
   Die Tabelle ist nach der CPU-Zeit absteigend sortiert.
 
   Programme, die nur einmalig gelaufen sind, werden in der Zeile {\bf
-  \verb?**other**?} zusammengefasst.
+  \verb?***other*?} zusammengefasst.
 
-  Mit den folgenden Optionen kann ich die Ausgabe von sa modifizieren:
+  Mit den folgenden Optionen kann ich die Ausgabe von sa modifizieren, die
+  Handbuchseite kennt noch mehr davon:
   \begin{description}
-    \item[-a] Zeige alle Programme (fasst keine Programme unter
-      \verb?**other**? zusammen).
+    \item[-a | --list-all-names] Zeigt alle Programme (fasst keine Programme unter
+      \verb?***other*? zusammen).
+    \item[-b | --sort-sys-user-div-calls] Sortiert die Aufrufe nach der
+      CPU-Zeit geteilt durch die Anzahl der Aufrufe.
+    \item[-d | --sort-avio] Sortiert nach der durchschnittlichen Anzahl der
+      I/O-Operationen.
+    \item[-D | --sort-tio] Sortiert nach der Gesamtzahl der I/O-Operationen.
+    \item[-i | --dont-read-summary-file] Ignoriert die Auswertungsdatei. Mit
+      dieser Option zeigt sa die Prozesse seit dem letzten Aufruf von 
+      \verb?sa -s?.
+    \item[-k | --sort-cpu-avmem] Sortiert nach dem durchschnittlichen
+      Speicherverbrauch. Dieser Report identifiziert die größten
+      Speichernutzer.
+    \item[-n | --sort-num-calls] Sortiert nach der Anzahl der Aufrufe,
+      identifiziert die am häufigsten aufgerufenen Programme.
+    \item[-r | --reverse-sort] Dreht die Sortierreihenfolge um.
+    \item[-s | --merge] Fasst die aktuellen Accountingdaten in der
+      Auswertungsdatei zusammen.
+    \item[-t | --print-ratio] Zeigt das Verhältnis von Laufzeit zu CPU-Zeit,
+      identifiziert Programme mit sehr viel Leerlauf.
   \end{description}
 \end{normaltext}
 
