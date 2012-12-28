@@ -21,8 +21,1023 @@
 
 \begin{notes}
 \item Wie installiere ich Software?
-\item acct
 \end{notes}
+
+\section{shell}
+\label{sec:lokal-werkzeuge-shell}
+\begin{abstractsec}
+  Ein wichtiges Hilfsmittel bei der Fehlersuche ist die Shell. Dies in
+  zweierlei Hinsicht: zum einen starte ich in einer interaktiven Shell die
+  Kommandos, mit denen ich den Fehler eingrenzen will, zum anderen verwende
+  ich die Shell für simple, schnell zusammengestrickte Programme, die mich bei
+  der Fehlersuche unterstützen.
+\end{abstractsec}
+\begin{normaltext}
+  Ein wichtiges Hilfsmittel bei der Fehlersuche ist die Shell. Dies in
+  zweierlei Hinsicht: zum einen starte ich in einer interaktiven Shell die
+  Kommandos, mit denen ich den Fehler eingrenzen will, zum anderen verwende
+  ich die Shell für simple, schnell zusammengestrickte Programme, die mich bei
+  der Fehlersuche unterstützen.
+
+  Bei der Problemeingrenzung bevorzuge ich eine Shell mit History-Funktion und
+  Kommandozeilenergänzung (commandline completion).
+  Die History-Funktion benutze ich vor allem Dingen, um bereits ausgeführte
+  Befehle wieder hervorzuholen, gegebenenfalls geringfügig zu ändern und noch
+  einmal auszuführen. Die Kommandozeilenergänzung beschleunigt den Zusammenbau
+  von neuen Befehlen, in denen die Shell (meist nach Eingabe von \verb?<TAB>?)
+  die Zeile komplettiert oder - bei mehreren möglichen Vervollständigungen -
+  die nächsten Argumente vorschlägt. Das halte ich für unverzichtbar um bei
+  der Fehlersuche den Gedankenflug nicht abreißen zu lassen.
+  Ich bin an die Bash gewähnt, aber andere Shells können das meist ebensogut.
+
+  Für Shell-Scripts bevorzuge ich als kleinsten gemeinsamen Nenner die Bourne
+  Shell (\verb?/bin/sh?). Auf manchen Systemen ist \verb?/bin/sh? nur ein Link
+  auf die Bash. Das ist kein Problem, weil diese als Bourne Again Shell in der
+  Lage ist, Bourne Shell Skripts auszuführen. Da andererseits nicht jede
+  Bourne Shell kompatible Shell in der Lage ist, Bash-Erweiterungen zu
+  verstehen, beschränke ich mich hier nach Möglichkeit auf den kleinsten
+  gemeinsamen Nenner.
+
+  Ich will hier keine komplette Einführung in die Programmierung mit der
+  Bourne Shell geben, sondern verweise stattdessen auf die Handbuchseiten.
+  Stattdessen stelle ich ein Skript vor, das ich in dieser oder ähnlicher Form
+  bereits mehrfach für die Fehlersuche verwendet habe und gehe dann auf die
+  Einzelheiten ein.
+
+  \subsection{Strace Invocator}
+  Manchmal habe ich ein Problem mit einem Programm, bei dem ich auf strace
+  (siehe Abschnitt \ref{sec:lokal-werkzeuge-strace}) zurückgreife,
+  um das Programm bei der Arbeit zu beobachten.
+  Wenn dieses Programm jedoch nicht von Kommandozeile,
+  sondern von einem anderen Programm gestartet wird, greife ich auf folgenden
+  Trick zurück: Ich benenne das Programm um indem ich an den Namen die Endung
+  \verb?.orig? anhänge. Unter dem ursprünglichen Programmnamen platziere ich
+  einen Link auf dieses Skript:
+  \begin{verbatim}
+ 1:#!/bin/sh
+ 2:
+ 3:progname=$(basename $0)
+ 4:origin=$0.orig
+ 5:
+ 6:die () {
+ 7:  ev=$1
+ 8:  shift
+ 9:  echo $* 1>&2
+10:  exit $ev
+11:}
+12:
+13:[ -x $origin ] || die 2 "Can't execute $origin"
+14:
+15:tmpdir=$(mktemp -d /tmp/$progname.XXXXX)
+16:
+17:date > $tmpdir/invocation
+18:
+19:echo "#----- args -----" >> $tmpdir/invocation
+20:for arg in "$@"; do echo $arg >> $tmpdir/invocation; done
+21:
+22:echo "#----- id -----" >> $tmpdir/invocation
+23:id >> $tmpdir/invocation
+24:
+25:echo "#----- env -----" >> $tmpdir/invocation
+26:env >> $tmpdir/invocation
+27:
+28:strace -f -o $tmpdir/strace.out $origin "$@"
+  \end{verbatim}
+  Zeile 1 zeigt an, dass das Skript mit der Bourne Shell läuft.
+
+  In Zeile 3 bestimme ich den Namen des aufgerufenen Programms und in Zeile 4
+  den Namen des eigentlichen Programms.
+
+  In Zeile 6 bis 11 habe ich eine kleine Funktion, mit der ich das Skript mit
+  Fehlermeldung und -code beenden kann.
+
+  In Zeile 13 teste ich, ob das Originalprogramm da und ausführbar ist und
+  breche andernfalls ab. Dazu nutze ich die oben definierte Funktion.
+
+  In Zeile 15 lege ich ein temporäres Verzeichnis mit eindeutigem Namen an.
+  Damit kann ich mich bei der Auswertung in aller Ruhe auf jeden einzelnen
+  Aufruf des Programms konzentrieren.
+
+  In den Zeilen 17 bis 26 halte ich verschiedene Informationen zum Aufruf
+  fest. Und zwar die aktuelle Zeit, ide übergebenen Argumente, die
+  Benutzer-Id, unter der der Prozess läuft und die Umgebungsvariablen.
+
+  In Zeile 28 schließlich rufe ich via strace das Originalprogramm mit allen
+  Argumenten auf. Diesen Aufruf kann ich noch modifizieren, wenn ich an der
+  Standardeingabe für das Programm interessiert bin:
+  \begin{verbatim}
+28:tee $tmpdir/stdin | strace -f -o $tmpdir/strace.out $origin "$@"
+  \end{verbatim}
+  Oder, wenn ich sowohl an der Standardeingabe als auch an der Standardausgabe
+  interessiert bin:
+  \begin{verbatim}
+28:tee $tmpdir/stdin \
+29:| strace -f -o $tmpdir/strace.out $origin "$@" \
+30:| tee $tmpdir/stdout
+  \end{verbatim}
+\end{normaltext}
+
+\section{perl}
+\label{sec:lokal-werkzeuge-perl}
+\begin{abstractsec}
+  Für knifflige Probleme, die ich mit den spezialisierten Werkzeugen nicht zu
+  fassen kriege und denen mit einfacher Shell-Programmierung auch nicht
+  beizukommen ist, benötige ich eine Programmiersprache, die mächtiger als die
+  Shell ist, mit der ich aber trotzdem mit wenig Aufwand ein passendes
+  Programm schreiben kann. Für mich ist das Perl.
+\end{abstractsec}
+\begin{normaltext}
+  Zwischen den vielen Spezialwerkzeugen für die Fehlersuche und der Shell als
+  Kommandozentrale benötige ich hin und wieder ein Werkzeug, mit dem sich auch
+  kniffligere Probleme angehen lassen, die so vielleicht vorher noch gar nicht
+  untersucht worden sind. Etwas, das sich etwa so schnell wie die Shell
+  programmieren läßt, aber ausdrucksstärker ist und auch sehr komplexe
+  Probleme angehen kann. Für micht ist das Perl. Für andere vielleicht Python,
+  das in vielem Perl ähnlich nicht, aber auf keinem Fall in der Syntax.
+
+  Die Programmiersprache Perl umfasst Konzepte von einfachen Werkzeugen wie sed
+  oder awk bis hin zu anspruchsvollen Programmiersprachen wie C oder Lisp. Es
+  gibt umfangreiche Fachliteratur sowohl offline als auch online sowie
+  Communities, an die man sich bei Problemen wenden kann.
+
+  Was Perl aber heraushebt gegenüber vielen anderen Skriptsprachen ist CPAN,
+  das Comprehensive Perl Archive Network, ein so umfangreiches Reservoir an
+  Softwaremodulen für fast alle erdenklichen Zwecke, das es möglich macht, die
+  meisten Skripts auf wenige Zeilen zu beschränken. Die besten und meist
+  verwendeten Module schaffen es mit der Zeit in die Standarddistribution und
+  stehen dann nach der Installation von Perl gleich zur Verfügung. In vielen
+  Fällen muß Perl auch gar nicht installiert werden, weil es bereits
+  Bestandteil des Systems ist.
+
+  Ganz besonders hilfreich bei der Problemlösung mit Perl ist das Perl
+  Kochbuch von Tom Christiansen und Nathan Torkington. In diesem sind Lösungen
+  für viele Probleme in Rezeptform aufbereitet und vor allen Dingen erläutert.
+  Die Codebeispiele aus dem Kochbuch sind Online verfügbar, den meisten Wert
+  zieht man jedoch aus den Erläuterungen im Buch.
+
+  \subsection{HTTP Injector}
+
+  Vor einiger Zeit hatte ich ein Problem, bei dem 502-Fehler von
+  einem Webservice abhängig waren von der Zeit für die
+  Anfrage. Der Betreiber des Webservices stritt das ab und um das
+  Problem zu verifizieren benötigte ich die Möglichkeit HTTP-Anfragen gezielt
+  zu verzögern.
+  
+  Ich kam mit Hilfe des Kochbuches zu folgendem Programm:
+  \begin{verbatim}
+01:#!/usr/bin/perl
+02:use Getopt::Long;
+03:use IO::Socket;
+04:use Time::HiRes qw(sleep);
+05:
+06:my %opt = ( delay => 0 );
+07:
+08:GetOptions( \%opt, 'delay=i');
+09:
+10:my $server = shift;
+11:my $port   = shift || 80;
+12:
+13:my $socket = IO::Socket::INET->new(PeerAddr => $server,
+14:                                   PeerPort => $port,
+15:                                   Proto    => 'tcp',
+16:                                   Type     => SOCK_STREAM);
+17:
+18:my @in = <>;
+19:my $del = $opt{delay} / ( 1.0 + scalar @in );
+20:foreach (@in) {
+21:    s/[\r\n]+$//;
+22:    sleep $del;
+23:    print $socket $_, "\r\n";
+24:}
+25:sleep $del;
+26:print $socket "\r\n";
+27:
+28:while (my $line = <$socket>) {
+29:    print $line;
+30:}
+  \end{verbatim}
+  In den Zeilen 2-4 lade ich die benötigten Module. \verb?Getopt::Long? ist
+  für die Verarbeitung der Kommandozeilenoptionen und sichert ab, dass ich mit
+  \verb?--delay? einen Integerwert angebe. \verb?IO::Socket? stellt die
+  Socketfunktionalität bereit, so dass ich diesen Socket wie eine Datei
+  verwenden kann. \verb?Time::HiRes? stellt mir eine verbesserte
+  \verb?sleep()? Funktion bereit, die mit Gleitkommazahlen zurechtkommt.
+
+  In Zeile 6 stelle ich die Option \verb?--delay? auf den Wert 0 ein, falls
+  sie nicht explizit angegeben wird. In Zeile 8 werden die Optionen
+  eingelesen.
+
+  Zeile 10 und 11 entnehmen den Server und gegebenenfalls den Port der
+  Kommandozeile und in Zeile 13 öffne ich mit diesen Angaben den Socket.
+
+  In Zeile 18 lese ich die gesamte Eingabe in ein Array ein. Dies benötige
+  ich, da ich die Anzahl der Zeilen wissen muss, denn ich verzögere das Senden
+  zeilenweise um jeweils einen Bruchteil der Gesamtverzögerung. Die Zeilen
+  20-25 schließlich bereiten die Zeilenenden auf und senden die modifizierten
+  Zeilen verzögert über den Socket. Zeile 26 schickt die Leerzeile, nach der
+  der Server antwortet.
+
+  In Zeile 28-30 liest das Skript die Antwort des Servers vom Socket und
+  schreibt sie zur Standardausgabe.
+
+  Dieses Skript kann ich nun wie folgt aufrufen:
+  \begin{verbatim}
+time ./http-injector.pl --delay 5 localhost 80 < request > reply
+
+real  0m5.072s
+user  0m0.056s
+sys   0m0.012s
+  \end{verbatim}
+  Dabei steht in der Datei request die HTTP-Anfrage, die ich an den Server
+  sende.
+  Nach fünf Sekunden ist die Anfrage beim Server, und die Antwort landet in
+  der Datei reply.
+
+  Damit konnte ich nachweisen, dass dieselbe Anfrage einen Fehler
+  lieferte, wenn sie mehr als drei Sekunden zur Übertragung brauchte und
+  fehlerfrei beantwortet wurde, wenn sie weniger als drei Sekunden brauchte.
+\end{normaltext}
+
+\section{fuser}
+\label{sec:lokal-werkzeuge-fuser}
+\begin{abstractsec}
+  Das Programm fuser setze ich ein, wenn ich schnell Informationen darüber
+  haben will, welche Prozesse bestimmte Dateien oder Netzwerksockets geöffnet
+  haben.
+\end{abstractsec}
+\begin{normaltext}
+  Das Programm fuser setzte ich ein, wenn ich schnell Informationen darüber
+  haben will, welche Prozesse bestimmte Dateien oder Netzwerksockets geöffnet
+  haben, um sie dann mit anderen Programmen näher zu untersuchen.
+  Zwar kann ich die ermittelten Prozesse dann gleich von fuser beenden lassen,
+  aber in diesem Buch geht es vor allem um die Fehleranalyse und dafür wäre
+  das dann meist doch etwas zu grobschlächtig.
+
+  Was mich vor allem interessiert, sind die Prozesse und die Art und Weise,
+  wie diese die betreffenden Dateien verwenden.
+  Diese bekomme ich von fuser in einer Tabelle angezeigt. In der ersten Spalte
+  steht die Datei, dahinter die PID. Mit der Option -v kann ich diese Ausgabe
+  erweitern, so dass fuser für jeden Prozess den Benutzer (USER), die PID, den
+  Zugriff (ACCESS) und den Namen des Prozesses (COMMAND) anzeigt.
+
+  Von diesen ist ACCESS für viele Analysen interessant. Diese Spalte kann die
+  folgenden Merkmale haben:
+  \begin{description}
+    \item[c] CWD, das Arbeitsverzeichnis des Prozesses,
+    \item[e] Executable, die Datei wird als Programm ausgeführt
+    \item[f] File, die Datei ist als normale Datei geöffnet
+    \item[F] File, die Datei ist zum Schreiben geöffnet
+    \item[r] Root, die Datei ist Wurzelverzeichnis
+    \item[m] MMAP, die Datei ist in den Speicherbereich des Prozesses
+      eingeblendet (zum Beispiel als Bibliothek)
+  \end{description}
+  Mit diesen Merkmalen bekomme ich heraus, wie ein Prozess eine Datei
+  verwendet. Allerdings kann ich das nur für Dateien sehen, die noch im
+  Dateisystem verlinkt sind. Dateien, die zwar geöffnet, aber nicht mehr im
+  Dateisystem verlinkt sind, kann ich damit nicht finden. Dazu benötige ich
+  andere Programme, wie zum Beispiel lsof. Mit der Option \verb?--mount?
+  (\verb?-m?) bekomme ich aber zumindest die PID dieser Prozesse, und kann
+  diese dann mit lsof näher untersuchen.
+
+  Dazu muss ich folgende Besonderheit der Ausgabe von fuser beachten. Das
+  Programm schreibt nur die PIDs an die Standardausgabe, alles andere kommt
+  über die Fehlerausgabe. Damit kann ich die Ausgabe von fuser sehr bequem in
+  Scripts weiterverarbeiten:
+  \begin{verbatim}
+for p in $(fuser -m /); do
+    lsof -p $p
+done
+  \end{verbatim}
+  Will ich die Ausgabe allerdings in einem Pager betrachten, oder
+  dokumentieren, so schreibe ich:
+  \begin{verbatim}
+fuser -m / 2>&1 | less
+  \end{verbatim}
+
+  Neben den Prozessen, die auf bestimmte Dateien zugreifen, bin ich manchmal
+  an allen Prozessen interessiert, die irgendeine Datei in einem Dateisystem
+  geöffnet haben. Dafür verwende ich die Option \verb?--mount? (\verb?-m?).
+  Das ist auch der einzige Weg, wie ich mit fuser Prozesse finden kann, die
+  bereits im Dateisystem gelöschte Dateien noch offen halten. Welche Prozesse
+  das konkret sind, kann ich zwar damit noch nicht sagen, aber das kann ich
+  zum Beispiel ermitteln, wenn ich die mit fuser ermittelten Prozesse mit lsof
+  näher betrachte.
+
+  Außer bei Dateien in Dateisystemen kann ich mit fuser auch die Prozesse
+  ermitteln, die bestimmte Sockets geöffnet haben. Dazu wähle ich den
+  entsprechenden Namensraum mit der Option \verb?--namespace SPACE?
+  (\verb?-n SPACE?) aus. Fuser kennt die folgenden Namensräume:
+  \begin{description}
+    \item[file] ist der Standardnamensraum, der nicht extra angegeben werden
+      muss.
+    \item[tcp] steht für TCP-Sockets
+    \item[udp] steht für UDP-Sockets
+  \end{description}
+  Sockets werden nach dem folgenden Schema angegeben:
+  \begin{verbatim}
+[local port][,[remote host][,[remote port]]][/namespace]
+  \end{verbatim}
+  Den Namensraum kann ich angeben, wenn die Angabe eindeutig ist und ich
+  diesen nicht explizit mit \verb?--namespace? angeben will.
+  Die Komma sind wichtig. So zeigt \verb?fuser ssh/tcp? alle Prozesse, die mit
+  dem lokalen Port 22 arbein, währen \verb?fuser ,,ssh/tcp? alle Prozesse mit
+  abgehender SSH-Verbindung an.
+
+  Mit der Option \verb?-4? beziehungsweise \verb?-6? kann ich die Ausgabe auf
+  die entsprechende Version des Internetprotokolls eingrenzen.
+
+  Eine Option, die ich eher selten anwende ist \verb?--kill? (\verb?-k?), mit
+  der fuser ein Signal (ohne weitere Angaben: \verb?SIGKILL?) an die
+  ermittelten Prozesse sendet. Das Signal kann ich mit einem vorangestellten
+  Bindestrich (\verb?-?) angeben, eine Liste der Signale bekomme ich mit
+  \verb?--list-signals? (\verb?-l?). Zum Beispiel könnte ich mit
+  \begin{verbatim}
+fuser -k -HUP 22/tcp
+  \end{verbatim}
+  alle SSH-Anmeldungen an diesem Rechner beenden. War ich selbst via SSH
+  angemeldet, dann habe ich mich damit selbst hinausgeworfen. Oder, falls ich
+  ein Dateisystem aushängen will, beende ich mit
+  \begin{verbatim}
+fuser -k -m /media/cdrom
+  \end{verbatim}
+  alle Prozesse, die auf die eingehängte CD-ROM zugreifen. Falls aber unter
+  /media/cdrom kein Dateisystem eingehängt war, werden alle Prozesse, die das
+  nächsthöhere Dateisystem (meist /) verwenden, beendet. Das kommt einem
+  Ausschalten des Rechners schon sehr nahe. Darum gibt es, quasi als
+  Sicherheitsgurt für solche Fälle, die Option \verb?--ismountpoint?
+  (\verb?-M?), mit der alle Aktionen nur dann ausgeführt werden, wenn der
+  angegebene Dateiname ein Mountpoint ist. Außerdem kann ich mit der Option
+  \verb?-w? das Senden des Signals auf Prozesse einschränken, die eine Datei
+  zum Schreiben geöffnet haben. Das ist dann interessant, wenn ich das Datei
+  von read-write auf read-only umhängen will.
+
+\end{normaltext}
+
+\section{lsof}
+\label{sec:lokal-werkzeuge-lsof}
+\begin{abstractsec}
+  Ein Werkzeug, dass in keinem Werkzeugkasten für die lokale Fehlersuche fehlen
+  sollte, ist lsof. Dieses Programm zeigt Informationen zu Dateien, die von
+  Prozessen geöffnet sind, an.
+\end{abstractsec}
+\begin{normaltext}
+  Ein Werkzeug, dass in meinem Werkzeugkasten für die lokale Fehlersuche nicht
+  fehlen darf, ist lsof. Dieses Programm zeigt Informationen zu Dateien, die
+  von laufenden Prozessen geöffnet sind, an.
+
+  Ich habe dieses Programm erfolgreich beim Untersuchen von Mount-Problemen
+  eingesetzt.
+  Auch beim Aufspüren und Untersuchen von Sicherheitsproblemen leistet es
+  wertvolle Dienste.
+
+  Außer für Linux gibt es dieses Programm auch für andere UNIX-Derivate, bei
+  denen einige Optionen eine andere Bedeutung haben. Aus diesem Grund und weil
+  ich hier nicht alle Optionen erläutern werde, ist ein Blick in die
+  entsprechende Handbuchseite unumgänglich.
+
+  Offene Dateien, die lsof auflistet können
+  \begin{itemize}
+    \item reguläre Dateien,
+    \item Verzeichnisse,
+    \item block- oder zeichenorientierte Spezialdateien,
+    \item Verweise auf ausführbaren Code,
+    \item Bibliotheken,
+    \item UNIX- oder Netzwerksockets sein.
+  \end{itemize}
+
+  In einigen Aspekten überschneidet sich die Funktionialität von lsof mit der
+  von netstat, welches ich weiter hinten in 
+  Sektion \ref{sec:lokal-werkzeuge-netstat}
+  beschreibe. Meist entscheide ich je nach vorliegendem Problem, zu welchem
+  der Programme ich greife.
+
+  Es ist möglich, von lsof statt einer einmaligen Ausgabe, automatisch in
+  bestimmten Abständen neue Schnappschüsse der angeforderten Informationen zu
+  erhalten und die Ausgabe dazu so umzuformen, dass sie gut von einem Skript
+  oder sonstigem Programm überwacht werden kann.
+
+  Rufe ich lsof ohne Optionen und Argumente auf, bekomme ich eine Liste aller
+  Dateien, die alle laufenden Prozesse im Moment geöffnet haben. Bin ich nur
+  an wenigen Dateien interessiert, gebe ich diese als Argumente auf der
+  Kommandozeile an. Bin ich nur an bestimmten Aspekten oder an Dateien, die
+  ich zwar selbst nicht genau kenne, aber deren Eigenschaften, so
+  spezifiziere ich das mit Optionen. Einige dieser Optionen will ich hier
+  vorstellen.
+  
+  Selektiere ich mit einer Option eine definierte Menge von
+  Dateien, dann werden nur die Dateien, die dieser Selektion genögen,
+  angezeigt. Gebe ich mehrere Selektoren an, dann werden alle Dateien
+  angezeigt, die irgendeinem dieser Selektoren entsprechen. Das heißt, die
+  Menge der angezeigten Dateien entspricht der ODER-Verknüpfung der einzelnen
+  Selektoren. Dazu gibt es folgende Ausnahme: wenn ich mit einer Option
+  bestimmte Dateien deselektiere (zum Beispiel durch vorangestelltes \verb?^?
+  bei Auswahllisten), dann werden diese Dateien auch nicht angezeigt, wenn sie
+  nach einem anderen Selektor drann wären. Außerdem kann ich die Verknüpfung
+  der Selektionskriterien mit der Option \verb?-a? von ODER auf UND umstellen.
+  Gebe ich mehrmals die gleiche Option mit verschiedenen Selektoren an, so
+  werden diese vor der ODER- beziehungsweise UND-Verknüpfung zu einem Selektor
+  zusammengefasst.
+  Wenn ich zum Beispiel nur an allen Internetsockets interessiert bin, die von
+  Prozessen mit UID xyz geöffnet sind, dann schreibe ich:
+  \begin{verbatim}
+    lsof -a -i -u xyz
+  \end{verbatim}
+  
+  Nun zu den Optionen.
+
+  Mit Option \verb?-c name? selektiere ich Prozesse, deren Name mit \verb?name?
+  beginnt. Fängt \verb?name? selbst mit \verb?^? an, dann werden genau diese
+  Prozesse ignoriert. Beginnt und endet \verb?name? mit einem Schrägstrich
+  (\verb?/?), dann wird er als regulärer Ausdruck interpretiert.
+
+  Mit der Option \verb?+d s? bekomme ich alle geöffneten Dateien direkt im
+  Verzeichnis \verb?s?. Demgegenüber liefert \verb?+D s? auch die Dateien und
+  Verzeichnisse in den Unterverzeichnissen von \verb?s?, die von Prozessen
+  geöffnet sind. Beide Optionen kann ich mit \verb?-x? kombinieren, damit lsof
+  symbolischen Links folgen und Mountpoints überqueren soll, was es ansonsten
+  nicht machen würde.
+
+  Die Option \verb?-d s? erwartet eine Liste von Dateideskriptoren (diese
+  stehen in der Ausgabe in Spalte FD), die ich einschließen, oder mit \verb?^?
+  ausschließen kann. Möchte ich zwar das Arbeitsverzeichnis, aber nicht die
+  Standardeingabe, -ausgabe und -fehlerausgabe von Prozessen wissen, dann
+  drücke ich das so aus:
+  \begin{verbatim}
+    lsof -d cwd,^0,^1,^2
+  \end{verbatim}
+
+  Mit der Option \verb?-i [m]? bekomme ich Internetsockets und zwar speziell
+  für TCP oder UDP angezeigt. Optional kann ich diese mit dem Muster \verb?m?
+  genauer spezifizieren. Dazu gebe ich \verb?m? in der folgenden Form
+  \verb?[46][protocol][@hostname|hostaddr][:service|port]? an. Hierbei steht
+  \begin{description}
+    \item[4] für die Beschränkung auf IPv4
+    \item[6] für die Beschränkung auf IPv6
+    \item[protocol] für den Protokollnamen TCP oder UDP
+    \item[hostname] für einen Internet-Hostnamen oder alternativ
+    \item[hostaddr] für eine numerische Adresse
+    \item[service] für einen Servicenamen aus /etc/services oder alternativ
+    \item[port] für die Portnummer
+  \end{description}
+  Demgegenüber kann ich mit \verb?-U? UNIX-Domain-Sockets auswählen.
+
+  Die Option \verb?-n? unterdrückt die Umwandlung von Netzadressen in Namen,
+  \verb?-P? die Umwandlung von Portnummern in Servicenamen und schließlich
+  \verb?-l? die Umwandlung von UID in Benutzernamen. Diese Optionen verwende
+  ich, wenn ich mehr Klarheit haben will, oder wenn diese Umwandlung
+  ihrerseits die Ausführung von lsof verzögert, weil DNS- oder NIS-Anfragen
+  für die Auflösung notwendig sind.
+
+  Mit der Option \verb?-u s? lassen sich die Prozesse nach UID oder
+  Benutzernamen auswählen, während ich mit \verb?-p s? die Prozesse direkt
+  nach PID auswählen kann.
+
+  Starte ich lsof mit Otion \verb?-r [t]?, so liefert es die Informationen
+  wiederholt in dem mit \verb?t? spezifizierten Zeitabstand (ohne Angabe 15
+  Sekunden). Diese Option kann ich mit \verb?-F f? kombinieren um die Ausgabe
+  für die einfachere Verarbeitung in einem Skript zu modifizieren.
+\end{normaltext}
+
+\section{netstat}
+\label{sec:lokal-werkzeuge-netstat}
+\begin{abstractsec}
+  In den meisten Fällen setze ich netstat bei Netzwerkproblemen ein.
+  Wenn ich jedoch Probleme mit UNIX-Sockets vermute oder den Prozess, der
+  einen bestimmten Socket verwendet ermitteln will, hilft es mir auch bei der
+  lokalen Fehlersuche.
+\end{abstractsec}
+\begin{normaltext}
+  Ein Werkzeug, das sowohl bei der lokalen, als auch bei der Fehlersuche im
+  Netzwerk behilflich sein kann, ist netstat. Auf den Aspekt
+  Netzwerkfehlersuche gehe ich im Abschnitt \ref{sec:netz-werkzeuge-netstat}
+  näher ein. Hier konzentriere ich mich auf die Fehlersuche bei lokalen
+  Problemen.
+
+  Dafür verwende ich vor allem die Optionen \verb?--protocol=unix?
+  (alternativ: \verb?-A unix?) oder \verb?--unix? (\verb?-x?) um mir die
+  UNIX-Sockets ausgeben zu lassen.
+  Bin ich an den Prozessen interessiert, die die Netzwerksockets verwenden,
+  kann ich diese stattdessen mit \verb?--inet?, \verb?--ipx?, \verb?--tcp?,
+  \ldots selektieren. Das ist ausführlicher in Abschnitt
+  \ref{sec:netz-werkzeuge-netstat} beschrieben.
+
+  Mit \verb?--program? (\verb?-p?) erhalte ich die PID und den Namen des
+  Prozesses, der den Socket benutzt. Dafür benötige ich Superuser-Privilegien.
+  Mit dieser PID kann ich dann zum Beispiel den Prozess mit strace näher
+  betrachten.
+
+  Normalerweise zeigt netstat nur aktive, das heißt verbundene Sockets an. Mit
+  der Option \verb?--listening? (\verb?-l?) kann ich dagegen nur die Sockets
+  ausgeben lassen, die auf eine Verbindung warten oder mit \verb?--all?
+  (\verb?-a?) alle.
+
+  Mehr Informationen kann ich bekommen, wenn ich zusätzlich die Optionen
+  \verb?--verbose? (\verb?-v?) oder \verb?--extend? (\verb?-e?) angebe.
+
+  Die Ausgabe von netstat kommt als Tabelle, deren Spalten die folgende
+  Bedeutung haben:
+  \begin{description}
+    \item[RefCnt] Zeigt die Anzahl der Prozesse, die sich mit dem Socket
+      verbunden haben.
+    \item[Flags] geben zusätzliche Informationen zum Zustand des Sockets aus:
+      \begin{description}
+        \item[ACC] - der Socket wartet auf eine Verbindung
+        \item[W] - der Socket wartet auf Daten
+        \item[N] - der Socket hat im Moment nicht genug Platz zum Schreiben
+      \end{description}
+    \item[Typ] kann stehen für
+      \begin{description}
+        \item[DGRAM] für verbindungslose Sockets
+        \item[STREAM] für verbundene Sockets
+        \item[RAW] für rohe ungefilterte Sockets %XXX FIXME
+        \item[RDM] für zuverlässig ausgelieferte Nachrichten (Reliable
+          Delivered Messages)
+        \item[SEQPACKETS] für nacheinander folgende Pakete %XXX FIXME
+        \item[PACKET] für rohe Interface-Sockets %XXX FIXME
+      \end{description}
+    \item[State] kann für einen der folgenden Zustände des Sockets stehen:
+      \begin{description}
+        \item[Free] - nicht allozierte Sockets %XXX FIXME
+        \item[Listening] - nicht verbundene Sockets
+        \item[Connecting, Connected, Disconnected] - die Phasen einer
+          Socketverbindung
+        \item[(empty)] für unverbundene Sockets %XXX FIXME
+      \end{description}
+    \item[PID] enthält die Prozess-ID und den Namen des Prozesses
+    \item[Path] zeigt den Pfad zum Socket vom Prozess aus an, relativ zum
+      Arbeitsverzeichnis des Prozesses
+  \end{description}
+\end{normaltext}
+
+\section{iproute}
+\label{sec:lokal-werkzeuge-iproute}
+\begin{abstractsec}
+  Ein Werkzeug, dass in keinem Werkzeugkasten für die lokale Fehlersuche fehlen
+  Iproute ist ein Softwarepaket, dass ich am häufigsten bei Netzwerkproblemen
+  einsetze. Zwei Programme daraus, ip und ss, nutze ich auch bei lokalen
+  Problemen, daher stelle ich sie bereits hier vor. Im Kapitel über Werkzeuge
+  für Netzwerkprobleme (\ref{cha:netz-werkzeuge}) gehe ich noch etwas
+  ausführlicher auf iproute ein.
+\end{abstractsec}
+\begin{normaltext}
+  Ein Werkzeug, dass in keinem Werkzeugkasten für die lokale Fehlersuche fehlen
+  Iproute ist ein Softwarepaket, dass ich am häufigsten bei Netzwerkproblemen
+  einsetze. Zwei Programme daraus, ip und ss, nutze ich auch bei lokalen
+  Problemen, daher stelle ich sie bereits hier vor. Diese beiden Programme
+  überschneiden sich in der Funktionalität der Programme mit ifconfig, route,
+  netstat und arp.
+  
+  Im Kapitel über Werkzeuge
+  für Netzwerkprobleme (\ref{cha:netz-werkzeuge}) gehe ich noch etwas
+  ausführlicher auf iproute ein. 
+
+  \subsection*{ip}
+
+  Das Programm \verb?ip? funktioniert nach dem Schema
+  \begin{verbatim}
+ip [optionen] objekt befehl
+  \end{verbatim}
+  Die komplette Syntax ist in der Handbuchseite beschrieben. Ich bin bei der
+  lokalen Fehlersuche vor allem an folgenden Objekten interessiert:
+  \begin{description}
+    \item[link] Schnittstellenparameter
+    \item[addr] IP-Adressen
+    \item[neigh] ARP- und NDISC-Caches
+    \item[route] IP-Routingtabellen
+  \end{description}
+  Zu allen Objekten kann ich mit
+  \begin{verbatim}
+ip objekt help
+  \end{verbatim}
+  eine Kurzübersicht der möglichen Befehle und Optionen bekommen.
+
+  Bei der lokalen Fehlersuche verwende ich am häufigsten den Befehl show, um
+  mir den momentanen Zustand anzusehen. Die anderen Objekte und Befehle
+  benötige ich eher selten zur Fehlersuche.
+
+  \subsection*{ss}
+
+  Das Programm \verb?ss? (show sockets) zeigt Informationen über Sockets an.
+  Dabei kann ich auswählen, ob ich mit
+  \begin{description}
+    \item[-t] TCP-Sockets, mit
+    \item[-u] UDP-Sockets, oder mit
+    \item[-x] UNIX-Sockets
+  \end{description}
+  betrachten will.
+
+  Die Ausgabe kann ich mit folgenden Optionen beeinflussen:
+  \begin{description}
+    \item[-n] schaltet die Namensauflösung ab.
+    \item[-r] schaltet die Namensauflösung ein.
+    \item[-l] zeigt Listening Sockets anstelle von Connected Sockets.
+    \item[-a] zeigt sowohl Listening als auch Connected Sockets.
+    \item[-p] zeigt die Prozesse, die einen Socket verwenden.
+  \end{description}
+
+  Auch hier helfen die Handbuchseiten weiter.
+\end{normaltext}
+
+\section{strace}
+\label{sec:lokal-werkzeuge-strace}
+
+\begin{abstractsec}
+  Mit strace kann ich die Interaktion eines Programmes mit dem Linux-Kernel
+  beobachten. Dieses verwende ich zum Beispiel um unvorhergesehene
+  Programmabrüche oder unerklärliches Verhalten eines Binärprogrammes zu
+  analysieren.
+\end{abstractsec}
+\begin{normaltext}
+  Strace ist ein Werkzeug, dass ich einsetze, wenn mir das Verhalten eines
+  Programmes unklar ist. Wenn ich Probleme mit Zugriffsrechten vermute, aber
+  keinen Anhaltspunkt in den Fehlermeldungen oder Systemprotokollen finde.
+  Wenn ich mit einem Programm noch wenig Erfahrung habe, kaum Hilfe zu meinem
+  Problem im Internet finde, aber das Problem trotzdem so schnell wie möglich
+  beheben will.
+  In \cite{guug:uptimes:2012.1/07} führt Harald König sehr gut in die Arbeit
+  mit strace ein.
+  
+  Strace hilft mir, wenn ich beobachten will, wie ein Programm
+  mit seiner Umgebung interagiert. Es setzt dazu an der Kernelschnittstelle
+  an und protokolliert alle Systemaufrufe mit den Parametern und Ergebnissen.
+  Diese werden im Protokoll ähnlich den Systemaufrufen in der
+  Programmiersprache C dargestellt: das Ergebnis steht hinter einem
+  Gleichheitszeichen am Ende der Zeile, die Systemzeit steht vor dem
+  Systemaufruf. Wenn ich mehrere Prozesse beobachte und in dieselbe Datei
+  protokolliere, steht auch noch die Prozess-ID am Anfang der Zeile.
+
+  Um die Ausgabe von strace interpretieren zu können, ist es hilfreich die
+  Sektion der Handbuchseiten zu installiert zu haben. Diese befinden sich bei
+  Debian-basierten Systemen im Paket manpages-dev.
+
+  Da strace Systemaufrufe der beobachteten Prozesse protokolliert, verlangsamt
+  sich deren Ablauf, was zu zusätzlichen Problemen bei der Fehlersuche führen
+  kann. Dessen muss ich mir beim Einsatz von strace immer bewusst sein.
+
+  Ich persönlich setze strace bei der Fehlersuche meist auf eine der folgenden
+  Weisen ein.
+
+  Bei Problemen mit mit Programmen, die von Hand aufgerufen werden, starte ich
+  das betreffende Programm wie gewohnt, allerdings setze ich am Anfang der
+  Kommandozeile strace mit einigen Optionen ein. Aus
+
+  \begin{verbatim}
+  $ make xyz
+  \end{verbatim}
+
+  wird dann
+
+  \begin{verbatim}
+  $ strace -f -o make.strace make xyz
+  \end{verbatim}
+
+  Dabei bedeuten die Optionen
+
+  \begin{description}
+    \item[-f] Strace soll auch von make gestartete Programme verfolgen.
+    \item[-o make.strace] Die Ausgabe soll in die Datei make.strace
+      geschrieben werden.
+  \end{description}
+
+  Bei Problemen mit bereits gestarteten Prozessen verwende ich die Option
+  {\bf -p PID} um mich mit dem betreffenden Prozess zu verbinden. Alle
+  weiteren Optionen verwende ich wie gehabt, auf die Angabe des Programmnamens
+  und der Programmparameter kann ich verzichten.
+
+  Schwieriger ist es, wenn ein Programm ein zweites aufruft, dieses ein
+  drittes und so weiter. Wenn ich nur an einem der Programme interessiert bin
+  und nicht genau weiss, von welchem Prozess beziehungsweise Programm dieses
+  gestartet wird, helfe ich mir mit einem Trick. Ich benenne das eigentliche
+  Programm um und ersetze es durch ein Skript, welche alle mich
+  interessierenden Werte wie zum Beispiel die Aufrufparameter, die Umgebung,
+  die UID/GID, die Standardeingabe und/oder -ausgabe protokolliert und
+  schließlich das Originalprogramm via strace aufruft.
+  Damit bekomme ich meist genügend Informationen, um das Problem zu lösen.
+  Natürlich darf ich am Ende nicht vergessen, das Skript wieder durch das
+  Originalprogramm zu ersetzen.
+
+  \begin{notes}
+  \item Was für eine Kernelschnittstelle nutzt strace?
+  \item Strace-Skript: Datum, Kommandozeile, Umgebung, Benutzer,
+    Standardeingabe, Strace-Ausgabe
+  \end{notes}
+\end{normaltext}
+
+\section{ltrace}
+\label{sec:lokal-werkzeuge-ltrace}
+\begin{abstractsec}
+  Ltrace ist, ähnlich strace, ein Programm, mit dem ich einem Prozess bei der
+  Arbeit zusehen kann. Im Gegensatz zu strace, welches nur die
+  Kernel-Schnittstelle beobachtet, zeigt ltrace den Aufruf von
+  Bibliotheksfunktionen.
+\end{abstractsec}
+\begin{normaltext}
+  Ltrace ist, ähnlich strace
+  (siehe Abschnitt \ref{sec:lokal-werkzeuge-strace}),
+  ein Programm, mit dem ich einem Prozess bei der
+  Arbeit zusehen kann. Im Gegensatz zu strace, welches nur die
+  Kernel-Schnittstelle beobachtet, zeigt ltrace den Aufruf von
+  Bibliotheksfunktionen.
+
+  Beim Start eines Programmes via ltrace läßt dieses den Prozess laufen, bis
+  es endet. Dabei fängt ltrace Aufrufe von Bibliotheksfunktionen durch den
+  Prozess und Signale an den Prozess ab und zeigt sie auf STDERR an. Das ist
+  in etwa das Gleiche, was auch strace macht. Da aber ltrace
+  Bibliotheksaufrufe abfängt, ist die Ausgabe viel feiner granuliert und
+  umfangreicher.
+
+  Die folgenden Optionen sind für die Fehlersuche mit ltrace interessant. Für
+  eine komplette Liste der Optionen verweise ich auf die Handbuchseite.
+  \begin{description}
+    \item[-S] Mit dieser Option zeigt ltrace zusätzlich zu den
+      Bibliotheksaufrufen auch Systemaufrufe an der Kernelschnittstelle.
+      Diesen wird in der Ausgabe \verb?SYS_? vorangestellt.
+    \item[-L] Diese Option ist nur zusammen mit \verb?-S? sinnvoll, da sie die
+      Ausgabe der Bibliotheksaufrufe unterdrückt. Mit beiden Optionen zusammen
+      zeigt ltrace etwa das gleiche an wie strace, der einzige Unterschied ist
+      das vorangestellte \verb?SYS_? bei ltrace.
+    \item[-e expr] Damit kann ich die Ereignisse/Funktionen, die angezeigt
+      werden sollen, einschränken. Funktionen, die ich nicht sehen will,
+      kennzeichne ich mit vorangestelltem \verb?!?. So kann ich zum Beispiel
+      mit \verb?ltrace -e malloc,free? nachschauen, ob angeforderter Speicher
+      auch wieder freigegeben wird, was insbesondere bei langlaufenden
+      Prozessen von Belang ist.
+    \item[-f] Diese Option bewirkt, genau wie bei strace, das auch
+      Kindprozesse mit beobachtet werden.
+    \item[-o dateiname] Das bewirkt, ebenfalls wie bei strace, das die Ausgabe
+      von ltrace in die angegebene Datei anstatt zu STDERR ausgegeben wird.
+    \item[-p pid] Mit dieser Option kann ich, wie bei strace, einen bereits
+      laufenden Prozess untersuchen.
+    \item[-i] Mit dieser Option zeigt ltrace den Befehlszeiger zu jedem
+      Funktionsaufruf.
+    \item[-r] Damit fügt ltrace relative Zeitstempel in die Ausgabe, mit denen
+      ich zum Beispiel die Verzögerungen durch Timeouts genauer eingrenzen
+      kann.
+    \item[-T] Mit dieser Option zeigt ltrace die Zeit, die für die
+      Funktionsaufrufe benötigt wurde.
+    \item[-l dateiname] Diese Option erlaubt mir die Beobachtung
+      einzuschränken auf Funktionsaufrufe aus dieser Bibliothek. Ich muss den
+      kompletten Pfad zur Bibliothek angeben. Welche Bibliotheken ein Programm
+      verwendet, bekomme ich mit ldd heraus. Wenn ich an mehreren Bibliotheken
+      interessiert bin, kann ich diese Option mehrfach angeben.
+  \end{description}
+  \begin{notes}
+  \item Diskussion: wann ltrace, wann strace
+  \end{notes}
+\end{normaltext}
+
+\section{GDB der GNU Debugger}
+\label{sec:lokal-werkzeuge-gdb}
+\begin{abstractsec}
+  GDB ist ein sehr mächtiges Werkzeug, das eher in extrem schwierigen Fällen
+  zum Einsatz kommt. Vorzugsweise, wenn ich nachträglich die Ursache eines
+  Programmabsturzes ermitteln will oder wenn ich einen Programmfehler vermute
+  und finden will.
+\end{abstractsec}
+\begin{normaltext}
+  GDB ist ein sehr mächtiges Werkzeug, das eher in extrem schwierigen Fällen
+  zum Einsatz kommt. Vorzugsweise, wenn ich nachträglich die Ursache eines
+  Programmabsturzes ermitteln will oder wenn ich einen Programmfehler vermute
+  und finden will.
+
+  Um mit dem Debugger zu arbeiten benötige ich Zugriff auf die Quellen, aus
+  denen das betreffende Programm übersetzt wurde.
+  \footnote{Zwar ist es auch möglich, direkt die Maschinenbefehle zu verfolgen,
+  aber das liegt definitiv jenseits des Horizonts dieses Buches.}
+  Außerdem brauche ich die Symboltabellen des Programms damit der Debugger die
+  Maschinenbefehle des Binärprogramms den Quellcodezeilen zuordnen kann. Diese
+  bekomme ich, wenn zum Beispiel beim Übersetzen des Programms mit dem
+  Compiler gcc die Option \verb?-g? angegeben wurde. Bei vielen Softwarpaketen
+  kann ich die Symboltabellen über das entsprechende Paket mit der Option
+  \verb?-dbg? (zum Beispiel \verb?avahi-dbg? für \verb?avahi?) installieren.
+
+  Um einen Prozess postmortal zu analysieren, muss ich das System anweisen ein
+  sogenanntes Corefile zu schreiben, das den Zustand des Prozesses beim
+  Programmabsturz enthält. Dazu kann ich in der Bash mit dem Befehl
+  \verb?ulimit -c size? die maximale Größe des Corefiles festlegen, die das
+  Betriebssystem schreibt. Diese muss ich hoch genug wählen, damit das
+  Corefile für den gewünschten Prozess reicht.
+
+  Ich kann den GNU Debugger auf verschiedene Arten starten:
+  \begin{description}
+    \item[gdb options program core] So starte ich, wenn ich einen
+      Prozess postmortal analysieren will (mit \verb?core?) oder, wenn ich
+      ein Programm nur beim Ablauf verfolgen will (ohne \verb?core?). Dabei
+      ist \verb?program? der Name der Programmdatei und \verb?core? der Name
+      des Corefiles.
+    \item[gdb options --args program arguments] Hier gebe ich dem
+      Programm, dass ich beobachten will gleich die Kommandozeilenargumente
+      beim Aufrauf des GDB mit.
+    \item[gdbtui options] Das startet den GDB mit einer
+      Textbenutzeroberfläche, bei der im oberen Teil der aktuelle Quelltext
+      angezeigt wird und im unteren Teil die Befehle und Ausgaben des GDB.
+  \end{description}
+
+  Von den Optionen, die GDB beim Aufruf mitgegeben werden können, sind die
+  folgenden für die Fehlersuche relevant, weitere können der Handbuchseite,
+  der GDB-Texinfo-Datei oder \verb?gdb -help? entnommen werden:
+  \begin{description}
+    \item[-c file | -core file] Damit gebe ich das Corefile bei den Optionen
+      an und brauche es nicht mehr nach dem Programmnamen anzugeben.
+    \item[-e file | -exec file] Gibt das ausführbare Programm an.
+    \item[-s file | -symbols file] Gibt die Datei mit den Symboltabellen an.
+      Die Optionen \verb?-s? und \verb?-e? können auch zu \verb?-se?
+      zusammengefasst werden, wenn die Symboltabellen noch in der
+      Binärprogrammdatei enthalten sind.
+    \item[-help] Listed alle Optionen mit einer kurzen Erläuterung auf.
+  \end{description}
+
+  Nachdem ich GDB gestartet habe, steuere ich den Ablauf der Sitzung mit
+  Textbefehlen. Alle diese Befehle können soweit abgekürzt werden, wie sie
+  noch eindeutig sind.
+  Die wichtigsten dieser Befehle für die Fehlersuche sind:
+  \begin{description}
+    \item[break function | break file:function] So ziemlich als erstes rufe
+      ich in einer Debuggingsitzung \verb?break main? auf, damit der Debugger
+      an dieser Funktion anhält und ich anschließend das Programm in Ruhe
+      analysieren kann. Vor einer Funktion kann ich, durch \verb?:? getrennt
+      die Datei angeben, falls der Debugger momentan eine andere geladen hat.
+    \item[run | run arglist] Damit starte ich das Programm im Debugger.
+      Optional kann ich dem Prozess mit \verb?arglist? einige
+      Kommandozeilenargumente mitgeben.
+    \item[bt] Dieser Befehl zeigt den Programmstack an. Bei einer postmortalen
+      Analyse eines Prozesses rufe ich diesen Befehl als erstes auf, um
+      herauszubekommen, wo genau das Programm abgestürzt ist.
+    \item[print expr] Mit \verb?print? lasse ich mir die Werte in den
+      Variablen und verschiedene andere Datein ausgeben. Dabei kann
+      \verb?expr? ein komplexer C-Ausdruck sein.
+    \item[c] Mit \verb?c? (continue) läuft das Programm weiter bis zum
+      nächsten Haltepunkt oder bis zum Programmende.
+    \item[next] Dieser Befehl arbeitet die nächste Zeile im Quelltext ab.
+      Dabei werden Funktionsaufrufe ausgeführt und übersprungen.
+    \item[step] Auch dieser Befehl arbeitet die nächste Zeile im Quelltext ab,
+      der Debugger folgt hier allerdings Funktionsaufrufen in das Innere der
+      Funktion.
+    \item[list | list function | list file:function] Zeigt die aktuelle
+      Programmumgebung beziehungsweise die angegebene Funktion im Quelltext.
+    \item[help befehl] Gibt die Hilfe zu dem angegebenen Befehl aus.
+    \item[quit] Beendet die Debuggingsitzung.
+  \end{description}
+
+  GDB ist ein sehr mächtiges Werkzeug für die Fehlersuche und auch sehr
+  komplex in der Anwendung. Da die Bedienung nicht einfach ist und es auch
+  einiger Vorkehrungen für den erfolgreichen Einsatz bedarf, setze ich ihn
+  eher selten ein, quasi als Ultima Ratio. Trotzdem ist es sinnvoll, sich
+  gelegentlich hinzusetzen und testweise das eine oder andere Programm im
+  Debugger zu beobachten und zu analysieren, damit es im Ernstfall, wenn man
+  darauf angewiesen ist, einfacher von der Hand geht.
+\end{normaltext}
+
+\section{vmstat}
+\label{sec:lokal-werkzeuge-vmstat}
+
+\begin{abstractsec}
+  Das Programm vmstat verwende ich, um bei lokalen Performanceengpässen einen
+  Überblick über das Gesamtsystem zu bekommen. Es liefert mir statistische
+  Informationen über Prozesse, Speicher, I/O, Platen- und CPU-Aktivitäten.
+\end{abstractsec}
+\begin{normaltext}
+  Das Programm vmstat verwende ich, um bei lokalen Performanceengpässen einen
+  Überblick über das Gesamtsystem zu bekommen. Es liefert mir statistische
+  Informationen über Prozesse, Speicher, I/O, Platen- und CPU-Aktivitäten.
+  Durch die kompakte Darstellung kann ich im Wiederholungsmodus  ein Gefühl
+  für die normale Aktivität des Gesamtsystems bekommen und sehe dann, wenn ein
+  Performanceengpass auftritt, manchmal sofort, ob es ein allgemeines
+  Ressourcenproblem ist (zuwenig Speicher, zu schwache CPU, zu langsame
+  Platte, \ldots) oder ob ich mich doch eher mit dem betreffenden Programm
+  beschäftigen muss.
+
+  Für die meisten Optionen sind keine speziellen Privilegien erforderlich, das
+  heißt, ich kann mit vmstat auch als normaler Benutzer mal eben nachsehen,
+  wie es dem System geht.
+  
+  Im Wiederholungsmodus zeigt das Programm in der ersten Zeile für alle Werte
+  den Durchschnitt seit Systemstart an und in den folgenden Zeilen die Werte
+  für die betreffende Abtastperiode. Diesen Modus verwende ich am häufigsten:
+  \begin{verbatim}
+vmstat [-a] [-n] [periode [anzahl]]
+  \end{verbatim}
+  Lasse ich die beiden Zahlen für \verb?periode? und \verb?anzahl? weg, dann
+  bekomme ich nur die Durchschnittswerte seit Systemstart angezeigt. Das
+  brauche ich eigentlich nur, wenn ich das System sehr gut kenne oder mehrere
+  ähnliche Systeme vergleichen will.
+
+  Gebe ich eine Zahl für \verb?periode? an, dann verwendet vmstat diese als Länge der
+  Periode in Sekunden mit der es kontinuierlich die Werte der letzten Periode
+  ausgibt. Auch hier steht in der ersten Zeile der Durchschnitt seit
+  Systemstart, so dass ich gleich ab der zweiten Zeile sehen kann, womit das
+  System besonders beschäftigt ist.
+
+  Gebe ich auch eine Zahl für \verb?anzahl? an, dann beendet sich vmstat nach
+  soviel Perioden, wie angegeben.
+
+  Die Ausgabe von vmstat in diesem Modus bedeutet folgendes:
+  \begin{description}
+    \item[Procs] Unter \verb?r? steht hier die Anzahl der Prozesse, die laufen
+      können und unter \verb?b? steht die Anzahl der Prozesse in
+      uninteruptible sleep, das heißt der Prozesse, die im Kernelcode auf I/O
+      warten.
+    \item[Memory] Hier habe ich unter \verb?swpd? die Menge des verwendeten
+      virtuellen Speichers (des ausgelagerten Hauptspeichers). Unter
+      \verb?free? finde ich den unbenutzten Speicher, unter \verb?buff?
+      Speicher, der für Datei- und Socketpuffer verwendet wird. Der unter
+      \verb?cache? aufgeführte Speicher wird für zwischengespeicherte Daten
+      von Blockdevices verwendet.
+
+      Habe ich die Option \verb?-a? angegeben, wird statt \verb?buffer/cache?
+      aktiver und inaktiver Speicher angezeigt.
+    \item[IO] Unter des Spalte \verb?bi? finde ich die Anzahl der von
+      Blockdevices gelesenen Blöcke (blocks in) und unter \verb?bo? die
+      geschriebenen (blocks out).
+    \item[System] Hier finde ich unter \verb?in? die Anzahl der Interrupts pro
+      Sekunde und unter \verb?cs? die Anzahl der Kontextwechsel pro Sekunde.
+    \item[CPU] Diese Spalten zeigen prozentual, wie die CPU ihre Zeit
+      verbringt. Unter\verb?us? steht der Anteil, den die CPU mit Code in
+      Benutzerprogrammen verbringt. Unter \verb?sy? steht die Zeit für das
+      Abarbeiten von Systemaufrufen und unter \verb?id? die untätige (idle)
+      Zeit. Bis zum Kernel 2.5.41 zählte auch die Zeit, in der die CPU auf I/O
+      wartete hierzu, ab dann gab es dafür die Spalte \verb?wa?.
+  \end{description}
+  \begin{notes}
+  \item Was bedeutet aktive / inactive bei Memory?
+  \end{notes}
+
+  Im Wiederholungsmodus kann ich mit Option \verb?-a? die Anzeige des Speichers von
+  buffer/cache auf inactive/active umschalten und mit \verb?-n? die
+  wiederholte Anzeige der Kopfzeilen abschalten. Letztere sind insbesondere
+  bei länger laufender Ausgabe praktisch, wenn ich nicht genau im Kopf habe,
+  welche Spalte was anzeigt. Daher verwende ich \verb?-n? so gut wie nie.
+
+  Mit Option \verb?-m?, die Superuserprivilegien erfordert, zeigt vmstat
+  Informationen zum Slab Allocator an. Das ist ein Verfahren zur Verwaltung
+  des Arbeitsspeichers. Weitere Informationen hierzu finden sich in
+  \cite{Bonwick:1994:SAO:1267257.1267263}.
+
+  Mit Option \verb?-d? zeigt vmstat einmalig Diskstatistiken für alle Disk
+  Devices (das können auch RAM-Disks und Loop Devices sein) an.
+  Dabei bedeuten:
+  \begin{description}
+    \item[Reads/Writes] für Lese-/Schreib-Zugriffe:
+      \begin{description}
+        \item[total] alle erfolgreichen Zugriffe
+        \item[merged] gruppierte Zugriffe, die in einem I/O-Vorgang resultieren
+        \item[sectors] erfolgreich gelesene/geschriebene Sektoren
+        \item[ms] Anzahl der lesend/schreiben verbrachten Millisekunden
+      \end{description}
+    \item[I/O] Unter \verb?cur? die gerade laufende I/O und unter \verb?s? die
+      Sekunden, die das System mit I/O verbracht hat.
+  \end{description}
+
+  Mit Option \verb?-D? zeigt vmstat einmalig zusammengefasste Statistiken zu
+  allen Disks.
+
+  Und mit \verb?-p partition? schließlich zeigt vmstat einmalig Statistiken fü
+  diese Partition. Hierbei bedeuten in der Ausgabe:
+  \begin{description}
+    \item[reads] die Gesamtzahl der Lesezugriffe auf diese Partition
+    \item[read sectors] die Gesamtzahl der gelesenen Sektoren dieser Partition
+    \item[writes] die Gesamtzahl der Schreibzugriffe auf diese Partition
+    \item[requested writes] die Gesamtzahl der Schreibanforderungen für diese
+      Partition
+  \end{description}
+\end{normaltext}
+
+\section{sysstat}
+\label{sec:lokal-werkzeuge-sysstat}
+
+\begin{abstractsec}
+  Sysstat ist ein Werkzeug zur Einschätzung der Systemperformance.
+\end{abstractsec}
+\begin{normaltext}
+  Sysstat ist ein Werkzeug zur Einschätzung der Systemperformance.
+
+  Üblicherweise wird via cron aller 10 Minuten ein Skript gespeichert, das die
+  Systemstatistiken sichert. Diese Statistiken können dann mit verschiedenen
+  Auswertewerkzeugen ausgelesen werden.
+
+  Alternativ können diese Werkzeuge auch selbst periodisch die
+  Performancedaten sammeln und als aktuelle Schnappschüsse ausgeben.
+
+  Zur Auswertung mit sysstat stehen die folgenden Werkzeuge zur Verfügung:
+  \begin{description}
+    \item[cifsiostat] liefert CIFS Statistiken
+    \item[iostat] liefert CPU- und I/O-Statistiken für Geräte und Partitionen
+    \item[mpstat] liefert (multi-)prozessorbezogene Statistiken
+    \item[nfsiostat] liefert NFS-bezogene I/O-Statistiken
+    \item[pidstat] liefert Statistiken über Linux-Tasks (-Prozesse)
+    \item[sar, sadf] Sar sammelt, berichtet und sichert Informationen zu
+      Systemaktivitäten, sadf gibt die von sar gesammelten Daten in
+      verschiedenen Formaten aus.
+  \end{description}
+
+  Die Auswertung der Statistikdaten mit sar wurde bereits in
+  \cite{Loukides:1996:SPT:547780} beschrieben. Da sich die Software seitdem
+  weiterentwickelt hat, ist ein Blick in die Handbuchseiten unerlässlich.
+
+  Für die grafische Auswertung gibt es verschiedene Programme. Ein
+  Programm, sargraph, wird als Beispiel mit sysstat verteilt. Dieses wertet
+  die XML-Ausgabe von sadf auf und übergibt sie an gnuplot zur Darstellung.
+\end{normaltext}
 
 \section{acct}
 \label{sec:lokal-werkzeuge-acct}
@@ -334,1042 +1349,6 @@ hdparm [optionen] [geraet ..]
   hinterlegt werden. Diese Datei ist gut kommentiert, so dass ich mir weitere
   Erläuterungen hier spare.
 \end{normaltext}
-
-\section{GDB der GNU Debugger}
-\label{sec:lokal-werkzeuge-gdb}
-\begin{abstractsec}
-  GDB ist ein sehr mächtiges Werkzeug, das eher in extrem schwierigen Fällen
-  zum Einsatz kommt. Vorzugsweise, wenn ich nachträglich die Ursache eines
-  Programmabsturzes ermitteln will oder wenn ich einen Programmfehler vermute
-  und finden will.
-\end{abstractsec}
-\begin{normaltext}
-  GDB ist ein sehr mächtiges Werkzeug, das eher in extrem schwierigen Fällen
-  zum Einsatz kommt. Vorzugsweise, wenn ich nachträglich die Ursache eines
-  Programmabsturzes ermitteln will oder wenn ich einen Programmfehler vermute
-  und finden will.
-
-  Um mit dem Debugger zu arbeiten benötige ich Zugriff auf die Quellen, aus
-  denen das betreffende Programm übersetzt wurde.
-  \footnote{Zwar ist es auch möglich, direkt die Maschinenbefehle zu verfolgen,
-  aber das liegt definitiv jenseits des Horizonts dieses Buches.}
-  Außerdem brauche ich die Symboltabellen des Programms damit der Debugger die
-  Maschinenbefehle des Binärprogramms den Quellcodezeilen zuordnen kann. Diese
-  bekomme ich, wenn zum Beispiel beim Übersetzen des Programms mit dem
-  Compiler gcc die Option \verb?-g? angegeben wurde. Bei vielen Softwarpaketen
-  kann ich die Symboltabellen über das entsprechende Paket mit der Option
-  \verb?-dbg? (zum Beispiel \verb?avahi-dbg? für \verb?avahi?) installieren.
-
-  Um einen Prozess postmortal zu analysieren, muss ich das System anweisen ein
-  sogenanntes Corefile zu schreiben, das den Zustand des Prozesses beim
-  Programmabsturz enthält. Dazu kann ich in der Bash mit dem Befehl
-  \verb?ulimit -c size? die maximale Größe des Corefiles festlegen, die das
-  Betriebssystem schreibt. Diese muss ich hoch genug wählen, damit das
-  Corefile für den gewünschten Prozess reicht.
-
-  Ich kann den GNU Debugger auf verschiedene Arten starten:
-  \begin{description}
-    \item[gdb options program core] So starte ich, wenn ich einen
-      Prozess postmortal analysieren will (mit \verb?core?) oder, wenn ich
-      ein Programm nur beim Ablauf verfolgen will (ohne \verb?core?). Dabei
-      ist \verb?program? der Name der Programmdatei und \verb?core? der Name
-      des Corefiles.
-    \item[gdb options --args program arguments] Hier gebe ich dem
-      Programm, dass ich beobachten will gleich die Kommandozeilenargumente
-      beim Aufrauf des GDB mit.
-    \item[gdbtui options] Das startet den GDB mit einer
-      Textbenutzeroberfläche, bei der im oberen Teil der aktuelle Quelltext
-      angezeigt wird und im unteren Teil die Befehle und Ausgaben des GDB.
-  \end{description}
-
-  Von den Optionen, die GDB beim Aufruf mitgegeben werden können, sind die
-  folgenden für die Fehlersuche relevant, weitere können der Handbuchseite,
-  der GDB-Texinfo-Datei oder \verb?gdb -help? entnommen werden:
-  \begin{description}
-    \item[-c file | -core file] Damit gebe ich das Corefile bei den Optionen
-      an und brauche es nicht mehr nach dem Programmnamen anzugeben.
-    \item[-e file | -exec file] Gibt das ausführbare Programm an.
-    \item[-s file | -symbols file] Gibt die Datei mit den Symboltabellen an.
-      Die Optionen \verb?-s? und \verb?-e? können auch zu \verb?-se?
-      zusammengefasst werden, wenn die Symboltabellen noch in der
-      Binärprogrammdatei enthalten sind.
-    \item[-help] Listed alle Optionen mit einer kurzen Erläuterung auf.
-  \end{description}
-
-  Nachdem ich GDB gestartet habe, steuere ich den Ablauf der Sitzung mit
-  Textbefehlen. Alle diese Befehle können soweit abgekürzt werden, wie sie
-  noch eindeutig sind.
-  Die wichtigsten dieser Befehle für die Fehlersuche sind:
-  \begin{description}
-    \item[break function | break file:function] So ziemlich als erstes rufe
-      ich in einer Debuggingsitzung \verb?break main? auf, damit der Debugger
-      an dieser Funktion anhält und ich anschließend das Programm in Ruhe
-      analysieren kann. Vor einer Funktion kann ich, durch \verb?:? getrennt
-      die Datei angeben, falls der Debugger momentan eine andere geladen hat.
-    \item[run | run arglist] Damit starte ich das Programm im Debugger.
-      Optional kann ich dem Prozess mit \verb?arglist? einige
-      Kommandozeilenargumente mitgeben.
-    \item[bt] Dieser Befehl zeigt den Programmstack an. Bei einer postmortalen
-      Analyse eines Prozesses rufe ich diesen Befehl als erstes auf, um
-      herauszubekommen, wo genau das Programm abgestürzt ist.
-    \item[print expr] Mit \verb?print? lasse ich mir die Werte in den
-      Variablen und verschiedene andere Datein ausgeben. Dabei kann
-      \verb?expr? ein komplexer C-Ausdruck sein.
-    \item[c] Mit \verb?c? (continue) läuft das Programm weiter bis zum
-      nächsten Haltepunkt oder bis zum Programmende.
-    \item[next] Dieser Befehl arbeitet die nächste Zeile im Quelltext ab.
-      Dabei werden Funktionsaufrufe ausgeführt und übersprungen.
-    \item[step] Auch dieser Befehl arbeitet die nächste Zeile im Quelltext ab,
-      der Debugger folgt hier allerdings Funktionsaufrufen in das Innere der
-      Funktion.
-    \item[list | list function | list file:function] Zeigt die aktuelle
-      Programmumgebung beziehungsweise die angegebene Funktion im Quelltext.
-    \item[help befehl] Gibt die Hilfe zu dem angegebenen Befehl aus.
-    \item[quit] Beendet die Debuggingsitzung.
-  \end{description}
-
-  GDB ist ein sehr mächtiges Werkzeug für die Fehlersuche und auch sehr
-  komplex in der Anwendung. Da die Bedienung nicht einfach ist und es auch
-  einiger Vorkehrungen für den erfolgreichen Einsatz bedarf, setze ich ihn
-  eher selten ein, quasi als Ultima Ratio. Trotzdem ist es sinnvoll, sich
-  gelegentlich hinzusetzen und testweise das eine oder andere Programm im
-  Debugger zu beobachten und zu analysieren, damit es im Ernstfall, wenn man
-  darauf angewiesen ist, einfacher von der Hand geht.
-\end{normaltext}
-
-\section{fuser}
-\label{sec:lokal-werkzeuge-fuser}
-\begin{abstractsec}
-  Das Programm fuser setze ich ein, wenn ich schnell Informationen darüber
-  haben will, welche Prozesse bestimmte Dateien oder Netzwerksockets geöffnet
-  haben.
-\end{abstractsec}
-\begin{normaltext}
-  Das Programm fuser setzte ich ein, wenn ich schnell Informationen darüber
-  haben will, welche Prozesse bestimmte Dateien oder Netzwerksockets geöffnet
-  haben, um sie dann mit anderen Programmen näher zu untersuchen.
-  Zwar kann ich die ermittelten Prozesse dann gleich von fuser beenden lassen,
-  aber in diesem Buch geht es vor allem um die Fehleranalyse und dafür wäre
-  das dann meist doch etwas zu grobschlächtig.
-
-  Was mich vor allem interessiert, sind die Prozesse und die Art und Weise,
-  wie diese die betreffenden Dateien verwenden.
-  Diese bekomme ich von fuser in einer Tabelle angezeigt. In der ersten Spalte
-  steht die Datei, dahinter die PID. Mit der Option -v kann ich diese Ausgabe
-  erweitern, so dass fuser für jeden Prozess den Benutzer (USER), die PID, den
-  Zugriff (ACCESS) und den Namen des Prozesses (COMMAND) anzeigt.
-
-  Von diesen ist ACCESS für viele Analysen interessant. Diese Spalte kann die
-  folgenden Merkmale haben:
-  \begin{description}
-    \item[c] CWD, das Arbeitsverzeichnis des Prozesses,
-    \item[e] Executable, die Datei wird als Programm ausgeführt
-    \item[f] File, die Datei ist als normale Datei geöffnet
-    \item[F] File, die Datei ist zum Schreiben geöffnet
-    \item[r] Root, die Datei ist Wurzelverzeichnis
-    \item[m] MMAP, die Datei ist in den Speicherbereich des Prozesses
-      eingeblendet (zum Beispiel als Bibliothek)
-  \end{description}
-  Mit diesen Merkmalen bekomme ich heraus, wie ein Prozess eine Datei
-  verwendet. Allerdings kann ich das nur für Dateien sehen, die noch im
-  Dateisystem verlinkt sind. Dateien, die zwar geöffnet, aber nicht mehr im
-  Dateisystem verlinkt sind, kann ich damit nicht finden. Dazu benötige ich
-  andere Programme, wie zum Beispiel lsof. Mit der Option \verb?--mount?
-  (\verb?-m?) bekomme ich aber zumindest die PID dieser Prozesse, und kann
-  diese dann mit lsof näher untersuchen.
-
-  Dazu muss ich folgende Besonderheit der Ausgabe von fuser beachten. Das
-  Programm schreibt nur die PIDs an die Standardausgabe, alles andere kommt
-  über die Fehlerausgabe. Damit kann ich die Ausgabe von fuser sehr bequem in
-  Scripts weiterverarbeiten:
-  \begin{verbatim}
-for p in $(fuser -m /); do
-    lsof -p $p
-done
-  \end{verbatim}
-  Will ich die Ausgabe allerdings in einem Pager betrachten, oder
-  dokumentieren, so schreibe ich:
-  \begin{verbatim}
-fuser -m / 2>&1 | less
-  \end{verbatim}
-
-  Neben den Prozessen, die auf bestimmte Dateien zugreifen, bin ich manchmal
-  an allen Prozessen interessiert, die irgendeine Datei in einem Dateisystem
-  geöffnet haben. Dafür verwende ich die Option \verb?--mount? (\verb?-m?).
-  Das ist auch der einzige Weg, wie ich mit fuser Prozesse finden kann, die
-  bereits im Dateisystem gelöschte Dateien noch offen halten. Welche Prozesse
-  das konkret sind, kann ich zwar damit noch nicht sagen, aber das kann ich
-  zum Beispiel ermitteln, wenn ich die mit fuser ermittelten Prozesse mit lsof
-  näher betrachte.
-
-  Außer bei Dateien in Dateisystemen kann ich mit fuser auch die Prozesse
-  ermitteln, die bestimmte Sockets geöffnet haben. Dazu wähle ich den
-  entsprechenden Namensraum mit der Option \verb?--namespace SPACE?
-  (\verb?-n SPACE?) aus. Fuser kennt die folgenden Namensräume:
-  \begin{description}
-    \item[file] ist der Standardnamensraum, der nicht extra angegeben werden
-      muss.
-    \item[tcp] steht für TCP-Sockets
-    \item[udp] steht für UDP-Sockets
-  \end{description}
-  Sockets werden nach dem folgenden Schema angegeben:
-  \begin{verbatim}
-[local port][,[remote host][,[remote port]]][/namespace]
-  \end{verbatim}
-  Den Namensraum kann ich angeben, wenn die Angabe eindeutig ist und ich
-  diesen nicht explizit mit \verb?--namespace? angeben will.
-  Die Komma sind wichtig. So zeigt \verb?fuser ssh/tcp? alle Prozesse, die mit
-  dem lokalen Port 22 arbein, währen \verb?fuser ,,ssh/tcp? alle Prozesse mit
-  abgehender SSH-Verbindung an.
-
-  Mit der Option \verb?-4? beziehungsweise \verb?-6? kann ich die Ausgabe auf
-  die entsprechende Version des Internetprotokolls eingrenzen.
-
-  Eine Option, die ich eher selten anwende ist \verb?--kill? (\verb?-k?), mit
-  der fuser ein Signal (ohne weitere Angaben: \verb?SIGKILL?) an die
-  ermittelten Prozesse sendet. Das Signal kann ich mit einem vorangestellten
-  Bindestrich (\verb?-?) angeben, eine Liste der Signale bekomme ich mit
-  \verb?--list-signals? (\verb?-l?). Zum Beispiel könnte ich mit
-  \begin{verbatim}
-fuser -k -HUP 22/tcp
-  \end{verbatim}
-  alle SSH-Anmeldungen an diesem Rechner beenden. War ich selbst via SSH
-  angemeldet, dann habe ich mich damit selbst hinausgeworfen. Oder, falls ich
-  ein Dateisystem aushängen will, beende ich mit
-  \begin{verbatim}
-fuser -k -m /media/cdrom
-  \end{verbatim}
-  alle Prozesse, die auf die eingehängte CD-ROM zugreifen. Falls aber unter
-  /media/cdrom kein Dateisystem eingehängt war, werden alle Prozesse, die das
-  nächsthöhere Dateisystem (meist /) verwenden, beendet. Das kommt einem
-  Ausschalten des Rechners schon sehr nahe. Darum gibt es, quasi als
-  Sicherheitsgurt für solche Fälle, die Option \verb?--ismountpoint?
-  (\verb?-M?), mit der alle Aktionen nur dann ausgeführt werden, wenn der
-  angegebene Dateiname ein Mountpoint ist. Außerdem kann ich mit der Option
-  \verb?-w? das Senden des Signals auf Prozesse einschränken, die eine Datei
-  zum Schreiben geöffnet haben. Das ist dann interessant, wenn ich das Datei
-  von read-write auf read-only umhängen will.
-
-\end{normaltext}
-
-\section{iproute}
-\label{sec:lokal-werkzeuge-iproute}
-\begin{abstractsec}
-  Ein Werkzeug, dass in keinem Werkzeugkasten für die lokale Fehlersuche fehlen
-  Iproute ist ein Softwarepaket, dass ich am häufigsten bei Netzwerkproblemen
-  einsetze. Zwei Programme daraus, ip und ss, nutze ich auch bei lokalen
-  Problemen, daher stelle ich sie bereits hier vor. Im Kapitel über Werkzeuge
-  für Netzwerkprobleme (\ref{cha:netz-werkzeuge}) gehe ich noch etwas
-  ausführlicher auf iproute ein.
-\end{abstractsec}
-\begin{normaltext}
-  Ein Werkzeug, dass in keinem Werkzeugkasten für die lokale Fehlersuche fehlen
-  Iproute ist ein Softwarepaket, dass ich am häufigsten bei Netzwerkproblemen
-  einsetze. Zwei Programme daraus, ip und ss, nutze ich auch bei lokalen
-  Problemen, daher stelle ich sie bereits hier vor. Diese beiden Programme
-  überschneiden sich in der Funktionalität der Programme mit ifconfig, route,
-  netstat und arp.
-  
-  Im Kapitel über Werkzeuge
-  für Netzwerkprobleme (\ref{cha:netz-werkzeuge}) gehe ich noch etwas
-  ausführlicher auf iproute ein. 
-
-  \subsection*{ip}
-
-  Das Programm \verb?ip? funktioniert nach dem Schema
-  \begin{verbatim}
-ip [optionen] objekt befehl
-  \end{verbatim}
-  Die komplette Syntax ist in der Handbuchseite beschrieben. Ich bin bei der
-  lokalen Fehlersuche vor allem an folgenden Objekten interessiert:
-  \begin{description}
-    \item[link] Schnittstellenparameter
-    \item[addr] IP-Adressen
-    \item[neigh] ARP- und NDISC-Caches
-    \item[route] IP-Routingtabellen
-  \end{description}
-  Zu allen Objekten kann ich mit
-  \begin{verbatim}
-ip objekt help
-  \end{verbatim}
-  eine Kurzübersicht der möglichen Befehle und Optionen bekommen.
-
-  Bei der lokalen Fehlersuche verwende ich am häufigsten den Befehl show, um
-  mir den momentanen Zustand anzusehen. Die anderen Objekte und Befehle
-  benötige ich eher selten zur Fehlersuche.
-
-  \subsection*{ss}
-
-  Das Programm \verb?ss? (show sockets) zeigt Informationen über Sockets an.
-  Dabei kann ich auswählen, ob ich mit
-  \begin{description}
-    \item[-t] TCP-Sockets, mit
-    \item[-u] UDP-Sockets, oder mit
-    \item[-x] UNIX-Sockets
-  \end{description}
-  betrachten will.
-
-  Die Ausgabe kann ich mit folgenden Optionen beeinflussen:
-  \begin{description}
-    \item[-n] schaltet die Namensauflösung ab.
-    \item[-r] schaltet die Namensauflösung ein.
-    \item[-l] zeigt Listening Sockets anstelle von Connected Sockets.
-    \item[-a] zeigt sowohl Listening als auch Connected Sockets.
-    \item[-p] zeigt die Prozesse, die einen Socket verwenden.
-  \end{description}
-
-  Auch hier helfen die Handbuchseiten weiter.
-\end{normaltext}
-
-\section{lsof}
-\label{sec:lokal-werkzeuge-lsof}
-\begin{abstractsec}
-  Ein Werkzeug, dass in keinem Werkzeugkasten für die lokale Fehlersuche fehlen
-  sollte, ist lsof. Dieses Programm zeigt Informationen zu Dateien, die von
-  Prozessen geöffnet sind, an.
-\end{abstractsec}
-\begin{normaltext}
-  Ein Werkzeug, dass in meinem Werkzeugkasten für die lokale Fehlersuche nicht
-  fehlen darf, ist lsof. Dieses Programm zeigt Informationen zu Dateien, die
-  von laufenden Prozessen geöffnet sind, an.
-
-  Ich habe dieses Programm erfolgreich beim Untersuchen von Mount-Problemen
-  eingesetzt.
-  Auch beim Aufspüren und Untersuchen von Sicherheitsproblemen leistet es
-  wertvolle Dienste.
-
-  Außer für Linux gibt es dieses Programm auch für andere UNIX-Derivate, bei
-  denen einige Optionen eine andere Bedeutung haben. Aus diesem Grund und weil
-  ich hier nicht alle Optionen erläutern werde, ist ein Blick in die
-  entsprechende Handbuchseite unumgänglich.
-
-  Offene Dateien, die lsof auflistet können
-  \begin{itemize}
-    \item reguläre Dateien,
-    \item Verzeichnisse,
-    \item block- oder zeichenorientierte Spezialdateien,
-    \item Verweise auf ausführbaren Code,
-    \item Bibliotheken,
-    \item UNIX- oder Netzwerksockets sein.
-  \end{itemize}
-
-  In einigen Aspekten überschneidet sich die Funktionialität von lsof mit der
-  von netstat, welches ich weiter hinten in 
-  Sektion \ref{sec:lokal-werkzeuge-netstat}
-  beschreibe. Meist entscheide ich je nach vorliegendem Problem, zu welchem
-  der Programme ich greife.
-
-  Es ist möglich, von lsof statt einer einmaligen Ausgabe, automatisch in
-  bestimmten Abständen neue Schnappschüsse der angeforderten Informationen zu
-  erhalten und die Ausgabe dazu so umzuformen, dass sie gut von einem Skript
-  oder sonstigem Programm überwacht werden kann.
-
-  Rufe ich lsof ohne Optionen und Argumente auf, bekomme ich eine Liste aller
-  Dateien, die alle laufenden Prozesse im Moment geöffnet haben. Bin ich nur
-  an wenigen Dateien interessiert, gebe ich diese als Argumente auf der
-  Kommandozeile an. Bin ich nur an bestimmten Aspekten oder an Dateien, die
-  ich zwar selbst nicht genau kenne, aber deren Eigenschaften, so
-  spezifiziere ich das mit Optionen. Einige dieser Optionen will ich hier
-  vorstellen.
-  
-  Selektiere ich mit einer Option eine definierte Menge von
-  Dateien, dann werden nur die Dateien, die dieser Selektion genögen,
-  angezeigt. Gebe ich mehrere Selektoren an, dann werden alle Dateien
-  angezeigt, die irgendeinem dieser Selektoren entsprechen. Das heißt, die
-  Menge der angezeigten Dateien entspricht der ODER-Verknüpfung der einzelnen
-  Selektoren. Dazu gibt es folgende Ausnahme: wenn ich mit einer Option
-  bestimmte Dateien deselektiere (zum Beispiel durch vorangestelltes \verb?^?
-  bei Auswahllisten), dann werden diese Dateien auch nicht angezeigt, wenn sie
-  nach einem anderen Selektor drann wären. Außerdem kann ich die Verknüpfung
-  der Selektionskriterien mit der Option \verb?-a? von ODER auf UND umstellen.
-  Gebe ich mehrmals die gleiche Option mit verschiedenen Selektoren an, so
-  werden diese vor der ODER- beziehungsweise UND-Verknüpfung zu einem Selektor
-  zusammengefasst.
-  Wenn ich zum Beispiel nur an allen Internetsockets interessiert bin, die von
-  Prozessen mit UID xyz geöffnet sind, dann schreibe ich:
-  \begin{verbatim}
-    lsof -a -i -u xyz
-  \end{verbatim}
-  
-  Nun zu den Optionen.
-
-  Mit Option \verb?-c name? selektiere ich Prozesse, deren Name mit \verb?name?
-  beginnt. Fängt \verb?name? selbst mit \verb?^? an, dann werden genau diese
-  Prozesse ignoriert. Beginnt und endet \verb?name? mit einem Schrägstrich
-  (\verb?/?), dann wird er als regulärer Ausdruck interpretiert.
-
-  Mit der Option \verb?+d s? bekomme ich alle geöffneten Dateien direkt im
-  Verzeichnis \verb?s?. Demgegenüber liefert \verb?+D s? auch die Dateien und
-  Verzeichnisse in den Unterverzeichnissen von \verb?s?, die von Prozessen
-  geöffnet sind. Beide Optionen kann ich mit \verb?-x? kombinieren, damit lsof
-  symbolischen Links folgen und Mountpoints überqueren soll, was es ansonsten
-  nicht machen würde.
-
-  Die Option \verb?-d s? erwartet eine Liste von Dateideskriptoren (diese
-  stehen in der Ausgabe in Spalte FD), die ich einschließen, oder mit \verb?^?
-  ausschließen kann. Möchte ich zwar das Arbeitsverzeichnis, aber nicht die
-  Standardeingabe, -ausgabe und -fehlerausgabe von Prozessen wissen, dann
-  drücke ich das so aus:
-  \begin{verbatim}
-    lsof -d cwd,^0,^1,^2
-  \end{verbatim}
-
-  Mit der Option \verb?-i [m]? bekomme ich Internetsockets und zwar speziell
-  für TCP oder UDP angezeigt. Optional kann ich diese mit dem Muster \verb?m?
-  genauer spezifizieren. Dazu gebe ich \verb?m? in der folgenden Form
-  \verb?[46][protocol][@hostname|hostaddr][:service|port]? an. Hierbei steht
-  \begin{description}
-    \item[4] für die Beschränkung auf IPv4
-    \item[6] für die Beschränkung auf IPv6
-    \item[protocol] für den Protokollnamen TCP oder UDP
-    \item[hostname] für einen Internet-Hostnamen oder alternativ
-    \item[hostaddr] für eine numerische Adresse
-    \item[service] für einen Servicenamen aus /etc/services oder alternativ
-    \item[port] für die Portnummer
-  \end{description}
-  Demgegenüber kann ich mit \verb?-U? UNIX-Domain-Sockets auswählen.
-
-  Die Option \verb?-n? unterdrückt die Umwandlung von Netzadressen in Namen,
-  \verb?-P? die Umwandlung von Portnummern in Servicenamen und schließlich
-  \verb?-l? die Umwandlung von UID in Benutzernamen. Diese Optionen verwende
-  ich, wenn ich mehr Klarheit haben will, oder wenn diese Umwandlung
-  ihrerseits die Ausführung von lsof verzögert, weil DNS- oder NIS-Anfragen
-  für die Auflösung notwendig sind.
-
-  Mit der Option \verb?-u s? lassen sich die Prozesse nach UID oder
-  Benutzernamen auswählen, während ich mit \verb?-p s? die Prozesse direkt
-  nach PID auswählen kann.
-
-  Starte ich lsof mit Otion \verb?-r [t]?, so liefert es die Informationen
-  wiederholt in dem mit \verb?t? spezifizierten Zeitabstand (ohne Angabe 15
-  Sekunden). Diese Option kann ich mit \verb?-F f? kombinieren um die Ausgabe
-  für die einfachere Verarbeitung in einem Skript zu modifizieren.
-\end{normaltext}
-
-\section{ltrace}
-\label{sec:lokal-werkzeuge-ltrace}
-\begin{abstractsec}
-  Ltrace ist, ähnlich strace, ein Programm, mit dem ich einem Prozess bei der
-  Arbeit zusehen kann. Im Gegensatz zu strace, welches nur die
-  Kernel-Schnittstelle beobachtet, zeigt ltrace den Aufruf von
-  Bibliotheksfunktionen.
-\end{abstractsec}
-\begin{normaltext}
-  Ltrace ist, ähnlich strace
-  (siehe Abschnitt \ref{sec:lokal-werkzeuge-strace}),
-  ein Programm, mit dem ich einem Prozess bei der
-  Arbeit zusehen kann. Im Gegensatz zu strace, welches nur die
-  Kernel-Schnittstelle beobachtet, zeigt ltrace den Aufruf von
-  Bibliotheksfunktionen.
-
-  Beim Start eines Programmes via ltrace läßt dieses den Prozess laufen, bis
-  es endet. Dabei fängt ltrace Aufrufe von Bibliotheksfunktionen durch den
-  Prozess und Signale an den Prozess ab und zeigt sie auf STDERR an. Das ist
-  in etwa das Gleiche, was auch strace macht. Da aber ltrace
-  Bibliotheksaufrufe abfängt, ist die Ausgabe viel feiner granuliert und
-  umfangreicher.
-
-  Die folgenden Optionen sind für die Fehlersuche mit ltrace interessant. Für
-  eine komplette Liste der Optionen verweise ich auf die Handbuchseite.
-  \begin{description}
-    \item[-S] Mit dieser Option zeigt ltrace zusätzlich zu den
-      Bibliotheksaufrufen auch Systemaufrufe an der Kernelschnittstelle.
-      Diesen wird in der Ausgabe \verb?SYS_? vorangestellt.
-    \item[-L] Diese Option ist nur zusammen mit \verb?-S? sinnvoll, da sie die
-      Ausgabe der Bibliotheksaufrufe unterdrückt. Mit beiden Optionen zusammen
-      zeigt ltrace etwa das gleiche an wie strace, der einzige Unterschied ist
-      das vorangestellte \verb?SYS_? bei ltrace.
-    \item[-e expr] Damit kann ich die Ereignisse/Funktionen, die angezeigt
-      werden sollen, einschränken. Funktionen, die ich nicht sehen will,
-      kennzeichne ich mit vorangestelltem \verb?!?. So kann ich zum Beispiel
-      mit \verb?ltrace -e malloc,free? nachschauen, ob angeforderter Speicher
-      auch wieder freigegeben wird, was insbesondere bei langlaufenden
-      Prozessen von Belang ist.
-    \item[-f] Diese Option bewirkt, genau wie bei strace, das auch
-      Kindprozesse mit beobachtet werden.
-    \item[-o dateiname] Das bewirkt, ebenfalls wie bei strace, das die Ausgabe
-      von ltrace in die angegebene Datei anstatt zu STDERR ausgegeben wird.
-    \item[-p pid] Mit dieser Option kann ich, wie bei strace, einen bereits
-      laufenden Prozess untersuchen.
-    \item[-i] Mit dieser Option zeigt ltrace den Befehlszeiger zu jedem
-      Funktionsaufruf.
-    \item[-r] Damit fügt ltrace relative Zeitstempel in die Ausgabe, mit denen
-      ich zum Beispiel die Verzögerungen durch Timeouts genauer eingrenzen
-      kann.
-    \item[-T] Mit dieser Option zeigt ltrace die Zeit, die für die
-      Funktionsaufrufe benötigt wurde.
-    \item[-l dateiname] Diese Option erlaubt mir die Beobachtung
-      einzuschränken auf Funktionsaufrufe aus dieser Bibliothek. Ich muss den
-      kompletten Pfad zur Bibliothek angeben. Welche Bibliotheken ein Programm
-      verwendet, bekomme ich mit ldd heraus. Wenn ich an mehreren Bibliotheken
-      interessiert bin, kann ich diese Option mehrfach angeben.
-  \end{description}
-  \begin{notes}
-  \item Diskussion: wann ltrace, wann strace
-  \end{notes}
-\end{normaltext}
-
-\section{netstat}
-\label{sec:lokal-werkzeuge-netstat}
-\begin{abstractsec}
-  In den meisten Fällen setze ich netstat bei Netzwerkproblemen ein.
-  Wenn ich jedoch Probleme mit UNIX-Sockets vermute oder den Prozess, der
-  einen bestimmten Socket verwendet ermitteln will, hilft es mir auch bei der
-  lokalen Fehlersuche.
-\end{abstractsec}
-\begin{normaltext}
-  Ein Werkzeug, das sowohl bei der lokalen, als auch bei der Fehlersuche im
-  Netzwerk behilflich sein kann, ist netstat. Auf den Aspekt
-  Netzwerkfehlersuche gehe ich im Abschnitt \ref{sec:netz-werkzeuge-netstat}
-  näher ein. Hier konzentriere ich mich auf die Fehlersuche bei lokalen
-  Problemen.
-
-  Dafür verwende ich vor allem die Optionen \verb?--protocol=unix?
-  (alternativ: \verb?-A unix?) oder \verb?--unix? (\verb?-x?) um mir die
-  UNIX-Sockets ausgeben zu lassen.
-  Bin ich an den Prozessen interessiert, die die Netzwerksockets verwenden,
-  kann ich diese stattdessen mit \verb?--inet?, \verb?--ipx?, \verb?--tcp?,
-  \ldots selektieren. Das ist ausführlicher in Abschnitt
-  \ref{sec:netz-werkzeuge-netstat} beschrieben.
-
-  Mit \verb?--program? (\verb?-p?) erhalte ich die PID und den Namen des
-  Prozesses, der den Socket benutzt. Dafür benötige ich Superuser-Privilegien.
-  Mit dieser PID kann ich dann zum Beispiel den Prozess mit strace näher
-  betrachten.
-
-  Normalerweise zeigt netstat nur aktive, das heißt verbundene Sockets an. Mit
-  der Option \verb?--listening? (\verb?-l?) kann ich dagegen nur die Sockets
-  ausgeben lassen, die auf eine Verbindung warten oder mit \verb?--all?
-  (\verb?-a?) alle.
-
-  Mehr Informationen kann ich bekommen, wenn ich zusätzlich die Optionen
-  \verb?--verbose? (\verb?-v?) oder \verb?--extend? (\verb?-e?) angebe.
-
-  Die Ausgabe von netstat kommt als Tabelle, deren Spalten die folgende
-  Bedeutung haben:
-  \begin{description}
-    \item[RefCnt] Zeigt die Anzahl der Prozesse, die sich mit dem Socket
-      verbunden haben.
-    \item[Flags] geben zusätzliche Informationen zum Zustand des Sockets aus:
-      \begin{description}
-        \item[ACC] - der Socket wartet auf eine Verbindung
-        \item[W] - der Socket wartet auf Daten
-        \item[N] - der Socket hat im Moment nicht genug Platz zum Schreiben
-      \end{description}
-    \item[Typ] kann stehen für
-      \begin{description}
-        \item[DGRAM] für verbindungslose Sockets
-        \item[STREAM] für verbundene Sockets
-        \item[RAW] für rohe ungefilterte Sockets %XXX FIXME
-        \item[RDM] für zuverlässig ausgelieferte Nachrichten (Reliable
-          Delivered Messages)
-        \item[SEQPACKETS] für nacheinander folgende Pakete %XXX FIXME
-        \item[PACKET] für rohe Interface-Sockets %XXX FIXME
-      \end{description}
-    \item[State] kann für einen der folgenden Zustände des Sockets stehen:
-      \begin{description}
-        \item[Free] - nicht allozierte Sockets %XXX FIXME
-        \item[Listening] - nicht verbundene Sockets
-        \item[Connecting, Connected, Disconnected] - die Phasen einer
-          Socketverbindung
-        \item[(empty)] für unverbundene Sockets %XXX FIXME
-      \end{description}
-    \item[PID] enthält die Prozess-ID und den Namen des Prozesses
-    \item[Path] zeigt den Pfad zum Socket vom Prozess aus an, relativ zum
-      Arbeitsverzeichnis des Prozesses
-  \end{description}
-\end{normaltext}
-
-\section{perl}
-\label{sec:lokal-werkzeuge-perl}
-\begin{abstractsec}
-  Für knifflige Probleme, die ich mit den spezialisierten Werkzeugen nicht zu
-  fassen kriege und denen mit einfacher Shell-Programmierung auch nicht
-  beizukommen ist, benötige ich eine Programmiersprache, die mächtiger als die
-  Shell ist, mit der ich aber trotzdem mit wenig Aufwand ein passendes
-  Programm schreiben kann. Für mich ist das Perl.
-\end{abstractsec}
-\begin{normaltext}
-  Zwischen den vielen Spezialwerkzeugen für die Fehlersuche und der Shell als
-  Kommandozentrale benötige ich hin und wieder ein Werkzeug, mit dem sich auch
-  kniffligere Probleme angehen lassen, die so vielleicht vorher noch gar nicht
-  untersucht worden sind. Etwas, das sich etwa so schnell wie die Shell
-  programmieren läßt, aber ausdrucksstärker ist und auch sehr komplexe
-  Probleme angehen kann. Für micht ist das Perl. Für andere vielleicht Python,
-  das in vielem Perl ähnlich nicht, aber auf keinem Fall in der Syntax.
-
-  Die Programmiersprache Perl umfasst Konzepte von einfachen Werkzeugen wie sed
-  oder awk bis hin zu anspruchsvollen Programmiersprachen wie C oder Lisp. Es
-  gibt umfangreiche Fachliteratur sowohl offline als auch online sowie
-  Communities, an die man sich bei Problemen wenden kann.
-
-  Was Perl aber heraushebt gegenüber vielen anderen Skriptsprachen ist CPAN,
-  das Comprehensive Perl Archive Network, ein so umfangreiches Reservoir an
-  Softwaremodulen für fast alle erdenklichen Zwecke, das es möglich macht, die
-  meisten Skripts auf wenige Zeilen zu beschränken. Die besten und meist
-  verwendeten Module schaffen es mit der Zeit in die Standarddistribution und
-  stehen dann nach der Installation von Perl gleich zur Verfügung. In vielen
-  Fällen muß Perl auch gar nicht installiert werden, weil es bereits
-  Bestandteil des Systems ist.
-
-  Ganz besonders hilfreich bei der Problemlösung mit Perl ist das Perl
-  Kochbuch von Tom Christiansen und Nathan Torkington. In diesem sind Lösungen
-  für viele Probleme in Rezeptform aufbereitet und vor allen Dingen erläutert.
-  Die Codebeispiele aus dem Kochbuch sind Online verfügbar, den meisten Wert
-  zieht man jedoch aus den Erläuterungen im Buch.
-
-  \subsection{HTTP Injector}
-
-  Vor einiger Zeit hatte ich ein Problem, bei dem 502-Fehler von
-  einem Webservice abhängig waren von der Zeit für die
-  Anfrage. Der Betreiber des Webservices stritt das ab und um das
-  Problem zu verifizieren benötigte ich die Möglichkeit HTTP-Anfragen gezielt
-  zu verzögern.
-  
-  Ich kam mit Hilfe des Kochbuches zu folgendem Programm:
-  \begin{verbatim}
-01:#!/usr/bin/perl
-02:use Getopt::Long;
-03:use IO::Socket;
-04:use Time::HiRes qw(sleep);
-05:
-06:my %opt = ( delay => 0 );
-07:
-08:GetOptions( \%opt, 'delay=i');
-09:
-10:my $server = shift;
-11:my $port   = shift || 80;
-12:
-13:my $socket = IO::Socket::INET->new(PeerAddr => $server,
-14:                                   PeerPort => $port,
-15:                                   Proto    => 'tcp',
-16:                                   Type     => SOCK_STREAM);
-17:
-18:my @in = <>;
-19:my $del = $opt{delay} / ( 1.0 + scalar @in );
-20:foreach (@in) {
-21:    s/[\r\n]+$//;
-22:    sleep $del;
-23:    print $socket $_, "\r\n";
-24:}
-25:sleep $del;
-26:print $socket "\r\n";
-27:
-28:while (my $line = <$socket>) {
-29:    print $line;
-30:}
-  \end{verbatim}
-  In den Zeilen 2-4 lade ich die benötigten Module. \verb?Getopt::Long? ist
-  für die Verarbeitung der Kommandozeilenoptionen und sichert ab, dass ich mit
-  \verb?--delay? einen Integerwert angebe. \verb?IO::Socket? stellt die
-  Socketfunktionalität bereit, so dass ich diesen Socket wie eine Datei
-  verwenden kann. \verb?Time::HiRes? stellt mir eine verbesserte
-  \verb?sleep()? Funktion bereit, die mit Gleitkommazahlen zurechtkommt.
-
-  In Zeile 6 stelle ich die Option \verb?--delay? auf den Wert 0 ein, falls
-  sie nicht explizit angegeben wird. In Zeile 8 werden die Optionen
-  eingelesen.
-
-  Zeile 10 und 11 entnehmen den Server und gegebenenfalls den Port der
-  Kommandozeile und in Zeile 13 öffne ich mit diesen Angaben den Socket.
-
-  In Zeile 18 lese ich die gesamte Eingabe in ein Array ein. Dies benötige
-  ich, da ich die Anzahl der Zeilen wissen muss, denn ich verzögere das Senden
-  zeilenweise um jeweils einen Bruchteil der Gesamtverzögerung. Die Zeilen
-  20-25 schließlich bereiten die Zeilenenden auf und senden die modifizierten
-  Zeilen verzögert über den Socket. Zeile 26 schickt die Leerzeile, nach der
-  der Server antwortet.
-
-  In Zeile 28-30 liest das Skript die Antwort des Servers vom Socket und
-  schreibt sie zur Standardausgabe.
-
-  Dieses Skript kann ich nun wie folgt aufrufen:
-  \begin{verbatim}
-time ./http-injector.pl --delay 5 localhost 80 < request > reply
-
-real  0m5.072s
-user  0m0.056s
-sys   0m0.012s
-  \end{verbatim}
-  Dabei steht in der Datei request die HTTP-Anfrage, die ich an den Server
-  sende.
-  Nach fünf Sekunden ist die Anfrage beim Server, und die Antwort landet in
-  der Datei reply.
-
-  Damit konnte ich nachweisen, dass dieselbe Anfrage einen Fehler
-  lieferte, wenn sie mehr als drei Sekunden zur Übertragung brauchte und
-  fehlerfrei beantwortet wurde, wenn sie weniger als drei Sekunden brauchte.
-\end{normaltext}
-
-\section{shell}
-\label{sec:lokal-werkzeuge-shell}
-\begin{abstractsec}
-  En wichtiges Hilfsmittel bei der Fehlersuche ist die Shell. Dies in
-  zweierlei Hinsicht: zum einen starte ich in einer interaktiven Shell die
-  Kommandos, mit denen ich den Fehler eingrenzen will, zum anderen verwende
-  ich die Shell für simple, schnell zusammengestrickte Programme, die mich bei
-  der Fehlersuche unterstützen.
-\end{abstractsec}
-\begin{normaltext}
-  Ein wichtiges Hilfsmittel bei der Fehlersuche ist die Shell. Dies in
-  zweierlei Hinsicht: zum einen starte ich in einer interaktiven Shell die
-  Kommandos, mit denen ich den Fehler eingrenzen will, zum anderen verwende
-  ich die Shell für simple, schnell zusammengestrickte Programme, die mich bei
-  der Fehlersuche unterstützen.
-
-  Bei der Problemeingrenzung bevorzuge ich eine Shell mit History-Funktion und
-  Kommandozeilenergänzung (commandline completion).
-  Die History-Funktion benutze ich vor allem Dingen, um bereits ausgeführte
-  Befehle wieder hervorzuholen, gegebenenfalls geringfügig zu ändern und noch
-  einmal auszuführen. Die Kommandozeilenergänzung beschleunigt den Zusammenbau
-  von neuen Befehlen, in denen die Shell (meist nach Eingabe von \verb?<TAB>?)
-  die Zeile komplettiert oder - bei mehreren möglichen Vervollständigungen -
-  die nächsten Argumente vorschlägt. Das halte ich für unverzichtbar um bei
-  der Fehlersuche den Gedankenflug nicht abreißen zu lassen.
-  Ich bin an die Bash gewähnt, aber andere Shells können das meist ebensogut.
-
-  Für Shell-Scripts bevorzuge ich als kleinsten gemeinsamen Nenner die Bourne
-  Shell (\verb?/bin/sh?). Auf manchen Systemen ist \verb?/bin/sh? nur ein Link
-  auf die Bash. Das ist kein Problem, weil diese als Bourne Again Shell in der
-  Lage ist, Bourne Shell Skripts auszuführen. Da andererseits nicht jede
-  Bourne Shell kompatible Shell in der Lage ist, Bash-Erweiterungen zu
-  verstehen, beschränke ich mich hier nach Möglichkeit auf den kleinsten
-  gemeinsamen Nenner.
-
-  Ich will hier keine komplette Einführung in die Programmierung mit der
-  Bourne Shell geben, sondern verweise stattdessen auf die Handbuchseiten.
-  Stattdessen stelle ich ein Skript vor, das ich in dieser oder ähnlicher Form
-  bereits mehrfach für die Fehlersuche verwendet habe und gehe dann auf die
-  Einzelheiten ein.
-
-  \subsection{Strace Invocator}
-  Manchmal habe ich ein Problem mit einem Programm, bei dem ich auf strace
-  (siehe Abschnitt \ref{sec:lokal-werkzeuge-strace}) zurückgreife,
-  um das Programm bei der Arbeit zu beobachten.
-  Wenn dieses Programm jedoch nicht von Kommandozeile,
-  sondern von einem anderen Programm gestartet wird, greife ich auf folgenden
-  Trick zurück: Ich benenne das Programm um indem ich an den Namen die Endung
-  \verb?.orig? anhänge. Unter dem ursprünglichen Programmnamen platziere ich
-  einen Link auf dieses Skript:
-  \begin{verbatim}
- 1:#!/bin/sh
- 2:
- 3:progname=$(basename $0)
- 4:origin=$0.orig
- 5:
- 6:die () {
- 7:  ev=$1
- 8:  shift
- 9:  echo $* 1>&2
-10:  exit $ev
-11:}
-12:
-13:[ -x $origin ] || die 2 "Can't execute $origin"
-14:
-15:tmpdir=$(mktemp -d /tmp/$progname.XXXXX)
-16:
-17:date > $tmpdir/invocation
-18:
-19:echo "#----- args -----" >> $tmpdir/invocation
-20:for arg in "$@"; do echo $arg >> $tmpdir/invocation; done
-21:
-22:echo "#----- id -----" >> $tmpdir/invocation
-23:id >> $tmpdir/invocation
-24:
-25:echo "#----- env -----" >> $tmpdir/invocation
-26:env >> $tmpdir/invocation
-27:
-28:strace -f -o $tmpdir/strace.out $origin "$@"
-  \end{verbatim}
-  Zeile 1 zeigt an, dass das Skript mit der Bourne Shell läuft.
-
-  In Zeile 3 bestimme ich den Namen des aufgerufenen Programms und in Zeile 4
-  den Namen des eigentlichen Programms.
-
-  In Zeile 6 bis 11 habe ich eine kleine Funktion, mit der ich das Skript mit
-  Fehlermeldung und -code beenden kann.
-
-  In Zeile 13 teste ich, ob das Originalprogramm da und ausführbar ist und
-  breche andernfalls ab. Dazu nutze ich die oben definierte Funktion.
-
-  In Zeile 15 lege ich ein temporäres Verzeichnis mit eindeutigem Namen an.
-  Damit kann ich mich bei der Auswertung in aller Ruhe auf jeden einzelnen
-  Aufruf des Programms konzentrieren.
-
-  In den Zeilen 17 bis 26 halte ich verschiedene Informationen zum Aufruf
-  fest. Und zwar die aktuelle Zeit, ide übergebenen Argumente, die
-  Benutzer-Id, unter der der Prozess läuft und die Umgebungsvariablen.
-
-  In Zeile 28 schließlich rufe ich via strace das Originalprogramm mit allen
-  Argumenten auf. Diesen Aufruf kann ich noch modifizieren, wenn ich an der
-  Standardeingabe für das Programm interessiert bin:
-  \begin{verbatim}
-28:tee $tmpdir/stdin | strace -f -o $tmpdir/strace.out $origin "$@"
-  \end{verbatim}
-  Oder, wenn ich sowohl an der Standardeingabe als auch an der Standardausgabe
-  interessiert bin:
-  \begin{verbatim}
-28:tee $tmpdir/stdin \
-29:| strace -f -o $tmpdir/strace.out $origin "$@" \
-30:| tee $tmpdir/stdout
-  \end{verbatim}
-\end{normaltext}
-
-\section{strace}
-\label{sec:lokal-werkzeuge-strace}
-
-\begin{abstractsec}
-  Mit strace kann ich die Interaktion eines Programmes mit dem Linux-Kernel
-  beobachten. Dieses verwende ich zum Beispiel um unvorhergesehene
-  Programmabrüche oder unerklärliches Verhalten eines Binärprogrammes zu
-  analysieren.
-\end{abstractsec}
-\begin{normaltext}
-  Strace ist ein Werkzeug, dass ich einsetze, wenn mir das Verhalten eines
-  Programmes unklar ist. Wenn ich Probleme mit Zugriffsrechten vermute, aber
-  keinen Anhaltspunkt in den Fehlermeldungen oder Systemprotokollen finde.
-  Wenn ich mit einem Programm noch wenig Erfahrung habe, kaum Hilfe zu meinem
-  Problem im Internet finde, aber das Problem trotzdem so schnell wie möglich
-  beheben will.
-  In \cite{guug:uptimes:2012.1/07} führt Harald König sehr gut in die Arbeit
-  mit strace ein.
-  
-  Strace hilft mir, wenn ich beobachten will, wie ein Programm
-  mit seiner Umgebung interagiert. Es setzt dazu an der Kernelschnittstelle
-  an und protokolliert alle Systemaufrufe mit den Parametern und Ergebnissen.
-  Diese werden im Protokoll ähnlich den Systemaufrufen in der
-  Programmiersprache C dargestellt: das Ergebnis steht hinter einem
-  Gleichheitszeichen am Ende der Zeile, die Systemzeit steht vor dem
-  Systemaufruf. Wenn ich mehrere Prozesse beobachte und in dieselbe Datei
-  protokolliere, steht auch noch die Prozess-ID am Anfang der Zeile.
-
-  Um die Ausgabe von strace interpretieren zu können, ist es hilfreich die
-  Sektion der Handbuchseiten zu installiert zu haben. Diese befinden sich bei
-  Debian-basierten Systemen im Paket manpages-dev.
-
-  Da strace Systemaufrufe der beobachteten Prozesse protokolliert, verlangsamt
-  sich deren Ablauf, was zu zusätzlichen Problemen bei der Fehlersuche führen
-  kann. Dessen muss ich mir beim Einsatz von strace immer bewusst sein.
-
-  Ich persönlich setze strace bei der Fehlersuche meist auf eine der folgenden
-  Weisen ein.
-
-  Bei Problemen mit mit Programmen, die von Hand aufgerufen werden, starte ich
-  das betreffende Programm wie gewohnt, allerdings setze ich am Anfang der
-  Kommandozeile strace mit einigen Optionen ein. Aus
-
-  \begin{verbatim}
-  $ make xyz
-  \end{verbatim}
-
-  wird dann
-
-  \begin{verbatim}
-  $ strace -f -o make.strace make xyz
-  \end{verbatim}
-
-  Dabei bedeuten die Optionen
-
-  \begin{description}
-    \item[-f] Strace soll auch von make gestartete Programme verfolgen.
-    \item[-o make.strace] Die Ausgabe soll in die Datei make.strace
-      geschrieben werden.
-  \end{description}
-
-  Bei Problemen mit bereits gestarteten Prozessen verwende ich die Option
-  {\bf -p PID} um mich mit dem betreffenden Prozess zu verbinden. Alle
-  weiteren Optionen verwende ich wie gehabt, auf die Angabe des Programmnamens
-  und der Programmparameter kann ich verzichten.
-
-  Schwieriger ist es, wenn ein Programm ein zweites aufruft, dieses ein
-  drittes und so weiter. Wenn ich nur an einem der Programme interessiert bin
-  und nicht genau weiss, von welchem Prozess beziehungsweise Programm dieses
-  gestartet wird, helfe ich mir mit einem Trick. Ich benenne das eigentliche
-  Programm um und ersetze es durch ein Skript, welche alle mich
-  interessierenden Werte wie zum Beispiel die Aufrufparameter, die Umgebung,
-  die UID/GID, die Standardeingabe und/oder -ausgabe protokolliert und
-  schließlich das Originalprogramm via strace aufruft.
-  Damit bekomme ich meist genügend Informationen, um das Problem zu lösen.
-  Natürlich darf ich am Ende nicht vergessen, das Skript wieder durch das
-  Originalprogramm zu ersetzen.
-
-  \begin{notes}
-  \item Was für eine Kernelschnittstelle nutzt strace?
-  \item Strace-Skript: Datum, Kommandozeile, Umgebung, Benutzer,
-    Standardeingabe, Strace-Ausgabe
-  \end{notes}
-
-\end{normaltext}
-\section{sysstat}
-\label{sec:lokal-werkzeuge-sysstat}
-
-\begin{abstractsec}
-  Sysstat ist ein Werkzeug zur Einschätzung der Systemperformance.
-\end{abstractsec}
-\begin{normaltext}
-  Sysstat ist ein Werkzeug zur Einschätzung der Systemperformance.
-
-  Üblicherweise wird via cron aller 10 Minuten ein Skript gespeichert, das die
-  Systemstatistiken sichert. Diese Statistiken können dann mit verschiedenen
-  Auswertewerkzeugen ausgelesen werden.
-
-  Alternativ können diese Werkzeuge auch selbst periodisch die
-  Performancedaten sammeln und als aktuelle Schnappschüsse ausgeben.
-
-  Zur Auswertung mit sysstat stehen die folgenden Werkzeuge zur Verfügung:
-  \begin{description}
-    \item[cifsiostat] liefert CIFS Statistiken
-    \item[iostat] liefert CPU- und I/O-Statistiken für Geräte und Partitionen
-    \item[mpstat] liefert (multi-)prozessorbezogene Statistiken
-    \item[nfsiostat] liefert NFS-bezogene I/O-Statistiken
-    \item[pidstat] liefert Statistiken über Linux-Tasks (-Prozesse)
-    \item[sar, sadf] Sar sammelt, berichtet und sichert Informationen zu
-      Systemaktivitäten, sadf gibt die von sar gesammelten Daten in
-      verschiedenen Formaten aus.
-  \end{description}
-
-  Die Auswertung der Statistikdaten mit sar wurde bereits in
-  \cite{Loukides:1996:SPT:547780} beschrieben. Da sich die Software seitdem
-  weiterentwickelt hat, ist ein Blick in die Handbuchseiten unerlässlich.
-
-  Für die grafische Auswertung gibt es verschiedene Programme. Ein
-  Programm, sargraph, wird als Beispiel mit sysstat verteilt. Dieses wertet
-  die XML-Ausgabe von sadf auf und übergibt sie an gnuplot zur Darstellung.
-\end{normaltext}
-
-\section{vmstat}
-\label{sec:lokal-werkzeuge-vmstat}
-
-\begin{abstractsec}
-  Das Programm vmstat verwende ich, um bei lokalen Performanceengpässen einen
-  Überblick über das Gesamtsystem zu bekommen. Es liefert mir statistische
-  Informationen über Prozesse, Speicher, I/O, Platen- und CPU-Aktivitäten.
-\end{abstractsec}
-\begin{normaltext}
-  Das Programm vmstat verwende ich, um bei lokalen Performanceengpässen einen
-  Überblick über das Gesamtsystem zu bekommen. Es liefert mir statistische
-  Informationen über Prozesse, Speicher, I/O, Platen- und CPU-Aktivitäten.
-  Durch die kompakte Darstellung kann ich im Wiederholungsmodus  ein Gefühl
-  für die normale Aktivität des Gesamtsystems bekommen und sehe dann, wenn ein
-  Performanceengpass auftritt, manchmal sofort, ob es ein allgemeines
-  Ressourcenproblem ist (zuwenig Speicher, zu schwache CPU, zu langsame
-  Platte, \ldots) oder ob ich mich doch eher mit dem betreffenden Programm
-  beschäftigen muss.
-
-  Für die meisten Optionen sind keine speziellen Privilegien erforderlich, das
-  heißt, ich kann mit vmstat auch als normaler Benutzer mal eben nachsehen,
-  wie es dem System geht.
-  
-  Im Wiederholungsmodus zeigt das Programm in der ersten Zeile für alle Werte
-  den Durchschnitt seit Systemstart an und in den folgenden Zeilen die Werte
-  für die betreffende Abtastperiode. Diesen Modus verwende ich am häufigsten:
-  \begin{verbatim}
-vmstat [-a] [-n] [periode [anzahl]]
-  \end{verbatim}
-  Lasse ich die beiden Zahlen für \verb?periode? und \verb?anzahl? weg, dann
-  bekomme ich nur die Durchschnittswerte seit Systemstart angezeigt. Das
-  brauche ich eigentlich nur, wenn ich das System sehr gut kenne oder mehrere
-  ähnliche Systeme vergleichen will.
-
-  Gebe ich eine Zahl für \verb?periode? an, dann verwendet vmstat diese als Länge der
-  Periode in Sekunden mit der es kontinuierlich die Werte der letzten Periode
-  ausgibt. Auch hier steht in der ersten Zeile der Durchschnitt seit
-  Systemstart, so dass ich gleich ab der zweiten Zeile sehen kann, womit das
-  System besonders beschäftigt ist.
-
-  Gebe ich auch eine Zahl für \verb?anzahl? an, dann beendet sich vmstat nach
-  soviel Perioden, wie angegeben.
-
-  Die Ausgabe von vmstat in diesem Modus bedeutet folgendes:
-  \begin{description}
-    \item[Procs] Unter \verb?r? steht hier die Anzahl der Prozesse, die laufen
-      können und unter \verb?b? steht die Anzahl der Prozesse in
-      uninteruptible sleep, das heißt der Prozesse, die im Kernelcode auf I/O
-      warten.
-    \item[Memory] Hier habe ich unter \verb?swpd? die Menge des verwendeten
-      virtuellen Speichers (des ausgelagerten Hauptspeichers). Unter
-      \verb?free? finde ich den unbenutzten Speicher, unter \verb?buff?
-      Speicher, der für Datei- und Socketpuffer verwendet wird. Der unter
-      \verb?cache? aufgeführte Speicher wird für zwischengespeicherte Daten
-      von Blockdevices verwendet.
-
-      Habe ich die Option \verb?-a? angegeben, wird statt \verb?buffer/cache?
-      aktiver und inaktiver Speicher angezeigt.
-    \item[IO] Unter des Spalte \verb?bi? finde ich die Anzahl der von
-      Blockdevices gelesenen Blöcke (blocks in) und unter \verb?bo? die
-      geschriebenen (blocks out).
-    \item[System] Hier finde ich unter \verb?in? die Anzahl der Interrupts pro
-      Sekunde und unter \verb?cs? die Anzahl der Kontextwechsel pro Sekunde.
-    \item[CPU] Diese Spalten zeigen prozentual, wie die CPU ihre Zeit
-      verbringt. Unter\verb?us? steht der Anteil, den die CPU mit Code in
-      Benutzerprogrammen verbringt. Unter \verb?sy? steht die Zeit für das
-      Abarbeiten von Systemaufrufen und unter \verb?id? die untätige (idle)
-      Zeit. Bis zum Kernel 2.5.41 zählte auch die Zeit, in der die CPU auf I/O
-      wartete hierzu, ab dann gab es dafür die Spalte \verb?wa?.
-  \end{description}
-  \begin{notes}
-  \item Was bedeutet aktive / inactive bei Memory?
-  \end{notes}
-
-  Im Wiederholungsmodus kann ich mit Option \verb?-a? die Anzeige des Speichers von
-  buffer/cache auf inactive/active umschalten und mit \verb?-n? die
-  wiederholte Anzeige der Kopfzeilen abschalten. Letztere sind insbesondere
-  bei länger laufender Ausgabe praktisch, wenn ich nicht genau im Kopf habe,
-  welche Spalte was anzeigt. Daher verwende ich \verb?-n? so gut wie nie.
-
-  Mit Option \verb?-m?, die Superuserprivilegien erfordert, zeigt vmstat
-  Informationen zum Slab Allocator an. Das ist ein Verfahren zur Verwaltung
-  des Arbeitsspeichers. Weitere Informationen hierzu finden sich in
-  \cite{Bonwick:1994:SAO:1267257.1267263}.
-
-  Mit Option \verb?-d? zeigt vmstat einmalig Diskstatistiken für alle Disk
-  Devices (das können auch RAM-Disks und Loop Devices sein) an.
-  Dabei bedeuten:
-  \begin{description}
-    \item[Reads/Writes] für Lese-/Schreib-Zugriffe:
-      \begin{description}
-        \item[total] alle erfolgreichen Zugriffe
-        \item[merged] gruppierte Zugriffe, die in einem I/O-Vorgang resultieren
-        \item[sectors] erfolgreich gelesene/geschriebene Sektoren
-        \item[ms] Anzahl der lesend/schreiben verbrachten Millisekunden
-      \end{description}
-    \item[I/O] Unter \verb?cur? die gerade laufende I/O und unter \verb?s? die
-      Sekunden, die das System mit I/O verbracht hat.
-  \end{description}
-
-  Mit Option \verb?-D? zeigt vmstat einmalig zusammengefasste Statistiken zu
-  allen Disks.
-
-  Und mit \verb?-p partition? schließlich zeigt vmstat einmalig Statistiken fü
-  diese Partition. Hierbei bedeuten in der Ausgabe:
-  \begin{description}
-    \item[reads] die Gesamtzahl der Lesezugriffe auf diese Partition
-    \item[read sectors] die Gesamtzahl der gelesenen Sektoren dieser Partition
-    \item[writes] die Gesamtzahl der Schreibzugriffe auf diese Partition
-    \item[requested writes] die Gesamtzahl der Schreibanforderungen für diese
-      Partition
-  \end{description}
-\end{normaltext}
-%\subsection{Seiteneffekte}
-%\label{sec:seiteneffekte}
-
-%\subsection{Einschränkung der Umsetzung}
-%\label{sec:einschr-der-umsetz}
-
-%\section{Schnittstellen nach außen}
-%\label{sec:schn-nach-au3en}
-
-%\subsection{Schnittstelle zu A}
-%\label{sec:schnittstelle-zu}
-
-%\subsection{Schnittstelle zu B}
-%\label{sec:schnittstelle-zu-b}
-
-%\begin{notes}
-%\item Syntax
-%\item Semantik
-%\end{notes}
-
 
 %%% Local Variables: 
 %%% mode: latex
