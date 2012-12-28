@@ -152,7 +152,7 @@
   kniffligere Probleme angehen lassen, die so vielleicht vorher noch gar nicht
   untersucht worden sind. Etwas, das sich etwa so schnell wie die Shell
   programmieren läßt, aber ausdrucksstärker ist und auch sehr komplexe
-  Probleme angehen kann. Für micht ist das Perl. Für andere vielleicht Python,
+  Probleme angehen kann. Für mich ist das Perl. Für andere vielleicht Python,
   das in vielem Perl ähnlich nicht, aber auf keinem Fall in der Syntax.
 
   Die Programmiersprache Perl umfasst Konzepte von einfachen Werkzeugen wie sed
@@ -170,92 +170,69 @@
   Bestandteil des Systems ist.
 
   Ganz besonders hilfreich bei der Problemlösung mit Perl ist das Perl
-  Kochbuch von Tom Christiansen und Nathan Torkington. In diesem sind Lösungen
+  Kochbuch von Tom Christiansen und Nathan Torkington
+  \cite{ChristiansenTorkington04de}. In diesem sind Lösungen
   für viele Probleme in Rezeptform aufbereitet und vor allen Dingen erläutert.
   Die Codebeispiele aus dem Kochbuch sind Online verfügbar, den meisten Wert
   zieht man jedoch aus den Erläuterungen im Buch.
 
-  \subsection*{HTTP Injector}
+  \subsection*{Syslog auswerten}
 
-  Vor einiger Zeit hatte ich ein Problem, bei dem 502-Fehler von
-  einem Webservice abhängig waren von der Zeit für die
-  Anfrage. Der Betreiber des Webservices stritt das ab und um das
-  Problem zu verifizieren benötigte ich die Möglichkeit HTTP-Anfragen gezielt
-  zu verzögern.
+  Es kommt immer mal wieder, dass ich die Zeilen in den Systemprotokollen
+  miteinander verknüpfen muss, um eine ganz spezielle Auswertung zu bekommen.
+  Finde ich kein geeignetes Programm, beginne ich mit folgendem Fragment, dass
+  ich dann für die Lösung meines konkreten Problems ausbaue:
   
-  Ich kam mit Hilfe des Kochbuches zu folgendem Programm:
   \begin{verbatim}
 01:#!/usr/bin/perl
-02:use Getopt::Long;
-03:use IO::Socket;
-04:use Time::HiRes qw(sleep);
-05:
-06:my %opt = ( delay => 0 );
-07:
-08:GetOptions( \%opt, 'delay=i');
-09:
-10:my $server = shift;
-11:my $port   = shift || 80;
-12:
-13:my $socket = IO::Socket::INET->new(PeerAddr => $server,
-14:                                   PeerPort => $port,
-15:                                   Proto    => 'tcp',
-16:                                   Type     => SOCK_STREAM);
-17:
-18:my @in = <>;
-19:my $del = $opt{delay} / ( 1.0 + scalar @in );
-20:foreach (@in) {
-21:    s/[\r\n]+$//;
-22:    sleep $del;
-23:    print $socket $_, "\r\n";
-24:}
-25:sleep $del;
-26:print $socket "\r\n";
-27:
-28:while (my $line = <$socket>) {
-29:    print $line;
-30:}
+03:use Time::Local;
+05:my $wanted = 'CRON';
+06:my $syslogline = qr/^
+07:    (\S{3})\s{1,2}              # $1: month name
+08:    (\d{1,2})\s                 # $2: day of month
+09:    (\d\d):(\d\d):(\d\d)\s      # $3, $4, $5: hour, minute, second
+10:    (\S+)\s                     # $6: host
+11:    ([^[:]+)                    # $7: process name
+12:    (?:\[(\d+)\])?              # $8: process id
+13:    :\s
+14:    (.+)                        # $9: log line
+15:    $/x;
+16:my ($sec,$min,$hour,$mday,$month,$year,$wday,$yday,$isdst) = localtime time;
+18:while (<>) {
+19:    if (/$syslogline/) {
+20:        my $time = utctime($1, $2, $3, $4, $5);
+21:        if ($7 eq $wanted) {
+22:            process_line($time,$6,$7,$8,$9);
+23:        }
+24:    }
+25:}
+27:sub utctime {
+28:    my ($month,$dom,$hour,$min,$sec) = @_;
+29:    my %months = (
+30:        Jan => 0, Feb => 1, Mar => 2, Apr => 3, May => 4, Jun => 5,
+31:        Jul => 6, Aug => 7, Sep => 8, Oct => 9, Nov => 10, Dec => 11,
+32:    );
+33:    return timegm($sec, $min, $hour, $dom, $months{$month}, $year);
+34:}
+36:sub process_line {
+37:    print join(" ",@_,"\n");
+38:    # ...
+39:}
   \end{verbatim}
-  In den Zeilen 2-4 lade ich die benötigten Module. \verb?Getopt::Long? ist
-  für die Verarbeitung der Kommandozeilenoptionen und sichert ab, dass ich mit
-  \verb?--delay? einen Integerwert angebe. \verb?IO::Socket? stellt die
-  Socketfunktionalität bereit, so dass ich diesen Socket wie eine Datei
-  verwenden kann. \verb?Time::HiRes? stellt mir eine verbesserte
-  \verb?sleep()? Funktion bereit, die mit Gleitkommazahlen zurechtkommt.
+  In Zeile 05 gebe ich den Prozess an, an dessen Logzeilen ich interessiert
+  bin. Sind es mehrere Prozesse, muss ich gegebenenfalls die Zeile 21
+  anpassen.
 
-  In Zeile 6 stelle ich die Option \verb?--delay? auf den Wert 0 ein, falls
-  sie nicht explizit angegeben wird. In Zeile 8 werden die Optionen
-  eingelesen.
+  Die Zeilen 06-15 definieren einen regulären Ausdruck mit dessen Hilfe ich
+  die Protokollzeilen aufspalte in die angegebenen Bestandteile.
 
-  Zeile 10 und 11 entnehmen den Server und gegebenenfalls den Port der
-  Kommandozeile und in Zeile 13 öffne ich mit diesen Angaben den Socket.
+  Die Zeitfelder fasse ich in der Funktion \verb?utctime()? zu einer Zahl
+  zusammen. Als Jahr nimmt das Skript das aktuelle an, dieses wird in zeile 16
+  ermittelt.
 
-  In Zeile 18 lese ich die gesamte Eingabe in ein Array ein. Dies benötige
-  ich, da ich die Anzahl der Zeilen wissen muss, denn ich verzögere das Senden
-  zeilenweise um jeweils einen Bruchteil der Gesamtverzögerung. Die Zeilen
-  20-25 schließlich bereiten die Zeilenenden auf und senden die modifizierten
-  Zeilen verzögert über den Socket. Zeile 26 schickt die Leerzeile, nach der
-  der Server antwortet.
-
-  In Zeile 28-30 liest das Skript die Antwort des Servers vom Socket und
-  schreibt sie zur Standardausgabe.
-
-  Dieses Skript kann ich nun wie folgt aufrufen:
-  \begin{verbatim}
-time ./http-injector.pl --delay 5 localhost 80 < request > reply
-
-real  0m5.072s
-user  0m0.056s
-sys   0m0.012s
-  \end{verbatim}
-  Dabei steht in der Datei request die HTTP-Anfrage, die ich an den Server
-  sende.
-  Nach fünf Sekunden ist die Anfrage beim Server, und die Antwort landet in
-  der Datei reply.
-
-  Damit konnte ich nachweisen, dass dieselbe Anfrage einen Fehler
-  lieferte, wenn sie mehr als drei Sekunden zur Übertragung brauchte und
-  fehlerfrei beantwortet wurde, wenn sie weniger als drei Sekunden brauchte.
+  In Funktion \verb?process_line()? ab Zeile 36 kann ich die gesamte
+  Auswertelogik für die Protokollzeilen schreiben und dabei auf die bereits
+  separierten allgemeinen Felder und die eigentliche Nachricht zurückgreifen.
 \end{normaltext}
 
 \section{fuser}
