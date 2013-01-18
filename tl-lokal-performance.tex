@@ -29,6 +29,35 @@
 \subsection*{Festplatten}
 \label{sec:performance-festplatten}
 
+\begin{normaltext}
+  Bei vermuteten Performanceproblemen mit Festplatten kann man mit hdparm
+  zumindest die Lesegeschwindigkeit kontrollieren. Mit dem Befehl
+  \begin{verbatim}
+# hdparm -tT /dev/sda
+  \end{verbatim}
+  bekomme ich einen Überblick über die Lesegeschwindigkeit der ersten
+  Festplatte.
+  Sinnvollerweise rufe ich den Befehl auf, wenn
+  das System sonst unbelastet ist und wiederhole ihn noch ein oder zwei mal.
+
+  Mit der Option \verb?-t? ermittelt hdparm die Lesegeschwindigkeit der Platte
+  durch die Buffercaches, ohne dass letztere vorher gefüllt werden. Das zeigt
+  an, wie schnell die Festplatte die sequentiell Daten unter Linux liefern
+  kann.
+
+  Mit der Option \verb?-T? zeigt hdparm, wie schnell Linux die Daten aus dem
+  Buffercache lesen kann, ohne auf die Festplatte zuzugreifen.
+
+  Will ich einen Überblick über die Schreibgeschwindigkeit, kann ich zum
+  Beispiel bonnie++ verwenden.
+
+  Bei allen diesen Benchmark gilt, dass sie nur relativ zu anderen Systemen
+  sinnvoll sind. Das bedeutet, das man am besten bereits im Vorfeld Benchmarks
+  auf verschiedenen Systemen macht und die Rahmenbedingungen so genau wie
+  möglich notiert (Betriebssystemversion, CPU, Speicher, Plattenparameter) um
+  im Falle eines Problems die Ausgaben interpretieren zu können.
+\end{normaltext}
+
 \begin{notes}
 \item HD Performancemessung mit hdparm (ALIX performance with an
   internal disk)
