@@ -8,7 +8,7 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[ifconfig, iproute, bridge-utils, netstat, route] zur Abfrage,
+\item[arp, ifconfig, iproute, bridge-utils, netstat, route] zur Abfrage,
   Manipulation der (Kernel-)Netzwerkschnittstellen und Kernelrouten
 \item[mii-tools, eth-tools] für Hardware-Ethernet-Schnittstellen
 \item[ping, traceroute, nmap] zur ersten Diagnose von Verbindungsproblemen
@@ -19,9 +19,72 @@
 \item[telnet, nc, openssl, smbclient] zum Testen von Anwendungsprotokollen
 \end{notes}
 
+\section{ifconfig}
+\label{sec:netz-werkzeuge-ifconfig}
+\begin{abstractsec}
+  Das Programm ifconfig dient traditionell der Konfiguration der
+  Netzwerkschnittstellen. Außerdem liefert es Informationen über den aktuellen
+  Zustand und die Konfiguration der Netzwerkschnittstelle.
+\end{abstractsec}
+\begin{normaltext}
+  Das Programm ifconfig dient traditionell der Konfiguration der
+  Netzwerkschnittstellen. Außerdem liefert es Informationen über den aktuellen
+  Zustand und die Konfiguration der Netzwerkschnittstelle.
+
+  Seit einiger Zeit wird das Netzwerk mit dem Programm ip vom Paket iproute2
+  konfiguriert, welches in Sektion \ref{sec:netz-werkzeuge-iproute}
+  beschrieben ist.
+
+  Es gibt drei prinzipielle Aufrufmöglichkeiten für ifconfig. Mit
+  \begin{verbatim}
+# ifconfig [-a]
+  \end{verbatim}
+  zeigt das Programm den Status der aktiven Schnittstellen (ohne \verb?-a?)
+  beziehungsweise aller (aktiven und nichtaktiven) Schnittstellen (mit
+  \verb?-a?) an.
+
+  Durch Aufruf von
+  \begin{verbatim}
+# ifconfig $schnittstellenname
+  \end{verbatim}
+  zeigt das Programm den Zustand genau der angegebenen Schnittstelle an.
+
+  In der dritten Form,
+  \begin{verbatim}
+# ifconfig $schnittstellenname $optionen
+  \end{verbatim}
+  wird die Schnittstelle konfiguriert.
+
+  Die wichtigsten Optionen beim Troubleshooting sind
+  \begin{description}
+    \item[up] zum Aktivieren von Schnittstellen
+    \item[down] zum Deaktivieren
+    \item[mtn N] zum Setzen der Maximum Transfer Unit
+    \item[netmask M] zum Setzen der Netzmaske
+    \item[hw A] zum Setzen der Hardware-Adresse
+  \end{description}
+
+  Weitere Informationen liefert die Handbuchseite.
+
+  Es ist möglich, an eine Netzwerkschnittstelle mehrere IP-Adressen zu binden.
+  Das Programm ifconfig arbeitet jedoch mit einer Adresse pro Schnittstelle.
+  Um weitere Adressen an diese Schnittstelle zu binden, fügt man an den
+  Schnittstellennamen einen Doppelpunkt und eine Zahl an.
+
+  \begin{notes}
+  \item Beispiel für mehrere Adressen an einer Schnittstelle
+  \end{notes}
+\end{normaltext}
+
+\section{iproute}
+\label{sec:netz-werkzeuge-iproute}
+\begin{abstractsec}
+\end{abstractsec}
+\begin{normaltext}
+\end{normaltext}
+
 \section{netstat}
 \label{sec:netz-werkzeuge-netstat}
-
 \begin{abstractsec}
   Mit netstat ist es möglich essentielle Informationen zur
   Netzwerkkonfiguration und zum aktuellen Zustand der Netzwerksockets und
