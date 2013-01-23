@@ -8,7 +8,7 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[arp, ifconfig, iproute, bridge-utils, netstat, route] zur Abfrage,
+\item[arp, iproute, bridge-utils, netstat, route] zur Abfrage,
   Manipulation der (Kernel-)Netzwerkschnittstellen und Kernelrouten
 \item[mii-tools, eth-tools] für Hardware-Ethernet-Schnittstellen
 \item[ping, traceroute, nmap] zur ersten Diagnose von Verbindungsproblemen
@@ -30,10 +30,6 @@
   Das Programm ifconfig dient traditionell der Konfiguration der
   Netzwerkschnittstellen. Außerdem liefert es Informationen über den aktuellen
   Zustand und die Konfiguration der Netzwerkschnittstelle.
-
-  Seit einiger Zeit wird das Netzwerk mit dem Programm ip vom Paket iproute2
-  konfiguriert, welches in Sektion \ref{sec:netz-werkzeuge-iproute}
-  beschrieben ist.
 
   Es gibt drei prinzipielle Aufrufmöglichkeiten für ifconfig. Mit
   \begin{verbatim}
@@ -71,9 +67,69 @@
   Um weitere Adressen an diese Schnittstelle zu binden, fügt man an den
   Schnittstellennamen einen Doppelpunkt und eine Zahl an.
 
-  \begin{notes}
-  \item Beispiel für mehrere Adressen an einer Schnittstelle
-  \end{notes}
+  In letzter Zeit werden die Netzwerkschnittstellen auch mit dem Programm ip
+  vom Paket iproute2 konfiguriert, welches in Sektion
+  \ref{sec:netz-werkzeuge-iproute} beschrieben ist.
+  Für den schnellen Überblick über die aktuelle Schnittstellenkonfiguration
+  gefällt mir die Ausgabe von \verb?ip addr show? besser, da sie kompakter
+  ist, was sich insbesondere dann auszahlt, wenn ein Rechner mehrere
+  Netzwerkschnittstellen hat, oder mehrere Adressen auf einer Schnittstelle.
+
+  Hier habe ich die Ausgabe für einen Rechner:
+  \begin{verbatim}
+$ /sbin/ifconfig -a
+eth0      Link encap:Ethernet  HWaddr 00:01:6c:6f:c5:d6  
+          inet addr:192.0.2.5  Bcast:192.0.2.255  Mask:255.255.255.0
+          inet6 addr: 2001:db8::201:6cff:fe6f:c5d6/64 Scope:Global
+          inet6 addr: fe80::201:6cff:fe6f:c5d6/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:12259377 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:13256939 errors:0 dropped:0 overruns:0 carrier:1
+          collisions:0 txqueuelen:1000 
+          RX bytes:3104599402 (2.8 GiB)  TX bytes:1370040423 (1.2 GiB)
+          Interrupt:30 
+
+eth0:0    Link encap:Ethernet  HWaddr 00:01:6c:6f:c5:d6  
+          inet addr:192.0.2.246  Bcast:192.0.2.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          Interrupt:30 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:5386162 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5386162 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:668745964 (637.7 MiB)  TX bytes:668745964 (637.7 MiB)
+
+wlan0     Link encap:Ethernet  HWaddr 0c:60:76:7c:3e:25  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+  \end{verbatim}
+  Die Ausgabe von \verb?ip? ist demgegenüber wesentlich kompakter.
+  \begin{verbatim}
+$ ip addr show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 00:01:6c:6f:c5:d6 brd ff:ff:ff:ff:ff:ff
+    inet 192.0.2.246/24 brd 192.0.2.255 scope global eth0:0
+    inet 192.0.2.5/24 brd 192.0.2.255 scope global secondary eth0
+    inet6 2001:db8:201:6cff:fe6f:c5d6/64 scope global dynamic 
+       valid_lft 86345sec preferred_lft 14345sec
+    inet6 fe80::201:6cff:fe6f:c5d6/64 scope link 
+       valid_lft forever preferred_lft forever
+3: wlan0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN qlen 1000
+    link/ether 0c:60:76:7c:3e:25 brd ff:ff:ff:ff:ff:ff
+  \end{verbatim}
+
 \end{normaltext}
 
 \section{iproute}
