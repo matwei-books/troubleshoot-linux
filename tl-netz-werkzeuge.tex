@@ -8,7 +8,7 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[arp, iproute, bridge-utils, netstat, route] zur Abfrage,
+\item[iproute, bridge-utils, netstat, route] zur Abfrage,
   Manipulation der (Kernel-)Netzwerkschnittstellen und Kernelrouten
 \item[mii-tools, eth-tools] für Hardware-Ethernet-Schnittstellen
 \item[ping, traceroute, nmap] zur ersten Diagnose von Verbindungsproblemen
@@ -18,6 +18,43 @@
   -tabellen
 \item[telnet, nc, openssl, smbclient] zum Testen von Anwendungsprotokollen
 \end{notes}
+
+\section{arp}
+\label{sec:netz-werkzeuge-arp}
+\begin{abstractsec}
+  Das Programm arp dient der Anzeige und Manipulation des ARP-Caches des
+  Kernels und wird bei Problemen in direkt angeschlossenen Netzwerksegmenten
+  eingesetzt.
+\end{abstractsec}
+\begin{normaltext}
+  Das Programm arp dient der Anzeige und Manipulation des ARP-Caches des
+  Kernels und wird bei Problemen in direkt angeschlossenen Netzwerksegmenten
+  eingesetzt.
+
+  ARP, das (Ethernet) Address Resolution Protocol, dient der Zuordnung von
+  Internetadressen zu Ethernet-Adressen. Es wurde in RFC826 beschrieben und in
+  RFC5227 und RFC5494 aktualisiert.
+
+  Der prinzipielle Aufruf ist:
+  \begin{verbatim}
+# arp [Optionen] [Rechnername]
+  \end{verbatim}
+
+  Bei Aufruf ohne Optionen zeigt arp die MAC-Adressen an, die Rechnername
+  zugeordnet sind. Fehlt Rechnername, werden alle bekannten Adresszuordnungen
+  angezeigt. Rechnername kann dabei ein Hostname sein, ein FQDN oder eine
+  IP-Adresse.
+
+  Die für die Fehlersuche wichtigsten Optionen sind:
+  \begin{description}
+    \item[-n] damit unterlässt das Programm die Namensauflösung bei der
+      Anzeige
+    \item[-d Rechnername] entfernt alle Einträge für Rechnername
+    \item[-s Rechnername Hardwareadresse] setzt den Eintrag für Rechnername
+      auf Hardwareadresse
+  \end{description}
+  Für weitergehende Informationen verweise ich wieder auf die Handbuchseite.
+\end{normaltext}
 
 \section{ifconfig}
 \label{sec:netz-werkzeuge-ifconfig}
