@@ -172,8 +172,68 @@ $ ip addr show
 \section{iproute}
 \label{sec:netz-werkzeuge-iproute}
 \begin{abstractsec}
+  Die Programme der iproute-Suite sind moderne Werkzeuge zur Anzeige und
+  Konfiguration von Netzwerkschnittstellen, -routen und -verkehrskontrolle.
+
+  Sie bieten gegenüber den Programmen der net-tools-Suite erweiterte
+  Möglichkeiten.
 \end{abstractsec}
 \begin{normaltext}
+  Die Programme der iproute-Suite sind moderne Werkzeuge zur Anzeige und
+  Konfiguration von Netzwerkschnittstellen, -routen und -verkehrskontrolle.
+
+  Sie bieten gegenüber den Programmen der net-tools-Suite erweiterte
+  Möglichkeiten.
+
+  Mit dem Kernel kommunizieren sie über die (rt)netlink-Schnittstelle.
+
+  Die iproute-Suite umfasst unter anderem die folgenden Programme:
+  \begin{description}
+    \item[ip] zum Anzeigen und Konfigurieren von Netzwerkschnittstellen,
+      -adressen, -routen, Policy-Regeln, ARP- und NDISC-Einträgen, IP-Tunneln
+      und Multicast
+    \item[ss] zur Anzeige von Socketstatistiken
+    \item[tc] zur Anzeige und Konfiguration von Netzwerkverkehrskontrolle
+      (traffic control)
+    \item[arpd] einen Userspace-ARP-Daemon
+    \item[*stat, rtacct] verschiedene Statistikwerkzeuge
+  \end{description}
+
+  Weitere und genauere Informationen stehen in den betreffenden Handbuchseiten
+  und der zugehörigen Dokumentation.
+
+  \subsection{ip}
+
+  Das Program ip dient zum Anzeigen / Manipulieren von Routen, Schnittstellen,
+  Policy-Routing und Tunneln. Es ist das Programm aus der Suite, das ich am
+  häufigsten interaktiv aufrufe.
+
+  Allgemein sieht der Aufruf des Programms wie folgt aus:
+  \begin{verbatim}
+  ip [ Optionen ] Objekt [ Befehl [ Argumente ] ]
+  \end{verbatim}
+
+  Die Optionen sind allgemeine Modifikatoren, die das Verhalten des Programms
+  ändern, wie zum Beispiel \verb?-4? und \verb?-6?, die die Adressfamilie auf
+  IPv4 oder IPv6 einschränken.
+
+  Das Objekt gibt an, worüber ich Informationen wünsche, beziehungsweise, was
+  ich manipulieren will. Mögliche Objekte sind unter anderem:
+  \begin{description}
+    \item[link] Netzwerkschnittstellen
+    \item[address] Protokoll-Adressen an einer Schnittstelle
+    \item[neighbour] ARP- oder NDISC-Einträge
+    \item[route] Einträge in der Kernel-Routingtabelle
+    \item[rule] Regeln in der Policydatenbank
+    \item[maddress] Multicast-Adressen
+    \item[mroute] Multicast-Routingeinträge
+    \item[tunnel] IP-Tunnel
+    \item[monitor] Nachrichten auf der netlink-Schnittstelle des Kernels
+  \end{description}
+
+  Der Befehl schließlich gibt die Aktion an, die wir ausführen wollen und wird
+  gegebenenfalls von passenden Argumenten gefolgt. Befehl und Argumente sind
+  spezifisch für die entsprechenden Objekte.
 \end{normaltext}
 
 \section{netstat}
