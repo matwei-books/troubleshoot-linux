@@ -17,6 +17,7 @@
 \item[quagga] zur Diagnose und Manipulation von Routingprotokollen und
   -tabellen
 \item[telnet, nc, openssl, smbclient] zum Testen von Anwendungsprotokollen
+\item[iperf, ttcp, nuttcp] zur Diagnose von Performanceproblemen
 \end{notes}
 
 \section{arp}
@@ -202,7 +203,7 @@ $ ip addr show
   Weitere und genauere Informationen stehen in den betreffenden Handbuchseiten
   und der zugehörigen Dokumentation.
 
-  \subsection{ip}
+  \subsection*{ip}
 
   Das Program ip dient zum Anzeigen / Manipulieren von Routen, Schnittstellen,
   Policy-Routing und Tunneln. Es ist das Programm aus der Suite, das ich am
@@ -236,6 +237,58 @@ $ ip addr show
   spezifisch für die entsprechenden Objekte.
 \end{normaltext}
 
+  \subsection*{ss}
+
+  Das Programm ss (socket statistics) liefert Informationen und Statistiken zu
+  Sockets. Ähnliche Informationen kann ich zum Beispiel auch mit netstat
+  bekommen, jedoch habe ich bei ss mehr Möglichkeiten zur Filterung, was mir
+  insbesondere bei Servern mit vielen Verbindungen zugute kommt.
+
+  Der Aufruf ist wie folgt:
+  \begin{verbatim}
+  ss [ Optionen ] [ Filter ]
+  \end{verbatim}
+
+  Debei zeigt ss ohne Optionen die verbundenen TCP-Sockets an.
+
+  Die wichtigsten Optionen sind unter anderen:
+  \begin{description}
+    \item[-a] um alle Sockets anzuzeigen
+    \item[-l] um nur die Listening Sockets anzuzeigen (diese werden per
+      Default ausgelassen)
+    \item[-p] um die zugehörigen Prozesse anzuzeigen (dafür benötige ich
+      Rootrechte)
+    \item[-t | -u | -w | -x] um TCP-, UDP-, Raw- oder Unix-Sockets auszuwählen
+  \end{description}
+
+  Der Filter beim Aufruf von ss hat die allgemeine Form:
+  \begin{verbatim}
+  [ TCP-Status ] [ Ausdruck ]
+  \end{verbatim}
+
+  Um nach TCP-Status zu filtern, gebe ich das Schlüsselwort \verb?state? oder
+  \verb?exclude? gefolgt von einem der Standard-TCP-Zustandsnamen oder einem
+  der folgenden an:
+  \begin{description}
+    \item[all] für alle Zustände
+    \item[bucket] für TCP-Minisockets (TIME-WAIT|SYN-RECV)
+    \item[big] für alle außer den Minisockets
+    \item[connected] für alle nicht geschlossenen und nicht lauschenden
+      Sockets
+    \item[synchronized] für alle verbundenen Sockets, die nicht im Zustand
+      SYN-SENT sind
+  \end{description}
+
+  Falls weder ein \verb?state? noch ein \verb?exclude? Statement vorhanden
+  ist, ist die Voreinstellung \verb?all? bei Option \verb?-a? und ansonsten
+  alle außer \verb?listening?, \verb?syn-recv?, \verb?time-wait? und
+  \verb?closed?.
+
+  Mit dem (booleschen) Ausdruck kann ich nach Adressen und Ports filtern.
+
+  Weitere Optionen und ausführlichere Informationen zur Filterung gibt es in
+  der Handbuchseite und im Artikel ``SS Utility: Quick Intro'', der sich bei
+  der Dokumentation des iproute-Pakets befindet.
 \section{netstat}
 \label{sec:netz-werkzeuge-netstat}
 \begin{abstractsec}
