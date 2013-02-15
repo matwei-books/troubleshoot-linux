@@ -363,7 +363,46 @@ tc qdisc add dev $device root $disc $params
   enthalten, die zunächst auch nur ein QDISC haben.
 
   Wenn ein Datenpaket in einer klassenbasierten QDISC ankommt, wird es genau
-  einer der enthaltenen Klassen zugeordnet.
+  einer der enthaltenen Klassen zugeordnet. Sind Filter für eine Klasse
+  definiert, werden diese zuerst für die Klassifizierung herangezogen. Einige
+  QDISC werten auch das TOS-Feld des IP-Headers aus.
+
+  Jeder Knoten im Klassenbaum kann seine eigenen Filter haben. Filter in
+  höheren Ebenen können direkt auf niedrigere Klassen verweisen.
+
+  Wenn ein Paket nicht klassifiziert werden konnte, geht es in die
+  Blatt-QDISC der Klasse.
+
+  \subsubsection*{Namen}
+  Alle QDISC, Klassen und Filter haben Ids, die automatisch bestimmt oder
+  explizit spezifiziert werden. Diese Ids bestehen aus einer Haupt- und einer
+  Nebennummer, getrennt durch Doppelpunkt.
+
+  Ein QDISC, welche potentiell Kinder haben kann, bekommt eine Hauptnummer,
+  die 'Handle' genannt wird und lässt die Nebennummer als Namensraum für die
+  Klassen. Üblicherweise benennt man QDISC, die Kinder haben, explizit.
+
+  Alle Klassen, die zur selben QDISC gehören, teilen sich die gleiche
+  Hauptnummeer. Jede hat eine separate Nebennummer, die Class-Id genann wird
+  un sich auf die QDISC (nicht die Elternklasse bezieht).
+
+  Filter haben eine dreiteilige Filter-Id, die nur bei einer Filter-Hierarchie
+  benötigt werden.
+
+  \subsubsection*{tc Befehle}
+  \begin{description}
+    \item[add] Fügt eine QDISC, Klasse oder einen Filter an. Der Vorfahre
+      (root oder Class-Id) muss angegeben werden. QDISC oder Filter können mit
+      dem \verb?handle? Parameter benannt werden, Klassen mit \verb?classid?.
+    \item[remove] entfernt eine QDISK
+    \item[change] modifiziert eine Einheit am Orte
+    \item[replace] gleichzeitiges \verb?remove? / \verb?add?, der neue Knoten
+      wird gegebenenfalls neu erzeugt
+    \item[link] gleichzeitiges \verb?remove? / \verb?add?, der neue Knoten
+      muss bereits existieren.
+  \end{description}
+
+  Weitere Informationen finden sich in der Handbuchseite von \verb?tc?.
 \section{netstat}
 \label{sec:netz-werkzeuge-netstat}
 \begin{abstractsec}
