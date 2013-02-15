@@ -289,6 +289,81 @@ $ ip addr show
   Weitere Optionen und ausführlichere Informationen zur Filterung gibt es in
   der Handbuchseite und im Artikel ``SS Utility: Quick Intro'', der sich bei
   der Dokumentation des iproute-Pakets befindet.
+
+  \subsection*{tc}
+
+  Mit dem Programm tc (traffic control) kann ich die Einstellungen zur
+  Verkehrssteuerung des Kernels ansehen und manipulieren.
+
+  Dabei gilt es drei Arten von Objekten zu unterscheiden:
+  \begin{description}
+    \item[QDISC] (queueing discipline) beschreiben das
+      Warteschlangenverhalten, das heißt, wie und in welcher Reihenfolge
+      Datenpakete, die in eine QDISC eingereiht wurden, an den Treiber der
+      Netzwerkkarte zum Senden übergeben werden. Wenn ein Datenpaket gesendet
+      werden soll, wird es in die für das Interface konfigurierte QDISC
+      eingereiht. Unmittelbar danach versucht der Kernel, so viele Pakete wie
+      möglich an den Netzwerkadapter zu übergeben.
+    \item[CLASS] (Klassen) können in QDISC enthalten sein und wiederum weitere
+      QDISC enthalten. Datenpakete werden in den inneren QDISC eingereiht.
+      Datenpakete, die an den Netzwerkadapter übergeben werden, können
+      von jeder inneren QDISC kommen. Dadurch, dass bestimmte Klassen vor
+      anderen drankommen, kann der Datenverkehr priorisiert werden.
+    \item[FILTER] entscheiden, welcher Klasse ein Datenpaket bei einem
+      klassenbasierten QDISC zugeordnet wird. Alle Filter einer Klasse werden
+      aufgerufen, bis einer eine Entscheidung trifft.
+  \end{description}
+
+  \subsubsection*{Klassenlose QDISC}
+  Die folgenden Klassenlosen QDISC stehen zur Verfügung:
+  \begin{description}
+    \item[fifo] ist die einfachste Form (First In, First Out). Die QDISC
+      kann auf Paketebene (pfifo) oder Byteebene (bfifo) begrenzt werden.
+    \item[pfifo\_fast] ist die Standard-QDISC für Advanced Router Kernel. Diese
+      enthält eine dreireihige Warteschlange, die das TOS-Feld und die
+      Priorität des Datenpakets beachten.
+    \item[red] (Random Early Detection) simuliert eine überlastete Leitung,
+      indem zufällig Datenpakete verworfen werden, wenn sich der Durchsatz der
+      konfigurierten Bandbreite nähert.
+    \item[sfq] (Stochastic Fairness Queueing) sortiert die wartenden
+      Datenpakete um, so dass jede Sitzung reihum dran ist.
+    \item[tbf] (Token Bucket Filter) ist geeignet, um den Traffic zu eineer
+      präzise konfigurierten Bandbreite zu verlangsamen.
+  \end{description}
+
+  Klassenlose QDISC müssen an der Wurzel installiert werden:
+  \begin{verbatim}
+tc qdisc add dev $device root $disc $params
+  \end{verbatim}
+
+  \subsubsection*{Klassenbasierte QDISC}
+  Die folgenden klassenbasierten QDISC stehen zur Verfügung:
+  \begin{description}
+    \item[cbq] (Class Based Queueing) bildet eine Hierarchie von Klassen, die
+      sich einen Link teilen und kann sowohl priorisieren als auch den
+      Durchsatz begrenzen.
+    \item[htb] (Hierarchy Token Buffer) ermöglicht garantierte Bandbreiten für
+      Klassen und erlaubt die Ausgabe von oberen Grenzen für das Teilen von
+      Bandbreite zwischen Klassen. Es enthält begrenzende Elemente auf Basis
+      von TBF und kann Klassen priorisieren.
+    \item[prio] wird für Priorisierung ohne Begrenzung der Bandbreite
+      verwendet.
+  \end{description}
+
+  \subsubsection*{Theorie}
+  Die Klassen formen einen Baum, bei dem jede Klasse genau einen Vorfahren hat
+  und mehrere Kinder haben kann.
+
+  Manche QDISC erlauben zur Laufzeit Klassen hinzuzufügen (CBQ, HTB), andere
+  nicht (PRIO). Erstere können beliebig viele (auch keine) Subklassen haben,
+  in denen die Datenpakete einsortiert werden.
+
+  Jede Klasse enthält genau ein Blatt-QDISC (per Default pfifo), welcher durch
+  ein anderes ersetzt werden kann. Diese QDISC kann wiederum andere Klasse
+  enthalten, die zunächst auch nur ein QDISC haben.
+
+  Wenn ein Datenpaket in einer klassenbasierten QDISC ankommt, wird es genau
+  einer der enthaltenen Klassen zugeordnet.
 \section{netstat}
 \label{sec:netz-werkzeuge-netstat}
 \begin{abstractsec}
