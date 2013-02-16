@@ -406,6 +406,36 @@ tc qdisc add dev $device root $disc $params
   \subsection*{lnstat / nstat / rtacct}
   Diese Programme liefern Netzwerkstatistiken. Nähere Informationen siehe
   Handbuchseiten.
+
+  \subsection*{rtmon}
+  Mit dem Programm rtmon kann ich Änderungen an der Routingtabelle des Kernels
+  über den \verb?netlink? Socket beobachten. Das Programm kann vor der ersten
+  Netzwerkkonfiguration, zum Beispiel in einem Init-Script, gestartet werden.
+
+  Rtmon schreibt in eine Datei und stellt der Historie der Routingtabelle
+  einen Schnappschuss des Zustandes beim Start des Programms voran. Die Datei
+  kann ich mit dem bereits besprochenen Programm ip auswerten.
+
+  Der typische Aufruf sieht in etwa so aus:
+  \begin{verbatim}
+  # rtmon file /var/log/rtmon.log
+  \end{verbatim}
+  Anschließend kann ich die protokollierten Änderungen wie folgt ausgeben
+  lassen:
+  \begin{verbatim}
+  # ip monitor file /var/log/rtmon.log
+  \end{verbatim}
+
+  Sowohl beim Aufruf von rtmon, als auch bei dem von ip kann ich angeben, an
+  welchen Objekten ich interessiert bin:
+  \begin{description}
+    \item[link], den Netzwerkgeräten
+    \item[address], den Protokolladressen (IPv4, IPv6) an einem Gerät
+    \item[route], den Einträgen der Routingtabelle
+    \item[all], an allem
+  \end{description}
+
+  Weitere Informationen finden sich auch hier in der Handbuchseite.
 \section{netstat}
 \label{sec:netz-werkzeuge-netstat}
 \begin{abstractsec}
