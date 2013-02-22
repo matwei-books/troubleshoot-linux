@@ -8,7 +8,7 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[iproute, bridge-utils, netstat, route] zur Abfrage,
+\item[route] zur Abfrage,
   Manipulation der (Kernel-)Netzwerkschnittstellen und Kernelrouten
 \item[mii-tools, eth-tools] für Hardware-Ethernet-Schnittstellen
 \item[ping, traceroute, nmap] zur ersten Diagnose von Verbindungsproblemen
@@ -56,6 +56,112 @@
   \end{description}
   Für weitergehende Informationen verweise ich wieder auf die Handbuchseite.
 \end{normaltext}
+
+\section{bridge-utils}
+\label{sec:netz-werkzeuge-bridge-utils}
+\begin{abstractsec}
+  Ein Rechner mit Linux kann nicht nur als Router IP-Pakete in Layer 3
+  weiterleiten, sondern auch als Bridge in Layer 2. Letzteres wird mit den
+  bridge-utils konfiguriert.
+\end{abstractsec}
+\begin{normaltext}
+  Ein Rechner mit Linux kann nicht nur als Router IP-Pakete in Layer 3
+  weiterleiten, sondern auch als Bridge in Layer 2. Letzteres wird mit den
+  bridge-utils konfiguriert.
+
+  Es gibt mehrere Szenarien, in denen man sich bei der Fehlersuche mit der
+  Linux-Layer2-Bridge beschäftigen muß. Zum einen, wenn ich einen verdächtigen
+  Rechner habe und zur Kontrolle jeglichen Netzverkehrs eine Bridge vor seinen
+  Netzanschluß schalten will. Oder, wenn ich den Verkehr auf einer
+  Punkt-zu-Punkt-Verbindung kontrollieren will. In diesen Fällen möchte ich
+  das restliche Netzwerk möglichst unverändert lassen und keinen anderen
+  Rechner umkonfigurieren um das Problem beobachten zu können. Mit einer
+  Bridge bekomme ich allen Datenverkehr an der betreffenden Stelle frei Haus
+  geleifert. Bis 100 MBit/s eignen sich beispielsweise kleine
+  Einplatinenrechner, wie in \cite{weidner12:linuxkopflos} beschrieben, sehr
+  gut dafür. Ein anderes Szenario ist eine regulär betriebene Bridge (zum
+  Beispiel für virtuelle Maschinen), die scheinbar nicht funktioniert und die
+  ich mit den bridge-utils untersuchen kann.
+
+  Prinzipiell kann ich mit einer Linux-Bridge den Verkehr filtern und
+  begrenzen. Dafür verwende ich auf Layer2-Ebene \verb?ebtables? und auf
+  Layer3-Ebene \verb?iptables?, bei letzteren benötige ich für eine Bridge
+  mindestens einen Kernel ab Version 2.4.
+
+  Linux-Bridges können das Spanning Tree Protocol (STP) verwenden und ich kann
+  sie auch zur Diagnose von STP-Problemen heranziehen (obwohl mir hier sicher
+  tcpdump, wireshark, etc genausogut weiterhelfen.
+
+  Generell wird eine Bridge mit den Programmen \verb?ifconfig?
+  (beziehungsweise \verb?ip? von iproute2) und \verb?brctl? konfiguriert.
+
+  Falls eine Bridge keinen Traffic durchlässt, kann ich in
+  \verb?/proc/sys/net/bridge/? nach Dateien mit Namen wie \verb?bridge-nf-*?
+  suchen. Diese legen fest, ob die betreffende Bridge Verkehr filtert. Das
+  kann ich abschalten, indem ich eine '0' in die betreffende Datei schreibe:
+  \begin{verbatim}
+# echo 0 > /proc/sys/net/bridge/bridge-nf-call-arptables
+# echo 0 > /proc/sys/net/bridge/bridge-nf-call-ip6tables
+# echo 0 > /proc/sys/net/bridge/bridge-nf-call-iptables
+  \end{verbatim}
+
+  Ein Problem mit Bridges könnte das Bridge-Forwarding-Delay von circa 30
+  Sekunden sein, das bei DHCP-Clients Probleme bereiten kann.
+
+  Mit dem Program \verb?brctl? bearbeite beziehungsweise inspiziere ich
+  die Bridge-Konfiguration im Linux-Kernel.
+
+  Dabei verwende ich die folgenden Befehle um eine oder mehrere
+  Bridge-Instanzen zu bearbeiten:
+  \begin{description}
+    \item[brctl addbr name] fügt eine neue Bridge-Instanz namens 'name' hinzu.
+    \item[brctl delbr name] entfernt die Bridge 'name'.
+    \item[brctl show] zeigt alle momentan bekannten Bridges und die ihnen
+      zugeordneten Interfaces an.
+  \end{description}
+
+  Jede Bridge benötigt Ports, zwischen denen sie Ethernet-Pakete vermittelt.
+  Diese bearbeite ich mit den folgenden Befehlen:
+  \begin{description}
+    \item[brctl addif brname if] fügt die Schnittstelle 'if' zur Bridge
+      mit Namen 'brname' hinzu. Das Interface muss ich mit \verb?ifconfig?
+      oder \verb?ip? aktivieren.
+    \item[brctl delif brname if] entfernt Schnittstelle 'if' von Bridge
+      'brname'.
+    \item[brctl show brname] zeigt Informationen zur Bridge 'brname'.
+    \item[brctl showmacs brname] zeigt die der Bridge 'brname' momentan
+      bekannten MAC-Adressen an. Um herauszufinden, an welcher Schnittstelle
+      die betreffende MAC-Adresse zuletzt gesichtet wurde, bestimme ich die
+      die Adresse und den Port in den Zeilen, in denen bei Spalte
+      \verb!is local?! auf 'yes' steht und ermittle mit \verb?ifconfig? oder
+      \verb?ip? die betreffende Ethernetschnittstelle.
+  \end{description}
+
+  Die Timer der Bridge kann ich mit den folgenden Befehlen bearbeiten:
+  \begin{description}
+    \item[brctl setageing brname time] setzt den Ageing-Timer für die Bridge
+      'brname'. Nach dem eine MAC-Adresse so viele Sekunden nicht gesehen
+      wurde, wird die Bridge sie aus der Forwarding-Tabelle austragen.
+    \item[brctl setgcint brname time] setzt das Intervall für die Garbage
+      Collection auf 'time' Sekunden. Aller 'time' Sekunden kontrolliert die
+      Bridge die Forwarding-Tabelle nach veralteten MAC-Adressen.
+  \end{description}
+
+  Das Spanning Tree Protocol kann ich mit den folgenden Befehlen bearbeiten:
+  \begin{description}
+    \item[brctl stp brname status] schaltet STP an Bridge 'brname' ein, wenn
+      ich für 'status' \verb?on? oder \verb?yes? angebe.
+    \item[brctl showstp brname] zeigt detaillierte Angaben zu STP an Bridge
+      'brname'.
+  \end{description}
+  Für weitere Befehle zur Manipulation von STP verweise ich auf die
+  Handbuchseite. Vor deren Einsatz empfiehlt es sich, sich mit dem Spanning
+  Tree Protocol vertraut zu machen.
+\end{normaltext}
+\begin{notes}
+\item Skript, um Interface zu MAC-Adressen auszugeben
+\item Referenzen zum Spanning Tree Protocol
+\end{notes}
 
 \section{ifconfig}
 \label{sec:netz-werkzeuge-ifconfig}
