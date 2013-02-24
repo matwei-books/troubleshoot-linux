@@ -8,8 +8,6 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[route] zur Abfrage,
-  Manipulation der (Kernel-)Netzwerkschnittstellen und Kernelrouten
 \item[mii-tools, eth-tools] für Hardware-Ethernet-Schnittstellen
 \item[ping, traceroute, nmap] zur ersten Diagnose von Verbindungsproblemen
 \item[tcpdump, wireshark, libtrace-tools] zur Diagnose von hartnäckigen
@@ -653,6 +651,22 @@ tc qdisc add dev $device root $disc $params
   Informationen aller Sekunde ausgegeben.
 \end{normaltext}
 
+
+\section{route}
+\label{sec:netz-werkzeuge-route}
+\begin{abstractsec}
+  Das Programm route ist für die Anzeige und Manipulation von Routingeinträgen
+  zuständig.
+\end{abstractsec}
+\begin{normaltext}
+  Das Programm \verb?route? ist für die Anzeige und Manipulation von
+  Routingeinträgen zuständig.
+  
+  Da die gleiche Funktionialität mit dem Befehl \verb?ip route? und
+  entsprechenden Optionen erreicht werden kann, gehe ich hier nicht näher auf
+  das \verb?route? ein. Falls das Paket iproute2 auf einen Rechner nicht
+  installiert ist, verweise ich auf die Handbuchseite.
+\end{normaltext}
 \section{perl}
 \label{sec:lokal-werkzeuge-perl}
 \begin{abstractsec}
