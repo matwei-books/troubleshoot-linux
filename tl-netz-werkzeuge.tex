@@ -8,7 +8,6 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[mii-tools, eth-tools] für Hardware-Ethernet-Schnittstellen
 \item[ping, traceroute, nmap] zur ersten Diagnose von Verbindungsproblemen
 \item[tcpdump, wireshark, libtrace-tools] zur Diagnose von hartnäckigen
   Verbindungsproblemen
@@ -666,6 +665,49 @@ tc qdisc add dev $device root $disc $params
   entsprechenden Optionen erreicht werden kann, gehe ich hier nicht näher auf
   das \verb?route? ein. Falls das Paket iproute2 auf einen Rechner nicht
   installiert ist, verweise ich auf die Handbuchseite.
+\end{normaltext}
+\section{ethtool, mii-diag, mii-tools}
+\label{sec:netz-werkzeuge-ethtool}
+\begin{abstractsec}
+  Mit den Programmen ethtool, mii-diag beziehungsweise mii-tool kann ich die
+  Konfiguration der Ethernetschnittstellen anzeigen und manipulieren,
+  zumindest bei modernen Schnittstellen.
+\end{abstractsec}
+\begin{normaltext}
+  Mit den Programmen ethtool, mii-diag beziehungsweise mii-tool kann ich die
+  Konfiguration der Ethernetschnittstellen anzeigen und manipulieren,
+  zumindest bei modernen Schnittstellen.
+
+  Dazu verwenden diese Programme meist das Media Independend Interface (MII),
+  von dem sich auch der Name ableitet.
+
+  Welches Programm installiert ist, hängt von der verwendeten
+  Linux-Distribution ab. Ob man es überhaupt verenden kann, hängt auch von der
+  verwendeten Ethernetkarte ab. Moderne Ethernetkarten und die
+  Onboardschnittstellen neuerer Rechner funktionieren üblicherweise gut mit
+  diesen Programmen.
+
+  Unter anderem kann man mit diesen Programmen
+  \begin{itemize}
+    \item die Ethernet-Geschwindigkeit, das Duplexverhalten und das Aushandeln
+      der Parameter mit dem Switch beziehungsweise der angeschlossenen
+      Gegenstelle einstellen oder abfragen
+    \item die Wake-On-Lan-Konfiguration bearbeiten
+    \item Selbsttests anstoßen
+  \end{itemize}
+
+  Gerade die Möglichkeit, Fehlanpassungen in der Geschwindigkeit oder beim
+  Duplexverhalten zu erkennen, kann sich als sehr wertvoll bei der Diagnose
+  von Performanceproblemen erweisen.
+
+  Bei einer LWL-Verbindung über mehrere Kilometer hatten wir ernste
+  Performanceprobleme, bei denen die Transferrate in ener Richtung auf wenige
+  KB/s beim beidseitigen Lasttest herunterging. Der erste Gedanke war eine
+  schlechte Faser, da das Problem nur in einer Richtung auftrat. Mit den
+  mii-tools konnten wir eine Fehlanpassung der Ethernetkarte mit dem
+  Medienwandler diagnostizieren. Nachdem wir die Schnittstelle auf Full-Duplex
+  eingestellt hatten, blieb die verfügbare Bandbreite auch bei Volllast in
+  beiden Richtungen im erwarteten Rahmen.
 \end{normaltext}
 \section{perl}
 \label{sec:lokal-werkzeuge-perl}
