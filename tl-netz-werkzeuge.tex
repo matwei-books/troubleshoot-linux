@@ -709,6 +709,222 @@ tc qdisc add dev $device root $disc $params
   eingestellt hatten, blieb die verfügbare Bandbreite auch bei Volllast in
   beiden Richtungen im erwarteten Rahmen.
 \end{normaltext}
+
+\section{ping}
+\label{sec:netz-werkzeuge-ping}
+\begin{abstractsec}
+  Eines der grundlegenden und vielseitigsten Werkzeuge für das
+  Netzwerk-Troubleshooting ist ping. Mit diesem Programm kann ich die
+  Erreichbarkeit einer Maschine testen, die Paketlaufzeit sehen, die
+  Bandbreite einer Verbindung ermitteln, die Performance meines Rechners und
+  des Netzwerkes abschätzen, Netzlast für bestimmte Tests erzeugen.
+\end{abstractsec}
+\begin{normaltext}
+  Eines der grundlegenden und vielseitigsten Werkzeuge für das
+  Netzwerk-Troubleshooting ist Ping. Mit diesem Programm kann ich:
+  \begin{itemize}
+    \item testen, ob eine Maschine überhaupt erreichbar ist,
+    \item sehen, wie lange ein Paketaustausch dauert,
+    \item analysieren, welche Bandbreite die Verbindung zu einem Rechner hat,
+    \item die Performance meines Rechners und Netzwerkes einschätzen,
+    \item eine hohe Netzlast für andere Tests erzeugen.
+  \end{itemize}
+
+  Natürlich sind alle mit Ping gewonnen Erkenntnisse mit einer Prise Salz zu
+  nehmen, aber das trifft schließlich auf jedes Werkzeug zu.
+
+  In \cite{sloan2001} sind die Anwendungen von Ping beim
+  Netzwerk-Troubleshooting sehr gut und ausführlich beschrieben, so dass ich
+  sie hier nur kurz zusammenfassen brauch.
+
+  \subsection{Verbindungstest}
+  Das ist der einfachste Test, den ich mit Ping ausführen kann. Ich gebe
+  \begin{verbatim}
+$ ping rechnername
+  \end{verbatim}
+  ein und bekomme heraus, ob die betreffende Maschine erreichbar ist. Das
+  heißt, ob Antwortpakete von dort zurück kommen. Ältere Versionen des
+  Programms begnügten sich auch schon mit der Ausgabe:\
+  \begin{verbatim}
+rechnername is alive
+  \end{verbatim}
+  Moderne Versionen zeigen nach Beendigung des Programms (nötigenfalls durch
+  Abbruch mit \verb?<CTRL>-C?) die Paketlaufzeiten und einige Statistiken an.
+
+  Ein Problem, das das Testen der Verbindung mit Ping verhindern kan, sind zu
+  restriktive Firewalleinstellungen. Bei etlichen Rechnern habe ich erlebt,
+  dass diese nach der Installation zwar am Netzverkehr teilnehmen konnten,
+  aber selbst nicht auf ICMP-Hello-Pakete (Ping) antworteten. Das ist, aus
+  meiner Sicht, eine Überreaktion auf die Tatsache, das einige DoS-Angriffe
+  das ICMP-Protokoll und insbesondere ICMP-Hello (Ping) verwendet haben. Man
+  kann schlecht jedem vorschreiben, was er in seinem Netzwerk erlaubt und was
+  nicht. Auf jeden Fall möchte ich jeden bitten, sachlich einen möglichen oder
+  eingebildeten Gewinn an Sicherheit gegenüber der Erschwernis der
+  Netzwerkdiagnose abzuwägen.
+
+  \subsection{Netzwerkperformancemessungen}
+  Ein weiteres Anwendungsgebiet sind Performancemessungen im Netzwerk. Am
+  einfachsten geht die Bestimmung der Paketlaufzeit zu einem entfernten
+  Rechner und zurück, denn diese gibt Ping selbst aus. Bin ich an der reinen
+  Laufzeit interessiert, muss ich mir einen Zeitpunkt suchen, zu dem sehr
+  wenig im Netz los ist.
+
+  Zusätzlich zu den Latenzzeiten, die durch die Datenübertragung und das
+  reine Umkopieren in den Routern und Switches entstehen, gibt es
+  Verzögerungen, die durch die Pufferung von Datenpaketen verursacht werden.
+  Diese entstehen dadurch, dass ein Netzwerkgerät auf der Sendeseite die Daten
+  nicht so schnell los wird, wie sie auf der Empfangsseite ankommen. Das
+  passiert meist beim Übergang von schnellen auf langsamere Medien, aber auch,
+  wenn Datenpakete aus mehreren Richtungen ankommen und in die selbe Richtung
+  abgehen. Tritt dieser Effekt nur kurzzeitig auf, dann wirken die Puffer
+  positiv, da keines der Datenpaket verloren geht, sondern nur etwas später
+  ankommt. Kommen jedoch ständig mehr Daten an, als gesendet werden können,
+  dann werden erst die Puffer gefüllt, bevor Daten verworfen werden. Ohne
+  aktives Puffermangement hat dann jedes ankommende Datenpaket so viele andere
+  Datenpakete vor sich, wie in den Puffer passen. Die durch den Puffer
+  verursachte Latenz beträgt dann Puffergröße geteilt durch Sendebandbreite.
+  Leider verhindert die durch den Puffer erhöhte Latenzzeit, dass sich das
+  TCP-Protokoll an die gerade mögliche Bandbreite anpassen kann. Die
+  wirksamste  Abhilfe ist Adaptive Queue Management, ein Notbehelf kann
+  Trafficshaping sein, wobei dieses den Nachteil hat, dass man als
+  Netzadministrator die Sendebandbreite kennen muss um den Traffic manuell auf
+  die entsprechende Rate zu begrenzen.
+
+  \subsubsection{Bestimmung der Bandbreite}
+  Wie man mit Ping die Bandbreite bestimmen kann, ist sehr gut in
+  \cite{sloan2001} Kapitel 4. Path Characteristics beschrieben.
+
+  Das geht für beliebige Streckenabschnitte einer Verbindung und zwar wie
+  folgt:
+  \begin{enumerate}
+    \item Mit Ping bestimmt man die RTT zum vorderen und hinteren Ende des
+      Netzsegments. Die Differenzen zwischen den beiden Zeiten eliminieren die
+      Einflüsse der anderen Netzkomponenten.
+    \item Jetzt bestimmt man die RTT zu den beiden Enden mit größeren
+      Datenpaketen und bestimmt wieder die Differenz.
+    \item Die Differenz zwischen den beiden Zeitdifferenzen aus den ersten
+      beiden Schritten ist die Zeit, die für die zusätzlichen Daten benötigt
+      wird.
+    \item Die Bitrate ist 16 mal der Differenz der Paketgrößen geteilt
+      durch die Differenzzeit aus Schritt 3 (die magische Zahl 16 kommt daher,
+      dass wir mit 8 Bit pro Byte rechnen und die die Messungen die doppelte
+      Zeit, nämlich für Hin- und Rückweg, enthalten, aber nur die einfache
+      Bitrate bestimmen wollen)
+  \end{enumerate}
+  Wenn ich mehrere Pingpakete pro Einzelmessung sende, dann verwende ich
+  jeweils die geringste gemessene RTT, da diese vermutlich die geringsten
+  Störeinflüsse enthält.
+
+  \subsubsection{Netzwerkperfomance}
+  Mit dem Befehl
+  \begin{verbatim}
+# ping -f rechnername
+  \end{verbatim}
+  sendet Ping Datenpakete so schnell es geht zum Zielrechner. Dazu benötige
+  ich Superuserrechte.
+
+  Diesen Aufruf verwende ich, um auf einem Segment Netzwerklast zu erzeugen.
+  Zusätzlich zur normalen Statistik (min/avg/max/mdev) zeigt Ping am Ende zwei
+  Werte: IPG und EWMA.
+
+  IPG (Inter Packet Gap) ist die Zeit zwischen dem Senden zweier Datenpakete.
+  Für Ethernet ist die Minimalzeit auf die Zeit festgelegt, in der 96 Bit
+  übertragen werden. Das sind 9,6 µs für 10 MBit/s Ethernet und 9,6 ns für 10
+  GBit/s. Diese Zeit wird automatisch vom Ethernetadapter an jedes Datenpaket
+  angehängt. Das angezeigte IPG kann ich als Maß verwenden, um abzuschätzen,
+  wie effizient die Kombination Betriebssystem, Netzwerkkarte, Netzwerk Daten
+  senden kann.
+
+  EWMA steht für Exponential Weighted Moving Average. Bei diesem Durchschnitt
+  werden die letzten  RTT-Zeiten höher gewichtet als ältere. Im Normalfall
+  sollte dieser gleich dem Mittelwert für RTT sein. Weicht er signifikant ab,
+  deutet das auf einen Trend hin. Dafür benötigt man aber einen länger
+  laufenden Ping und da EWMA am Ende ausgegeben wird, wird der Trend erst am
+  Ende dieser Messung offenbar.
+
+  \subsection{Probleme mit Ping}
+  Ein paar Sachen gibt es zu beachten, wenn ich Ping beim Troubleshooting
+  verwende.
+
+  Zunächst arbeitet Ping nicht im luftleeren Raum, snondern hängt vom
+  Funktionieren anderer Netzwerkelemente ab. Arbeite ich mit Hostnamen statt
+  IP-Adressen, dann muss DNS fuktionieren, oder die Namen via /etc/hosts
+  auflösbar sein.
+
+  Dann muss die Ethernet-Adresse des Zielrechners oder Routers aufgelöst
+  werden können. Dazu muss ich sicherstellen, dass das ARP-Protokoll
+  funktioniert oder statische ARP-Einträge verwenden (und zwar auf beiden
+  Seiten). Üblicherweise wird die erste RTT bei einer Messung mit Ping durch
+  das ARP-Protokoll verfälscht. Diesem Problem kann ich begegnen, indem ich
+  grundsätzlich mehrere Ping-Pakete sende und die erste Zeit ignoriere.
+
+  Bei der Bestimmung der Bandbreite eines Links verwende ich ohnehin die
+  niedrigste Zeit, da ist dieses Problem bereits berücksichtigt. Ich muss
+  lediglich daran denken, immer mehrere gleichartige Ping-Pakete zu senden.
+
+  Ein weiteres mögliches Problem ist, das das korrekte Funktionieren des
+  Netzwerkes von Faktoren abhängen kann, die Ping nicht beeinflussen. So kann
+  zum Beispiel ein kleines Ping-Paket problemlos hindurch gelangen, während
+  größere Datenpakete der Anwendungsprotokolle verworfen werden.
+
+  Andererseits kann ICMP administrativ geblockt sein, während
+  Anwendungsprotokolle von der Firewall durchgelassen werden, was zu einem
+  False Negative führen kann. Gerade diese Konstellation trifft man häufig in
+  Netzen, die von paranoiden Administratoren konfiguriert werden oder in
+  solchen, deren Administration die Auswirkungen der betreffenden Sperren
+  nicht in vollem Maße abschätzen können. Trotzdem halte ich es für sinnvoll,
+  die Argumente für und wieder diese Sperren im Einzelfall zu klären und zu
+  dokumentieren, damit es an dieser Stelle nicht immer wieder zu Diskussionen
+  kommt, weil die Sicherheitseinstellungen das Troubleshooting erschweren. Für
+  eine entsprechende Argumentation ist es notwendig, die möglichen
+  Sicherheitsprobleme und gegebenenfalls alternative Gegenmaßnahmen genau zu
+  kennen.
+
+  Mögliche Argumente für ein Sperren von ICMP sind:
+  \begin{description}
+    \item[Smurf Attacks] Ein ICMP-Paket mit gefälschter Absenderadresse wird
+      an die Broadcast-Adresse eines Netzes gesendet. Der Rechner, dem die
+      gefälschte Absenderadresse gehört, bekommt von allen Rechnern des
+      Netzsegments eine Antwort.
+      Zur Abhilfe kann man Pakete an Netz-Broadcast-Adressen am Router
+      ausfiltern. Damit schränkt man diesen Angriff auf das lokale Netz ein.
+      In diesem sollte es relativ einfach möglich sein, den Verursacher zu
+      ermitteln.
+    \item[Ping of Death] Es gibt (ältere) Betriebssysteme, die mit übergroßen
+      ICMP-Paketen nicht umgehen können und damit außer Betrieb genommen
+      werden können. Dieses Problem sollte mit allen aktuellen
+      Betriebssystemen behoben sein.
+    \item[Auskundschaften des Netzes] Mit ICMP ist es möglich, die Adressen
+      der Rechner in einem IPv4-Netz zu ermitteln. Hier ist zu bedenken, ob
+      das wirklich ein Problem darstellt.
+    \item[Unerwünschter Traffic] Durch ICMP (insbesondere Floodping) kann
+      unnötiger unerwünschter Traffic erzeugt werden, der legitimen
+      Datenverkehr behindert. Hier kann man das Problem, soweit es geht mit
+      Rate-Limiting am Router eindämmen.
+  \end{description}
+
+  Wenn Ping nicht komplett blockiert wird, ist immerhin noch möglich, dass das
+  Protokoll eine sehr niedrige Priorität am Router bekommt und allein dadurch,
+  insbesondere bei gut ausgelateten Routern unter den Tisch fällt oder
+  zumindest die RTT stark verfälscht wird.
+
+  Bei manchen Routern kann es vorkommen, dass im Fall von NAT die
+  ICMP-Echo-Antwort nicht zum anfragenden Host zurückgeschickt wird.
+
+  Interessanterweise kann man trotz unterdrücktem ICMP zumindest im lokalen
+  Netzsegment herausbekommen, ob eine bestimmte IP-Adresse verwendet wird.
+  Dazu löscht man den ARP-Cache und schickt dann ein Ping-Paket zur
+  entsprechenden Adresse. Ist danach ein korrekter ARP-Eintrag vorhanden, ist
+  der Host angeschlossen und unterdrückt das ICMP-Echo.
+
+  Eines muss man bei Ping-Tests immer im Hinterkopf behalten: Ping testet nur
+  die Erreichbarkeit einer bestimmten IP-Adresse. Ob die angebotenen Dienste
+  funktionieren und ob überhaupt der richtige Rechner diese Adresse verwendet,
+  muss ich auf anderem Wege herausbekommen.
+  \begin{notes}
+  \item Kann Ping ohne funktionierendes Routing funktionieren?
+  \end{notes}
+\end{normaltext}
 \section{perl}
 \label{sec:lokal-werkzeuge-perl}
 \begin{abstractsec}
