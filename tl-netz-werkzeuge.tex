@@ -734,8 +734,27 @@ tc qdisc add dev $device root $disc $params
   nehmen, aber das trifft schließlich auf jedes Werkzeug zu.
 
   In \cite{sloan2001} sind die Anwendungen von Ping beim
-  Netzwerk-Troubleshooting sehr gut und ausführlich beschrieben, so dass ich
-  sie hier nur kurz zusammenfassen brauch.
+  Netzwerk-Troubleshooting sehr gut und ausführlich beschrieben.
+
+  Die wichtigsten Kommandozeilenoptionen von \verb?ping? sind:
+  \begin{description}
+    \item[-c count] um die Anzahl der gesendeten Datenpakete zu begrenzen,
+    \item[-i interval] um den zeitlichen Abstand in Sekunden zwischen den
+      einzelnen Paketen vorzugeben (Voreinstellung ist eine Sekunde)
+    \item[-s size] um die Größe der Datenpakete in Bytes vorzugeben
+      (Voreinstellung ist 56, hinzu kommen immer noch 8 Byte für den
+      ICMP-Header)
+    \item[-n] um die Auflösung von Hostnamen abzuschalten
+    \item[-q] um die Ausgabe der einzelnen Zeiten abzuschalten (die
+      Statistikinformationen am Ende werden trotzdem ausgegeben)
+    \item[-f] um die Ping-Pakete mit maximaler Geschwindigkeit zu senden und
+      dadurch eine möglichst hohe Netzlast zu erzeugen (diese Option sowie die
+      Option \verb?-i? mit Zeiten unter 0,2 Sekunden benötigen
+      Superuserrechte)
+  \end{description}
+  Daneben gibt es sehr viele weitere Optionen, die seltener benötigt werden
+  und deren genaue Auswirkungen aus den Handbuchseiten erschlossen werden
+  können.
 
   \subsection{Verbindungstest}
   Das ist der einfachste Test, den ich mit Ping ausführen kann. Ich gebe
