@@ -8,12 +8,11 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[nmap] zur ersten Diagnose von Verbindungsproblemen
 \item[tcpdump, wireshark, libtrace-tools] zur Diagnose von hartnäckigen
   Verbindungsproblemen
 \item[quagga] zur Diagnose und Manipulation von Routingprotokollen und
   -tabellen
-\item[telnet, nc, openssl, smbclient] zum Testen von Anwendungsprotokollen
+\item[nmap,telnet, nc, openssl, smbclient] zum Testen von Anwendungsprotokollen
 \item[iperf, ttcp, nuttcp] zur Diagnose von Performanceproblemen
 \end{notes}
 
@@ -957,6 +956,116 @@ rechnername is alive
   Kommandozeilenoptionen zum Teil erheblich voneinander abweichen, verweise
   ich auf die Dokumentation des auf dem Rechner installierten Programmes.
 \end{normaltext}
+
+\section{tcpdump}
+\label{sec:netz-werkzeuge-tcpdump}
+\begin{abstractsec}
+  Bei besonders schwierigen Netzwerkproblemen verwende ich tcpdump zum
+  Mitschreiben des Datenverkehrs im Netz.
+\end{abstractsec}
+\begin{normaltext}
+  Bei besonders schwierigen Netzwerkproblemen verwende ich - quasi als große
+  Kanone - tcpdump zum Mitschreiben des Datenverkehrs im Netz. Dabei setze ich
+  tcpdump vorzugsweise auf Servern, die keine grafische Benutzeroberfläche
+  haben, oder auf Routern/Bridges mit Linux oder BSD als Betriebssystem.
+
+  Ich verwende tcpdump dann
+  \begin{itemize}
+    \item um das Verhalten andere Werkzeuge zu kontrollieren und zu
+      verifizieren. Erhalte ich zum Beispiel via Ping keine Antwort von einer
+      bestimmten IP-Adresse, sehe ich mit tcpdump nach, ob mein Rechner die
+      ICMP-Anfragen überhaupt absendet. Sehe ich dann mit tcpdump die Antwort
+      ebenfalls ankommen, kann ich auf die Firewallregeln auf meinem Rechner
+      als Verursacher schließen.
+    \item um das Vorkommen bestimmter Datenpakete zu verifizieren. Zum einen
+      überhaupt, wie im Beispiel mit Ping und zum anderen an verschiedenen
+      Stellen im Netz, um durch Bisektion die Stelle im Netz zu finden, an der
+      der Datenfluß unterbrochen wird.
+    \item um Protokollverhalten zu verifizieren und/oder Protokollfehler
+      nachzuweisen. Das erfordert seinerseits widerum umfangreiche Kenntnisse
+      der untersuchten Protokolle, die sich in vielen Fällen durch Studium der
+      relevanten RFCs erlangen lassen.
+    \item um Datenmitschnitte für die Auswertung mit Wireshark zu sammeln.
+      Zwar habe ich in Wireshark auch nur die selben Daten zur Verfügung wie
+      in tcpdump, aber bereits die Statistikfunktionen können mir Hinweise auf
+      Netzprobleme geben, die ich mit tcpdump gar nicht wahrgenommen hätte.
+      Abgesehen davon ist die Darstellung der einzelnen Protokollschichten bei
+      Wireshark einfach anschaulicher.
+  \end{itemize}
+
+  Nach dem ich nun geklärt habe, wofür ich tcpdump im Allgemeinen einsetze,
+  komme ich nun dazu, was ich damit konkret machen kann und wie ich das mache.
+
+  Die häufigste Anwendung ist das Mitschneiden von Datenverkehr. Dazu benötige
+  ich Superuserrechte. Je nachdem, wie viele Schnittstellen mein Rechner hat,
+  muss ich diese noch angeben. Prinzipiell schalte ich die Namensauflösung ab,
+  wenn ich mir die Datenpakete anzeigen lasse, um Verzögerungen durch
+  DNS-Anfragen zu vermeiden.
+
+  Will ich die mitgeschnittenen Daten nicht sofort auswerten, kann ich diese
+  auch in eine Datei schreiben lassen, die ich dann später mit tcpdump oder
+  wireshark auswerte. Für die Auswertung der Datei benötige ich keine
+  Superuserrechte sondern nur Leserechte auf die Datei.
+
+  Will ich über einen längeren Zeitraum Datenpakete mitschneiden und in
+  Dateien archivieren, kann ich tcpdump anweisen, bei Erreichen einer
+  bestimmten Dateigröße oder alternativ periodisch nach einer bestimmten Zeit
+  mit einer neuen Datei zu beginnen.
+
+  Manche IPSEC-Verbindungen kann tcpdump dekodieren, wenn ich den Schlüssel
+  angebe.
+
+  Bin ich nur an den Kopfdaten und nicht an den Anwendungsdaten interessiert,
+  kann ich die maximale pro Datenpaket mitgeschnittene Länge vorgeben. Damit
+  erhöht sich gleichzeitig die Verarbeitungsgeschwindigkeit, wenn ich die
+  Datei in eine Datei schreibe.
+
+  \subsection{Kommandozeilenoptionen}
+
+  Die Optionen, die ich am häufigsten verwende, sind:
+  \begin{description}
+    \item[-n] um die Namensauflösung abzuschalten. Diese Option benötige ich
+      nicht, wenn ich den Mitschnitt lediglich in eine Datei schreibe.
+    \item[-l] um die Daten gleich während des Mitschnitts zu sehen.
+      Andernfalls puffert tcpdump die Standardausgabe und zeigt die
+      Datenpakete nicht sofort an, wenn sie eingetroffen sind.
+    \item[-U] um den Schreibpuffer beim Schreiben in eine Datei nach jedem
+      angekommenen Datenpaket zu leeren. Das ist nützlich, wenn ich die
+      geschriebene Datei in einem anderen Fenster zur gleichzeitigen
+      Auswertung geöffnet habe. Dort verwende ich dann die Option \verb?-l?.
+    \item[-w filename] um in eine Datei zu schreiben.
+    \item[-r filename] um aus einer Datei zu lesen.
+    \item[-i device] um das Interface anzugeben, an dem ich mitschreiben will.
+      Ab einem Kernel der Version 2.2 ist es möglich an allen Interfaces
+      gleichzeitig mitzuschreiben. Dafür gebe ich als Device \verb?any? an.
+    \item[-C filesize] weist tcpdump an, beim Schreiben in eine Datei
+      automatisch eine neue Datei zu öffnen, wenn die alte größer als
+      \verb?filesize? ist. An den Dateinamen wird eine fortlaufende Nummer
+      angehängt.
+    \item[-G seconds] um die mit \verb?-w? angegebene Datei nach der
+      angegebenen Zeit zu rotieren. Der Name der Datei sollte eine
+      Zeitformatangabe für strftime(3) haben, damit sie nicht überschrieben
+      wird.
+    \item[-F filename] um den Filterausdruck, der sonst am Ende der
+      Kommandozeile folgt, aus der angegebenen Datei zu lesen.
+    \item[-q] um die ausgegebenen Informationen zu reduzieren, so dass die
+      Ausgabezeilen kürzer werden.
+    \item[-v] um mehr Informationen pro Datenpaket angezeigt zu bekommen.
+      Ich kann mehrere \verb?-v? verwenden, um noch mehr Informationen zu
+      bekommen.
+    \item[-s snaplen] um die Zahl der Bytes pro Datenpaket, die mitgeschrieben
+      werden, zu begrenzen. 0 bedeutet hier keine Begrenzung.
+    \item[-W filecount] um die Anzahl der Dateien, die mit \verb?-C? oder
+      \verb?-G? automatisch erzeugt werden, zu begrenzen.
+    \item[-x]
+    \item[-X] um die Header und Daten als Hexadezimal- und ASCII-Werte
+      ausgeben zu lassen.
+    \item
+  \end{description}
+
+  Weitere Optionen und deren Bedeutungen gibt es in der Handbuchseite.
+\end{normaltext}
+
 
 \section{perl}
 \label{sec:netz-werkzeuge-perl}
