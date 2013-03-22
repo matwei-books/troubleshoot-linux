@@ -148,6 +148,42 @@ level 2/.style={sibling distance=2.2cm},
   wahrgenommen werden können.
 \end{normaltext}
 
+\section{Bisektion}
+\label{sec:bisektion}
+
+\begin{abstractsec}
+  Die Bisektion verwende ich bei der Fehlersuche in einem örtlichen oder
+  zeitlichen Intervall.
+\end{abstractsec}
+
+\begin{normaltext}
+  Die Bisektion, auch Intervallhalbierungsverfahren genannt, wird verwendet um
+  bei einem Fehler, der auf einer längeren Strecke - zum Beispiel bei einer
+  Netzwerkverbindung über mehrere Hops - oder über einen längeren Zeitraum
+  auftritt, den Punkt, an dem der Fehler erstmalig auftritt, so schnell wie
+  möglich zu ermitteln. Diesen Punkt suche ich, da er mir vermutlich Hinweise
+  auf die Ursache geben kann.
+
+  Das Intervall kann örtlich sein - zum Beispiel bei einer Datenübertragung
+  über mehrere Hops - oder zeitlich - zum Beispiel, wenn sich der Fehler in
+  Logfiles zeigt und ich den Zeitpunkt des ersten Auftretens über viele
+  Logdateien hinweg suche.
+
+  Das Verfahren selbst ist sehr einfach. Anstatt das Intervall sequentiell in
+  einer Richtung abzuschreiten, wird das Intervall halbiert und von den
+  entstehenden Teilintervallen dasjenige untersucht, dessen Grenzen sich
+  unterscheiden. Bei diesem Teilintervall fährt man mit der Bisektion fort.
+
+  Wenn ich zum Beispiel einen Rechner in einem weit entfernten Netz zwar via
+  Ping erreichen kann, aber zum Beispiel nicht mit Port 25, dann kann ich 
+  zunächst untersuchen, ob Datenpakete zu Port 25 beim Sender rauskommen und
+  ob sie beim Empfänger ankommen. Kann ich die Datenpakete beim Sender
+  nachweisen, aber beim Empfänger nicht, dann suche ich etwa auf der Hälfte
+  der Strecke, ob diese Datenpakete nachzuweisen sind. Je nachdem, ob die
+  Datenpakete dort auftreten oder nicht, halbiere ich dann die Strecke zum
+  Empfänger oder zum Sender. 
+\end{normaltext}
+
 %\section{Nicht verrückt machen lassen}
 %\label{sec:nicht-verrueckt}
 
