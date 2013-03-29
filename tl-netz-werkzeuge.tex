@@ -8,8 +8,6 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[libtrace-tools] zur Diagnose von hartnäckigen
-  Verbindungsproblemen
 \item[quagga] zur Diagnose und Manipulation von Routingprotokollen und
   -tabellen
 \item[nmap,telnet, nc, openssl, smbclient] zum Testen von Anwendungsprotokollen
@@ -1257,6 +1255,283 @@ rechnername is alive
 \end{normaltext}
 \begin{notes}
 \item Wo finde ich Tutorials zu Wireshark?
+\end{notes}
+
+\section{libtrace und libtrace-tools}
+\label{sec:netz-werkzeuge-librace}
+\begin{abstractsec}
+  Neben Tcpdump und Wireshark gibt es noch ein drittes Werkzeug, das ich gern
+  einsetze, wenn ich auf Paketmitschnitte zurückgreifen muss: libtrace und die
+  dazugehörigen Tools.
+
+  Ein großer Vorteil von libtrace ist, dass diese Bibliothek und die damit
+  geschriebenen Werkzeuge mit Paketmitschnitten aus unterschiedlichen Quellen
+  umgehen können und die verschiedenen Formate ineinander umwandlen können.
+\end{abstractsec}
+\begin{normaltext}
+  Neben Tcpdump und Wireshark gibt es noch ein drittes Werkzeug, das ich gern
+  einsetze, wenn ich auf Paketmitschnitte zurückgreifen muss: libtrace und die
+  dazugehörigen Tools.
+
+  Mit libtrace kann man ähnlich wie mit libpcap eigene Analysewerkzeuge
+  programmieren. Aber hier will ich mehr auf die mitgelieferten libtrace-tools
+  eingehen, mit denen Mitschnitte angefertigt und weiter bearbeitet werden
+  können.
+
+  Ein großer Vorteil von libtrace ist, dass diese Bibliothek und die damit
+  geschriebenen Werkzeuge mit Paketmitschnitten aus unterschiedlichen Quellen
+  umgehen können und die verschiedenen Formate ineinander umwandlen können.
+  Dazu verwendet libtrace sogenannte URI um das Format und die Quelle
+  beziehungsweise das Ziel anzugeben.
+
+  \begin{table}
+    \begin{tabularx}{\textwidth}{X | l | c | c}
+    Format & URI & Lesen & Schreiben \\
+    \hline
+    Live PCAP Schnittstelle & pcapint:<interface> & Ja & Ja \\
+    PCAP Trace Datei & pcapfile:<filename> & Ja & Ja \\
+    ERF Trace Datei & erf:<filename> & Ja & Ja \\
+    DAG Gerät & dag:<device location> & Ja & Ja \\
+    Native Linux interface & int:<interface> & Ja & Ja \\
+    Native Linux interface (ring buffers) & ring:<interface> & Ja & Ja \\
+    Native BSD interface & bpf:<interface> & Ja & Nein \\
+    TSH trace file & tsh:<filename> & Ja & Nein \\
+    FR+ trace file & fr+:<filename> & Ja & Nein \\
+    Legacy DAG ATM Trace Datei & legacyatm:<filename> & Ja & Nein \\
+    Legacy DAG POS Trace Date & legacypos:<filename> & Ja & Nein \\
+    Legacy DAG Ethernet Trace Datei & legacyeth:<filename> & Ja & Nein \\
+    Legacy DAG NZIX Trace Datei & legacynzix:<filename> & Ja & Nein \\
+    ATM Cell Header Trace Datei & atmhdr:<filename> & Ja & Nein \\
+    RT Network Protocol & rt:<host>:<port> & Ja & Nein \\
+    \end{tabularx}
+    \caption{Unterstützte Formate für Paketmitschnitte}
+  \end{table}
+
+  Damit genug der Vorrede, kommen wir nun zu den Werkzeugen.
+
+  \subsection*{traceanon}
+  Mit traceanon kann man die IP-Adressen von Paketmitschnitten anonymisieren.
+  Das ist immer dann wichtig, wenn ein Paketmitschnitt zu einem Problem
+  weitergereicht werden, aber möglichst wenig Informationen zur
+  Netzwerkstruktur preisgegeben werden soll.
+
+  Traceanon ändert die IP-Header der Datenpakete sowie die in ICMP
+  eingebetteten IP-Header und repariert die Prüfsummen innerhalb von TCP- und
+  UDP-Headern.
+
+  Es gibt zwei Schemata, zum Einen wird ein kompletter Adressblock durch einen
+  anderen ersetzt und zum Anderen werden die Adressen mit dem
+  Cryptopan-Verfahren ersetzt.
+
+  Wichtig beim Einsatz von traceanon ist, immer im Hinterkopf zu behalten,
+  dass IP-Adressen auch auf anderem Weg offenbar werden können. So werden zum
+  Beispiel IP-Adressen innerhalp von ARP-Paketen nicht anonymisiert und einige
+  Anwendungsprotokolle wie zum Beispiel HTTP, SMTP, OSPF und andere
+  Routingprotokolle können in den Anwendungsdaten Informationen über die
+  beteiligten Netze preisgeben.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  traceanon [options] sourceuri desturi
+  \end{verbatim}
+  Die möglichen Optionen sind der Handbuchseite zu entnehmen.
+
+  \subsection*{tracediff}
+  Dieses Werkzeug findet Differenzen zwischen zwei Mitschnitten und gibt diese
+  aus. Dabei wird der Inhalt aus den Framingheadern (PCAP oder ERF) nicht
+  ausgewertet.
+
+  Mit der Option \verb?-m max? kann ich die Ausgabe nach \verb?max?
+  Unterschieden abbrechen lassen.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  tracediff [ -m maxdiff ] firsturi seconduri
+  \end{verbatim}
+
+  Tracediff ist zum Beispiel nützlich, wenn ich mehrere Mitschnitte einer
+  Verbindungssitzung an verschiedenen Stellen aufgenommen habe und diese
+  vergleichen will.
+
+  \subsection*{tracemerge}
+  Mit diesem Werkzeug kann ich zwei oder mehrere Paketmitschnitte zu einer
+  kombinieren, wobei die Reihenfolge der Pakete beibehalten wird.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  tracemerge [ options ] outputuri inputuri ...
+  \end{verbatim}
+  Die möglichen Optionen sind der Handbuchseite zu entnehmen.
+
+  \subsection*{tracepktdump}
+  Mit diesem Programm kann ich Datenpakete in lesbarer Form ausgeben.
+  Dabei kann ich mit der Option \verb?-f filter? die Ausgabe auf bestimmte
+  Pakete einschränken und mit \verb?-c count? die Anzahl der angezeigten
+  Pakete begrenzen.
+
+  Die Ausgabe ist abhängig davon, inwieweit die mitgeschnittenen Protokolle in
+  libtrace bekannt sind und ändert sich folglich von Version zu Version.
+
+  Folgender Beispielaufruf mit tracepktdump aus den libtrace-tools Version
+  3.0.10 soll das verdeutlichen:
+  \begin{verbatim}
+$ tracepktdump pcap/ospf-1.pcap
+Wed Sep 26 13:54:58 2012
+ Capture: Packet Length: 138/142 Direction Value: -1
+ Ethernet: Dest: 01:00:5e:00:00:05 Source: 12:6a:17:1a:52:6e Ethertype: 0x0800
+ IP: Header Len 20 Ver 4 DSCP 30 ECN 0 Total Length 124
+ IP: Id 10064 Fragoff 0
+ IP: TTL 1 Proto 89 (ospf) Checksum 11126
+ IP: Source 132.147.1.11 Destination 224.0.0.5
+unknown protocol ip/89
+ Unknown Protocol: 89
+  02 01 00 68 84 93 01 0b 00 00 00 00 e2 48 00 00    ...h.........H..
+  00 00 00 00 00 00 00 00 ff ff 00 00 00 0a 02 01    ................
+  00 00 00 28 84 93 01 0d 84 93 01 12 84 93 01 03    ...(............
+  c0 a8 fe 09 c0 a8 fe 05 c0 a8 ef 0a c0 a8 ef 0b    ................
+  c0 a8 ef 14 c0 a8 ef 15 0a 09 01 01 84 93 04 01    ................
+  84 93 04 0f 84 93 04 11 84 93 04 13 84 93 05 02    ................
+  84 93 05 03 84 93 01 0e                            ........                        
+
+  \end{verbatim}
+  In dieser Version ist das OSPF-Protokoll in der Bibliothek noch nicht
+  bekannt und wird daher als Hexdump präsentiert.
+  Die IP- und Ethernetheader hingegen werden dekodiert und erscheinen nicht
+  im Hexdump.
+
+  \subsection*{tracereplay}
+  Dieses Werkzeug spielt einen Paketmitschnitt mit den gleichen Zeitabständen
+  aus einer URI zu einer anderen. Insbesondere wenn die zweite URI ein
+  Netzwerkinterface bestimmt, kann ich damit einen Mitschnitt wieder auf das
+  Netz schicken.
+  Prüfsummen werden dabei während des Abspielens neu berechnet.
+
+  Mit der Option \verb?-f filter? kann ich die zurückgespielten Datenpakete
+  einschränken und \verb?-b? kann ich als Zielethernetadresse die
+  Broadcast-Adresse verwenden.
+
+  Beim Zurückspielen werden ansonsten die Ethernetadresssen aus dem Mitschnitt
+  verwendet, so dass ich das vorwiegend im selben Netzsegment einspielen will.
+
+  Abhängig vom Switch und dem Verkehr im Netz können die Reaktionen anderer
+  Rechner auf die wiedereingespielten Datenpakete auch an andere Rechner
+  gehen, wenn deren Ethernetadresse als Absender im Mitschnitt steht.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  tracereplay [ options ] inputuri outputuri
+  \end{verbatim}
+  Die möglichen Optionen sind der Handbuchseite zu entnehmen.
+
+  \subsection*{tracereport}
+  Dieses Programm kann eine Reihe von Berichten über die Eigenschaften von
+  Paketmitschnitten produzieren. Die Berichte landen in Dateien deren Name
+  gleich der Langoption gefolgt vom Suffix \verb?.rpt? ist.
+
+  Unter anderem folgende Optionen und Reports stehen zur Verfügung:
+  \begin{description}
+    \item[-e | --error] erzeugt einen Bericht über Paketfehler (zum Beispiel
+      Prüfsummenfehler, Empfangsfehler).
+    \item[-F | --flow] erzeugt einen Bericht über die Anzahl von Datenflüssen.
+    \item[-m | --misc] liefert einen allgemeinen Bericht (Zeitpunkt des ersten
+      und letzten Paketes, Gesamtzahl der Pakete, \ldots)
+    \item[-P | --protocol] erzeugt einen Bericht über die im Mitschnitt
+      vorkommenden Protokolle der Transportschicht
+    \item[-p | --ports] liefert einen Bericht über die vorkommenden Ports
+    \item[-t | --ttl] berichtet über die TTL der Datenpakete im Mitschnitt
+    \item[-n | --nlp] berichtet über die im Mitschnitt vorkommenden Protokolle
+      der Netzwerkschicht
+    \item[-d | --direction] berichtet, wieviel Traffic in jede Richtung geht
+  \end{description}
+  Mehr Optionen und Berichte beschreibt die Handbuchseite.
+
+  \subsection*{tracertstats}
+  Mit diesem Programm bekomme ich eine einfache filter- und zeitbasierte
+  Analyse eines Paketmitschnitts.
+  Dabei wird der Mitschnitt in Intervalle aufgeteilt und für jedes Intervall
+  angegeben, wie viele Datenpakete passen zu den angegebenen Filtern im
+  Intervall vorkommen.
+
+  Die möglichen Optionen sind unter anderen:
+  \begin{description}
+    \item[-f filter] legt die Filter für die Analyse fest, kann auch mehrfach
+      angegeben werden
+    \item[-i interval] bestimmt das zugrunde liegende Zeitraster in Sekunden
+    \item[-m] wenn mehrere Paketmitschnitte angegeben werden, sollen diese
+      zusammengefasst werden (merge)
+    \item[-o format] legt das Ausgabeformat fest (\verb?txt?, \verb?csv?,
+      \verb?html?)
+  \end{description}
+  Weitere Optionen stehen in der Handbuchseite.
+  
+  \subsection*{tracestats}
+  Dieses Programm gibt ähnliche Analysen wie tracertstats aus, aber jeweils
+  für den gesamten Paketmitschnitt und nicht für einzelne Zeitintervalle
+  daraus. Mit der Option \verb?-f filter? kann ich auch hier die Pakete
+  angeben, an denen ich interessiert bin.
+
+  Das Programm tracesummary ist ein Shellwrapper um tracestats und gibt eine
+  einfache Zusammenfassung für einen Paketmitschnitt an.
+
+  \subsection*{tracesplit}
+  Dieses Programm teilt einen Paketmitschnitt in mehrere Dateien auf.
+
+  Das kann ich unter anderen mit diesen Optionen beeinflussen:
+  \begin{description}
+    \item[-f filter] gibt nur die Pakete aus, die zu dem angegebenen Filter
+      passen
+    \item[-c count] schreibt maximal \verb?count? Pakete pro Ausgabedatei. Die
+      Ausgabedateien werden benannt nach dem in outputuri angegeben Basisnamen
+      mit der angehängten Nummer des ersten Paketes in der Datei.
+    \item[-b bytes] schreibt maximal \verb?bytes? Bytes in eine Datei
+    \item[-i seconds] startet eine neue Datei aller \verb?seconds? Sekunden
+    \item[-s unixtime] beginnt die Ausgabe bei \verb?unixtime?
+    \item[-e unixtime] endet die Ausgabe bei \verb?unixtime?
+    \item[-m max] erzeugt nicht mehr als \verb?max? Ausgabedateien
+    \item[-S snaplen] schneidet die Datenpakete bei \verb?snaplen? ab. Ohne
+      diese Angabe wird das komplette Datenpaket geschrieben.
+    \item[-z level] setzt den Kompressionsgrad (0..9)
+    \item[-Z method] wählt die Kompressionsmethode (\verb?gzip?, \verb?bzip2?,
+      \verb?lzo? oder \verb?none?)
+  \end{description}
+  Weitere Optionen stehen in der Handbuchseite.
+
+  Zwei weitere Werkzeuge sind lediglich Shellwrapper um das Programm
+  tracesplit:
+  \begin{description}
+    \item[traceconvert] transformiert einen Mitschnitt aus einem Format in
+      ein anderes
+    \item[tracefilter] extrahiert Datenpakete anhand von BPF-Filtern aus einem
+      Mitschnitt
+  \end{description}
+
+  \subsection*{tracesplit\_dir}
+  Dieses Programm teilt einen Mitschnitt in zwei Richtungen auf. Die
+  Richtungen müssen aus der Inputuri erkennbar sein.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  tracesplit_dir inputuri outputuri_incoming outputuri_outgoing
+  \end{verbatim}
+
+  \subsection*{tracetop}
+  Das Programm zeigt die obersten n Datenflüsse in jeder Sekunde an, ähnlich
+  wie top für Prozesse oder mytop für MySQL-Verbindungen.
+
+  Mit den folgenden Optionen kann ich die Ausgabe beeinflussen:
+  \begin{description}
+    \item[-f filter] zählt nur die Pakete, die zu dem Filter passen
+    \item[-i interval] gibt das Intervall in Sekunden zwischen den
+      Bildschirmaktualisierungen vor (Voreinstellung 2 Sekunden)
+    \item[--percent] zeigt die Bytes und Pakete der Datenflüsse als Anteil vom
+      Gesamtdatenverkehr
+    \item[--bits-per-second] zeigt die Bandbreite als Bits pro Sekunde an
+  \end{description}
+\end{normaltext}
+\begin{notes}
+\item URIs erklären
+\item Cryptopan erklären
+\item bpf-Filter erklären
 \end{notes}
 
 \section{perl}
