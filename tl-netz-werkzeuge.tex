@@ -8,7 +8,7 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[nmap, openssl, smbclient] zum Testen von Anwendungsprotokollen
+\item[nmap, smbclient] zum Testen von Anwendungsprotokollen
 \item[iperf, ttcp, nuttcp] zur Diagnose von Performanceproblemen
 \end{notes}
 
@@ -1792,6 +1792,78 @@ Connection to smtp.example.net 22 port [tcp/ssh] succeeded!
 nc: connect to smtp.example.net port 23 (tcp) failed: Connection refused
 nc: connect to smtp.example.net port 24 (tcp) failed: Connection refused
 Connection to smtp.example.net 25 port [tcp/smtp] succeeded!
+  \end{verbatim}
+\end{normaltext}
+
+\section{openssl s\_client}
+\label{sec:netz-werkzeuge-openssl}
+\begin{abstractsec}
+  Openssl s\_client ist das dritte Werkzeug, welches ich zu Verbindungstests
+  verwende. Dabei handelt es sich um einen generischen SSL/TLS Client, mit dem
+  ich verschlüsselte Protokolle wie HTTPS, SSMTP, \ldots und die
+  entsprechenden Server testen kann.
+\end{abstractsec}
+\begin{normaltext}
+  Openssl s\_client ist das dritte Werkzeug, welches ich zu Verbindungstests
+  verwende. Dabei handelt es sich um einen generischen SSL/TLS Client, mit dem
+  ich verschlüsselte Protokolle wie HTTPS, SSMTP, \ldots und die
+  entsprechenden Server testen kann.
+
+  \subsection*{Aufruf}
+  Der Grundlegende Aufruf sieht wie folgt aus:
+  \begin{verbatim}
+$ openssl s_client -connect host:port [ options ]
+  \end{verbatim}
+  
+  \subsection*{Optionen}
+  Die folgenden Optionen verwende ich hin und wieder, weitere gibt es wie
+  fast immer in den Handbuchseiten.
+  \begin{description}
+    \item[-connect host:port] Baut eine SSL- oder TLS-Verbindung zu dem
+      angegebenen Server und Port auf.
+    \item[-crlf] Setzt den Zeilenvorschub des Terminals in CR+LF, wie für
+      einige Protokolle gefordert, um.
+    \item[-quiet] Unterdrückt die Ausgabe der Zertifikatinformationen.
+    \item[starttls proto] sendet die Protokollspezifischen Befehle um eine
+      Verbindung auf TLS umzuschalten. Für \verb?proto? sind momentan nur die
+      folgenden Protokolle erlaubt: \verb?smtp?, \verb?pop3?, \verb?imap?,
+      \verb?ftp?.
+  \end{description}
+  Bei Problemen mit der Aushandlung des SSL-Protokolls kann man mit den
+  Optionen \verb?-bugs?, \verb?-ssl2?, \verb?-ssl3?, \verb?-tls?,
+  \verb?-no_ssl2?, \ldots experimentieren. Details finden sich in der
+  Handbuchseite.
+
+  \subsection*{Beispiel}
+  Das folgende Beispiel zeigt eine HTTP-Abfrage mit openssl:
+  \begin{verbatim}
+$ openssl s_client -connect encrypted.example.net:443 -quiet
+depth=0 CN = encrypted.example.net
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 CN = encrypted.example.net
+verify return:1
+GET / HTTP/1.0
+Host: encrypted.example.net
+
+HTTP/1.1 200 OK
+Date: Fri, 05 Apr 2013 09:39:20 GMT
+Server: Apache
+Vary: Accept-Encoding
+Content-Length: 709
+Connection: close
+Content-Type: text/html;charset=UTF-8
+
+<!DOCTYPE HTML PUBLIC ``-//W3C//DTD HTML 3.2 Final//EN''>
+<html>
+<head>
+<title>Index of /</title>
+</head>
+<body>
+<h1>Index of /</h1>
+...
+<address>Apache Server at encrypted.example.net Port 443</address>
+</body></html>
   \end{verbatim}
 \end{normaltext}
 
