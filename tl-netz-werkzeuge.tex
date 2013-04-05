@@ -8,7 +8,7 @@
 \end{abstractsec}
 
 \begin{notes}
-\item[nmap, nc, openssl, smbclient] zum Testen von Anwendungsprotokollen
+\item[nmap, openssl, smbclient] zum Testen von Anwendungsprotokollen
 \item[iperf, ttcp, nuttcp] zur Diagnose von Performanceproblemen
 \end{notes}
 
@@ -1660,6 +1660,139 @@ zebra# end
   Umschalten in den Kommandomodus mitgeben, muss dann aber ein Zeichen
   auswählen, dass im Protokoll nicht vorkommt und trotzdem leicht zu erreichen
   ist.
+\end{normaltext}
+
+\section{netcat}
+\label{sec:netz-werkzeuge-netcat}
+\begin{abstractsec}
+  Ein weiteres Werkzeug um schnell eine Netzwerkverbindung herzustellen,
+  ähnlich wie telnet doch weitaus flexibler, ist netcat. Damit kann ich nicht
+  nur TCP-, UDP- oder UNIX-Socket-Verbindungen sehr einfach aufbauen, sondern
+  außerdem ganz schnell mal eben einen Socket-Server für die genannten
+  Protokolle einrichten.
+\end{abstractsec}
+\begin{normaltext}
+  Ein weiteres Werkzeug um schnell eine Netzwerkverbindung herzustellen,
+  ähnlich wie telnet doch weitaus flexibler, ist netcat. Damit kann ich nicht
+  nur TCP-, UDP- oder UNIX-Socket-Verbindungen sehr einfach aufbauen, sondern
+  außerdem ganz schnell mal eben einen Socket-Server für die genannten
+  Protokolle einrichten.
+
+  Netcat ist sehr gut in Skripten einsetzbar und kann auch ein rudimentäres
+  Port-Scanning für TCP-Ports. Und, was in manchen Umgebungen wichtig sein
+  kann: netcat kann mit Proxy-Servern umgehen und darüber Verbindungen
+  herstellen.
+
+  \subsection*{Aufruf}
+
+  Der grundlegende Aufruf ist
+  \begin{verbatim}
+$ netcat [ optionen ] host port
+  \end{verbatim}
+  wenn ich eine Verbindung via TCP oder UDP aufbauen will,
+  \begin{verbatim}
+$ netcat [ optionen ] port
+  \end{verbatim}
+  wenn ich auf TCP- oder UDP-Verbindungen warten will, und
+  \begin{verbatim}
+$ netcat [ optionen ] socketpath
+  \end{verbatim}
+  wenn ich mit UNIX-Domain-Sockets arbeiten will.
+
+  Wenn ich einen Portscan mit Option \verb?-z? starten will, kann ich statt
+  eines Ports auch einen Bereich (\verb?port1-port2?) angeben.
+
+  \subsection*{Optionen}
+
+  Einige der wichtigsten Optionen sind:
+  \begin{description}
+    \item[-k] In Verbindung mit der Option \verb?-l? wartet netcat auf weitere
+      Verbindungen, wenn die erste beendet ist. Ohne diese Option beendet sich
+      netcat nach der ersten Verbindung.
+    \item[-l] Netcat wartet auf eine ankommende Verbindung anstatt selbst eine
+      Verbindung zu öffnen.
+    \item[-s addr] Setzt die Absenderadresse auf \verb?addr?. Das ist
+      insbesondere nützlich, wenn der Rechner mehrere Adressen hat.
+    \item[-U] verwendet UNIX-Domain-Sockets
+    \item[-u] verwendet UDP statt TCP
+    \item[-X proto] verwendet Proxyprotokoll \verb?proto?. Mögliche Werte sind
+      \verb?4? für SOCKS Version 4, \verb?5? für SOCKS Version 5 und
+      \verb?connect? für die CONNECT-Methode bei HTTP-Proxies.
+    \item[-x addr:port] spezifiziert die Adresse und den Port des
+      Proxieservers.
+    \item[-z] weist netcat an, keine Verbindung aufzubauen, sondern nur
+      nachzuschauen, ob der Port oder Portbereich offen ist. Diese Option
+      kombiniert man sinnvollerweise mit \verb?-v?.
+  \end{description}
+  Weitere Optionen finden sich in den Handbuchseiten.
+
+  \subsection*{Beispiele}
+
+  Die folgenden Beispiele sind der Handbuchseite von netcat entnommen.
+
+  \subsubsection*{Client/Server}
+  Für eine einfache Client-Server-Verbindung gebe ich folgendes auf der
+  Serverseite ein:
+  \begin{verbatim}
+$ netcat -l 1234
+  \end{verbatim}
+  Auf der Clientseite dann das folgende:
+  \begin{verbatim}
+$ netcat host.example.net 1234
+  \end{verbatim}
+  um mich mit dem Server zu verbinden.
+
+  Mit Option \verb?-u? verwende ich UDP statt TCP zur Übertragung.
+
+  Mit Option \verb?-U? geht es stattdessen (auf demselben Rechner) über
+  UNIX-Domain-Sockets. Dann lasse ich auf Clientseite den Rechnernamen weg und
+  verwende statt der Portnummer den Pfadnamen zur Socketdatei. Diese darf bei
+  Aufruf der Serverseite noch nicht existieren.
+
+  \subsubsection*{Datentransfer}
+  Um schnell mal eine Datei zu übertragen erweitere ich das Client/Server
+  Beispiel auf Serverseite wie folgt:
+  \begin{verbatim}
+$ netcat -l 1234 > file.out
+  \end{verbatim}
+  Und auf Clientseite:
+  \begin{verbatim}
+$ netcat host.example.net 1234 < file.in
+  \end{verbatim}
+  Die Verbindung widr nach erfolgter Datenübertragung automatisch geschlossen.
+  Vertausche ich die spitzen Klammern, wird die Datei vom Server zum Client
+  übertragen.
+
+  \subsubsection*{Einen Server testen}
+  Wenn ich das Plaintextprotokoll des Servers kenne, kann ich mit netcat auch
+  differenziertere Protokolle bedienen oder testen:
+  \begin{verbatim}
+$ netcat -C mail.example.net 25 <<EOT
+HELO host.example.net
+MAIL FROM:<user@host.example.net>
+RCPT TO:<user2@host.example.net>
+DATA
+Subject: Testmail
+
+Body of email.
+.
+QUIT
+EOT
+  \end{verbatim}
+  Damit kann ich eine E-Mail einspeisen, um einen Mailserver zu testen. Das
+  gleiche könnte ich auch interaktiv (von Hand) eingeben. Oder zum Beispiel an
+  einem POP3-Server nachsehen, ob eine bestimmte E-Mail angekommen ist.
+
+  \subsubsection*{Portscanning}
+  Um festzustellen, welche Ports an einem Rechner erreichbar sind, kann ich
+  netcat wie folgt aufrufen:
+  \begin{verbatim}
+$ nc -z -v smtp.example.net 22-25
+Connection to smtp.example.net 22 port [tcp/ssh] succeeded!
+nc: connect to smtp.example.net port 23 (tcp) failed: Connection refused
+nc: connect to smtp.example.net port 24 (tcp) failed: Connection refused
+Connection to smtp.example.net 25 port [tcp/smtp] succeeded!
+  \end{verbatim}
 \end{normaltext}
 
 \section{perl}
