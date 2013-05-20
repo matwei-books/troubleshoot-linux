@@ -205,14 +205,114 @@ Bei Problemen mit Treibern versuche ich meist die folgenden Strategien:
     diesen Treibers unterbinden.
 \end{itemize}
 
-\section{Stopp bei der Dateisystemüberprüfung}
-\label{sec:lokal-stop-at-fsck}
+Wenn bereits nach einigen Zeilen der Bildschirm schwarz wird oder das System
+neu startet, könnte es auch am Grafiktreiber liegen, falls die Zeilen davor
+nicht auf andere Ursachen hindeuten.
 
-Ein Rechner wurde neu gestartet und taucht nicht wieder in der
-Monitoringumgebung auf. Ping vom Administratorplatz funktioniert auch nicht,
-wohl aber zu anderen Geräten in diesem Netzsegment. Wohl oder übel muss ich
-zur Konsole, die an diesem Rechner angeschlossen ist, beziehungsweise bei
-einer VM an die Servicekonsole. Und dann kann ich es sehen:
+Als erstes kann ich den Standard-VGA-Textmodus mit dem Kernelparameter
+\verb?nomodeset? einschalten. Falls das funktioniert, könnte es an einer
+fehlerhaften Erkennung des Monitors liegen. Mit \verb?video=1024x768-24@75?
+gebe ich eine Auflösung von 1024x768 bei 24 Bit Farbtiefe und einer
+Bildwiederholrate von 75 Hertz vor. Funktioniert auch das, kann ich den
+Parameter so ändern, das er zu meinem Monitor passt. Sitzen die Probleme
+tiefe, kann ich versuchen, die Debug-Informationen des Direct Rendering
+Manager (DRM) des Kernels mittels des Kernelparameters \verb?drm.debug=14?
+auszuwerten. Auch die DRM-Treiber bieten Optionen, mit denen ich
+experimentieren kann. Auf diese gehe ich an dieser Stelle jedoch nicht weiter
+ein, da das zu weit ab vom Thema führen würde.
+
+\subsection{Kernel-Panik}
+
+Der Kernel schreibt eine Zeile mit \verb?Kernel panic? und arbeitet nicht mehr
+weiter. In dieser Zeile folgt noch eine Kurzbeschreibung des Problems.
+
+\subsubsection{Attempted to kill init}
+
+Der Prozess mit PID 1 ist abgestürzt. Das könnte durch ein beschädigtes
+Initramfs verursacht sein oder, falls das System schon mit dem
+Root-Dateisystem arbeitet, durch beschädigte oder fehlende Dateien auf eben
+diesem.
+
+Zur Lösung starte ich den Rechner mit einem Live- oder Rescue-System,
+ermittele die genaue Ursache und repariere diese.
+
+Alternativ, falls ich gerade nicht von einem anderen Medium starten kann,
+starte ich mit dem Kernelparameter \verb?init=/bin/sh? eine Shell anstelle des
+Init-Daemons und muss dann die Initialisierungen von Hand erledigen, bevor ich
+das System reparieren kann.
+
+\begin{notes}
+\item Was macht und wie funktioniert \verb!init=/bin/sh!?
+\end{notes}
+
+\subsubsection{No init found \ldots}
+
+Der Kernel hat das Programm, das er als erstes starten soll, nicht gefunden.
+Ich behandle das Problem ähnlich wie das vorige und starte ein Live- oder
+Rescue-System beziehungsweise gebe mit der Option \verb?init=\ldots? ein
+anderes Programm an.
+
+\subsubsection{Fatal Exception / Aiee, Killing Interrupt Handler}
+
+Diese Probleme können vielfältige Ursachen haben. Meist finden sich Hinweise
+ein paar Zeilen weiter oben. Steht dort ein \verb?Oops?, hat der Kernel ein
+Problem erkannt und zunächst versucht weiter zu arbeiten.
+
+Ein \verb?Oops? ist eine Abweichung vom korrekten Verhalten des Kernels, die
+eine Fehlermeldung produziert, welche via syslog protokolliert werden kann (im
+Gegensatz zu einem Kernel-Panik, bei dem kein Logging mehr möglich ist). Wenn
+der Kernel ein Problem entdeckt, gibt er eine \verb?Oops? Nachricht aus und
+beendet den verursachenden Prozess. Die offizielle Dokumentation dazu findet
+sich in der Datei oops\_tracing.txt bei der Kernel-Dokumentation. Sobald ein
+System einen \verb?Oops? erlebt hat, arbeiten einige interne Ressourcen nicht
+mehr korrekt. Das wiederum kann zu weiteren \verb?Oops? und schließlich zum
+Kernel-Panik führen. Daher ist es bei der Analyse wichtig, sich zunächst auf
+den ersten \verb?Oops? zu konzentrieren. Dabei helfen Internet-Suchen, die
+Dokumentation und gegebenenfalls eine Anfrage auf der entsprechenden
+Mailingliste.
+
+\subsubsection{not syncing: VFS: Unable to mount rootfs on \ldots}
+
+Der Kernel findet sein Root-Dateisystem nicht. Das kann an einem fehlenden
+oder defekten Initramfs liegen. Oder das in der Kernel-Kommandozeile genannte
+Dateisystem ist nicht erreichbar.
+
+Als erstes sehe ich mir hier die Booloader-Konfiguration genau an. Ist das
+Initramfs korrekt angegeben? Ist das Root-Dateisystem korrekt angegeben? Ist
+(zum Beispiel bei NFS-Rootfs) der Server mit dem Rootfs erreichbar und auf ihm
+das Dateisystem mit dem entsprechenden Protokoll? Eventuell muss ich den
+Rechner mit einem Live- oder Rescue-System starten, um das Problem genauer
+einzugrenzen und zu beheben.
+
+\subsection{Probleme im Initramfs}
+
+Bekomme ich Meldungen wie \verb?dracut: Warning: \ldots? (Fedora) oder
+\verb?Gave up waiting for root device? (Debian, Ubuntu) und anschließend einen
+Shell-Prompt, dann haben die Skripts des Initramfs das Root-Dateisystem nicht
+gefunden.
+
+Mit \verb?dmesg|less? kann ich mir die Kernelmeldungen noch einmal ansehen.
+Dabei suche ich nach Meldungen zu den Speichersystemen. Habe ich less nicht
+zur Verfügung, kann ich mit \verb?<Shift>-<Bild auf/ab>? blättern. Dabei
+überprüfe ich, ob die Systemplatte gefunden wurde (beziehungsweise bei
+NFS-Root der Netzwerkadapter).
+
+Falls das Root-Dateisystem als UUID oder Label spezifiziert wurde, kann ich
+mit \verb?blkid? alle erkannten Label und UUIDs ausgeben lassen. Unter /proc
+und /sys kann ich weitere Informationen zu erkannten Hardware finden. So
+liefert mir zum Beispiel /proc/mdstat Informationen zu einem Software-RAID.
+
+\subsection{Udev}
+
+Kurz nachdem Udev gestartet wurde, bleibt das System hängen.
+
+In diesem Fall helfen mir die Kerneloptionen \verb?udev.log_priority=info? und
+\verb?udev.children-max=1?. Damit startet Udev nur einen Kind-Prozess und gibt
+eine Reihe von zusätzlichen Informationen aus. Habe ich damit ein
+problematisches Modul identifiziert, kann ich dieses mit
+\verb?modulename.disable=1? in den Kernel-Optionen deaktivieren.
+
+\subsection{Stopp bei der Dateisystemüberprüfung}
 
 \begin{verbatim}
 ...
@@ -221,12 +321,16 @@ error checking filesystem
 Give root password for rescue shell or type Control-D for reboot.
 \end{verbatim}
 
+Der Init-Daemon hat ein Problem beim Dateisystemcheck erkannt und bietet mir
+an, dieses in einer Shell zu beheben. Dazu muss ich das Rootkennwort wissen.
+
 Ein Neustart mit Steuerung-D wird mir nicht weiterhelfen, da wir es hier mit
 einem schwerwiegenden Problem im Dateisystem zu tun haben und beim nächsten
 Start genauso weit kommen würden.
 
 Ich brauche also das Rootkennwort oder eine andere Möglichkeit, eine
-Root-Shell auf dem Rechner zu bekommen.
+Root-Shell auf dem Rechner zu bekommen (wie zum Beispiel die Option
+\verb?init=/bin/sh?).
 
 Dann starte ich die Dateisystemüberprüfung und -reparatur von Hand für alle
 benötigten Dateisysteme und starte den Rechner anschließend neu. Läuft deer
