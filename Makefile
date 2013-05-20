@@ -22,7 +22,7 @@ space:= $(empty) $(empty)
 # Alle TeX-Quelldateien definieren (Beispiel für zweistufige Hierarchien)
 FRONTMATTER = tl-vorwort
 TLPART1 = tl-part1 tl-methoden tl-heuristiken tl-herangehen
-TLPART2 = tl-part2 tl-lokal-werkzeuge tl-lokal-bootprobleme \
+TLPART2 = tl-part2 tl-lokal-werkzeuge tl-lokal-totalausfall \
   tl-lokal-programmfehler tl-lokal-performance
 TLPART3 = tl-part3 tl-netz-werkzeuge tl-netz-totalausfall tl-netz-teilausfall \
   tl-netz-performance
