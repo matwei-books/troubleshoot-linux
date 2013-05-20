@@ -1,9 +1,11 @@
 %% tl-lokal-bootprobleme.tex
-\chapter{Bootprobleme}
-\label{cha:bootprobleme}
+\chapter{Totalausfall}
+\label{cha:totalausfall}
 
 \begin{abstractsec}
-  Probleme beim Booten des Rechners betrachte ich als lokalen Totalausfall.
+  Bootprobleme sind möglicherweise das häufigste Problem bei einem
+  Totalausfall. Andere mögliche Totalausfälle sind Kernel-Panik und ein
+  unbenutzbares System auf Grund von Überlast und/oder Speichermangel.
 \end{abstractsec}
 
 \begin{notes}
@@ -11,6 +13,197 @@
 %\item geht auch nicht
 %\item und auch das
 \end{notes}
+
+\section{Bootprobleme}
+\label{sec:lokal-bootprobleme}
+
+Eine Art von Totalausfall eines Linux-Servers sind Bootprobleme. Wenn der
+Rechner gar nicht erst startet, kann er seine Dienste nicht erfüllen, von
+Performance gar nicht zu reden.
+
+Zwar treten Bootprobleme eher selten auf, wenn sie erstmal da sind, bekommen
+sie aber die volle Konzentration, weil eben wirklich ``nichts mehr geht``.
+
+Um die Bootprobleme eines kaputten Systems diagnostizieren und beheben zu
+können, muss ich das Verhalten eines gesunden Systems beim Startvorgang
+kennen. Dieses zeichnet sich durch verschiedene Phasen mit unterschiedlicher
+Zuständigkeit und dementsprechend unterschiedlicher Herangehensweise aus. Grob
+kann man den Startvorgang eines Linux-Rechners in die folgenden Phasen
+einteilen:
+
+\begin{enumerate}
+  \item Die Firmware des Rechners initialisiert die Hardware. Das ist bei
+    einem PC zum Beispiel gekennzeichnet durch die verschiedenen
+    BIOS-Meldungen. Eingriffe an dieser Stelle sind abhängig von der konkreten
+    Hardware und nicht explizit Thema dieses Buches, obwohl diese das
+    Verhalten des Linux-Systems sehr wohl beeinflussen.
+  \item Die Firmware lädt und startet den Bootmanager (Grub, Lilo, \ldots). Je
+    nach Bootmanager habe ich hier eventuell bereits die Möglichkeit, das
+    spätere Verhalten des Linux-Systems direkt (zum Beispiel durch
+    Kernel-Optionen) zu steuern.
+  \item Der Bootloader als Bestandteil des Bootmanagers lädt den Kernel und
+    das Initramfs und startet den Kernel. Hier werden Änderungen, die ich
+    ebentuell im Bootmanager vorgenommen habe, zum ersten Mal wirksam.
+  \item Der Kernel nimmt die wichtsten Systemkomponenten in Betrieb und
+    startet ein Initialisierungsskript vom Initramfs. In dieser Phase kann ich
+    nicht eingreifen, nur beobachten.
+  \item Das Initialisierungsskript vom Initramfs lädt Treiber, überprüft das
+    Root-Dateisystem und hängt dieses ein. Bei Problemen startet es eine
+    Shell, in der das Problem interaktiv bearbeitet werden kann.
+  \item Sobald das Root-Dateisystem als rootfs eingehängt ist, übergibt das
+    Initialisierungsskript an das Programm an den Initd des Systems, der
+    weitere Dateisysteme einhängt, Hintergrunddienste und Anmeldeprogramme
+    startet. Wenn dieser auf Probleme mit Dateisystemen trifft, bietet er an,
+    das Problem in einer Shell (nach Eingabe des Root-Kennworts) zu lösen,
+    oder einen Neustart zu versuchen.
+  \item Sobald ich mich am System regulär anmelden kann (getty, sshd, xdm,
+    \ldots) kann ich den Rechner benutzen, auch wenn eventuell noch
+    Systemteile initialisiert werden.
+\end{enumerate}
+
+\subsection{Startphasen des Rechners identifizieren}
+
+Da ich, je nachdem in welcher Phase ein Problem auftritt, auf verschiedene
+Weise an die Lösung des Problems herangehe, ist es wichtig, dass ich die
+einzelnen Phasen erkennen und auseinander halten kann.
+
+Dazu muss ich gegebenenfalls die nötigen Startinformationen erst freilegen.
+Das können zum einen BIOS-Einstellungen sein, die abhängig von der Hard- und
+Firmware und daher nicht Thema dieses Buches sind. Gerade viele moderne
+Linux-Distributionen verstecken die Informationen, die Linux-Kernel und System
+auf den Bildschirm schicken. Mit dem Bootmanager kann ich die betreffenden
+Kerneloptionen ändern, um mehr Informationen zu erhalten. So entferne ich zum
+Beispiel die folgenden Kerneloptionen:
+\begin{itemize}
+  \item \verb?quiet?
+  \item \verb?rhgb? bei Fedora oder Red Hat
+  \item \verb?splash? bei Ubuntu
+  \item \verb?splash=silent? bei OpenSuse
+  \item \verb?vt.handoff=7? bei Ubuntu 11.10
+\end{itemize}
+
+Außerdem gibt es bei Grub2 eventuell in der Konfiguration die Zeile
+\begin{verbatim}
+set gfxpayload=$linux_gfx_mode
+\end{verbatim}
+die ich ändere in
+\begin{verbatim}
+set gfxpayload=text
+\end{verbatim}
+
+\begin{notes}
+\item Kasten: grub editieren
+\end{notes}
+
+Habe ich die Bootinformationen sichtbar gemacht, kann ich mit Ihrer Hilfe den
+Bootvorgang besser diagnostizieren und dabei die einzelnen Phasen
+unterscheiden.
+
+Nach den Firmwaremeldungen meldet sich der Bootmanager. Manchmal nur mit einer
+kurzen Zeile, die den Namen des Bootmanagers (Grub, Lilo, \ldots) enthält, oft
+aber auch mit einem Menü, aus dem ich das System, welches starten soll,
+auswählen kann.
+Fehlt das Menü, kann ich es mit \verb?<ESC>? oder \verb?<TAB>? hervorrufen,
+bevor der Bootloader den Kernel lädt.
+
+Die Meldung 'Loading Kernel' oder 'Loading initial ramdisk' zeigt den Übergang
+von Phase 2 zu Phase 3 an.
+Diese wird gefolgt von Dutzenden Kernelmeldungen zur Hardware-Initialisierung,
+die von der Kernel-Option \verb?quiet? unterdrückt worden wären.
+
+Eine Meldung wie 'dracut: dracut \ldots' bei Fedora oder 'Write protecting the
+kernel \ldots' und Meldungen von Udev zeigen an, dass der Kernel geladen ist
+und die Skripte des Initramfs die Arbeit übernommen haben.
+
+Meldungen wie 'Switching root' und 'Welcome to xyz Linux' zeigen an, dass die
+Skripte des Initramfs fertig sind und der Init-Daemon des Systems übernimmt.
+Sobald ein Konsole-Login oder grafisches Login präsentiert wird und ich mich
+anmelden kann, betrachte ich den Systemstart als abgeschlossen, auch wenn im
+Hintergrund noch der eine oder andere Dienst gestartet wird.
+
+Mit dem Wissen um die Übergänge zwischen den einzelnen Phasen des
+Startvorgangs kann ich mich nun den möglichen Problemen in den einzelnen
+Bootphasen zu wenden.
+
+Da Probleme mit der Firmware abhängig von der konkreten Hardware sind, werden
+diese hier nicht weiter behandelt. Wichtig für die Fehlersuche ist trotzdem
+ein grundlegendes Verständnis der Einstellmöglichkeiten in der Firmware (dem
+BIOS beim PC), weil diese Einfluss auf das Verhalten des Kernels haben können.
+
+\subsection{Probleme mit dem Bootmanager}
+
+Bleibt nach den Selbsstests der Firmware der Bildschirm schwarz, kommt eine
+Meldung wie 'Operating system not found' oder erscheinen Fehlermeldungen von
+Grub, Lilo oder welcher Bootmanager vorhanden ist, haben wir ein Problem mit
+dem Bootmanager.
+
+Eine mögliche Ursache ist, dass die Firmware den Bootmanager nicht gefunden
+hat. Das kann auf einen defekten Master Boot Record (MBR)hindeuten. Möglich
+ist auch, dass der Bootloader nicht im Master Boot Record, sondern in einer
+Partition installiert wurde und diese nicht als bootfähig in der
+Partitionstabelle gekennzeichnet wurde. Möglicherweise wurde die
+Bootreihenfolge im BIOS geändert oder durch einen zusätzlich angesteckten
+Datenträger durcheinander gebracht. Eventuell ist die Installation des
+Bootmanagers beschädigt. Grub2 zum Beispiel speichert einen Teil des
+Bootmanagers direkt hinter dem MBR vor der ersten Partition. Eventuell ist
+auch die Partition beziehungsweise das Dateisystem, welches weitere Teile des
+Bootmanagers enthält, beeschädigt.
+
+Wenn eine Vertauschung der Bootreihenfolge und ein zusätzlicher Datenträger
+ausgeschlossen werden können, starte ich den Rechner von einem Live- oder
+Rescue-System auf einer CD-ROM oder einem USB-Stick. Dann kann ich die
+Systemplatte mit allen zur Verfügung stehenden Mitteln und Werkzeugen
+überprüfen.
+\begin{itemize}
+  \item Ist die Partitionstabelle defekt?
+  \item Sind die Dateisysteme in Ordnung?
+\end{itemize}
+Außerdem kann ich den Bootmanager neu installieren. Das mache ich am besten
+aus dem System auf der Festplatte heraus. Dazu hänge ich die Partitionen an
+dern korrekten Mountpoints ein und wechsle mit \verb?chroot? in das System.
+
+\begin{notes}
+\item Kasten ``Zugriff von außen'' aus c't 2012/6/S.199
+\end{notes}
+
+\subsection{Probleme beim Start des Kernels}
+
+Nach dem der Bootloader den Kernel startet, bleibt das System stehen oder
+startet neu. Das passiert mitunter nach einem BIOS- oder Kernel-Upgrade oder
+nach Änderungen in den BIOS-Einstellungen. Daher versuche ich
+herauszubekommen, ob eine dieser Bedingungen hier vorliegt und ob ich diese
+möglicherweise rückgängig machen kann.
+
+Testweise kann ich alle Peripherie (USB, seriell, parallel, \ldots) und oder
+alle nicht zum Booten benötigten Komponenten entfernen. Falls das System dann
+startet, füge ich nach die einzelnen Komponenten wieder hinzu, bis der Fehler
+wieder auftritt.
+
+Als nächstes kann ich systematisch die verschiedenen Hardware-relevanten
+Kernelparameter durchprobieren. Dann genauso die BIOS-Einstellungen und
+schließlich die Kombination beider.
+
+\subsection{Abbruch des Kernels}
+
+Nach Ausgabe einiger Zeilen bleibt der Kernel eventuell mit der Meldung
+'Kernel panic' stehen.
+
+Das kann an einer fehlerhaften Kernkomponente, wie Prozessor, Speicher,
+Chipsatz auf dem Mainboard leigen. Insbesondere, wenn der Kernel gleich nach
+dem Anlaufen ohne Panic abbricht. In diesem Fall muss ich mit den
+Kernelparametern experimentieren. Eventuell hilft eine Internet-Suche nach der
+gleichen Hardware in Zusammenhang mit Problemen bei Linux.
+
+Bei Problemen mit Treibern versuche ich meist die folgenden Strategien:
+\begin{itemize}
+  \item Internet-Suche mit den Informationen aus den letzten Zeilen oberhalb
+    der Abbruchmeldung
+  \item Suche in der Kernel-Dokumentation zu Parametern für diesen Treiber.
+    Bei modularen Treibern hilft auch \verb?modinfo -p treibername? für eine
+    erste Übersicht.
+  \item Mit der Kerneloption \verb?modulename.disable=1? kann ich das Laden
+    diesen Treibers unterbinden.
+\end{itemize}
 
 \section{Stopp bei der Dateisystemüberprüfung}
 \label{sec:lokal-stop-at-fsck}
