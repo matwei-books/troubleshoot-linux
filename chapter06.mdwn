@@ -1,0 +1,1 @@
+# Partieller Ausfall {#cha-lokal-teilausfall}

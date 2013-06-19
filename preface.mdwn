@@ -1,0 +1,99 @@
+# Vorwort {#vorwort}
+
+Ich habe bereits viele Jahre mit Fehlersuche verbracht.
+Sei es als Kind beim Basteln, wenn etwas nicht so funktionierte, wie ich
+dachte. In meinem ersten Beruf bei der Reparatur von Telefonen und
+Telefonanlagen, die damals noch mit Relais funktionierten, so dass man ihnen
+im wahrsten Sinne des Wortes bei der Arbeit zusehen konnte. Nach dem
+Studium, als Softwareentwickler, beim Debuggen meiner oder fremder
+Programme. Oder später dann als Systemadministrator für UNIX und Netzwerke.
+
+Dabe war ich vor allem auf einige Dinge angewiesen um zum Erfolg zu kommen.
+Das erste und wichtigste ist ein zumindest grundlegendes Verständnis der
+Materie und die Fähigkeit und Möglichkeit, weitere nötige Kenntnisse zu
+erwerben.
+  
+Das zweite ist eine einigermaßen strukturierte Vorgehensweise, die
+mich zumindest in den meisten Fällen schneller zum Ziel führt als andere
+Vorgehensweisen.
+
+A> *Wissenschaftliches versus strukturiertes Vorgehen*
+A>
+A> Ich unterscheide hier zwischen dem wissenschaftlichen Vorgehen, einem
+A> methodischen Untersuchen aller Möglichkeiten zwecks Erkenntnisgewinn und dem
+A> zielgerichteten strukturierten Vorgehen, bei dem ich zunächst die
+A> Möglichkeiten untersuche, die vermutlich am ehesten zum Erfolg führen zwecks
+A> schnellstmöglicher Problembeseitigung.
+
+Eine dritte Voraussetzung ist die entsprechende geistige Einstellung. Ich
+musste sehr oft und werde vermutlich noch oft die Erfahrung machen, dass ich
+mir selbst bei der Lösung eines Problems im Weg stehe:
+
+*   Sei es, dass ich mir vor der Kenntnis aller relevanten Tatsachen
+    bereits eine (dann eventuell falsche) Meinung gebildet hatte.
+*   Sei es, dass ich durch Druck von außen oder selbst erzeugten Druck
+    besonders schnell sein wollte und dann beim oberflächlichen Hinsehen
+    wichtige Details übersah.
+*   Sei es, dass ich angebotene Hilfe nicht annahm, weil ich es selbst
+    schaffen wollte oder so sehr im Problem gefangen war, das ich das
+    Hilfsangebot nicht wahrnahm.
+*   Sei es, dass ich kurz vor dem Ziel aufgab und einfach nicht den
+    letzten Meter gegangen war.
+
+In diesem Buch lege ich meine über die Jahre gesammelten Erfahrungen mit
+der Fehlersuche bei Linux-Servern und in IP-Netzwerken nieder.
+
+Ich habe diese beiden Themen kombiniert, weil zum Einen Linux-Server fast
+immer über IP-Netzwerke angesprochen werden und daher auf ein gut
+funktionierendes Netzwerk angewiesen sind und zum Anderen Linux-Rechner
+(da gehen auch Arbeitsstationen) für mich ideal zur Analyse von
+Netzwerkproblemen geeignet sind.
+
+Zwar benutze ich fast täglich Linux auf dem Desktop, allerdings sind hier
+die am häufigsten verwendeten Programme ein Terminal und ein Webbrowser, die
+in den meisten Fällen vorzüglich funktionieren, so dass ich kaum Gelegenheit
+hatte Erfahrungen mit der Fehlersuche am Linux-Desktop zu sammeln. Aus
+diesem Grund bleibt dieser Bereich aussen vor.
+
+Meine Motivation ist das mitunter erschreckende Unverständnis einiger
+meiner Kollegen beim einfachen Fehlersuchen. Ich extrapoliere, dass es auch
+anderen so gehen könnte.
+
+## Für wen ist dieses Buch
+
+Die Zielgruppe ist angehende (und gestandene?) Systemadministratoren für
+Linux und/oder IP-Netzwerke.
+
+## Wie ist das Buch aufgebaut
+
+Dieses Buch ist in vier Teile gegliedert:
+
+*   Teil 1 beschäftigt sich mit dem grundlegenden Vorgehen bei der
+    Fehleranalyse.
+*   In Teil 1 geht es vorwiegend um lokale Probleme an einem
+    Linux-Rechner.
+*   Teil 3 befasst sich mit Netzwerkproblemen.
+*   In Teil 4 geht es um die Nachbereitung eines gelösten und die
+    Vorbereitung auf das nächste Problems.
+
+
+## Danksagung
+
+## Notizen
+
+*   Beim Text und Stil brauche ich mir keine persönlichen und
+    institutionellen Beschränkungen auferlegen. Der Stil sollte dennoch
+    weitgehend neutral sein, in den Beispielen ist die erste (und dritte)
+    Person angemessen.
+*   Ich werde grundlegende (strategische) Methoden, die ich bei der
+    Fehlersuche verwende, vorstellen.
+*   Ich werde einige (taktische) Programme vorstellen, die mir bei der
+    Fehlersuche helfen.
+*   Ich werde die operative Anwendung der grundlegenden Methoden und der
+    Programme in einigen konkreten Fehlersituationen vorstellen.
+*   Ich werde mich auf die Gebiete Linux-Server und (IPv4) Netzwerke
+    beschränken. Grafische Oberflächen bleiben (zunächst) außen vor.
+*   Schreiben, was im Buch voraussichtlich schnell altert und was vermutlich
+    länger gültig ist.
+*   Hinweis, dass eigenes Lernen unerlässlich ist, das Buch nur über die
+    ersten Hürden helfen kann und soll
