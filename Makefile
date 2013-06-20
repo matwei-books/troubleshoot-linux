@@ -22,6 +22,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/chapter10.mdwn \
                $(DROPBOXDIR)/chapter11.mdwn \
                $(DROPBOXDIR)/chapter12.mdwn \
+               $(DROPBOXDIR)/images/eb-allgemein.png \
 #
 CHAPTERS = \
     preface.mdwn \
@@ -39,6 +40,7 @@ CHAPTERS = \
     chapter12.mdwn \
 #
 IMAGES = \
+    images/eb-allgmein.png \
 #
 $(DROPBOXDIR)/%.mdwn: %.mdwn
 	cp $< $@
