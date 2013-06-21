@@ -1,0 +1,7 @@
+# Literatur
+
+{#bib-wsa2011}
+**[WSA2011]**
+: Weigend, Johannes and Siedersleben, Johannes and Adersberger, Josef;
+Dynamische Analyse mit dem Software-EKG; Informatik-Spektrum, Volume 34,
+Ausgabe 5, S. 484ff

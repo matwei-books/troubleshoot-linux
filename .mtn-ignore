@@ -1,9 +1,10 @@
-^manuscript$
 \.bbl$
 \.blg$
 \.log$
+^manuscript$
 \.out$
 \.pdf$
+^preview$
 ^recherche$
 \.toc$
 ^TODO.otl$
