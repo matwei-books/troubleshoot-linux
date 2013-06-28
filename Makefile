@@ -36,6 +36,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/chapter11.mdwn \
                $(DROPBOXDIR)/chapter12.mdwn \
                $(DROPBOXDIR)/literatur.mdwn \
+	       $(DROPBOXDIR)/code/read-syslog.pl \
+	       $(DROPBOXDIR)/code/strace-invocator.sh \
                $(DROPBOXDIR)/images/eb-allgemein.png \
 #
 CHAPTERS = \
@@ -66,8 +68,11 @@ $(DROPBOXDIR)/%-empty.mdwn: %.mdwn
 $(DROPBOXDIR)/%.txt: %.txt
 	cp $< $@
 
-$(DROPBOXDIR)/code/%: code/%
+$(DROPBOXDIR)/code/%: code/% $(DROPBOXDIR)/code
 	cp $< $@
+
+$(DROPBOXDIR)/code: $(DROPBOXDIR)
+	mkdir $(DROPBOXDIR)/code
 
 $(DROPBOXDIR)/images/%.jpg: images/%.jpg
 	cp $< $@
