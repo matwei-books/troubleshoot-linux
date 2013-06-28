@@ -1,16 +1,7 @@
 # Hinweise zum Übersetzen
 
-## verschiedene Versionen
+## Konvertieren in Markdown
 
-    make VERSION=abstracts
-    make VERSION=abstractstext
-    make VERSION=text
-    make VERSION=textnotes
-    make VERSION=final
+### \verb?...? durch `...` ersetzen
 
-Die Versionen abstractstext, text, textnotes können mit ONLY=dateiname,...
-kombiniert werden. Zum Beispiel erzeugt
-
-    make VERSION=textnotes ONLY=tl-netz-totalausfall
-
-nur den Text von Kapitel 10 mit den Notizen.
+    perl -pi.bak -e 's/\verb(.)(.+?)\1//g' chapter04.mdwn 
