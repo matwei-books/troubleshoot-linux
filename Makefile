@@ -10,6 +10,19 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/$(PREVIEW) \
                $(DROPBOXDIR)/$(SAMPLE) \
                $(DROPBOXDIR)/preface.mdwn \
+               $(DROPBOXDIR)/chapter01-empty.mdwn \
+               $(DROPBOXDIR)/chapter02-empty.mdwn \
+               $(DROPBOXDIR)/chapter03-empty.mdwn \
+               $(DROPBOXDIR)/chapter04-empty.mdwn \
+               $(DROPBOXDIR)/chapter05-empty.mdwn \
+               $(DROPBOXDIR)/chapter06-empty.mdwn \
+               $(DROPBOXDIR)/chapter07-empty.mdwn \
+               $(DROPBOXDIR)/chapter08-empty.mdwn \
+               $(DROPBOXDIR)/chapter09-empty.mdwn \
+               $(DROPBOXDIR)/chapter10-empty.mdwn \
+               $(DROPBOXDIR)/chapter11-empty.mdwn \
+               $(DROPBOXDIR)/chapter12-empty.mdwn \
+               $(DROPBOXDIR)/chapter01.mdwn \
                $(DROPBOXDIR)/chapter01.mdwn \
                $(DROPBOXDIR)/chapter02.mdwn \
                $(DROPBOXDIR)/chapter03.mdwn \
@@ -46,6 +59,9 @@ IMAGES = \
 #
 $(DROPBOXDIR)/%.mdwn: %.mdwn
 	cp $< $@
+
+$(DROPBOXDIR)/%-empty.mdwn: %.mdwn
+	grep '^#' $< | grep -v '## Tip' | sed -e 's/^/\n/' > $@
 
 $(DROPBOXDIR)/%.txt: %.txt
 	cp $< $@
