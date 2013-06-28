@@ -1,13 +1,35 @@
 # Literatur
 
-{#bib-edwards2012}
-**[Edwards2012]**
-: Edwards, Betty;
+## Bücher
+
+##### CT2000 {#bib-ct2000}
+Christiansen, Tom and Torkington, Nathan;
+Perl Kochbuch; O'Reilly, Köln, 2000; ISBN: 3-89721-140-8
+
+##### Edwards2012 {#bib-edwards2012}
+
+Edwards, Betty;
 Das neue GARANTIERT ZEICHNEN LERNEN: Die Befreiung unserer schöpferischen
 Gestaltungskräfte; Rowohlt, Reinbek bei Hamburg, 2012; ISBN: 978-3-498-01669-2
 
-{#bib-wsa2011}
-**[WSA2011]**
-: Weigend, Johannes and Siedersleben, Johannes and Adersberger, Josef;
+##### Loukides1996 {#bib-loukides1996}
+
+Loukides, Mike Kosta;
+System Performance Tuning; O'Reilly, Sebastopol, 1996;
+ISBN 0-937175-60-9
+
+## Artikel in Zeitschriften, Proceedings, ...
+
+##### Bonwick1994 {#bib-bonwick1994}
+Bonwick, Jeff; The slab allocator: an object-caching kernel memory
+allocator; Proceedings of the USENIX Summer 1994 Technical Conference on
+USENIX Summer 1994 Technical Conference - Volume 1, S. 6
+
+##### Koenig2012 {#bib-koenig2012}
+König, Harald; strace für Linux-Versteher; UpTimes - Mitgliederzeitschrift
+der German Unix User Group; Ausgabe 2012/1, S. 61ff
+
+##### WSA2011 {#bib-wsa2011}
+Weigend, Johannes and Siedersleben, Johannes and Adersberger, Josef;
 Dynamische Analyse mit dem Software-EKG; Informatik-Spektrum, Volume 34,
 Ausgabe 5, S. 484ff
