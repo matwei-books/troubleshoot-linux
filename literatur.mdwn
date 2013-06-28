@@ -1,5 +1,11 @@
 # Literatur
 
+{#bib-edwards2012}
+**[Edwards2012]**
+: Edwards, Betty;
+Das neue GARANTIERT ZEICHNEN LERNEN: Die Befreiung unserer schöpferischen
+Gestaltungskräfte; Rowohlt, Reinbek bei Hamburg, 2012; ISBN: 978-3-498-01669-2
+
 {#bib-wsa2011}
 **[WSA2011]**
 : Weigend, Johannes and Siedersleben, Johannes and Adersberger, Josef;

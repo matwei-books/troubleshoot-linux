@@ -1,1 +1,124 @@
 # Herangehen {#cha-herangehen}
+
+## Prinzipien {#sec-prinzipien}
+
+### Vier Kraftprinzipien
+
+> Es ist gegen neun Uhr, gut gelaunt betrete ich die Büroräume, als mich der
+> Kollege am Operatingplatz mit leicht erhobener Stimme empfängt:
+> 
+> "Im Rathaus geht das INTERNET nicht!"
+> 
+> "Das ist aber schade."
+> 
+> Eine dritte Kollegin ruft aus dem Hintergrund: "Das habe ich gewusst, dass
+> er das jetzt sagt".
+
+Was war denn da los? Proben die für eine Fernsehsendung?
+
+Nun ich habe hier Prinzipien angewandt, die ich im Wing Tsun Kung Fu (WT)
+gelernt habe und - entsprechend angepasst - bei Fehlersuchen aller Art gut
+verwenden kann. Es gibt im WT vier Kraftprinzipien, die lauten:
+
+*   Mache Dich frei von Deiner eigenen Kraft.
+
+*   Mache Dich frei von der Kraft Deines Gegners.
+
+*   Nutze die Kraft Deines Gegners.
+
+*   Füge zur Kraft Deines Gegners Deine eigene Kraft hinzu.
+
+Das klingt alles sehr schön und esoterisch, aber was hat das mit Fehlersuche
+in Computern und Computernetzen zu tun?
+
+Die eigene Kraft, von der ich mich frei machen will, sind vorschnelle
+Vermutungen, die ich aufstelle, die manchmal korrekt sind, aber mich oft nur
+daran hindern, das eigentliche Problem wahrzunehmen.
+
+Die Kraft meines Gegners, von der ich mich freimachen will, sind die
+Vermutungen und voreiligen Diagnosen dessen, der mir das Problem mitteilt.
+Diese können mich, genau wie meine eigenen, in die falsche Richtung locken.
+
+Wie nutze ich nun die Kraft meines Gegners? Nachdem ich mich eigener
+vorschneller Vermutungen und Diagnosen enthalten habe und die Aussagen meines
+Gegenübers zwar zur Kenntnis genommen aber mir nicht unbedingt zu eigen
+gemacht habe, evaluiere ich seine Angaben zum Beispiel anhand des
+grundlegenden Entscheidungsbaumes um das wirkliche Ausmaß des Problems und die
+nächsten Schritte zu bestimmen. Dabei frage ich gezielt und strukturiert nach.
+
+Meine Kraft füge ich hinzu, indem ich aus den so gewonnenen Kenntnissen eine
+Lösung des Problems herausarbeite.
+
+Im eingangs erwähnten Gespräch wollte der Operator mir mit dem Tonfall und der
+Schilderung wohl die besondere Dringlichkeit nahelegen und etwas Druck
+aufbauen. Meine erste Reaktion war, diesen Druck in's Leere laufen zu lassen,
+um den Kopf zum klaren Denken freizuhalten. Meine nächste Frage ging dann auch
+danach, ob andere Websites aus dem Rathausnetz nicht erreichbar waren und ob
+diese Websites aus unserem Netz erreichbar waren. So nutzte ich seine Kraft
+und fügte meine - in diesem Fall das strukturierte Erfassen der Situation -
+hinzu. Letztendlich stellte sich heraus, dass nur einige wenige Websites
+betroffen waren und das - aus unserer Sicht - global, das heisst ausserhalb
+undseres Einflussbereiches. Bis ich an meinem Platz ankam, waren alle Wogen
+geglättet. Was blieb, sind ein paar Erinnerungen und ein Ticket im
+Ticketsystem.
+
+## Zwei Bewusstseinsmodi {#sec-zwei-bewusstseinsmodi}
+
+Es gibt eine Unterscheidung des menschlichen Bewußstseins in einen
+sprachlich, analytischen Modus und einen visuellen, wahrnehmenden Modus.
+Obwohl die meisten Menschen beide Modi mehr oder weniger unbewusst
+verwenden, ist es gerade bei der Fehlersuche von Vorteil beide gezielt
+einsetzen zu können und gezielt zwischen beiden umschalten zu können.
+
+Vor meinem Studium habe ich einen Beruf erlernt, in dem ich unter anderem
+Telefonvermittlungsanlagen reparieren können musste, die damals noch mit
+Relais funktionierten. Damals hatten wir zwei Arten dieser Anlagen. Die
+alten, mit Hebdrehwählern hatten nur relativ wenige Relais und wenn man in
+der Vermittlunsanlage beobachtete, was beim Abheben des Telefonhörers
+passierte, dann konnte man beinahe das nächste Relais ansagen, was betätigt
+wurde. Das heißt, diese Anlagen konnte man im sprachlich analytischen Modus
+analysieren.
+
+Die anderen, moderneren Anlagen, funktionierten mit Koordinatenschaltern.
+Das waren große elektromagnetische Schalter, die in einer Art Matrix die
+richtige Verbindung durchschalteten. Diese konnten eine Verbindung erheblich
+schneller durchschalten, als Hebdrehwähler und konnten auch die Tonsignale
+von Tastentelefonen ohne Umsetzungen in Zähltakte verarbeiten. Dafür
+benötigten sie erheblich mehr Relais zur Funktion und Fehler konnten dort
+nicht wie in den alten Anlagen analysiert werden, da fast immer mehrere
+Relais gleichzeitig betätigt wurden. Dafür lernten wir eine andere
+Herangehensweise. Zunächst setzten wir uns so, dass wir die ganze Anlage im
+Blick hatten. Dann beobachteten wir wiederholt das Gesamtbild der Anlage,
+wenn bestimmte Aktionen ausgeführt wurden. Anschließend verglichen wir die
+Relais, die sich bewegt hatten mit dem Schaltplan der Anlage und
+erarbeiteten uns analytisch Stück für Stück den Zusammenhang zwischen dem,
+was wir gesehen hatten und dem, was laut Schaltplan hätte passieren müssen.
+Am Anfang wiederholten wir das mit einer funktionsfähigen Anlage. Nach
+einiger Zeit, als wir ein Gefühl für die Funktionsweise der Anlage bekommen
+hatten, isolierte unser Lehrmeister einige Relaiskontakte mit farblosem
+schnelltrocknendem Kleber und unsere Aufgabe war es, herauszufinden, welche
+Kontakte schlecht waren. Später, als wir dadurch ein Gefühl dafür bekamen,
+welcher Fehler wie aussah, erhielten die Fortgeschrittenen die Aufgabe sich
+selbst Fehler auszudenken, die die anderen finden sollten. Natürlich setzten
+wir unseren Ehrgeiz dahin, Fehler einzubauen, die durch ihr Verhalten die
+anderen zunächst auf die falsche Spur schickten. Und natürlich kannten wir
+diese Anlagen am Ende in- und auswendig. Was wir dabei - spielerisch -
+übten, war ein Umschalten zwischen dem visuellen, wahrnehmenden Modus und
+dem sprachlich, analytischen Modus unseres Gehirns. Und, ja, heute könnte
+ich keine solcher Anlagen mehr reparieren, müsste alles erst wieder lernen.
+Was ich aber immer noch kann, ist relativ schnell zwischen dem Gesamtbild
+eines Problems und den Details zu wechseln.
+
+Dieser Exkurs in eine längst vergangene Zeit war nötig, um einen Aspekt
+hervorzuheben, der damals so wichtig ist, wie heute: das die unzähligen
+Details, die man bei der Fehlersuche wissen muss, für sich genommen nichts
+wert sind, wenn es nicht gelingt, diese in ein Gesamtbild einzufügen und
+dadurch richtig zu bewerten. Wenn ich in der Lage bin, das Gesamtbild zu
+sehen, kann ich für jedes Detail einschätzen, ob es korrekt, falsch oder
+irrelevant ist und mich dementsprechend dem nächsten zuwenden.
+Dazu ist es notwendig, beide Gehirnhälften oder Bewusstseinsmodi gezielt
+einzusetzen.
+In [Edwards2012](#bib-edwards2012) beschreibt die Autorin am
+Beispiel des Zeichnenlernens, einige Übungen zum gezielten Umschalten der
+beiden Modi, die sie L-Modus und R-Modus nennt.
+
