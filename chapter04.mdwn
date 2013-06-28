@@ -45,7 +45,7 @@ Einzelheiten ein.
 ### Strace Invocator
 
 Manchmal habe ich ein Problem mit einem Programm, bei dem ich auf strace
-(siehe Abschnitt zu [strace](sec-lokal-werkzeuge-strace)) zurückgreife,
+(siehe Abschnitt zu [strace](#sec-lokal-werkzeuge-strace)) zurückgreife,
 um das Programm bei der Arbeit zu beobachten.
 Wenn dieses Programm jedoch nicht von Kommandozeile,
 sondern von einem anderen Programm gestartet wird, greife ich auf folgenden
@@ -241,22 +241,22 @@ Zugriff (ACCESS) und den Namen des Prozesses (COMMAND) anzeigt.
 Von diesen ist ACCESS für viele Analysen interessant. Diese Spalte kann die
 folgenden Merkmale haben:
 
-*c
+*c*
 : CWD, das Arbeitsverzeichnis des Prozesses,
 
-*e
+*e*
 : Executable, die Datei wird als Programm ausgeführt
 
-*f
+*f*
 : File, die Datei ist als normale Datei geöffnet
 
-*F
+*F*
 : File, die Datei ist zum Schreiben geöffnet
 
-*r
+*r*
 : Root, die Datei ist Wurzelverzeichnis
 
-*m
+*m*
 : MMAP, die Datei ist in den Speicherbereich des Prozesses
 eingeblendet (zum Beispiel als Bibliothek)
 
@@ -580,7 +580,7 @@ Problemen, daher stelle ich sie bereits hier vor. Diese beiden Programme
 überschneiden sich in der Funktionalität der Programme mit ifconfig, route,
 netstat und arp.
   
-Im Kapitel über [Werkzeuge für Netzwerkprobleme](#cha-netz-werkzeuge)) gehe
+Im Kapitel über [Werkzeuge für Netzwerkprobleme](#cha-netz-werkzeuge) gehe
 ich noch etwas ausführlicher auf iproute ein. 
 
 ### ip
