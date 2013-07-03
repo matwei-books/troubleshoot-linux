@@ -540,7 +540,7 @@ Art des Hauses:
 
 Anschließend starte ich den Rechner neu und verifiziere meine Änderungen.
 
-## Ein hängendes System mit Magic SysRequest neu starten label{#sec-lokal-total-magic-sysrq}
+## Ein hängendes System mit Magic SysRequest neu starten {#sec-lokal-total-magic-sysrq}
 
 Einem Totalausfall recht nahe kommt der Zustand, wenn ein oder mehrere
 Prozesse so viele Ressourcen belegen, dass andere Prozesse kaum noch zum Zuge
@@ -579,17 +579,12 @@ jeweils einigen Sekunden Abstand die Tasten `r`, `e`, `i`,
 
 Die genannten Schlüsseltasten bewirken das folgende:
 
-  | r | X11 die Tastatur entziehen                                  |
-  |---|-------------------------------------------------------------|
-  | e | alle Prozesse außer Prozess 1 (init) mit SIGTERM beenden    |
-  |---|-------------------------------------------------------------|
-  | i | alle Prozesse außer Prozess 1 (init) mit SIGKILL abschießen |
-  |---|-------------------------------------------------------------|
-  | s | alle Dateisystempuffer auf Platte schreiben (sync)          |
-  |---|-------------------------------------------------------------|
-  | u | alle Dateisystempuffer nur-lesend einhängen                 |
-  |---|-------------------------------------------------------------|
-  | b | Neustart                                                    |
+| r | X11 die Tastatur entziehen                                  |
+| e | alle Prozesse außer Prozess 1 (init) mit SIGTERM beenden    |
+| i | alle Prozesse außer Prozess 1 (init) mit SIGKILL abschießen |
+| s | alle Dateisystempuffer auf Platte schreiben (sync)          |
+| u | alle Dateisystempuffer nur-lesend einhängen                 |
+| b | Neustart                                                    |
 
 Insbesondere die letzten drei Funktionen bewirken, dass das Dateisystem vor
 dem Neustart sauber ausgehängt wird, so dass der Dateisystemcheck zumindest
