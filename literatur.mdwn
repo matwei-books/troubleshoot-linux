@@ -18,6 +18,11 @@ Loukides, Mike Kosta;
 System Performance Tuning; O'Reilly, Sebastopol, 1996;
 ISBN 0-937175-60-9
 
+##### Weidner2012 {#bib-weidner2012}
+Weidner, Mathias; Linux kopflos mit PC Engines ALIX;
+Lulu Press, Raleigh, 2012;
+ISBN 978-1-4717-2849-5
+
 ## Artikel in Zeitschriften, Proceedings, ...
 
 ##### Bonwick1994 {#bib-bonwick1994}
