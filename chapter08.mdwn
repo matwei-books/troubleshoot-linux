@@ -50,7 +50,7 @@ das restliche Netzwerk möglichst unverändert lassen und keinen anderen
 Rechner umkonfigurieren um das Problem beobachten zu können. Mit einer
 Bridge bekomme ich allen Datenverkehr an der betreffenden Stelle frei Haus
 geliefert. Bis 100 MBit/s eignen sich beispielsweise kleine
-Einplatinenrechner, wie in \cite{weidner12:linuxkopflos} beschrieben, sehr
+Einplatinenrechner, wie in [[Weidner2012](#bib-weidner2012)] beschrieben, sehr
 gut dafür. Ein anderes Szenario ist eine regulär betriebene Bridge (zum
 Beispiel für virtuelle Maschinen), die scheinbar nicht funktioniert und die
 ich mit den bridge-utils untersuchen kann.
@@ -745,7 +745,7 @@ Netzwerk-Troubleshooting ist Ping. Mit diesem Programm kann ich:
 Natürlich sind alle mit Ping gewonnen Erkenntnisse mit einer Prise Salz zu
 nehmen, aber das trifft schließlich auf jedes Werkzeug zu.
 
-In \cite{sloan2001} sind die Anwendungen von Ping beim
+In [[Sloan2001](#bib-sloan2001)] sind die Anwendungen von Ping beim
 Netzwerk-Troubleshooting sehr gut und ausführlich beschrieben.
 
 Die wichtigsten Kommandozeilenoptionen von `ping` sind:
@@ -2126,7 +2126,7 @@ lokalen Fehlersuche beschrieben. Durch die vielen einfach verfügbaren und
 meist sehr gut getesteten und dokumentierten Module auf CPAN ist Perl auch
 ein unentbehrliches Werkzeug für die Fehlersuche bei Netzwerkproblemen.
 
-Das Perl Kochbuch \cite{ChristiansenTorkington04de} hatte ich bereits
+Das Perl Kochbuch [[CT2000](#bib-ct2000)] hatte ich bereits
 erwähnt. Mit dessen Hilfe und den darin beschriebenen Modulen von CPAN war
 es mir zum Beispiel möglich ein Testprogramm für ein Timing-Problem bei
 einem Webservice zu schreiben.

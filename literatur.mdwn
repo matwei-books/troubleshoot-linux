@@ -18,6 +18,13 @@ Loukides, Mike Kosta;
 System Performance Tuning; O'Reilly, Sebastopol, 1996;
 ISBN 0-937175-60-9
 
+##### Sloan2001 {#bib-sloan2001}
+
+Sloan, Joseph D.;
+Network troubleshooting tools;
+O'Reilly, Sebastopol, 2001;
+ISBN 978-0-596-00186-5
+
 ##### Weidner2012 {#bib-weidner2012}
 Weidner, Mathias; Linux kopflos mit PC Engines ALIX;
 Lulu Press, Raleigh, 2012;
