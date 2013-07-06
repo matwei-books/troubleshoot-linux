@@ -1,1 +1,2152 @@
 # Werkzeuge zur Netzwerkfehlersuche {#cha-netz-werkzeuge}
+
+Verschiedene Werkzeuge eignen sich zur Fehlersuche im Netz. Hier stelle ich
+diejenigen vor, die ich in den nächsten Kapiteln einsetzen will.
+
+## arp {#sec-netz-werkzeuge-arp}
+
+Das Programm arp dient der Anzeige und Manipulation des ARP-Caches des
+Kernels und wird bei Problemen in direkt angeschlossenen Netzwerksegmenten
+eingesetzt.
+
+ARP, das (Ethernet) Address Resolution Protocol, dient der Zuordnung von
+Internetadressen zu Ethernet-Adressen. Es wurde in RFC826 beschrieben und in
+RFC5227 und RFC5494 aktualisiert.
+
+Der prinzipielle Aufruf ist:
+
+    # arp [Optionen] [Rechnername]
+
+Bei Aufruf ohne Optionen zeigt arp die MAC-Adressen an, die Rechnername
+zugeordnet sind. Fehlt Rechnername, werden alle bekannten Adresszuordnungen
+angezeigt. Rechnername kann dabei ein Hostname sein, ein FQDN oder eine
+IP-Adresse.
+
+Die für die Fehlersuche wichtigsten Optionen sind:
+
+-n
+: damit unterlässt das Programm die Namensauflösung bei der Anzeige
+
+-d Rechnername
+: entfernt alle Einträge für Rechnername
+
+-s Rechnername Hardwareadresse
+: setzt den Eintrag für Rechnername auf Hardwareadresse
+
+Für weitergehende Informationen verweise ich wieder auf die Handbuchseite.
+
+## bridge-utils {#sec-netz-werkzeuge-bridge-utils}
+
+Ein Rechner mit Linux kann nicht nur als Router IP-Pakete in Layer 3
+weiterleiten, sondern auch als Bridge in Layer 2. Letzteres wird mit den
+bridge-utils konfiguriert.
+
+Es gibt mehrere Szenarien, in denen man sich bei der Fehlersuche mit der
+Linux-Layer2-Bridge beschäftigen muß. Zum einen, wenn ich einen verdächtigen
+Rechner habe und zur Kontrolle jeglichen Netzverkehrs eine Bridge vor seinen
+Netzanschluß schalten will. Oder, wenn ich den Verkehr auf einer
+Punkt-zu-Punkt-Verbindung kontrollieren will. In diesen Fällen möchte ich
+das restliche Netzwerk möglichst unverändert lassen und keinen anderen
+Rechner umkonfigurieren um das Problem beobachten zu können. Mit einer
+Bridge bekomme ich allen Datenverkehr an der betreffenden Stelle frei Haus
+geliefert. Bis 100 MBit/s eignen sich beispielsweise kleine
+Einplatinenrechner, wie in \cite{weidner12:linuxkopflos} beschrieben, sehr
+gut dafür. Ein anderes Szenario ist eine regulär betriebene Bridge (zum
+Beispiel für virtuelle Maschinen), die scheinbar nicht funktioniert und die
+ich mit den bridge-utils untersuchen kann.
+
+Prinzipiell kann ich mit einer Linux-Bridge den Verkehr filtern und
+begrenzen. Dafür verwende ich auf Layer2-Ebene `ebtables` und auf
+Layer3-Ebene `iptables`, bei letzteren benötige ich für eine Bridge
+mindestens einen Kernel ab Version 2.4.
+
+Linux-Bridges können das Spanning Tree Protocol (STP) verwenden und ich kann
+sie auch zur Diagnose von STP-Problemen heranziehen (obwohl mir hier sicher
+tcpdump, wireshark, etc genausogut weiterhelfen.
+
+Generell wird eine Bridge mit den Programmen `ifconfig`
+(beziehungsweise `ip` von iproute2) und `brctl` konfiguriert.
+
+Falls eine Bridge keinen Traffic durchlässt, kann ich in
+*/proc/sys/net/bridge/* nach Dateien mit Namen wie `bridge-nf-\*`
+suchen. Diese legen fest, ob die betreffende Bridge Verkehr filtert. Das
+kann ich abschalten, indem ich eine '0' in die betreffende Datei schreibe:
+
+    # echo 0 > /proc/sys/net/bridge/bridge-nf-call-arptables
+    # echo 0 > /proc/sys/net/bridge/bridge-nf-call-ip6tables
+    # echo 0 > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+Ein Problem mit Bridges könnte das Bridge-Forwarding-Delay von circa 30
+Sekunden sein, das bei DHCP-Clients Probleme bereiten kann.
+
+Mit dem Program `brctl` bearbeite beziehungsweise inspiziere ich
+die Bridge-Konfiguration im Linux-Kernel.
+
+Dabei verwende ich die folgenden Befehle um eine oder mehrere
+Bridge-Instanzen zu bearbeiten:
+
+brctl addbr name
+: fügt eine neue Bridge-Instanz namens 'name' hinzu.
+
+brctl delbr name
+: entfernt die Bridge 'name'.
+
+brctl show
+: zeigt alle momentan bekannten Bridges und die ihnen
+  zugeordneten Interfaces an.
+
+Jede Bridge benötigt Ports, zwischen denen sie Ethernet-Pakete vermittelt.
+Diese bearbeite ich mit den folgenden Befehlen:
+
+brctl addif brname if
+: fügt die Schnittstelle 'if' zur Bridge
+  mit Namen 'brname' hinzu. Das Interface muss ich mit `ifconfig`
+  oder `ip` aktivieren.
+
+brctl delif brname if
+: entfernt Schnittstelle 'if' von Bridge 'brname'.
+
+brctl show brname
+: zeigt Informationen zur Bridge 'brname'.
+
+brctl showmacs brname
+: zeigt die der Bridge 'brname' momentan
+  bekannten MAC-Adressen an. Um herauszufinden, an welcher Schnittstelle
+  die betreffende MAC-Adresse zuletzt gesichtet wurde, bestimme ich die
+  die Adresse und den Port in den Zeilen, in denen bei Spalte
+  `is local?` auf 'yes' steht und ermittle mit `ifconfig` oder
+  `ip` die betreffende Ethernetschnittstelle.
+
+Die Timer der Bridge kann ich mit den folgenden Befehlen bearbeiten:
+
+brctl setageing brname time
+: setzt den Ageing-Timer für die Bridge
+  'brname'. Nach dem eine MAC-Adresse so viele Sekunden nicht gesehen
+  wurde, wird die Bridge sie aus der Forwarding-Tabelle austragen.
+
+brctl setgcint brname time
+: setzt das Intervall für die Garbage
+  Collection auf 'time' Sekunden. Aller 'time' Sekunden kontrolliert die
+  Bridge die Forwarding-Tabelle nach veralteten MAC-Adressen.
+
+Das Spanning Tree Protocol kann ich mit den folgenden Befehlen bearbeiten:
+
+brctl stp brname status
+: schaltet STP an Bridge 'brname' ein, wenn ich für 'status' `on`
+  oder `yes` angebe.
+
+brctl showstp brname
+: zeigt detaillierte Angaben zu STP an Bridge 'brname'.
+
+Für weitere Befehle zur Manipulation von STP verweise ich auf die
+Handbuchseite. Vor deren Einsatz empfiehlt es sich, sich mit dem Spanning
+Tree Protocol vertraut zu machen.
+
+## ifconfig {#sec-netz-werkzeuge-ifconfig}
+
+Das Programm ifconfig dient traditionell der Konfiguration der
+Netzwerkschnittstellen. Außerdem liefert es Informationen über den aktuellen
+Zustand und die Konfiguration der Netzwerkschnittstelle.
+
+Es gibt drei prinzipielle Aufrufmöglichkeiten für ifconfig. Mit
+
+    # ifconfig [-a]
+
+zeigt das Programm den Status der aktiven Schnittstellen (ohne `-a`)
+beziehungsweise aller (aktiven und nichtaktiven) Schnittstellen (mit
+`-a`) an.
+
+Durch Aufruf von
+
+    # ifconfig $schnittstellenname
+
+zeigt das Programm den Zustand genau der angegebenen Schnittstelle an.
+
+In der dritten Form,
+
+    # ifconfig $schnittstellenname $optionen
+
+wird die Schnittstelle konfiguriert.
+
+Die wichtigsten Optionen beim Troubleshooting sind
+
+up
+: zum Aktivieren von Schnittstellen
+
+down
+: zum Deaktivieren
+
+mtn N
+: zum Setzen der Maximum Transfer Unit
+
+netmask M
+: zum Setzen der Netzmaske
+
+hw A
+: zum Setzen der Hardware-Adresse
+
+Weitere Informationen liefert die Handbuchseite.
+
+Es ist möglich, an eine Netzwerkschnittstelle mehrere IP-Adressen zu binden.
+Das Programm ifconfig arbeitet jedoch mit einer Adresse pro Schnittstelle.
+Um weitere Adressen an diese Schnittstelle zu binden, fügt man an den
+Schnittstellennamen einen Doppelpunkt und eine Zahl an.
+
+In letzter Zeit werden die Netzwerkschnittstellen auch mit dem Programm ip
+vom Paket iproute2 konfiguriert, welches in Sektion
+\ref{sec:netz-werkzeuge-iproute} beschrieben ist.
+Für den schnellen Überblick über die aktuelle Schnittstellenkonfiguration
+gefällt mir die Ausgabe von `ip addr show` besser, da sie kompakter
+ist, was sich insbesondere dann auszahlt, wenn ein Rechner mehrere
+Netzwerkschnittstellen hat, oder mehrere Adressen auf einer Schnittstelle.
+
+Hier habe ich die Ausgabe für einen Rechner:
+
+    $ /sbin/ifconfig -a
+    eth0      Link encap:Ethernet  HWaddr 00:01:6c:6f:c5:d6  
+              inet addr:192.0.2.5  Bcast:192.0.2.255  Mask:255.255.255.0
+              inet6 addr: 2001:db8::201:6cff:fe6f:c5d6/64 Scope:Global
+              inet6 addr: fe80::201:6cff:fe6f:c5d6/64 Scope:Link
+              UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+              RX packets:12259377 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:13256939 errors:0 dropped:0 overruns:0 carrier:1
+              collisions:0 txqueuelen:1000 
+              RX bytes:3104599402 (2.8 GiB)  TX bytes:1370040423 (1.2 GiB)
+              Interrupt:30 
+
+    eth0:0    Link encap:Ethernet  HWaddr 00:01:6c:6f:c5:d6  
+              inet addr:192.0.2.246  Bcast:192.0.2.255  Mask:255.255.255.0
+              UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+              Interrupt:30 
+
+    lo        Link encap:Local Loopback  
+              inet addr:127.0.0.1  Mask:255.0.0.0
+              inet6 addr: ::1/128 Scope:Host
+              UP LOOPBACK RUNNING  MTU:16436  Metric:1
+              RX packets:5386162 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:5386162 errors:0 dropped:0 overruns:0 carrier:0
+              collisions:0 txqueuelen:0 
+              RX bytes:668745964 (637.7 MiB)  TX bytes:668745964 (637.7 MiB)
+
+    wlan0     Link encap:Ethernet  HWaddr 0c:60:76:7c:3e:25  
+              BROADCAST MULTICAST  MTU:1500  Metric:1
+              RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+              TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+              collisions:0 txqueuelen:1000 
+              RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+Die Ausgabe von `ip` ist demgegenüber wesentlich kompakter.
+
+    $ ip addr show
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN 
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+        inet6 ::1/128 scope host 
+           valid_lft forever preferred_lft forever
+    2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+        link/ether 00:01:6c:6f:c5:d6 brd ff:ff:ff:ff:ff:ff
+        inet 192.0.2.246/24 brd 192.0.2.255 scope global eth0:0
+        inet 192.0.2.5/24 brd 192.0.2.255 scope global secondary eth0
+        inet6 2001:db8:201:6cff:fe6f:c5d6/64 scope global dynamic 
+           valid_lft 86345sec preferred_lft 14345sec
+        inet6 fe80::201:6cff:fe6f:c5d6/64 scope link 
+           valid_lft forever preferred_lft forever
+    3: wlan0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN qlen 1000
+        link/ether 0c:60:76:7c:3e:25 brd ff:ff:ff:ff:ff:ff
+
+## iproute {#sec-netz-werkzeuge-iproute}
+
+Die Programme der iproute-Suite sind moderne Werkzeuge zur Anzeige und
+Konfiguration von Netzwerkschnittstellen, -routen und -verkehrskontrolle.
+
+Sie bieten gegenüber den Programmen der net-tools-Suite erweiterte
+Möglichkeiten.
+
+Mit dem Kernel kommunizieren sie über die (rt)netlink-Schnittstelle.
+
+Die iproute-Suite umfasst unter anderem die folgenden Programme:
+
+ip
+: zum Anzeigen und Konfigurieren von Netzwerkschnittstellen,
+  -adressen, -routen, Policy-Regeln, ARP- und NDISC-Einträgen, IP-Tunneln
+  und Multicast
+
+ss
+: zur Anzeige von Socketstatistiken
+
+tc
+: zur Anzeige und Konfiguration von Netzwerkverkehrskontrolle (traffic control)
+
+arpd
+: einen Userspace-ARP-Daemon
+
+\*stat, rtacct
+: verschiedene Statistikwerkzeuge
+
+Weitere und genauere Informationen stehen in den betreffenden Handbuchseiten
+und der zugehörigen Dokumentation.
+
+### ip
+
+Das Program ip dient zum Anzeigen / Manipulieren von Routen, Schnittstellen,
+Policy-Routing und Tunneln. Es ist das Programm aus der Suite, das ich am
+häufigsten interaktiv aufrufe.
+
+Allgemein sieht der Aufruf des Programms wie folgt aus:
+
+    ip [ Optionen ] Objekt [ Befehl [ Argumente ] ]
+
+Die Optionen sind allgemeine Modifikatoren, die das Verhalten des Programms
+ändern, wie zum Beispiel `-4` und `-6`, die die Adressfamilie auf
+IPv4 oder IPv6 einschränken.
+
+Das Objekt gibt an, worüber ich Informationen wünsche, beziehungsweise, was
+ich manipulieren will. Mögliche Objekte sind unter anderem:
+
+link
+: Netzwerkschnittstellen
+
+address
+: Protokoll-Adressen an einer Schnittstelle
+
+neighbour
+: ARP- oder NDISC-Einträge
+
+route
+: Einträge in der Kernel-Routingtabelle
+
+rule
+: Regeln in der Policydatenbank
+
+maddress
+: Multicast-Adressen
+
+mroute
+: Multicast-Routingeinträge
+
+tunnel
+: IP-Tunnel
+
+monitor
+: Nachrichten auf der netlink-Schnittstelle des Kernels
+
+Der Befehl schließlich gibt die Aktion an, die wir ausführen wollen und wird
+gegebenenfalls von passenden Argumenten gefolgt. Befehl und Argumente sind
+spezifisch für die entsprechenden Objekte.
+
+### ss
+
+Das Programm ss (socket statistics) liefert Informationen und Statistiken zu
+Sockets. Ähnliche Informationen kann ich zum Beispiel auch mit netstat
+bekommen, jedoch habe ich bei ss mehr Möglichkeiten zur Filterung, was mir
+insbesondere bei Servern mit vielen Verbindungen zugute kommt.
+
+Der Aufruf ist wie folgt:
+
+    ss [ Optionen ] [ Filter ]
+
+Dabei zeigt ss ohne Optionen die verbundenen TCP-Sockets an.
+
+Die wichtigsten Optionen sind unter anderen:
+
+-a
+: um alle Sockets anzuzeigen
+
+-l
+: um nur die Listening Sockets anzuzeigen (diese werden per Default
+  ausgelassen)
+
+-p
+: um die zugehörigen Prozesse anzuzeigen (dafür benötige ich Rootrechte)
+
+-t | -u | -w | -x
+: um TCP-, UDP-, Raw- oder Unix-Sockets auszuwählen
+
+Der Filter beim Aufruf von ss hat die allgemeine Form:
+
+    [ TCP-Status ] [ Ausdruck ]
+
+
+Um nach TCP-Status zu filtern, gebe ich das Schlüsselwort `state` oder
+`exclude` gefolgt von einem der Standard-TCP-Zustandsnamen oder einem
+der folgenden an:
+
+all
+: für alle Zustände
+
+bucket
+: für TCP-Minisockets (TIME-WAIT|SYN-RECV)
+
+big
+: für alle außer den Minisockets
+
+connected
+: für alle nicht geschlossenen und nicht lauschenden Sockets
+
+synchronized
+: für alle verbundenen Sockets, die nicht im Zustand SYN-SENT sind
+
+Falls weder ein `state` noch ein `exclude` Statement vorhanden
+ist, ist die Voreinstellung `all` bei Option `-a` und ansonsten
+alle außer `listening`, `syn-recv`, `time-wait` und `closed`.
+
+Mit dem (booleschen) Ausdruck kann ich nach Adressen und Ports filtern.
+
+Weitere Optionen und ausführlichere Informationen zur Filterung gibt es in
+der Handbuchseite und im Artikel ``SS Utility: Quick Intro'', der sich bei
+der Dokumentation des iproute-Pakets befindet.
+
+### tc
+
+Mit dem Programm tc (traffic control) kann ich die Einstellungen zur
+Verkehrssteuerung des Kernels ansehen und manipulieren.
+
+Dabei gilt es drei Arten von Objekten zu unterscheiden:
+
+QDISC
+: (queueing discipline) beschreiben das
+  Warteschlangenverhalten, das heißt, wie und in welcher Reihenfolge
+  Datenpakete, die in eine QDISC eingereiht wurden, an den Treiber der
+  Netzwerkkarte zum Senden übergeben werden. Wenn ein Datenpaket gesendet
+  werden soll, wird es in die für das Interface konfigurierte QDISC
+  eingereiht. Unmittelbar danach versucht der Kernel, so viele Pakete wie
+  möglich an den Netzwerkadapter zu übergeben.
+
+CLASS
+: (Klassen) können in QDISC enthalten sein und wiederum weitere
+  QDISC enthalten. Datenpakete werden in den inneren QDISC eingereiht.
+  Datenpakete, die an den Netzwerkadapter übergeben werden, können
+  von jeder inneren QDISC kommen. Dadurch, dass bestimmte Klassen vor
+  anderen drankommen, kann der Datenverkehr priorisiert werden.
+
+FILTER
+: entscheiden, welcher Klasse ein Datenpaket bei einem
+  klassenbasierten QDISC zugeordnet wird. Alle Filter einer Klasse werden
+  aufgerufen, bis einer eine Entscheidung trifft.
+
+#### Klassenlose QDISC
+
+Die folgenden Klassenlosen QDISC stehen zur Verfügung:
+
+fifo
+: ist die einfachste Form (First In, First Out). Die QDISC
+  kann auf Paketebene (pfifo) oder Byteebene (bfifo) begrenzt werden.
+
+pfifo_fast
+: ist die Standard-QDISC für Advanced Router Kernel. Diese
+  enthält eine dreireihige Warteschlange, die das TOS-Feld und die
+  Priorität des Datenpakets beachten.
+
+red
+: (Random Early Detection) simuliert eine überlastete Leitung,
+  indem zufällig Datenpakete verworfen werden, wenn sich der Durchsatz der
+  konfigurierten Bandbreite nähert.
+
+sfq
+: (Stochastic Fairness Queueing) sortiert die wartenden
+  Datenpakete um, so dass jede Sitzung reihum dran ist.
+
+tbf
+: (Token Bucket Filter) ist geeignet, um den Traffic zu eineer
+  präzise konfigurierten Bandbreite zu verlangsamen.
+
+Klassenlose QDISC müssen an der Wurzel installiert werden:
+
+    # tc qdisc add dev $device root $disc $params
+
+#### Klassenbasierte QDISC
+
+Die folgenden klassenbasierten QDISC stehen zur Verfügung:
+
+cbq
+: (Class Based Queueing) bildet eine Hierarchie von Klassen, die
+  sich einen Link teilen und kann sowohl priorisieren als auch den
+  Durchsatz begrenzen.
+
+htb
+: (Hierarchy Token Buffer) ermöglicht garantierte Bandbreiten für
+  Klassen und erlaubt die Ausgabe von oberen Grenzen für das Teilen von
+  Bandbreite zwischen Klassen. Es enthält begrenzende Elemente auf Basis
+  von TBF und kann Klassen priorisieren.
+
+prio
+: wird für Priorisierung ohne Begrenzung der Bandbreite verwendet.
+
+#### Theorie
+
+Die Klassen formen einen Baum, bei dem jede Klasse genau einen Vorfahren hat
+und mehrere Kinder haben kann.
+
+Manche QDISC erlauben zur Laufzeit Klassen hinzuzufügen (CBQ, HTB), andere
+nicht (PRIO). Erstere können beliebig viele (auch keine) Subklassen haben,
+in denen die Datenpakete einsortiert werden.
+
+Jede Klasse enthält genau ein Blatt-QDISC (per Default pfifo), welcher durch
+ein anderes ersetzt werden kann. Diese QDISC kann wiederum andere Klasse
+enthalten, die zunächst auch nur ein QDISC haben.
+
+Wenn ein Datenpaket in einer klassenbasierten QDISC ankommt, wird es genau
+einer der enthaltenen Klassen zugeordnet. Sind Filter für eine Klasse
+definiert, werden diese zuerst für die Klassifizierung herangezogen. Einige
+QDISC werten auch das TOS-Feld des IP-Headers aus.
+
+Jeder Knoten im Klassenbaum kann seine eigenen Filter haben. Filter in
+höheren Ebenen können direkt auf niedrigere Klassen verweisen.
+
+Wenn ein Paket nicht klassifiziert werden konnte, geht es in die
+Blatt-QDISC der Klasse.
+
+#### Namen
+
+Alle QDISC, Klassen und Filter haben Ids, die automatisch bestimmt oder
+explizit spezifiziert werden. Diese Ids bestehen aus einer Haupt- und einer
+Nebennummer, getrennt durch Doppelpunkt.
+
+Ein QDISC, welche potentiell Kinder haben kann, bekommt eine Hauptnummer,
+die 'Handle' genannt wird und lässt die Nebennummer als Namensraum für die
+Klassen. Üblicherweise benennt man QDISC, die Kinder haben, explizit.
+
+Alle Klassen, die zur selben QDISC gehören, teilen sich die gleiche
+Hauptnummeer. Jede hat eine separate Nebennummer, die Class-Id genann wird
+un sich auf die QDISC (nicht die Elternklasse bezieht).
+
+Filter haben eine dreiteilige Filter-Id, die nur bei einer Filter-Hierarchie
+benötigt werden.
+
+#### tc Befehle
+
+add
+: Fügt eine QDISC, Klasse oder einen Filter an. Der Vorfahre
+  (root oder Class-Id) muss angegeben werden. QDISC oder Filter können mit
+  dem `handle` Parameter benannt werden, Klassen mit `classid`.
+
+remove
+: entfernt eine QDISK
+
+change
+: modifiziert eine Einheit am Orte
+
+replace
+: gleichzeitiges `remove` / `add`, der neue Knoten
+  wird gegebenenfalls neu erzeugt
+
+link
+: gleichzeitiges `remove` / `add`, der neue Knoten muss bereits existieren.
+
+Weitere Informationen finden sich in der Handbuchseite von `tc`.
+
+### lnstat / nstat / rtacct
+
+Diese Programme liefern Netzwerkstatistiken. Nähere Informationen siehe
+Handbuchseiten.
+
+### rtmon
+
+Mit dem Programm rtmon kann ich Änderungen an der Routingtabelle des Kernels
+über den `netlink` Socket beobachten. Das Programm kann vor der ersten
+Netzwerkkonfiguration, zum Beispiel in einem Init-Script, gestartet werden.
+
+Rtmon schreibt in eine Datei und stellt der Historie der Routingtabelle
+einen Schnappschuss des Zustandes beim Start des Programms voran. Die Datei
+kann ich mit dem bereits besprochenen Programm ip auswerten.
+
+Der typische Aufruf sieht in etwa so aus:
+
+    # rtmon file /var/log/rtmon.log
+
+Anschließend kann ich die protokollierten Änderungen wie folgt ausgeben
+lassen:
+
+    # ip monitor file /var/log/rtmon.log
+
+Sowohl beim Aufruf von rtmon, als auch bei dem von ip kann ich angeben, an
+welchen Objekten ich interessiert bin:
+
+link
+: den Netzwerkgeräten
+
+address
+: den Protokolladressen (IPv4, IPv6) an einem Gerät
+
+route
+: den Einträgen der Routingtabelle
+
+all
+: an allem
+
+Weitere Informationen finden sich auch hier in der Handbuchseite.
+
+## netstat {#sec-netz-werkzeuge-netstat}
+
+Ein Werkzeug, dass ich auch bei der Analyse von lokalen Rechnerproblemen
+einsetze und dort bereits vorgestellt habe, ist netstat. Im Bereich
+Netzwerkprobleme kann es viele Informationen liefern, die mir, je nach
+Problemfall weiterhelfen können.
+
+### Sockets
+
+Rufe ich `netstat` ohne Argumente auf, liefert es mir eine Liste der
+offenen und aktiven Sockets aller konfigurierten Adressfamilien, das
+heisst, der bestehenden Verbindungen.
+
+Meist interessieren mich nicht alle Adressfamilien, sondern nur ganz
+bestimmte. Dann kann ich diese zum Beispiel mit der Option
+`--protocol=$familie` einschränken. Für `$familie` kan ich in
+einer kommaseparierten Liste die folgenden angeben: `unix`,
+`inet`, `ipx`, `ax25`, `netrom`, `ddp`. Alternativ
+kann ich jeden gewünschten Familiennamen einzeln als Option übergeben:
+`--unix`, `--inet`, \ldots
+
+In diesem Teil der Buches interessiert mich vor allem die Familie
+`--inet`. Diese kann ich weiter eingrenzen. Mit der Option `-4`
+beziehungsweise `-6` beschränke ich die Ausgabe auf die entsprechende
+Version des Internet Protokolls.
+
+Außerdem verwende ich
+
+--raw oder -w
+: wenn ich an Raw-Sockets interessiert bin,
+
+--tcp oder -t
+: für TCP-Sockets, und
+
+--udp oder -u
+: für UDP-Sockets.
+
+Bin ich nur daran interessiert, ob überhaupt ein Prozess an einem bestimmten
+Socket wartet, verwende ich die Option `--listening` beziehungsweise
+`-l`. Diese werden bei der normalen Ausgabe weggelassen. Will ich
+hingegen sowohl die aktiven als auch die lauschenden Sockets erfassen,
+verwende ich die Option `--all` beziehungsweise `-a`.
+
+### Routen
+
+Wenn ich statt an den Sockets eher an den Routen interessiert bin, verwende
+ich die Option `--routes` beziehungsweise `-r`. Damit bekomme ich
+die gleiche Ausgabe, wei mit dem Befehl `route -e`. Auch hier kann ich
+mit `-4` oder `-6` die Protokollversion einschränken.
+
+Füge ich die Option `-C` hinzu, bekomme ich Informationen aus dem
+Routencache, mit der Option `-F` stattdessen aus der Forwarding
+Information Base (der Routentabelle), aber das ist sowieso die
+Voreinstellung.
+
+### Interfaces
+
+Mit der Option `--interfaces` oder `-i` kann ich Informationen
+über die Netzwerk-Interfaces bekommen.
+
+Ein einfaches `netstat -i` liefert mir in einer übersichtlichen Tabelle
+zu jedem aktiven Interface unter anderem die MTU, die Anzahl der gesendeten
+und empfangenen Datenpakete sowie die Anzahl der Sende- beziehungweise
+Empfangsfehler.
+
+Kombiniere ich das mit `-e`, bekomme ich die gleiche Ausgabe wie vom
+Program `ifconfig`. Kombiniert mit `-a` werden auch Interfaces
+angezeigt, die nicht im Zustand `UP` sind.
+
+### Multicast-Gruppen
+
+Die Option `--groups` beziehungsweise `-g` liefert mir
+Informationen zur Mitgliedschaft des Rechners in Multicast-Gruppen.
+
+Auch diese kann ich mit `-4` oder `-6` einschränken.
+
+### Statistiken
+
+Mit der Option `--statistics` beziehungsweise `-s` zeigt netstat
+zusammengefasste Statistiken für alle Protokolle.
+
+### allgemeine Optionen
+
+Abschließen möchte ich diese kleine Vorstellung von netstat mit ein paar
+allgemeinen Optionen, mit denen ich die Ausgabe modifizieren kann.
+
+Die von mir wohl am meisten eingesetzte Option ist `--numeric`, kurz
+`-n`. Mit dieser Option zeigt netstat numerische statt symbolischer
+Informationen an und das ist insbesondere bei Netzwerkadressen ein immenser
+Geschwindigkeitsvorteil, da sonst unter Umständen etliche DNS-Anfragen mit
+den entsprechenden Verzögerungen gestellt werden, bevor die Ausgabe
+angezeigt werden kann. Natürlich kann man das auch selektiv einstellen mit
+`--numeric-hosts`, `--numeric-ports` und `--numeric-users`.
+
+Mit der Option `--verbose` oder `-v` kann ich mehr Informationen
+bekommen, insbesondere zu nicht konfigurierten Adressfamilien.
+
+Ähnliches bietet die Option `--extend` oder `-e`, die zusätzliche
+Informationen zum Beispiel bei Interfaces liefert.
+
+Gebe ich die Option `--continuos` oder `-c` an, bekomme ich die
+Informationen aller Sekunde ausgegeben.
+
+## route {#secr-netz-werkzeuge-route}
+
+Das Programm `route` ist für die Anzeige und Manipulation von
+Routingeinträgen zuständig.
+  
+Da die gleiche Funktionialität mit dem Befehl `ip route` und
+entsprechenden Optionen erreicht werden kann, gehe ich hier nicht näher auf
+das `route` ein. Falls das Paket iproute2 auf einen Rechner nicht
+installiert ist, verweise ich auf die Handbuchseite.
+
+## ethtool, mii-diag, mii-tools {#sec-netz-werkzeuge-ethtool}
+
+Mit den Programmen ethtool, mii-diag beziehungsweise mii-tool kann ich die
+Konfiguration der Ethernetschnittstellen anzeigen und manipulieren,
+zumindest bei modernen Schnittstellen.
+
+Dazu verwenden diese Programme meist das Media Independend Interface (MII),
+von dem sich auch der Name ableitet.
+
+Welches Programm installiert ist, hängt von der verwendeten
+Linux-Distribution ab. Ob man es überhaupt verenden kann, hängt auch von der
+verwendeten Ethernetkarte ab. Moderne Ethernetkarten und die
+Onboardschnittstellen neuerer Rechner funktionieren üblicherweise gut mit
+diesen Programmen.
+
+Unter anderem kann man mit diesen Programmen
+
+*   die Ethernet-Geschwindigkeit, das Duplexverhalten und das Aushandeln
+    der Parameter mit dem Switch beziehungsweise der angeschlossenen
+    Gegenstelle einstellen oder abfragen
+
+*   die Wake-On-Lan-Konfiguration bearbeiten
+
+*   Selbsttests anstoßen
+
+Gerade die Möglichkeit, Fehlanpassungen in der Geschwindigkeit oder beim
+Duplexverhalten zu erkennen, kann sich als sehr wertvoll bei der Diagnose
+von Performanceproblemen erweisen.
+
+Bei einer LWL-Verbindung über mehrere Kilometer hatten wir ernste
+Performanceprobleme, bei denen die Transferrate in ener Richtung auf wenige
+KB/s beim beidseitigen Lasttest herunterging. Der erste Gedanke war eine
+schlechte Faser, da das Problem nur in einer Richtung auftrat. Mit den
+mii-tools konnten wir eine Fehlanpassung der Ethernetkarte mit dem
+Medienwandler diagnostizieren. Nachdem wir die Schnittstelle auf Full-Duplex
+eingestellt hatten, blieb die verfügbare Bandbreite auch bei Volllast in
+beiden Richtungen im erwarteten Rahmen.
+
+## ping {#sec-netz-werkzeuge-ping}
+
+Eines der grundlegenden und vielseitigsten Werkzeuge für das
+Netzwerk-Troubleshooting ist Ping. Mit diesem Programm kann ich:
+
+*   testen, ob eine Maschine überhaupt erreichbar ist,
+
+*   sehen, wie lange ein Paketaustausch dauert,
+
+*   analysieren, welche Bandbreite die Verbindung zu einem Rechner hat,
+
+*   die Performance meines Rechners und Netzwerkes einschätzen,
+
+*   eine hohe Netzlast für andere Tests erzeugen.
+
+Natürlich sind alle mit Ping gewonnen Erkenntnisse mit einer Prise Salz zu
+nehmen, aber das trifft schließlich auf jedes Werkzeug zu.
+
+In \cite{sloan2001} sind die Anwendungen von Ping beim
+Netzwerk-Troubleshooting sehr gut und ausführlich beschrieben.
+
+Die wichtigsten Kommandozeilenoptionen von `ping` sind:
+
+-c count
+: um die Anzahl der gesendeten Datenpakete zu begrenzen,
+
+-i interval
+: um den zeitlichen Abstand in Sekunden zwischen den
+  einzelnen Paketen vorzugeben (Voreinstellung ist eine Sekunde)
+
+-s size
+: um die Größe der Datenpakete in Bytes vorzugeben
+  (Voreinstellung ist 56, hinzu kommen immer noch 8 Byte für den
+  ICMP-Header)
+
+-n
+: um die Auflösung von Hostnamen abzuschalten
+
+-q
+: um die Ausgabe der einzelnen Zeiten abzuschalten (die
+  Statistikinformationen am Ende werden trotzdem ausgegeben)
+
+-f
+: um die Ping-Pakete mit maximaler Geschwindigkeit zu senden und
+  dadurch eine möglichst hohe Netzlast zu erzeugen (diese Option sowie die
+  Option `-i` mit Zeiten unter 0,2 Sekunden benötigen Superuserrechte)
+
+  Daneben gibt es sehr viele weitere Optionen, die seltener benötigt werden
+  und deren genaue Auswirkungen aus den Handbuchseiten erschlossen werden
+  können.
+
+### Verbindungstest
+
+Das ist der einfachste Test, den ich mit Ping ausführen kann. Ich gebe
+
+    $ ping rechnername
+
+ein und bekomme heraus, ob die betreffende Maschine erreichbar ist. Das
+heißt, ob Antwortpakete von dort zurück kommen. Ältere Versionen des
+Programms begnügten sich auch schon mit der Ausgabe:
+
+    rechnername is alive
+
+Moderne Versionen zeigen nach Beendigung des Programms (nötigenfalls durch
+Abbruch mit `<CTRL>-C`) die Paketlaufzeiten und einige Statistiken an.
+
+Ein Problem, das das Testen der Verbindung mit Ping verhindern kan, sind zu
+restriktive Firewalleinstellungen. Bei etlichen Rechnern habe ich erlebt,
+dass diese nach der Installation zwar am Netzverkehr teilnehmen konnten,
+aber selbst nicht auf ICMP-Hello-Pakete (Ping) antworteten. Das ist, aus
+meiner Sicht, eine Überreaktion auf die Tatsache, das einige DoS-Angriffe
+das ICMP-Protokoll und insbesondere ICMP-Hello (Ping) verwendet haben. Man
+kann schlecht jedem vorschreiben, was er in seinem Netzwerk erlaubt und was
+nicht. Auf jeden Fall möchte ich jeden bitten, sachlich einen möglichen oder
+eingebildeten Gewinn an Sicherheit gegenüber der Erschwernis der
+Netzwerkdiagnose abzuwägen.
+
+### Netzwerkperformancemessungen
+
+Ein weiteres Anwendungsgebiet sind Performancemessungen im Netzwerk. Am
+einfachsten geht die Bestimmung der Paketlaufzeit zu einem entfernten
+Rechner und zurück, denn diese gibt Ping selbst aus. Bin ich an der reinen
+Laufzeit interessiert, muss ich mir einen Zeitpunkt suchen, zu dem sehr
+wenig im Netz los ist. Aber auch die Bandbreite kann ich mit Ping bestimmen
+sowie Netzwerklast für Lastmessungen erzeugen.
+
+### Probleme mit Ping
+
+Ein paar Sachen gibt es zu beachten, wenn ich Ping beim Troubleshooting
+verwende.
+
+Zunächst arbeitet Ping nicht im luftleeren Raum, snondern hängt vom
+Funktionieren anderer Netzwerkelemente ab. Arbeite ich mit Hostnamen statt
+IP-Adressen, dann muss DNS fuktionieren, oder die Namen via /etc/hosts
+auflösbar sein.
+
+Dann muss die Ethernet-Adresse des Zielrechners oder Routers aufgelöst
+werden können. Dazu muss ich sicherstellen, dass das ARP-Protokoll
+funktioniert oder statische ARP-Einträge verwenden (und zwar auf beiden
+Seiten). Üblicherweise wird die erste RTT bei einer Messung mit Ping durch
+das ARP-Protokoll verfälscht. Diesem Problem kann ich begegnen, indem ich
+grundsätzlich mehrere Ping-Pakete sende und die erste Zeit ignoriere.
+
+Bei der Bestimmung der Bandbreite eines Links verwende ich ohnehin die
+niedrigste Zeit, da ist dieses Problem bereits berücksichtigt. Ich muss
+lediglich daran denken, immer mehrere gleichartige Ping-Pakete zu senden.
+
+Ein weiteres mögliches Problem ist, das das korrekte Funktionieren des
+Netzwerkes von Faktoren abhängen kann, die Ping nicht beeinflussen. So kann
+zum Beispiel ein kleines Ping-Paket problemlos hindurch gelangen, während
+größere Datenpakete der Anwendungsprotokolle verworfen werden.
+
+Andererseits kann ICMP administrativ geblockt sein, während
+Anwendungsprotokolle von der Firewall durchgelassen werden, was zu einem
+False Negative führen kann. Gerade diese Konstellation trifft man häufig in
+Netzen, die von paranoiden Administratoren konfiguriert werden oder in
+solchen, deren Administration die Auswirkungen der betreffenden Sperren
+nicht in vollem Maße abschätzen können. Trotzdem halte ich es für sinnvoll,
+die Argumente für und wieder diese Sperren im Einzelfall zu klären und zu
+dokumentieren, damit es an dieser Stelle nicht immer wieder zu Diskussionen
+kommt, weil die Sicherheitseinstellungen das Troubleshooting erschweren. Für
+eine entsprechende Argumentation ist es notwendig, die möglichen
+Sicherheitsprobleme und gegebenenfalls alternative Gegenmaßnahmen genau zu
+kennen.
+
+Mögliche Argumente für ein Sperren von ICMP sind:
+
+Smurf Attacks
+: Ein ICMP-Paket mit gefälschter Absenderadresse wird
+  an die Broadcast-Adresse eines Netzes gesendet. Der Rechner, dem die
+  gefälschte Absenderadresse gehört, bekommt von allen Rechnern des
+  Netzsegments eine Antwort.
+  Zur Abhilfe kann man Pakete an Netz-Broadcast-Adressen am Router
+  ausfiltern. Damit schränkt man diesen Angriff auf das lokale Netz ein.
+  In diesem sollte es relativ einfach möglich sein, den Verursacher zu
+  ermitteln.
+
+Ping of Death
+: Es gibt (ältere) Betriebssysteme, die mit übergroßen
+  ICMP-Paketen nicht umgehen können und damit außer Betrieb genommen
+  werden können. Dieses Problem sollte mit allen aktuellen
+  Betriebssystemen behoben sein.
+
+Auskundschaften des Netzes
+: Mit ICMP ist es möglich, die Adressen
+  der Rechner in einem IPv4-Netz zu ermitteln. Hier ist zu bedenken, ob
+  das wirklich ein Problem darstellt.
+
+Unerwünschter Traffic
+: Durch ICMP (insbesondere Floodping) kann
+  unnötiger unerwünschter Traffic erzeugt werden, der legitimen
+  Datenverkehr behindert. Hier kann man das Problem, soweit es geht mit
+  Rate-Limiting am Router eindämmen.
+
+Wenn Ping nicht komplett blockiert wird, ist immerhin noch möglich, dass das
+Protokoll eine sehr niedrige Priorität am Router bekommt und allein dadurch,
+insbesondere bei gut ausgelateten Routern unter den Tisch fällt oder
+zumindest die RTT stark verfälscht wird.
+
+Bei manchen Routern kann es vorkommen, dass im Fall von NAT die
+ICMP-Echo-Antwort nicht zum anfragenden Host zurückgeschickt wird.
+
+Interessanterweise kann man trotz unterdrücktem ICMP zumindest im lokalen
+Netzsegment herausbekommen, ob eine bestimmte IP-Adresse verwendet wird.
+Dazu löscht man den ARP-Cache und schickt dann ein Ping-Paket zur
+entsprechenden Adresse. Ist danach ein korrekter ARP-Eintrag vorhanden, ist
+der Host angeschlossen und unterdrückt das ICMP-Echo.
+
+Eines muss man bei Ping-Tests immer im Hinterkopf behalten: Ping testet nur
+die Erreichbarkeit einer bestimmten IP-Adresse. Ob die angebotenen Dienste
+funktionieren und ob überhaupt der richtige Rechner diese Adresse verwendet,
+muss ich auf anderem Wege herausbekommen.
+
+## traceroute {#sec-netz-werkzeuge-traceroute}
+
+Traceroute ist ein Werkzeug zur Untersuchung des Netzwerkpfades zu einer
+IP-Adresse.
+
+Bei Problemen mit der Erreichbarkeit eines Rechners oder Netzwerkes kann ich
+es unter Umständen dazu verwenden, das letzte erreichbare Netzsegment zu
+bestimmen und dann meine nächsten Schritte auf dieses zu fokussieren. Bei
+manchen Problemen kann es auch bereits einen Hinweis auf die Art des
+Problems geben. Zum Beispiel können in der Ausgabe mehrfach auftretende
+IP-Adressen auf eine Routingschleife hin deuten.
+
+Die grundlegende Arbeitsweise von traceroute ist, Datenpakete zum
+Zielrechner zu senden, deren IP-time-to-live-Feld mit 0 beginnt und
+sukzessive erhöht wird, bis der Zielhost erreicht ist. Wenn ein Host oder
+Router ein Datenpaket mit einer TTL von 0 erhält, verwirft er das Datenpaket
+und schickt an den Absender eine ICMP-Nachricht, dass die TTL abgelaufen
+war. Diese ICMP-Nachricht enthält die ersten Bytes des verworfenen
+Datenpaketes, damit der Empfänger die ICMP-Nachricht dem gesendeten
+Datenpaket zuordnen kann.
+
+In der ursprünglichen Variante sendet traceroute UDP-Pakete ab einer
+bestimmten Portnummer und erhöht beim Senden nicht nur die TTL, sondern
+gleichzeitig auch die Portnummer. Dadurch ist es einfach, die zuückkehrenden
+ICMP-Nachrichten über den Port den richtigen TTL zuzuordnen. Damit ist es
+möglich mehrere Datenpakete mit verschiedenen TTL und Port quasi-parallel zu
+versenden und die Messzeit zu verkürzen.
+
+Wenn eine UDP-Nachricht am Zielhost angekommen ist, sendet dieser keine
+ICMP-ttl-exceeded-Nachricht, sondern stattdessen ICMP-port-unreachable, wenn
+an dem betreffenden Port kein Prozess lauscht. Darum ist es wichtig für
+traceroute via UDP einen Bereich zu verwenden, in dem auf dem Zielhost kein
+UDP-Port in Verwendung ist. Zwar kann der Zielhost auch an der IP-Adresse
+erkannt werden, aber gerade bei multihomed Hosts oder Routern kann das
+Datenpaket an einem anderen Interface ankommen und damit die ICMP-Antwort
+eine andere IP-Adresse.
+
+Da Firewalleinstellungen in Netzwerken immer restriktiver werden, gibt es
+einige Varianten von traceroute, die auch andere Protokolle verwenden und
+mit einem Port auf dem Zielrechner auskommen. So ist es möglich, traceroute
+mit ICMP-echo-Paketen (Ping), TCP-Paketen (zum Beispiel Port 25 oder 80)
+oder mit nur einem UDP-Port (zum Beispiel 53 oder 123) zu verwenden, wenn
+die Firewall für eines dieser Protokolle freigegeben ist.
+
+Zusätzlich zur IP-Adresse der Hops auf dem Weg zum Zielrechner zeigt
+traceroute of noch die RTT zwischen gesendetm Datenpaket und ICMP-Antwort
+an, aus der ich Rückschlüsse auf Art und Zustand des betreffenden
+Netzsegmentes ziehen kann.
+
+Auch bei traceroute, wie bei allen Werkzeugen, muss ich bei der
+Interpretation der Ergebnisse einige Sachen berücksichtigen.
+
+So zeigt zum Beispiel die Reihenfolge der Hops nur, wie die Daten in einer
+Richtung zum Zeitpunkt der Messung gelaufen sind. Bei Änderungen im Routing
+kann sich der Weg bereits während der Messung ändern. Und der Rückweg kann
+ganz anders aussehen, wenn das Routing asymmetrisch ist.
+
+Einige IP-Stacks senden ICMP-unreachable-Nachrichten mit einer TTL, die
+gleich der ist, mit der das Datenpaket ankam. Diese Host erscheinen dann
+(bei symmetrischem Routing) erst bei der doppelten TTL, also viel weiter weg
+als sie in Wirklichkeit sind.
+
+Wenn auf dem Weg der Daten zum Zielhost eine Adressumsetzung (NAT) erfolgt,
+dann gehen die ICMP-Nachrichten nach der NAT an die umgesetzte Adresse und
+erreichen möglicherweise nicht den Rechner, auf dem ich traceroute gestartet
+habe.
+
+Schließlich ist es möglich, dass eine sehr restriktive Firewall die
+Traceroute-Pakete einfach stillschweigend verwirft. In diesem Fall kann es
+sinnvoll sein, traceroute mit anderen Protokollen zu wiederholen und die
+Ergebnisse zu vergleichen.
+
+Abgesehen von diesen Problemen ist es möglich, mit traceroute eine
+hinreichend genaue Karte der erreichbaren Netze zu erstellen.
+
+Da es etliche Implementierungen von traceroute gibt, deren
+Kommandozeilenoptionen zum Teil erheblich voneinander abweichen, verweise
+ich auf die Dokumentation des auf dem Rechner installierten Programmes.
+
+## tcpdump {#sec-netz-werkzeuge-tcpdump}
+
+Bei besonders schwierigen Netzwerkproblemen verwende ich - quasi als große
+Kanone - tcpdump zum Mitschreiben des Datenverkehrs im Netz. Dabei setze ich
+tcpdump vorzugsweise auf Servern, die keine grafische Benutzeroberfläche
+haben, oder auf Routern/Bridges mit Linux oder BSD als Betriebssystem.
+
+Ich verwende tcpdump dann
+
+*   um das Verhalten andere Werkzeuge zu kontrollieren und zu
+    verifizieren. Erhalte ich zum Beispiel via Ping keine Antwort von einer
+    bestimmten IP-Adresse, sehe ich mit tcpdump nach, ob mein Rechner die
+    ICMP-Anfragen überhaupt absendet. Sehe ich dann mit tcpdump die Antwort
+    ebenfalls ankommen, kann ich auf die Firewallregeln auf meinem Rechner
+    als Verursacher schließen.
+
+*   um das Vorkommen bestimmter Datenpakete zu verifizieren. Zum einen
+    überhaupt, wie im Beispiel mit Ping und zum anderen an verschiedenen
+    Stellen im Netz, um durch Bisektion die Stelle im Netz zu finden, an der
+    der Datenfluß unterbrochen wird.
+
+*   um Protokollverhalten zu verifizieren und/oder Protokollfehler
+    nachzuweisen. Das erfordert seinerseits widerum umfangreiche Kenntnisse
+    der untersuchten Protokolle, die sich in vielen Fällen durch Studium der
+    relevanten RFCs erlangen lassen.
+
+*   um Datenmitschnitte für die Auswertung mit Wireshark zu sammeln.
+    Zwar habe ich in Wireshark auch nur die selben Daten zur Verfügung wie
+    in tcpdump, aber bereits die Statistikfunktionen können mir Hinweise auf
+    Netzprobleme geben, die ich mit tcpdump gar nicht wahrgenommen hätte.
+    Abgesehen davon ist die Darstellung der einzelnen Protokollschichten bei
+    Wireshark einfach anschaulicher.
+
+Nach dem ich nun geklärt habe, wofür ich tcpdump im Allgemeinen einsetze,
+komme ich nun dazu, was ich damit konkret machen kann und wie ich das mache.
+
+Die häufigste Anwendung ist das Mitschneiden von Datenverkehr. Dazu benötige
+ich Superuserrechte. Je nachdem, wie viele Schnittstellen mein Rechner hat,
+muss ich diese noch angeben. Prinzipiell schalte ich die Namensauflösung ab,
+wenn ich mir die Datenpakete anzeigen lasse, um Verzögerungen durch
+DNS-Anfragen zu vermeiden.
+
+Will ich die mitgeschnittenen Daten nicht sofort auswerten, kann ich diese
+auch in eine Datei schreiben lassen, die ich dann später mit tcpdump oder
+wireshark auswerte. Für die Auswertung der Datei benötige ich keine
+Superuserrechte sondern nur Leserechte auf die Datei.
+
+Will ich über einen längeren Zeitraum Datenpakete mitschneiden und in
+Dateien archivieren, kann ich tcpdump anweisen, bei Erreichen einer
+bestimmten Dateigröße oder alternativ periodisch nach einer bestimmten Zeit
+mit einer neuen Datei zu beginnen.
+
+Manche IPSEC-Verbindungen kann tcpdump dekodieren, wenn ich den Schlüssel
+angebe.
+
+Bin ich nur an den Kopfdaten und nicht an den Anwendungsdaten interessiert,
+kann ich die maximale pro Datenpaket mitgeschnittene Länge vorgeben. Damit
+erhöht sich gleichzeitig die Verarbeitungsgeschwindigkeit, wenn ich die
+Datei in eine Datei schreibe.
+
+### Kommandozeilenoptionen
+
+Die Optionen, die ich am häufigsten verwende, sind:
+
+-n
+: um die Namensauflösung abzuschalten. Diese Option benötige ich
+  nicht, wenn ich den Mitschnitt lediglich in eine Datei schreibe.
+
+-l
+: um die Daten gleich während des Mitschnitts zu sehen.
+  Andernfalls puffert tcpdump die Standardausgabe und zeigt die
+  Datenpakete nicht sofort an, wenn sie eingetroffen sind.
+
+-U
+: um den Schreibpuffer beim Schreiben in eine Datei nach jedem
+  angekommenen Datenpaket zu leeren. Das ist nützlich, wenn ich die
+  geschriebene Datei in einem anderen Fenster zur gleichzeitigen
+  Auswertung geöffnet habe. Dort verwende ich dann die Option `-l`.
+
+-w filename
+: um in eine Datei zu schreiben.
+
+-r filename
+: um aus einer Datei zu lesen.
+
+-i device
+: um das Interface anzugeben, an dem ich mitschreiben will.
+  Ab einem Kernel der Version 2.2 ist es möglich an allen Interfaces
+  gleichzeitig mitzuschreiben. Dafür gebe ich als Device `any` an.
+
+-C filesize
+: weist tcpdump an, beim Schreiben in eine Datei
+  automatisch eine neue Datei zu öffnen, wenn die alte größer als
+  `filesize` ist. An den Dateinamen wird eine fortlaufende Nummer angehängt.
+
+-G seconds
+: um die mit `-w` angegebene Datei nach der
+  angegebenen Zeit zu rotieren. Der Name der Datei sollte eine
+  Zeitformatangabe für strftime(3) haben, damit sie nicht überschrieben wird.
+
+-F filename
+: um den Filterausdruck, der sonst am Ende der
+  Kommandozeile folgt, aus der angegebenen Datei zu lesen.
+
+-q
+: um die ausgegebenen Informationen zu reduzieren, so dass die
+  Ausgabezeilen kürzer werden.
+
+-v
+: um mehr Informationen pro Datenpaket angezeigt zu bekommen.
+  Ich kann mehrere `-v` verwenden, um noch mehr Informationen zu bekommen.
+
+-s snaplen
+: um die Zahl der Bytes pro Datenpaket, die mitgeschrieben
+  werden, zu begrenzen. 0 bedeutet hier keine Begrenzung.
+
+-W filecount
+: um die Anzahl der Dateien, die mit `-C` oder `-G` automatisch erzeugt
+  werden, zu begrenzen.
+
+-x | -X
+: um die Header und Daten als Hexadezimal- und ASCII-Werte ausgeben zu lassen.
+
+### Filter
+
+Ein wesentlicher Punkt beim Einsatz von tcpdump ist die Möglichkeit, durch
+Filter zu bestimmen, welche Datenpakete mitgeschrieben werden und welche
+nicht. Das macht man mit Filterausdrücken, die einfach am Ende der
+Kommandozeile angefügt werden oder in einer Datei gesammelt und mit der
+Option `-F dateiname` übergeben werden. Detaillierte Informationen zu
+den Filtermöglichkeiten von tcpdump oder libpcap im Allgemeinen finden sich
+in der Handbuchseite `pcap-filter`.
+  
+In den meisten Fällen hänge ich
+den Filterausdruck an das Ende der Kommandozeile, weil das schneller geht.
+Nur bei komplizierten Filtern schreibe ich den Filter vor Benutzung in eine
+Datei.
+
+Ein Filterausdruck besteht aus einem oder mehreren Primitiven, die über die
+Begriffe `and`, `or` oder `not` miteinander kombiniert werden
+können. Ein Primitiv besteht aus einer ID, das ist ein Name oder eine Zahl,
+der ein oder mehrere Qualifizierer vorangestellt werden. Die Qualifizierer
+bestimmen, welche Bedeutung die ID hat. So kann zum Beispiel die ID smtp
+zusammen mit dem Qualifizierer zum einen auf eine Ethernetadresse verweisen
+(`ether host smtp`), auf eine IP-Adresse (`host smtp`), auf den
+TCP-Port 25 (`port smtp`) oder auf etwas anderes.
+
+Es gibt drei Arten von Qualifizierern, die miteinander kombiniert werden
+können:
+
+Typqualifizierer
+: geben an, worum es sich bei der ID handelt.
+  Mögliche Typen sind `host` (ein einzelner Rechner), `net` (ein
+  ganzes Netz, Netznamen können zum Beispiel in /etc/networks definiert
+  werden), `port` (ein TCP- oder UDP-Port, Portnamen werden in
+  /etc/services definiert) oder `portrange` (ein Portbereich, zwei
+  Ports verbunden mit Bindestrich).
+
+Richtungsqualifizierer
+: geben die Datenübertragungsrichtung zu oder
+  von der ID an. Mögliche Richtungen sind unter anderem `src`,
+  `dst`, `src or dst`, `src and dst`, `inbound`,
+  `outbound`. Fehlt der Richtungsqualifizierer, wird
+  `src or dst` angenommen.
+
+Protokollqualifizierer
+: beschränken das Primitiv auf ein bestimmtes
+  Protokoll. Das können unter anderem `ether` für Ethernet, `ip`
+  für IPv4, `ip6` für IPv6, `arp`, `tcp`, `udp` sein.
+  Protokollqualifizierer können noch weiter unterteilt sein, die Details
+  entnimmt man im Zweifel der Handbuchseite.
+
+Daneben gibt es noch einige spezielle Primitive, wie `gateway`,
+`broadcast`, `less`, `greater` und arithmetische Ausdrücke,
+die man in Filterausdrücken verwenden kann.
+
+Nachfolgend erläutere ich noch einige Primitive, die ich relativ häufig
+einsetze:
+
+src host h | dst host h | host h
+: Entweder die Quelladresse oder die Zieladresse oder
+  mindestens eine von beiden gehört zu Host `h`.
+
+ether src e | ether dst e | ether host e
+: Entweder die Ethernet-Quelladresse oder die
+  -Zieladresse oder mindestens eine von beiden ist `e`. Dabei kann
+  `e` als sechs durch Doppelpunkt getrennte Hexbytes oder als Name,
+  welcher in /etc/ethers definiert ist, angegeben werden.
+
+gateway host
+: Die Ethernet-Adresse gehört zu `host`, aber die
+  IP-Adresse nicht. So kann man Datenpakete filtern, die über ein
+  bestimmtes Gateway ankommen oder abgehen. Das funktioniert nur, wenn
+  `host` sowohl als IP-Adresse als auch als Ethernet-Adresse
+  aufgelöst werden kann.
+
+src net n/l | dst net n/l | net n/l
+: Entweder die Quelladresse oder die Zieladresse oder
+  mindestens eine von beiden liegt im Netz `n` mit einer
+  Bitmaskenlänge von `l`. Es gibt noch andere Primitive, um das
+  auszudrücken, aber diese Notation funktioniert für IPv4 und IPv6.
+
+src port p | dst port p | port p
+: Entweder der Quellport oder der Zielport oder mindestens
+  einer von beiden ist gleich `p`. Das ist nur gültig für TCP oder
+  UDP. Falls `p` als Name angegeben wird, muss er in /etc/services
+  definiert sein.
+
+greater l | less l
+: Die Paketlänge ist größer/gleich `l` oder kleiner/gleich `l`.
+  Achtung, `l` ist nicht die Größe des angezeigten IP-Pakets sondern
+  inklusive weiterer Protokollheader. Gegebenenfalls testet man das
+  erstmal an einem einfacheren Filterausdruck.
+
+ip proto p | ip6 proto p
+: Das Potokoll `p` ist eines der in /etc/protocols definierten
+  Protokolle oder die betreffende Nummer, zum Beispiel 1 für `icmp`,
+  6 für `tcp`, 17 für `udp` oder 89 für `ospf`. Da
+  `icmp`, `tcp` und `udp` Schlüsselwörter sind, müssen sie
+  hier mit Backslash (`\`) geschützt werden: `\icmp`,
+  `\tcp`, `\udp`.
+
+ether broadcast | ip broadcast | ether multicast | ip multicast
+: Diese Primitive sind wahr, wenn das betreffende Paket ein Ethernet- oder
+  IP-Broadcast oder -Multicastpaket ist.
+
+icmp | tcp | udp
+: Sind Abkürzungen für `ip proto \p or ip6 proto \p`, wobei `p`
+  für eines der drei Protokolle steht. Das heisst, ich bekomme die
+  entsprechenden Protokolle, unabhängig davon, ob sie via IPv4 oder IPv6
+  transportiert werden.
+
+expr relop expr
+: Damit ist es möglich, gezielt nach einzelnen Protokolloptionen zu
+  filtern, vorausgesetzt man kennt die entsprechenden Positionen.
+
+  So filtert zum Beispiel `ip[0] & 0xf != 5` alle IPv4 Pakete mit
+  gesetzten Optionen.
+
+  Damit lassen sich sehr spezielle Filter erzeugen. Es setzt allerdings
+  auch sehr genaue Kenntnis der untersuchten Protokolle voraus.
+
+Weitere Informationen zu Optionen, Filterausdrücken und deren Bedeutungen
+gibt es in der Handbuchseite.
+
+## {wireshark {#sec-netz-werkzeuge-wireshark}
+
+  Neben tcpdump verwende ich sehr gern Wireshark zur Auswertung von
+  Paketmitschnitten. Da dieses Werkzeug mit einer grafischen
+  Benutzeroberfläche daherkommt, habe ich es zwar auf kaum einem Server
+  installiert, aber wegen der bequemen Handhabung setze ich es sehr gern zur
+  Auswertung von Paketmitschnitten auf meiner Arbeitsstation ein. Und, wen es
+  sich ergibt, auch zum Mitschneiden der Datenpakete.
+
+  Im Netz finden sich einige Tutorials zum Einsatz von Wireshark, darum gehe
+  ich hier nur kurz auf die Menüpunkte ein, die ich am häufigsten einsetze.
+
+### Analyze > Expert Info Composite
+
+  Einen ersten Überblick über einen geladenen oder mit Wireshark erzeugten
+  Paketmitschnitt bekomme ich über den
+  Menüeintrag `Analyze > Expert Info Composite`.
+  In dem daraufhin geöffneten Fenster sind fünf Panels über die Reiter
+  `Errors`, `Warnings`, `Notes`, `Chats` und
+  `Details` zu erreichen. Die ersten vier Panels enthalten Bemerkungen
+  von Wiresharks zu Ereignissen mit der Wichtung entsprechend dem zugehörigen
+  Reiter. Im Panel `Details` finde ich noch einmal alle Bemerkungen in
+  der Reihenfolge, in der sie im Paketmitschnitt vorkommen. Praktisch ist, das
+  beim Anklicken einer Notiz das zugehörige Datenpaket im Hauptfenster
+  ebenfalls gleich ausgewählt wird.
+
+### Statistics > Conversations
+
+  Über den Menüeintrag `Statistics > Conversations` bekomme ich ebenfalls
+  ein Fenster mit mehreren Panels, die über Reiter wie `Ethernet`,
+  `IPv4`, `IPv6`, `TCP`, `UDP`, \ldots, jeweils gefolgt
+  von einer Zahl, ausgewählt werden. Dabei sind nur die Reiter aktiv, für die
+  Wireshark Konversationen (das heisst Datenaustausch mit dem entsprechenden
+  Protokoll) identifizieren konnte. Die Zahl gibt die Anzahl der verschiedenen
+  Konversationen an.
+
+  Im Panel ist dann eine Liste mit einer Zeile pro Konversation und den
+  zugehörigen Parametern zu sehen. Über das Kontextmenü kann man die
+  entsprechende Konversation zu einem Displayfilter für das Hauptfenster
+  hinzufügen oder einferben.
+  
+  Bei TCP und UDP kann man auch `Follow Stream` anwählen um in einem
+  weiteren Fenster die Nutzdaten der Verbindung zu sehen und zu speichern.
+  Dieses Feature von Wireshark ist vor allem dadurch praktisch, weil
+  Paketwiederholungen automatisch herausgerechnet werden un man so bequem an
+  die Nutzdaten herankommt.
+
+### Statistics > IO Graphs
+
+  Über diesen Menüeintrag bekomme ich einen grafischen Überblick über den
+  zeitlichen Ablauf des Datenverkehrs. Hier kann ich mit Filtern einzelne
+  Aspekte farblich hervorheben.
+
+### Hauptfenster
+
+  Bleibt schließlich die Paketliste im Hauptfenster.
+
+  Mit Displayfiltern kann ich die angezeigten Datenpakete einschränken. Es
+  lassen sich Zeitreferenzpunkte für eine genauere Analyse des Zeitverhaltens
+  setzen.
+
+  Auch hier habe ich die Möglichkeit, über das Kontextmenü und
+  `Follow Stream` an die Nutzdaten zu kommen.
+
+  Und vor allem kann ich für jedes Datenpaket die verschiedenen
+  Protokollschichten auf und zu klappen und  brauch die entsprechenden
+  Protokollparameter nicht aus dem Hexdump selbst zu ermitteln.
+
+## libtrace und libtrace-tools {#sec-netz-werkzeuge-librace}
+
+  Neben Tcpdump und Wireshark gibt es noch ein drittes Werkzeug, das ich gern
+  einsetze, wenn ich auf Paketmitschnitte zurückgreifen muss: libtrace und die
+  dazugehörigen Tools.
+
+  Mit libtrace kann man ähnlich wie mit libpcap eigene Analysewerkzeuge
+  programmieren. Aber hier will ich mehr auf die mitgelieferten libtrace-tools
+  eingehen, mit denen Mitschnitte angefertigt und weiter bearbeitet werden
+  können.
+
+  Ein großer Vorteil von libtrace ist, dass diese Bibliothek und die damit
+  geschriebenen Werkzeuge mit Paketmitschnitten aus unterschiedlichen Quellen
+  umgehen können und die verschiedenen Formate ineinander umwandlen können.
+  Dazu verwendet libtrace sogenannte URI um das Format und die Quelle
+  beziehungsweise das Ziel anzugeben.
+
+  \begin{table}
+    \begin{tabularx}{\textwidth}{X | l | c | c}
+    Format & URI & Lesen & Schreiben \\
+    \hline
+    Live PCAP Schnittstelle & pcapint:<interface> & Ja & Ja \\
+    PCAP Trace Datei & pcapfile:<filename> & Ja & Ja \\
+    ERF Trace Datei & erf:<filename> & Ja & Ja \\
+    DAG Gerät & dag:<device location> & Ja & Ja \\
+    Native Linux interface & int:<interface> & Ja & Ja \\
+    Native Linux interface (ring buffers) & ring:<interface> & Ja & Ja \\
+    Native BSD interface & bpf:<interface> & Ja & Nein \\
+    TSH trace file & tsh:<filename> & Ja & Nein \\
+    FR+ trace file & fr+:<filename> & Ja & Nein \\
+    Legacy DAG ATM Trace Datei & legacyatm:<filename> & Ja & Nein \\
+    Legacy DAG POS Trace Date & legacypos:<filename> & Ja & Nein \\
+    Legacy DAG Ethernet Trace Datei & legacyeth:<filename> & Ja & Nein \\
+    Legacy DAG NZIX Trace Datei & legacynzix:<filename> & Ja & Nein \\
+    ATM Cell Header Trace Datei & atmhdr:<filename> & Ja & Nein \\
+    RT Network Protocol & rt:<host>:<port> & Ja & Nein \\
+    \end{tabularx}
+    \caption{Unterstützte Formate für Paketmitschnitte}
+  \end{table}
+
+  Damit genug der Vorrede, kommen wir nun zu den Werkzeugen.
+
+### traceanon
+
+  Mit traceanon kann man die IP-Adressen von Paketmitschnitten anonymisieren.
+  Das ist immer dann wichtig, wenn ein Paketmitschnitt zu einem Problem
+  weitergereicht werden, aber möglichst wenig Informationen zur
+  Netzwerkstruktur preisgegeben werden soll.
+
+  Traceanon ändert die IP-Header der Datenpakete sowie die in ICMP
+  eingebetteten IP-Header und repariert die Prüfsummen innerhalb von TCP- und
+  UDP-Headern.
+
+  Es gibt zwei Schemata, zum Einen wird ein kompletter Adressblock durch einen
+  anderen ersetzt und zum Anderen werden die Adressen mit dem
+  Cryptopan-Verfahren ersetzt.
+
+  Wichtig beim Einsatz von traceanon ist, immer im Hinterkopf zu behalten,
+  dass IP-Adressen auch auf anderem Weg offenbar werden können. So werden zum
+  Beispiel IP-Adressen innerhalp von ARP-Paketen nicht anonymisiert und einige
+  Anwendungsprotokolle wie zum Beispiel HTTP, SMTP, OSPF und andere
+  Routingprotokolle können in den Anwendungsdaten Informationen über die
+  beteiligten Netze preisgeben.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  traceanon [options] sourceuri desturi
+  \end{verbatim}
+  Die möglichen Optionen sind der Handbuchseite zu entnehmen.
+
+### tracediff
+
+  Dieses Werkzeug findet Differenzen zwischen zwei Mitschnitten und gibt diese
+  aus. Dabei wird der Inhalt aus den Framingheadern (PCAP oder ERF) nicht
+  ausgewertet.
+
+  Mit der Option `-m max` kann ich die Ausgabe nach `max`
+  Unterschieden abbrechen lassen.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  tracediff [ -m maxdiff ] firsturi seconduri
+  \end{verbatim}
+
+  Tracediff ist zum Beispiel nützlich, wenn ich mehrere Mitschnitte einer
+  Verbindungssitzung an verschiedenen Stellen aufgenommen habe und diese
+  vergleichen will.
+
+### tracemerge
+
+  Mit diesem Werkzeug kann ich zwei oder mehrere Paketmitschnitte zu einer
+  kombinieren, wobei die Reihenfolge der Pakete beibehalten wird.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  tracemerge [ options ] outputuri inputuri ...
+  \end{verbatim}
+  Die möglichen Optionen sind der Handbuchseite zu entnehmen.
+
+### tracepktdump
+
+  Mit diesem Programm kann ich Datenpakete in lesbarer Form ausgeben.
+  Dabei kann ich mit der Option `-f filter` die Ausgabe auf bestimmte
+  Pakete einschränken und mit `-c count` die Anzahl der angezeigten
+  Pakete begrenzen.
+
+  Die Ausgabe ist abhängig davon, inwieweit die mitgeschnittenen Protokolle in
+  libtrace bekannt sind und ändert sich folglich von Version zu Version.
+
+  Folgender Beispielaufruf mit tracepktdump aus den libtrace-tools Version
+  3.0.10 soll das verdeutlichen:
+  \begin{verbatim}
+$ tracepktdump pcap/ospf-1.pcap
+Wed Sep 26 13:54:58 2012
+ Capture: Packet Length: 138/142 Direction Value: -1
+ Ethernet: Dest: 01:00:5e:00:00:05 Source: 12:6a:17:1a:52:6e Ethertype: 0x0800
+ IP: Header Len 20 Ver 4 DSCP 30 ECN 0 Total Length 124
+ IP: Id 10064 Fragoff 0
+ IP: TTL 1 Proto 89 (ospf) Checksum 11126
+ IP: Source 132.147.1.11 Destination 224.0.0.5
+unknown protocol ip/89
+ Unknown Protocol: 89
+  02 01 00 68 84 93 01 0b 00 00 00 00 e2 48 00 00    ...h.........H..
+  00 00 00 00 00 00 00 00 ff ff 00 00 00 0a 02 01    ................
+  00 00 00 28 84 93 01 0d 84 93 01 12 84 93 01 03    ...(............
+  c0 a8 fe 09 c0 a8 fe 05 c0 a8 ef 0a c0 a8 ef 0b    ................
+  c0 a8 ef 14 c0 a8 ef 15 0a 09 01 01 84 93 04 01    ................
+  84 93 04 0f 84 93 04 11 84 93 04 13 84 93 05 02    ................
+  84 93 05 03 84 93 01 0e                            ........                        
+
+  \end{verbatim}
+  In dieser Version ist das OSPF-Protokoll in der Bibliothek noch nicht
+  bekannt und wird daher als Hexdump präsentiert.
+  Die IP- und Ethernetheader hingegen werden dekodiert und erscheinen nicht
+  im Hexdump.
+
+### tracereplay
+
+  Dieses Werkzeug spielt einen Paketmitschnitt mit den gleichen Zeitabständen
+  aus einer URI zu einer anderen. Insbesondere wenn die zweite URI ein
+  Netzwerkinterface bestimmt, kann ich damit einen Mitschnitt wieder auf das
+  Netz schicken.
+  Prüfsummen werden dabei während des Abspielens neu berechnet.
+
+  Mit der Option `-f filter` kann ich die zurückgespielten Datenpakete
+  einschränken und `-b` kann ich als Zielethernetadresse die
+  Broadcast-Adresse verwenden.
+
+  Beim Zurückspielen werden ansonsten die Ethernetadresssen aus dem Mitschnitt
+  verwendet, so dass ich das vorwiegend im selben Netzsegment einspielen will.
+
+  Abhängig vom Switch und dem Verkehr im Netz können die Reaktionen anderer
+  Rechner auf die wiedereingespielten Datenpakete auch an andere Rechner
+  gehen, wenn deren Ethernetadresse als Absender im Mitschnitt steht.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  tracereplay [ options ] inputuri outputuri
+  \end{verbatim}
+  Die möglichen Optionen sind der Handbuchseite zu entnehmen.
+
+### tracereport
+
+  Dieses Programm kann eine Reihe von Berichten über die Eigenschaften von
+  Paketmitschnitten produzieren. Die Berichte landen in Dateien deren Name
+  gleich der Langoption gefolgt vom Suffix `.rpt` ist.
+
+  Unter anderem folgende Optionen und Reports stehen zur Verfügung:
+  \begin{description}
+    \item[-e | --error] erzeugt einen Bericht über Paketfehler (zum Beispiel
+      Prüfsummenfehler, Empfangsfehler).
+    \item[-F | --flow] erzeugt einen Bericht über die Anzahl von Datenflüssen.
+    \item[-m | --misc] liefert einen allgemeinen Bericht (Zeitpunkt des ersten
+      und letzten Paketes, Gesamtzahl der Pakete, \ldots)
+    \item[-P | --protocol] erzeugt einen Bericht über die im Mitschnitt
+      vorkommenden Protokolle der Transportschicht
+    \item[-p | --ports] liefert einen Bericht über die vorkommenden Ports
+    \item[-t | --ttl] berichtet über die TTL der Datenpakete im Mitschnitt
+    \item[-n | --nlp] berichtet über die im Mitschnitt vorkommenden Protokolle
+      der Netzwerkschicht
+    \item[-d | --direction] berichtet, wieviel Traffic in jede Richtung geht
+  \end{description}
+  Mehr Optionen und Berichte beschreibt die Handbuchseite.
+
+### tracertstats
+
+  Mit diesem Programm bekomme ich eine einfache filter- und zeitbasierte
+  Analyse eines Paketmitschnitts.
+  Dabei wird der Mitschnitt in Intervalle aufgeteilt und für jedes Intervall
+  angegeben, wie viele Datenpakete passen zu den angegebenen Filtern im
+  Intervall vorkommen.
+
+  Die möglichen Optionen sind unter anderen:
+  \begin{description}
+    \item[-f filter] legt die Filter für die Analyse fest, kann auch mehrfach
+      angegeben werden
+    \item[-i interval] bestimmt das zugrunde liegende Zeitraster in Sekunden
+    \item[-m] wenn mehrere Paketmitschnitte angegeben werden, sollen diese
+      zusammengefasst werden (merge)
+    \item[-o format] legt das Ausgabeformat fest (`txt`, `csv`,
+      `html`)
+  \end{description}
+  Weitere Optionen stehen in der Handbuchseite.
+  
+### tracestats
+
+  Dieses Programm gibt ähnliche Analysen wie tracertstats aus, aber jeweils
+  für den gesamten Paketmitschnitt und nicht für einzelne Zeitintervalle
+  daraus. Mit der Option `-f filter` kann ich auch hier die Pakete
+  angeben, an denen ich interessiert bin.
+
+  Das Programm tracesummary ist ein Shellwrapper um tracestats und gibt eine
+  einfache Zusammenfassung für einen Paketmitschnitt an.
+
+### tracesplit
+
+  Dieses Programm teilt einen Paketmitschnitt in mehrere Dateien auf.
+
+  Das kann ich unter anderen mit diesen Optionen beeinflussen:
+  \begin{description}
+    \item[-f filter] gibt nur die Pakete aus, die zu dem angegebenen Filter
+      passen
+    \item[-c count] schreibt maximal `count` Pakete pro Ausgabedatei. Die
+      Ausgabedateien werden benannt nach dem in outputuri angegeben Basisnamen
+      mit der angehängten Nummer des ersten Paketes in der Datei.
+    \item[-b bytes] schreibt maximal `bytes` Bytes in eine Datei
+    \item[-i seconds] startet eine neue Datei aller `seconds` Sekunden
+    \item[-s unixtime] beginnt die Ausgabe bei `unixtime`
+    \item[-e unixtime] endet die Ausgabe bei `unixtime`
+    \item[-m max] erzeugt nicht mehr als `max` Ausgabedateien
+    \item[-S snaplen] schneidet die Datenpakete bei `snaplen` ab. Ohne
+      diese Angabe wird das komplette Datenpaket geschrieben.
+    \item[-z level] setzt den Kompressionsgrad (0..9)
+    \item[-Z method] wählt die Kompressionsmethode (`gzip`, `bzip2`,
+      `lzo` oder `none`)
+  \end{description}
+  Weitere Optionen stehen in der Handbuchseite.
+
+  Zwei weitere Werkzeuge sind lediglich Shellwrapper um das Programm
+  tracesplit:
+  \begin{description}
+    \item[traceconvert] transformiert einen Mitschnitt aus einem Format in
+      ein anderes
+    \item[tracefilter] extrahiert Datenpakete anhand von BPF-Filtern aus einem
+      Mitschnitt
+  \end{description}
+
+### tracesplit_dir
+
+  Dieses Programm teilt einen Mitschnitt in zwei Richtungen auf. Die
+  Richtungen müssen aus der Inputuri erkennbar sein.
+
+  Der Aufruf sieht so aus:
+  \begin{verbatim}
+  tracesplit_dir inputuri outputuri_incoming outputuri_outgoing
+  \end{verbatim}
+
+### tracetop
+
+  Das Programm zeigt die obersten n Datenflüsse in jeder Sekunde an, ähnlich
+  wie top für Prozesse oder mytop für MySQL-Verbindungen.
+
+  Mit den folgenden Optionen kann ich die Ausgabe beeinflussen:
+  \begin{description}
+    \item[-f filter] zählt nur die Pakete, die zu dem Filter passen
+    \item[-i interval] gibt das Intervall in Sekunden zwischen den
+      Bildschirmaktualisierungen vor (Voreinstellung 2 Sekunden)
+    \item[--percent] zeigt die Bytes und Pakete der Datenflüsse als Anteil vom
+      Gesamtdatenverkehr
+    \item[--bits-per-second] zeigt die Bandbreite als Bits pro Sekunde an
+  \end{description}
+\end{normaltext}
+
+
+## quagga {#sec-netz-werkzeuge-quagga}
+
+  Einige Probleme im Netzwerk lassen sich auf fehlerhafte Routen zurückführen.
+  Die Routingtabelle des Kernels kann ich mit den Befehlen `netstat -rn`,
+  `route -n` oder `ip route show` schnell kontrollieren.
+  Stelle ich dabei eine fehlerhafte Route fest, ist meine nächste Frage: woher
+  kommt diese Route?
+  Bei der Beantwortung dieser Frage kann mir das Programm quagga helfen.
+
+  Quagga ist eine Programmsuite, die Protokolldämonen für die
+  Routingprotokolle RIP, OSPF, BGP und ISIS enthält. Die Konfigurationssprache
+  ist derjenigen von Cisco-Routern sehr ähnlich, so dass jemand, der diese
+  Geräte kennt, sich schnell hineinfindet.
+
+  Konfiguriert werden die Protokolldämonen entweder via telnet, über ein
+  Programm namens vtysh oder durch Editieren der Konfigurationsdateien im
+  Verzeichnis /etc/quagga und anschließenden Neustart der Protokolldämonen.
+
+### interaktive Konfiguration
+
+  Bei der interaktiven Konfiguration via telnet und vtysh habe ich die
+  Möglichkeit, die interne Hilfefunktion als Gedächtnisstütze heranzuziehen.
+  Ausserdem werden Syntaxfehler sofort abgewiesen.
+  Der Befehl `list` listet alle momentan möglichen Befehle nebst Argument
+  auf.
+  Ein `?` an beliebiger Stelle zeigt die möglichen Fortsetzungen. Das
+  heißt, ein Fragezeichen am Zeilenanfang listet alle momentan möglichen
+  Befehle, ein Fragezeichen nach einem Befehl listet die möglichen nächsten
+  Argumente.
+  Befehle müssen nor soweit ausgeschrieben werden, dass sie eindeutig sind.
+  Das gleiche gilt für die Argumente.
+
+  Mit `<Ctrl-P>` erhalte ich die letzte Zeile, mit `<Ctrl-N>` die
+  nächste. An den Anfang der Zeile der Zeile komme ich mit `<Ctrl-A>`, an
+  das Ende mit `<Ctrl-E>`. Ausserdem funktionieren auf neueren Systemen
+  die Cursortasten und alle anderen Funktionen der libreadline.
+
+  Bei der interaktiven Arbeit mit den Protokolldaemonen habe ich drei Modi. Im
+  ersten, dem Operatormodus kann ich im wesentlichen nur Informationen über
+  den aktuellen Zustand und die Routen abfragen. Mit dem Befehl `enable`
+  gelange ich in den Administratormodus und mit `disable` komme ich
+  wieder zurück.
+  Im Administratormodus sehe ich mehr Informationen, vor allem kann ich die
+  aktuelle Konfiguration ansehen, sichern oder wiederherstellen.
+  Aus dem Administratormodus komme ich mit dem Befehl `configure terminal`
+  in den Konfigurationsmodus und aus diesem mit `end` oder `exit`
+  zurück in den Administratormodus.
+  Der Befehl `exit` im Administrator- oder Operatormodus beendet die
+  Sitzung.
+
+  Im Konfigurationsmodus kann ich jeden einzelnen Aspekt der Konfiguration
+  ändern. Dabei lassen sich einzelne Befehle zurücknehmen, indem sie mit
+  vorangestelltem `no` noch einmal eingegeben werden. Finde ich zum
+  Beispiel eine statische Route in der Konfiguration:
+  \begin{verbatim}
+zebra# ip route destination gateway
+  \end{verbatim}
+  dann kann ich diese wie folgt entfernen:
+  \begin{verbatim}
+zebra# config t
+zebra(config)# no ip route destination gateway
+zebra# end
+  \end{verbatim}
+
+  Auf die gleiche Art bearbeite ich auch ACL. Diese werden oft mit einer
+  Auffangregel am Ende abgeschlossen. Füge ich eine neue spezielle Regel an,
+  ist diese nicht aktiv, weil die Auffangregel nun davor steht. In diesem Fall
+  entferne ich die Auffangregel mit vorangestelltem `no` und füge sie
+  sofort wieder am Ende an.
+
+### Protokollierung
+
+  Mit den `show ..` Befehlen kann ich mir den aktuellen Zustand des
+  Routingprotokolldämons ansehen. Das hilft mir oft schon, den Fehler
+  einzugrenzen. Suche ich aber nach der Ursache für den Fehler, dann benötige
+  ich Informationen darüber, wann etwas passiert ist. Dabei helfen mir die
+  `log` und `debug` Befehle. Mit dem `log` Befehl lege ich
+  fest, wohin die Routingdämonen protokollieren und mit den `debug`
+  Befehlen, was protokolliert wird. Je nach Routingprotokoll und eingestellter
+  Protokollierung können die Logdateien sehr schnell sehr unübersichtlich
+  werden. Dann helfen mir ein paar Zeilen Perl-Skript, die relevanten
+  Informationen herauszufischen und zusammenzusetzen.
+
+## telnet {#sec-netz-werkzeuge-telnet}
+
+  Neben SSH ist Telnet ein sehr wichtiges Programm für die Fehlersuche im
+  Netz. Zum Einen verwende ich es für den Zugriff auf ältere Router und
+  Switches, die das SSH-Protokoll nicht anbieten oder für den Zugriff auf die
+  interaktive Shell der Quagga-Protokolldämonen. Zum Anderen setze ich es für
+  kurze Tests von Anwendungsprotokollen wie SMTP, POP, IMAP, FTP oder HTTP
+  ein, die mit Plaintext via TCP arbeiten.
+
+  Zwar ist beim Testen der Plaintextprotokolle netcat etwas praktischer, aber
+  gerade auf älteren Rechnern findet man häufiger telnet als netcat.
+
+  Der Vorteil von telnet liegt eindeutig bei den interaktiven Shells, weil
+  hier Kennworte nicht auf der Konsole ausgegeben werden, so dass sie nicht
+  durch einfaches Schultersurfen abgeschaut werden können. Außerdem
+  funktionieren die Cursortasten mit telnet besser.
+
+  Ein Nachteil von telnet gegenüber netcat beim Testen der Plaintextprotokolle
+  ist, dass das Abbrechen einer Verbindung insbesondere mit einer deutschen
+  Tastatur eher unbequem ist, da die Escape-Sequenz um in den Kommandomodus zu
+  kommen hier ungünstig belegt ist und ich dann meist darauf setze, dass die
+  Gegenstelle die Verbindung abbaut. Alternativ kann ich beim Aufruf von
+  telnet mit der Option `-e <irgendwas>` ein anderes Zeichen für das
+  Umschalten in den Kommandomodus mitgeben, muss dann aber ein Zeichen
+  auswählen, dass im Protokoll nicht vorkommt und trotzdem leicht zu erreichen
+  ist.
+
+## netcat {#sec-netz-werkzeuge-netcat}
+
+  Ein weiteres Werkzeug um schnell eine Netzwerkverbindung herzustellen,
+  ähnlich wie telnet doch weitaus flexibler, ist netcat. Damit kann ich nicht
+  nur TCP-, UDP- oder UNIX-Socket-Verbindungen sehr einfach aufbauen, sondern
+  außerdem ganz schnell mal eben einen Socket-Server für die genannten
+  Protokolle einrichten.
+
+  Netcat ist sehr gut in Skripten einsetzbar und kann auch ein rudimentäres
+  Port-Scanning für TCP-Ports. Und, was in manchen Umgebungen wichtig sein
+  kann: netcat kann mit Proxy-Servern umgehen und darüber Verbindungen
+  herstellen.
+
+### Aufruf
+
+  Der grundlegende Aufruf ist
+  \begin{verbatim}
+$ netcat [ optionen ] host port
+  \end{verbatim}
+  wenn ich eine Verbindung via TCP oder UDP aufbauen will,
+  \begin{verbatim}
+$ netcat [ optionen ] port
+  \end{verbatim}
+  wenn ich auf TCP- oder UDP-Verbindungen warten will, und
+  \begin{verbatim}
+$ netcat [ optionen ] socketpath
+  \end{verbatim}
+  wenn ich mit UNIX-Domain-Sockets arbeiten will.
+
+  Wenn ich einen Portscan mit Option `-z` starten will, kann ich statt
+  eines Ports auch einen Bereich (`port1-port2`) angeben.
+
+### Optionen
+
+  Einige der wichtigsten Optionen sind:
+  \begin{description}
+    \item[-k] In Verbindung mit der Option `-l` wartet netcat auf weitere
+      Verbindungen, wenn die erste beendet ist. Ohne diese Option beendet sich
+      netcat nach der ersten Verbindung.
+    \item[-l] Netcat wartet auf eine ankommende Verbindung anstatt selbst eine
+      Verbindung zu öffnen.
+    \item[-s addr] Setzt die Absenderadresse auf `addr`. Das ist
+      insbesondere nützlich, wenn der Rechner mehrere Adressen hat.
+    \item[-U] verwendet UNIX-Domain-Sockets
+    \item[-u] verwendet UDP statt TCP
+    \item[-X proto] verwendet Proxyprotokoll `proto`. Mögliche Werte sind
+      `4` für SOCKS Version 4, `5` für SOCKS Version 5 und
+      `connect` für die CONNECT-Methode bei HTTP-Proxies.
+    \item[-x addr:port] spezifiziert die Adresse und den Port des
+      Proxieservers.
+    \item[-z] weist netcat an, keine Verbindung aufzubauen, sondern nur
+      nachzuschauen, ob der Port oder Portbereich offen ist. Diese Option
+      kombiniert man sinnvollerweise mit `-v`.
+  \end{description}
+  Weitere Optionen finden sich in den Handbuchseiten.
+
+### Beispiele
+
+  Die folgenden Beispiele sind der Handbuchseite von netcat entnommen.
+
+  \subsubsection*{Client/Server}
+  Für eine einfache Client-Server-Verbindung gebe ich folgendes auf der
+  Serverseite ein:
+  \begin{verbatim}
+$ netcat -l 1234
+  \end{verbatim}
+  Auf der Clientseite dann das folgende:
+  \begin{verbatim}
+$ netcat host.example.net 1234
+  \end{verbatim}
+  um mich mit dem Server zu verbinden.
+
+  Mit Option `-u` verwende ich UDP statt TCP zur Übertragung.
+
+  Mit Option `-U` geht es stattdessen (auf demselben Rechner) über
+  UNIX-Domain-Sockets. Dann lasse ich auf Clientseite den Rechnernamen weg und
+  verwende statt der Portnummer den Pfadnamen zur Socketdatei. Diese darf bei
+  Aufruf der Serverseite noch nicht existieren.
+
+  \subsubsection*{Datentransfer}
+  Um schnell mal eine Datei zu übertragen erweitere ich das Client/Server
+  Beispiel auf Serverseite wie folgt:
+  \begin{verbatim}
+$ netcat -l 1234 > file.out
+  \end{verbatim}
+  Und auf Clientseite:
+  \begin{verbatim}
+$ netcat host.example.net 1234 < file.in
+  \end{verbatim}
+  Die Verbindung widr nach erfolgter Datenübertragung automatisch geschlossen.
+  Vertausche ich die spitzen Klammern, wird die Datei vom Server zum Client
+  übertragen.
+
+  \subsubsection*{Einen Server testen}
+  Wenn ich das Plaintextprotokoll des Servers kenne, kann ich mit netcat auch
+  differenziertere Protokolle bedienen oder testen:
+  \begin{verbatim}
+$ netcat -C mail.example.net 25 <<EOT
+HELO host.example.net
+MAIL FROM:<user@host.example.net>
+RCPT TO:<user2@host.example.net>
+DATA
+Subject: Testmail
+
+Body of email.
+.
+QUIT
+EOT
+  \end{verbatim}
+  Damit kann ich eine E-Mail einspeisen, um einen Mailserver zu testen. Das
+  gleiche könnte ich auch interaktiv (von Hand) eingeben. Oder zum Beispiel an
+  einem POP3-Server nachsehen, ob eine bestimmte E-Mail angekommen ist.
+
+  \subsubsection*{Portscanning}
+  Um festzustellen, welche Ports an einem Rechner erreichbar sind, kann ich
+  netcat wie folgt aufrufen:
+  \begin{verbatim}
+$ nc -z -v smtp.example.net 22-25
+Connection to smtp.example.net 22 port [tcp/ssh] succeeded!
+nc: connect to smtp.example.net port 23 (tcp) failed: Connection refused
+nc: connect to smtp.example.net port 24 (tcp) failed: Connection refused
+Connection to smtp.example.net 25 port [tcp/smtp] succeeded!
+  \end{verbatim}
+
+## openssl s_client {#sec-netz-werkzeuge-openssl}
+
+  Openssl s_client ist das dritte Werkzeug, welches ich zu Verbindungstests
+  verwende. Dabei handelt es sich um einen generischen SSL/TLS Client, mit dem
+  ich verschlüsselte Protokolle wie HTTPS, SSMTP, \ldots und die
+  entsprechenden Server testen kann.
+
+### Aufruf
+
+  Der Grundlegende Aufruf sieht wie folgt aus:
+  \begin{verbatim}
+$ openssl s_client -connect host:port [ options ]
+  \end{verbatim}
+  
+### Optionen
+
+  Die folgenden Optionen verwende ich hin und wieder, weitere gibt es wie
+  fast immer in den Handbuchseiten.
+  \begin{description}
+    \item[-connect host:port] Baut eine SSL- oder TLS-Verbindung zu dem
+      angegebenen Server und Port auf.
+    \item[-crlf] Setzt den Zeilenvorschub des Terminals in CR+LF, wie für
+      einige Protokolle gefordert, um.
+    \item[-quiet] Unterdrückt die Ausgabe der Zertifikatinformationen.
+    \item[starttls proto] sendet die Protokollspezifischen Befehle um eine
+      Verbindung auf TLS umzuschalten. Für `proto` sind momentan nur die
+      folgenden Protokolle erlaubt: `smtp`, `pop3`, `imap`,
+      `ftp`.
+  \end{description}
+  Bei Problemen mit der Aushandlung des SSL-Protokolls kann man mit den
+  Optionen `-bugs`, `-ssl2`, `-ssl3`, `-tls`,
+  `-no_ssl2`, \ldots experimentieren. Details finden sich in der
+  Handbuchseite.
+
+### Beispiel
+
+  Das folgende Beispiel zeigt eine HTTP-Abfrage mit openssl:
+  \begin{verbatim}
+$ openssl s_client -connect encrypted.example.net:443 -quiet
+depth=0 CN = encrypted.example.net
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 CN = encrypted.example.net
+verify return:1
+GET / HTTP/1.0
+Host: encrypted.example.net
+
+HTTP/1.1 200 OK
+Date: Fri, 05 Apr 2013 09:39:20 GMT
+Server: Apache
+Vary: Accept-Encoding
+Content-Length: 709
+Connection: close
+Content-Type: text/html;charset=UTF-8
+
+<!DOCTYPE HTML PUBLIC ``-//W3C//DTD HTML 3.2 Final//EN''>
+<html>
+<head>
+<title>Index of /</title>
+</head>
+<body>
+<h1>Index of /</h1>
+...
+<address>Apache Server at encrypted.example.net Port 443</address>
+</body></html>
+  \end{verbatim}
+
+## samba, smbclient {#sec-netz-werkzeuge-smbclient}
+
+  Die Programme der Samba-Suite, insbesondere die zum Paket smbclient
+  zusammengefassten können bei der Fehlersuche in Zusammenhang mit MS Windows
+  Rechnern helfen.
+
+  Konkret handelt es sich dabei um die Programme
+  \begin{description}
+    \item[findsmb] liefert Informationen über Maschinen, die auf SMB
+      Namensanfragen in einem Netz antworten
+    \item[rpcclient] führt MS-RPC-Funktionen aus
+    \item[smbcacls] erfragt oder setzt ACLs auf NTFS Dateien oder
+      Verzeichnissen
+    \item[smbclient] ist ein FTP-ähnliches Programm um auf SMB/CIFS Ressourcen
+      auf Servern zuzugreifen
+    \item[smbcquota] dient zum Setzen und Abfragen der Quotas von NTFS 
+      Freigaben
+    \item[smbget] kann, ähnlich wget für HTTP, Dateien mit dem SMB-Protokoll
+      herunterladen
+    \item[smbtar] ist ein Shellskript, mit dem SMB/CIFS Freigaben direkt auf
+      UNIX Bandlaufwerke gesichert werden können
+    \item[smbtree] ist eine Art textbasierter SMB Netzwerkbrowser
+    \item[smbspool] kann eine Druckdatei an einen SMB Drucker senden
+  \end{description}
+
+### findsmb
+
+  Aufruf:
+  \begin{verbatim}
+$ findsmb [ broadcast_address ]
+  \end{verbatim}
+  Das Programm listet die IP Adresse, den NetBIOS-Namen, den Namen der
+  Arbeitsgruppe, des Betriebssystem und der SMB-Server-Version. Bei einem
+  lokalen Masterbrowser wird ein `+` hinzugefügt, bei einem Domain
+  Masterbrowser ein `*`.
+
+### rpcclient
+
+  Das Programm wurde ursprünglich entwickelt, um die MS-RPC-Funktionalität in
+  Samba zu testen. Es ist möglich, damit Windows NT Clients von
+  UNIX-Arbeitsstationen aus zu administrieren. Und das Programm läßt sich gut
+  in Skripten verwenden.
+  
+  Für nähere Informationen schaut man in die Handbuchseiten.
+
+### smbclient
+
+  Das ist ein Client-Programm mit dem man auf SMB- oder CIFS-Ressourcen auf
+  Servern zugreifen kann. Das Interface ist ähnlich dem Programm `ftp`
+  für den Zugriff auf FTP-Server.
+
+  Damit kann man Dateien vom Server holen, auf dem Server ablegen und
+  Verzeichnisinformationen bekommen.
+
+  So kann man zum Beispiel mit dem Aufruf
+  \begin{verbatim}
+$ smbclient -L hostname -N
+  \end{verbatim}
+  anonym alle Dienste des Servers `hostname` abfragen.
+  
+### smbget
+
+  Mit diesem  Programm kann man Dateien von Servern mit dem SMB-Protokoll
+  abholen, ähnlich wie mit dem Programm wget für das HTTP-Protokoll. Die
+  Dateien werden als smb-URL angegeben. Eine smb-URL sieht wie folgt aus:
+  \begin{verbatim}
+  smb://[[[domain;]user[:pass]@]server[/share[/path[/file]]]]
+  \end{verbatim}
+  Für Informationen zu den möglichen Optionen schaut man in die Handbuchseite.
+
+### smbtree
+
+  Dieses Programm gibt einen Baum als Text auf, der alle bekannten Domains,
+  die Server in diesen Domains und die Freigaben auf diesen Servern auflistet.
+  Dieser sieht in etwa so aus:
+  \begin{verbatim}
+$ smbtree -N
+WORKGROUP1
+	\\HOST1         		host1 server (Samba, Ubuntu)
+		\\HOST1\bilder         	
+		\\HOST1\psc_1100    HEWLETT-PACKARD OFFICEJET REFLASH
+		\\HOST1\p1606dn    	Hewlett-Packard HP LaserJet Professional P1606dn
+		\\HOST1\IPC$       	IPC Service (host1 server (Samba, Ubuntu))
+		\\HOST1\print$     	Printer Drivers
+WORKGROUP2
+	\\HOST2         		Samba 3.5.6
+		\\HOST2\public         	
+		\\HOST2\share          	
+		\\HOST2\IPC$       	IPC Service (Samba 3.5.6)
+  \end{verbatim}
+
+## iperf, nttcp, nuttcp {#sec-netz-werkzeuge-iperf}
+
+  In diesem Abschnitt stelle ich drei Werkzeuge kurz vor, mit denen auf
+  einfache Weise der Netzwerkdurchsatz für TCP und UDP gemessen werden kann.
+
+  Welches der drei ich zum Einsatz bringe, hängt im Wesentlichen von deer
+  Verfügbarkeit auf den beteiligten Rechnern ab und, bei mehreren, womit ich
+  die meisten Erfahrungen habe, da ich dann die Ergebnisse schneller
+  interpretieren kann.
+
+  Bei allen drei Werkzeugen brauche ich Zugang zu zwei Rechnern zwischen denen
+  ich messen will. Rootrechte sind nicht erforderlich.
+
+  Für genauere Informationen zu den einzelnen Programmen sind wie immer die
+  Handbuchseiten da.
+
+### iperf
+
+  Bei diesem Programm, dass ich als Client und Server einsetzen kann, erzeugt
+  der Client den Traffic aus dem Hauptspeicher heraus und der Server verwirft
+  die angekommenen Daten, so dass nur der Durchsatz im Netz und das Handling
+  der Pakete im Hauptspeicher gemessen wird.
+
+  Ich kann einseitige Messungen machen und anschließend die Client- und
+  Serverrolle tauschen odeer zwei Verbindungen in den verschiedenen Richtungen
+  gleichzeitig messen lassen. Die verschiedenen Messergebnisse lassen
+  Rückschlüsse auf den Zustand des Netzes zu.
+
+  Normalerweise dauert eine Messung 10 Sekunden, während derer das Programm
+  versucht, so viele Daten wie möglich zu versenden und an deren Ende es das
+  Ergebnis ausgibt. Alternativ ist es möglich, die Datenmenge vorzugeben, so
+  dass die Dauer vom Durchsatz abhängt. Außerdem ist es möglich, die Zeitdauer
+  zu verändern und periodische Berichte ausgeben zu lassen anstelle eines
+  Berichts am Ende der Übertragung.
+
+  Bei UDP ist es möglich die Datenrate vorzugeben und damit das Verhalten des
+  Netzes bei unterschiedlich starker Auslastung zu untersuchen. Dazu kann man
+  beispielsweise sich mit Ping die RTT anzeigen lassen und dann das Netz
+  verschieden stark auslasten.
+
+### nttcp
+
+  Das Programm nttcp, das auf dem älteren Programm ttcp basiert, kann die
+  Transferrate für TCP, UDP und UDP-Multicast messen.
+
+  Da es die Daten aus Puffern im Hauptspeicher über das Netzwerk sendet, fällt
+  am Rechner nur die Zeit zum Messen und die Zeit im Netzwerkcode im Kernel
+  in's Gewicht.
+
+  Zusätzlich zu den Transferdaten gibt das Programm auch die benötigte
+  CPU-Zeit aus.
+
+  Das Programm kann via inetd auf einem Rechner verfügbar gemacht werden, so
+  dass man sich dort dann nicht anmelden muss.
+
+### nuttcp
+
+  Dieses Programm, dass auf nttcp basiert, misst ebenfalls den Durchsatz für
+  TCP und UDP und UDP-Multicast.
+
+  Es kann etwa die gleichen Daten wie nttcp anzeigen und außerdem die Verluste
+  bei UDP.
+
+  Wie bei nttcp gibt es einen Sender- und einen Empfängermodus. Zusätzlich
+  gibt es einen Servermodus, in dem es sowohl senden als auch empfangen kann.
+  Dieser ist insbesondere beim Aufruf via inetd nützlich. Die Ergebnisse
+  werden beim Client angezeigt.
+
+  Eine Besonderheit von nuttcp ist, dass es außer dem üblichen
+  memory-to-memory-Transfer auch disk-to-memory, memory-to-disk und
+  disk-to-disk messen kann. Damit ist es möglich Szenarien zu messen, die
+  realistischen Einsatzgebieten näher kommen.
+
+## perl {#sec-netz-werkzeuge-perl}
+
+  Für knifflige Probleme, die ich mit den spezialisierten Werkzeugen nicht zu
+  fassen kriege und denen mit einfacher Shell-Programmierung auch nicht
+  beizukommen ist, benötige ich eine Programmiersprache, die mächtiger als die
+  Shell ist, mit der ich aber trotzdem mit wenig Aufwand ein passendes
+  Programm schreiben kann. Insbesondere durch die vielen verfügbaren Module
+  auf CPAN kann ich damit relativ schnell eine Speziallösung für vertrackte
+  Probleme zusammenbauen.
+
+  Perl hatte ich als Werkzeug bereits im Abschnitt über die Werkzeuge zur
+  lokalen Fehlersuche beschrieben. Durch die vielen einfach verfügbaren und
+  meist sehr gut getesteten und dokumentierten Module auf CPAN ist Perl auch
+  ein unentbehrliches Werkzeug für die Fehlersuche bei Netzwerkproblemen.
+
+  Das Perl Kochbuch \cite{ChristiansenTorkington04de} hatte ich bereits
+  erwähnt. Mit dessen Hilfe und den darin beschriebenen Modulen von CPAN war
+  es mir zum Beispiel möglich ein Testprogramm für ein Timing-Problem bei
+  einem Webservice zu schreiben.
+
+### HTTP Injector
+
+  Vor einiger Zeit hatte ich ein Problem, bei dem 502-Fehler von
+  einem Webservice abhängig waren von der Zeit für die
+  Anfrage. Der Betreiber des Webservices stritt das ab und um das
+  Problem zu verifizieren benötigte ich die Möglichkeit HTTP-Anfragen gezielt
+  zu verzögern.
+  
+  Ich kam mit Hilfe des Kochbuches zu folgendem Programm:
+  \begin{verbatim}
+01:#!/usr/bin/perl
+02:use Getopt::Long;
+03:use IO::Socket;
+04:use Time::HiRes qw(sleep);
+05:
+06:my %opt = ( delay => 0 );
+07:
+08:GetOptions( \%opt, 'delay=i');
+09:
+10:my $server = shift;
+11:my $port   = shift || 80;
+12:
+13:my $socket = IO::Socket::INET->new(PeerAddr => $server,
+14:                                   PeerPort => $port,
+15:                                   Proto    => 'tcp',
+16:                                   Type     => SOCK_STREAM);
+17:
+18:my @in = <>;
+19:my $del = $opt{delay} / ( 1.0 + scalar @in );
+20:foreach (@in) {
+21:    s/[\r\n]+$//;
+22:    sleep $del;
+23:    print $socket $_, "\r\n";
+24:}
+25:sleep $del;
+26:print $socket "\r\n";
+27:
+28:while (my $line = <$socket>) {
+29:    print $line;
+30:}
+  \end{verbatim}
+  In den Zeilen 2-4 lade ich die benötigten Module. `Getopt::Long` ist
+  für die Verarbeitung der Kommandozeilenoptionen und sichert ab, dass ich mit
+  `--delay` einen Integerwert angebe. `IO::Socket` stellt die
+  Socketfunktionalität bereit, so dass ich diesen Socket wie eine Datei
+  verwenden kann. `Time::HiRes` stellt mir eine verbesserte
+  `sleep()` Funktion bereit, die mit Gleitkommazahlen zurechtkommt.
+
+  In Zeile 6 stelle ich die Option `--delay` auf den Wert 0 ein, falls
+  sie nicht explizit angegeben wird. In Zeile 8 werden die Optionen
+  eingelesen.
+
+  Zeile 10 und 11 entnehmen den Server und gegebenenfalls den Port der
+  Kommandozeile und in Zeile 13 öffne ich mit diesen Angaben den Socket.
+
+  In Zeile 18 lese ich die gesamte Eingabe in ein Array ein. Dies benötige
+  ich, da ich die Anzahl der Zeilen wissen muss, denn ich verzögere das Senden
+  zeilenweise um jeweils einen Bruchteil der Gesamtverzögerung. Die Zeilen
+  20-25 schließlich bereiten die Zeilenenden auf und senden die modifizierten
+  Zeilen verzögert über den Socket. Zeile 26 schickt die Leerzeile, nach der
+  der Server antwortet.
+
+  In Zeile 28-30 liest das Skript die Antwort des Servers vom Socket und
+  schreibt sie zur Standardausgabe.
+
+  Dieses Skript kann ich nun wie folgt aufrufen:
+  \begin{verbatim}
+time ./http-injector.pl --delay 5 localhost 80 < request > reply
+
+real  0m5.072s
+user  0m0.056s
+sys   0m0.012s
+  \end{verbatim}
+  Dabei steht in der Datei request die HTTP-Anfrage, die ich an den Server
+  sende.
+  Nach fünf Sekunden ist die Anfrage beim Server, und die Antwort landet in
+  der Datei reply.
+
+  Damit konnte ich nachweisen, dass dieselbe Anfrage einen Fehler
+  lieferte, wenn sie mehr als drei Sekunden zur Übertragung brauchte und
+  fehlerfrei beantwortet wurde, wenn sie weniger als drei Sekunden brauchte.
+
+## Notizen
+
+*   nmap zum Testen von Anwendungsprotokollen
+
+*   bridge-utils: Skript, um Interface zu MAC-Adressen auszugeben
+
+*   bridge-utils: Referenzen zum Spanning Tree Protocol
+
+*   Kann Ping ohne funktionierendes Routing funktionieren?
+
+*   Wo finde ich Tutorials zu Wireshark?
+
+*   libtrace: URIs erklären
+
+*   libtrace: Cryptopan erklären
+
+*   libtrace: bpf-Filter erklären
