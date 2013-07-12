@@ -1,1 +1,25 @@
 # Nach der Fehlersuche ist vor der Fehlersuche {#cha-netz-nachbearbeitung}
+
+Nach dem letzten Fehler wird es einen nächsten geben. Was kann ich tun, um
+zu vermeiden, dass es noch einmal den selben Fehler geben wird.
+
+Es heißt, Voraussagen sind schwierig, besonders für die Zukunft. Für die
+Vergangenheit ist es einfacher.
+Manchen Leuten scheint es gegeben, häufiger als andere richtige Voraussagen
+zu machen und damit Probleme schneller auf die Schliche zu kommen.
+Beobachtet man diese Leute genauer, stellt man vielleicht fest, das sie
+keine Voraussagen über die Zukunft machen, sondern über die Vergangenheit.
+Der Volksmund nennt dieses Phänomen auch Erfahrung.
+
+## Was habe ich gelernt {#sec-was-habe-ich-gelernt}
+
+## Monitoring {#sec-monitoring}
+
+## Notizen
+
+*   Problem: ein Auslöser, mehrere Ursachen
+  
+    Nachbereitung: fünf mal warum, System umgestalten, so dass Auslöser erkannt
+    wird (Monitoring), aber nicht zum Problem führt
+
+    Kann ich den Fehler durch Monitoring vermeiden?
