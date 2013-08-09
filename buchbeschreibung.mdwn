@@ -1,0 +1,24 @@
+
+## Buchbeschreibung
+
+In vielen Jahren als Systemadministrator hat der Autor immer wieder bei
+eigentlich technisch begabten Menschen Mängel ausgemacht, wenn es um die
+Fehlersuche in Linux-Server-Systemen oder IP-Netzwerken geht.
+Diese Mängel offenbaren sich meist als Unfähigkeit, ein gegebenes Problem zu
+analysieren um dann die geeignete Abhilfe zu ergreifen.
+
+In diesem Buch hat der Autor seinen Erfahrungsschatz aus vielen Jahren
+Systemadministration von Linux-Servern und IP-Netzwerken systematisch
+aufbereitet um damit eine Hilfestellung zu leisten für diejenigen, die
+Probleme mit Linux-Serversystemen oder IP-Netzwerken analysieren wollen.
+
+Dabei setzt das Buch drei Schwerpunkte.
+Im ersten Teil geht es um allgemeine Methoden, Heuristiken und
+Herangehensweise, die - jeweils angepasst - bei beliebigen Problemen
+eingesetzt werden können.
+Der zweite Teil konzentriert sich auf Probleme von Linux-Systemen selbst und
+der dritte Teil schließlich behandelt die Analyse von Netzwerkproblemen.
+
+Natürlich kann kein Buch alle Probleme lösen, doch dieses Buch soll den Leser
+befähigen, seine eigenen Probleme strukturierter anzugehen und damit besser,
+schneller und gründlicher zu lösen.
