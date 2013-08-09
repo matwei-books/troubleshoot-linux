@@ -8,12 +8,12 @@ Diese offenbaren sich meist als Unfähigkeit, ein gegebenes Problem zu
 analysieren um dann eine geeignete Abhilfe zu ergreifen.
 
 Daher hat der Autor seine Erfahrungen bei der Fehlersuche
-systematisch aufbereitet um damit denjenigen eine Hilfestellung zu leisten,
+systematisch aufbereitet um denjenigen eine Hilfestellung zu leisten,
 die Probleme mit Linux-Serversystemen oder IP-Netzwerken analysieren wollen.
 
-Das Buch setzt dabei drei Schwerpunkte.
+Das Buch setzt drei Schwerpunkte.
 Im ersten Teil geht es um allgemeine Methoden, Heuristiken und
-Herangehensweise, die bei beliebigen Problemen eingesetzt werden können.
+Herangehensweisen, die bei beliebigen Problemen eingesetzt werden können.
 Der zweite Teil konzentriert sich auf Probleme von Linux-Systemen selbst und
 der dritte Teil schließlich behandelt die Analyse von Netzwerkproblemen mit
 Hilfe von Linux-Systemen.
