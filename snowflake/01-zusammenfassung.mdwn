@@ -1,0 +1,4 @@
+# Fehlersuche bei Linux Servern und Netzwerken
+
+Strukturiertes Herangehen erleichtert die Fehlersuche bei Linux-Servern und
+IP-Netzwerken.
