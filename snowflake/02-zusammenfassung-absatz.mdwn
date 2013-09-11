@@ -1,0 +1,37 @@
+# Fehlersuche bei Linux Servern und Netzwerken
+
+Ich habe mein ganzes Berufsleben nach Fehlern gesucht.
+Erst als Entstörer für Telefone und Telefonanlagen, nach dem Studium als
+Programmierer und Softwareentwickler und schließlich als Systemadministrator.
+Erfolg hatte ich bei "leichten" Fehlern, wenn ich hartnäckig genug war oder
+wenn ich strukturiert und methodisch vorging.
+Um diese methodische, strukturierte Vorgehensweise geht es hier.
+Bei mir hat sich in all den Jahren folgender Entscheidungsbaum bewährt:
+
+1.  Funktioniert überhaupt etwas?
+
+2.  Funktioniert alles, was funktionieren soll?
+
+3.  Ist es schnell genug?
+
+4.  Was ist eigentlich das Problem?
+
+Jede mit *ja* beantwortete Frage führt automatisch zur nächsten.
+Jede mit *nein* beantwortete Frage führt zu einem Aktionsprogramm, an
+dessen Ende diese Frage mit *ja* beantwortet werden sollte.
+Diese Grundschema wende ich auf Problemen mit Linux-Servern an, indem ich als
+erstes versuche Kontakt zu einer Kommandozeile zu bekommen.
+Alsdann verschaffe ich mir einen Überblick über die laufenden Dienste und sehe
+nach, ob alle gewünschten Dienste funktionieren.
+Schließlich schaue ich mir die Performance an.
+Dabei helfen mir SLAs, die ich mit meinen Kunden abgeschlossen habe und
+Baselines die ich zu einem früheren Zeitpunkt ermittelt habe.
+Bei Netzwerkproblemen teste ich als erstes, ob ich überhaupt einen Kontakt zu
+einem Netz bekomme, als nächstes, ob alle benötigten Netze und Netzdienste
+erreichbar sind und schließlich, ob es schnell genug ist.
+Auch hier helfen mir SLAs und Baselines, diese Frage zu beantworten.
+Habe ich mit Erfolg das Problem beseitigt, verwende ich noch etwas Zeit, über
+die Ursachen nachzudenken.
+Darüber, wie das Problem möglicherweise ganz zu verhindern wäre oder, durch
+Beobachten welcher Ursachen ich möglicherweise vorgewarnt wäre oder wenigstens
+beim nächsten Mal das Problem schneller erkennen kann.
