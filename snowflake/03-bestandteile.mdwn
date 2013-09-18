@@ -1,0 +1,337 @@
+# Fehlersuche bei Linux Servern und Netzwerken
+
+## Bestandteile des Buches
+
+### Methoden, Heuristiken, Modelle
+
+Methode
+:   (Duden)
+
+    1.   auf einem Regelsystem aufbauendes Verfahren zur Erlangung von
+         [wissenschaftlichen] Erkenntnissen oder praktischen Ergebnissen
+
+    2.   Art und Weise eines Vorgehens
+
+Heuristik
+:   (Duden)
+
+    Lehre, Wissenschaft von den Verfahren, Probleme zu lösen; methodische
+    Anleitung, Anweisung zur Gewinnung neuer Erkenntnisse
+
+heuristisches Prinzip
+:   (Duden)
+
+    Arbeitshypothese, vorläufige Annahme als Hilfsmittel der Forschung,
+    Untersuchung, Erklärung
+
+methodisch
+:   (Duden)
+
+    1.  die Methode(1) betreffend
+
+    2.  eine Methode zugrunde legend, nach einer Methode vorgehend
+
+In diesem Buch bezeichne ich **Medhoden** als Verfahren, die auf Regeln beruhen
+und immer zu einem Ergebnis führen, aber nur unter bestimmten Voraussetzungen
+anwendbar sind.
+**Heuristiken** sind in diesem Buch Verfahren um Erkenntnisse zu gewinnen, die
+fast immer anwendbar sind, deren Erkenntnisse aber nicht immer direkt für die
+Problemlösung nutzbar sind.
+Die Übergänge sind fließend.
+
+*   *Polya* einarbeiten
+
+Ein Modell ist eine vereinfachte Darstellung eines Systems, das wesentliche,
+momentan benötigte Eigenschaften mit dem System teilt. Für das gleiche System
+kann man unterschiedliche Modelle verwenden, jenachdem, welche Eigenschaften
+man näher untersuchen will.
+
+*   Hinweis auf OSI-Modell für Netzwerkschichten
+
+### Herangehensweisen
+
+*   abgewandelt: vier Kraftprinzipien aus WT
+
+*   Gehirn: L-Modus, R-Modus (*Edwards*):
+
+    *   (L): verbales Denken, logisch, analytisch
+
+    *   (R): nonverbales Denken, Gestaltwahrnehmung
+
+    *   Umschaltung zwischen den Hemisphären, Verweis auf *Edwards*
+
+        *   auf dem Kopf zeichnen
+
+	*   blindes Konturenzeichnen
+
+*   Gehirn: (*Kahnemann*)
+
+    System 1
+    : automatisch, schnell, wenig Aufwand, kein Sinn für willentliche
+      Steuerung, spontane Reflexe, Gewohnheiten
+
+    System 2
+    : leitet Aufmerksamkeit auf aufwendige mentale Aktivitäten, die das
+      erfordern, z.B. komplexe Berechnungen, Verwaltung (?, agency), Auswahl,
+      Konzentration
+
+    System 1 kann uns blitzschnell zur richtigen Lösung oder in die Irre
+    führen.
+
+    System 2 hat ein Vetorecht bei Entscheidungen.
+
+    *   **Training**, Einfluss auf System 1, für höchste Effektivität unter
+        Kontrolle von System 2
+
+    *   **Gewohnheiten**
+
+        *   verlagern Entscheidungen von System 2 zu System 1 (gute, wie
+	    schlechte)
+
+        *   können geändert werden (mit Hilfe und unter Kontrolle von System 2)
+
+*   andere fragen (aber: Selber denken macht schlau)
+
+    *   Google
+
+    *   Foren, Mailinglisten
+
+    *   Kollegen
+
+*   Auswertung von Systemlogs, Konsolenmeldungen, etc.
+
+### Nachbearbeitung
+
+*   Arbeitsbuch, Laborbuch, Logbuch
+
+*   Rückschau
+
+*   Kontrolle der Ergebnisse der Lösung (ist der Fehler wirklich behoben)
+
+*   fünf mal warum (Ursachenforschung)
+
+*   Kann ich diesen Fehler künftigt vermeiden?
+
+*   Kann ich Erkenntnisse aus dieser Fehlersuche an anderen Stellen
+    verwenden?
+
+*   Hätte ich das vorher sehen können?
+
+    *   Wenn ja, wie?
+
+    *   Kann ich es jetzt?
+
+    *   Wenn ja, kann ich das automatisieren?
+
+### Rechner-Totalausfall
+
+*   Bootprobleme
+
+*   Rechner reagiert nicht (mehr) -> SysRequest
+
+*   Überlast, Swapping, Thrashing
+
+*   Hardwarefehler -> ausklammern, wenn nicht mit Software analysierbar
+
+*   Ausfall bei virtuellen Maschinen
+
+### Rechner-Teilausfall
+
+*   Mount-Fehler
+
+*   Berechtigungen
+
+*   Dienst startet nicht
+
+*   Platte voll
+
+*   *My first five minutes on a server* verarbeiten
+
+*   ein Dienst wartet auf den anderen (Abhängigkeiten, init)
+
+### Rechner-Performanceprobleme
+
+Die Performance eines Rechners betrachte ich, wenn zwar alles funktioniert,
+aber die Benutzer trotzdem nicht zufrieden sind, weil das System nur langsam
+reagiert, Jobs zu lange zur Abarbeitung benötigen.
+Mangelnde Performance kann auf Dauer zur Ablehnung des Systems führen.
+Das Ziel ist, dass Benutzer nicht ausgebremst werden und alle Jobs rechtzeitig
+fertig werden.
+Das kann neben der Suche nach und der Eliminierung von Performancebremsen auch
+die Erziehung der Benutzer oder Programmierer umfassen, indem ich diese auf
+ressourcenhungrige Aktionen hinweist.
+
+Die wesentlichsten Performancebremsen sind CPU, Hauptspeicher, I/O, schlechte
+Algorithmen/Programmierung, übergroße Jobs.
+
+Schlechte Algorithmen lassen sich ohne Kenntnis der eingesetzten Software
+schlecht nachweisen und um übergroße Jobs zu identifizieren ist man mitunter
+auch auf die Mithilfe der betreffenden Anwendungssoftware angewiesen, so dass
+ich darauf nicht näher eingehen will.
+Für die anderen Performancebremsen gibt es Bordmittel, die mir bei der Suche
+helfen.
+
+### Werkzeuge zur lokalen Fehlersuche
+
+*   Shell {#sec-lokal-werkzeuge-shell}
+
+*   busybox {#sec-lokal-werkzeuge-busybox}
+
+*   perl {#sec-lokal-werkzeuge-perl}
+
+*   fuser {#sec-lokal-werkzeuge-fuser}
+
+*   lsof {#sec-lokal-werkzeuge-lsof}
+
+*   netstat {#sec-lokal-werkzeuge-netstat}
+
+*   iproute {#sec-lokal-werkzeuge-iproute}
+
+*   strace {#sec-lokal-werkzeuge-strace}
+
+*   ltrace {#sec-lokal-werkzeuge-ltrace}
+
+*   GDB der GNU Debugger {#sec-lokal-werkzeuge-gdb}
+
+*   vmstat {#sec-lokal-werkzeuge-vmstat}
+
+*   sysstat {#sec-lokal-werkzeuge-sysstat}
+
+*   acct {#sec-lokal-werkzeuge-acct}
+
+*   bonnie++ {#sec-lokal-werkzeuge-bonnie}
+
+*   hdparm {#sec-lokal-werkzeuge-hdparm}
+
+### Netzwerk-Totalausfall
+
+Wenn ich einen Netzwerk-Totalausfall diagnostiziert habe, gilt es als erstes,
+überhaupt Kontakt zu einem Netzwerk zu bekommen.
+Ohne Zugang zum Netz habe ich gar keine Chance, irgendeines der anderen
+Probleme zu analysieren.
+
+Ich arbeite mich im OSI-Modell von unten nach oben vor, überprüfe die
+SChichten und versuche, sie in Betrieb zu nehmen.
+
+*   Bitübertragung (physical)
+
+*   Sicherung (data link)
+
+*   Vermittlung (network)
+
+*   Transport (transport)
+
+### Netzwerk-Teilausfall
+
+*   verschiedene Formen:
+
+    *   einzelne Netzsegmente sind nicht zu erreichen
+
+    *   einzelne Dienste sind nicht zu erreichen
+
+*   gemeinsame Strategien
+
+    Tests:
+
+    *   Anfang, Endpunkte der Verbindung
+
+    *   Pfad kontrollieren (Bisektion anwendbar?)
+
+*   Unterschiede:
+
+    *   nicht erreichbares Netzsegment:
+
+        *   Kontrolle der Routen (Routingprotokolle, Kerneltabellen, Gateways)
+
+	*   (halb)automatische Tests mit traceroute
+
+    *   nicht erreichbarer Dienst:
+
+        *   Kontrolle der Firewallregeln, Paketfilter
+
+	*   geht eventuell in lokale Fehlersuche über
+
+### Netzwerk-Performanceprobleme
+
+*   mögliche Ursachen:
+
+    *   Paketverluste (schlechte Leitung, überlastete Leitung, überlastetes
+	Gateway)
+
+    *   DNS-Probleme
+
+    *   falsche Route bei Multipath
+
+    *   hohe Latenz (verursacht durch Leitung (Bandbreite) oder durch
+	Pufferung)
+
+    *   viel unnötiger Datenverkehr
+
+*   Messungen
+
+    *   Bandbreite (mit ping, siehe *Sloan* S. 81ff)
+
+    *   Latenz (mit Ping)
+        *   ohne Last
+        *   mit Last, um Pufferprobleme aufzudecken
+
+    *   Durchsatz
+
+    *   Verkehrsanalyse (Netflow)
+
+*   Maßnahmen
+
+    *   Auswechseln der überlasteten Hardware
+
+    *   bessere Leitungen anmieten/kaufen/verlegen
+
+    *   Qos
+
+    *   Traffic reduzuieren (Proxy-Server, ...), vorher Traffic analysieren
+
+    *   Software anpassen
+
+        *   Entwickler zugänglich?
+
+	*   Einstellungen an der Software, die Latenz berücksichtigen?
+
+### Werkzeuge zur Netzwerkfehlersuche
+
+*   arp {#sec-netz-werkzeuge-arp}
+
+*   bridge-utils {#sec-netz-werkzeuge-bridge-utils}
+
+*   ifconfig {#sec-netz-werkzeuge-ifconfig}
+
+*   iproute {#sec-netz-werkzeuge-iproute}
+
+*   netstat {#sec-netz-werkzeuge-netstat}
+
+*   route {#secr-netz-werkzeuge-route}
+
+*   ethtool, mii-diag, mii-tools {#sec-netz-werkzeuge-ethtool}
+
+*   ping {#sec-netz-werkzeuge-ping}
+
+*   traceroute {#sec-netz-werkzeuge-traceroute}
+
+*   tcpdump {#sec-netz-werkzeuge-tcpdump}
+
+*   wireshark {#sec-netz-werkzeuge-wireshark}
+
+*   libtrace und libtrace-tools {#sec-netz-werkzeuge-librace}
+
+*   quagga {#sec-netz-werkzeuge-quagga}
+
+*   telnet {#sec-netz-werkzeuge-telnet}
+
+*   netcat {#sec-netz-werkzeuge-netcat}
+
+*   openssl
+
+*   samba, smbclient {#sec-netz-werkzeuge-smbclient}
+
+*   iperf, nttcp, nuttcp {#sec-netz-werkzeuge-iperf}
+
+*   perl {#sec-netz-werkzeuge-perl}
+
