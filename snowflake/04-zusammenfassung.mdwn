@@ -1,0 +1,136 @@
+
+# Fehlersuche bei Linux Servern und Netzwerken
+
+Ich habe in meinem Berufsleben nach sehr vielen Fehlern gesucht.
+Darunter waren Fehler, die meine Kollegen und ich selbst verursacht hatten,
+Fehler, die auf äußere Einflüssen, wie falsche Bedienung, unwissentliche oder
+absichtliche Zerstörung zurückgingen.
+Oder Fehler durch Abnutzung oder Alterung.
+Den meisten Fehlern ist gemeinsam, dass das System bis zu einem Zeitpunkt X
+noch funktionierte und danach irgendwann bemerkt wird, dass es nicht mehr
+funktioniert.
+Ein Ausnahme sind Fehler bei der Entwicklung und bei neuen Projekten, bei
+denen etwas von Anfang an nicht funktioniert.
+
+Am Anfang meines Berufslebens hatte ich als Entstörer für Telefone und
+Telefonanlagen mit Problemen auf der ganzen Strecke vom Fernmeldeamt bis zum
+Telefonhörer des Kunden zu tun.
+Ich merkte relativ schnell, wenn ich vor Ort bei einem Kunden arbeitete oder
+im Winter unterwegs an einem Mast hochklettern musste, wie wichtig es ist, den
+Fehler zielstrebig einzugrenzen und das Problem zu eliminieren.
+Dazu ist es notwendig, sowohl das Gesamtsystem als auch die Details zu
+verstehen und aus dem vorgefundenen Fehlerbild auf das zugrunde liegende
+Problem zu schließen.
+Und dass die Begleitumstände sehr widrig sein können.
+
+Später als Programmierer und Softwareentwickler kamen vermehrt Fehler hinzu,
+die ich selbst oder meine Kollegen verursacht hatten.
+Ich lernte, wie wichtig genaue Absprachen und eine gute Dokumentation sind.
+Während bei der Entstörung von Telefonen die Details und Zusammenhänge meist
+noch gut im Kopf zu behalten waren, kam es nun mehr darauf an, die gestiegene
+Komplexität beherrschbar zu machen.
+Kapselung, wohl dokumentierte Schnittstellen und durchdachte Strukturierung des
+Gesamtsystems halfen, die unvermeidlich auftretenden Fehler einzugrenzen.
+
+Da ich es als Softwareentwickler jeweils mit einem System zu tun hatte, das
+zwar mit mehr oder weniger vielen anderen Systemen interagierte, waren
+Probleme doch in den meisten Fällen noch leicht zu isolieren.
+Bei der Arbeit als Systemadministrator für UNIX und Netzwerke bekam ich es
+jedoch mit verteilten Systemen zu tun, die miteinander interagierten,
+voneinander abhingen und um die gleichen Ressourcen konkurrierten.
+Alles bis dahin gelernte behielt seine Gültigkeit, doch hier waren neue
+Kenntnisse gefragt.
+
+In all der Zeit gab es einfache Probleme, deren Lösung offensichtlich war,
+leichte Probleme, die kurzes Nachdenken erforderten und mitunter schwere
+Probleme, für die ich meinen gesamten Werkzeugkasten benötigte und für die ich
+diesen manchmal noch erweitern, sprich etwas neues lernen, musste.
+Um diesen Werkzeugkasten für die strukturierte Lösung geht es hier.
+Um Methoden, Modelle und Heuristiken, um die Herangehensweise und die
+Nachbereitung.
+
+Habe ich ein Problem gelöst, ist es sinnvoll, noch etwas Zeit für die
+Nachbearbeitung aufzuwenden.
+Da gilt es zum einen, die Ursachen hinter den Ursachen aufzudecken um das
+Problem beim nächsten Mal vielleicht schon im Vorfeld zu verhindern.
+Weiterhin kann ich überlegen, ob ich durch Beobachtung bestimmter
+Systemvariablen (Monitoring) das Problem vielleicht schneller entdecken kann.
+Und schließlich, ob vielleicht das Problem durch eine automatische Reaktion
+verhindert werden könnte.
+
+Eine Methode, die ich verwende, sind Entscheidungsbäume, welche die Richtung
+meiner Suche vorgeben.
+Und einen grundlegenden Entscheidungsbaum verwende ich immer an erster Stelle
+bei jeder Art von Problem.
+Ich stelle mir die folgenden Fragen:
+
+1.  Funktioniert überhaupt etwas?
+
+2.  Funktioniert alles, was funktionieren soll?
+
+3.  Ist es schnell genug?
+
+Diese drei Fragen kann ich mit *ja* oder *nein* beantworten.
+Bei *ja* geht es sofort zur nächsten Frage, bei *nein* geht es in ein
+Programm, an dessen Ende die Frage hoffentlich mit *ja* beantwortet wird.
+Kann ich gleich von Anfang an die drei Fragen mit *ja* beantworten, dann
+bleibt als letzte Frage:
+
+4.  Was ist eigentlich das Problem?
+
+Diese Frage ist nicht leicht zu beantworten, da die Antwort *ja* auf die
+ersten drei Fragen impliziert, dass das System an sich in Ordnung ist.
+
+Die Beantwortung der ersten drei Fragen hängt natürlich von der Art des
+betrachteten Systems ab.
+Bei Linux Servern beantworte ich die Frage mit *ja*, wenn ich Kontakt zu einer
+Shell auf dem System bekomme und auf der Kommandozeile arbeiten kann.
+Zur Not akzeptiere ich auch eine graphische oder Web-Oberfläche wie zum
+Beispiel LuCI oder Webmin.
+Wichtig ist, dass ich Fragen an das System selbst stellen kann und Antworten
+erhalte.
+
+Als nächstes nutze ich das System um festzustellen, ob alle notwendigen
+Dienste laufen.
+Dabei hilft mir zum Beispiel eine Prozessliste oder eine Liste der offenen
+Ports und Sockets.
+Dann überprüfe ich, ob alle Dienste auch ihre Aufgabe erfüllen.
+Das ist wiederum vom konkreten Dienst abhängig.
+
+Um die dritte Frage zu beantworten, muss ich das System beobachten, wenn es zu
+langsam ist.
+Was genau macht es dann, womit verbringt es seine Zeit.
+Dabei achte ich vor allem auf die drei Bereiche CPU, Speicher und I/O um
+Kandidaten für die nähere Untersuchung zu ermitteln
+
+Für diese Tests kann ich verschiedene Programme nutzen, die mir helfen
+unterschiedliche Fragen zu beantworten.
+
+Bei einem Netzwerk-Problem kann ich die erste Frage mit *ja* beantworten,
+sobald ich das betroffene System von irgendeinem anderen System im Netzwerk
+erreichen kann beziehungsweise, wenn ich von diesem System irgendein anderes
+System erreichen kann, je nach dem, wo ich mich gerade befinde.
+
+Die zweite Frage beinhaltete im Netzwerk zwei Aspekte.
+Kann ich alle Netzwerk-Segmente erreichen, die ich erreichen will oder muss?
+Funktionieren alle benötigten Netzwerk-Dienste?
+Bei der Frage nach den Netzwerk-Segmenten konzentriere ich mich auf das Routing
+und eventuell auf Paketfilter-Firewalls auf dem Weg.
+Die Frage nach den Netzwerk-Diensten tangiert wiederum Firewalls und / oder
+lokale Dienste auf den Dienst-Servern.
+
+Die Frage nach der Performance des Netzwerks ist sehr komplex.
+SLAs und Baselines helfen mir, festzulegen, was "schnell genug" bedeutet.
+Um die Performance einzuschätzen muss ich verschiedene Dinge
+betrachten:
+
+*   die Bandbreite (übertragene Datenmenge pro Zeiteinheit)
+
+*   die Latenz (Zeit für die Übertragung eines Datagramms)
+
+*   beides im Leerlauf und unter Last
+
+*   Paketverluste
+
+Auch für die Analyse von Problemen im Netzwerk kann ich auf viele Programme
+zurückgreifen, die mir helfen, meine Fragen zu beantworten.
