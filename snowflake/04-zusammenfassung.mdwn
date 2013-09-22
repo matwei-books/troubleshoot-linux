@@ -17,11 +17,11 @@ Telefonanlagen mit Problemen auf der ganzen Strecke vom Fernmeldeamt bis zum
 Telefonhörer des Kunden zu tun.
 Ich merkte relativ schnell, wenn ich vor Ort bei einem Kunden arbeitete oder
 im Winter unterwegs an einem Mast hochklettern musste, wie wichtig es ist, den
-Fehler zielstrebig einzugrenzen und das Problem zu eliminieren.
+Fehler zielstrebig einzugrenzen und das Problem schnell zu eliminieren,
+und dass die Begleitumstände sehr widrig sein können.
 Dazu ist es notwendig, sowohl das Gesamtsystem als auch die Details zu
 verstehen und aus dem vorgefundenen Fehlerbild auf das zugrunde liegende
 Problem zu schließen.
-Und dass die Begleitumstände sehr widrig sein können.
 
 Später als Programmierer und Softwareentwickler kamen vermehrt Fehler hinzu,
 die ich selbst oder meine Kollegen verursacht hatten.
