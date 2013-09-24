@@ -50,6 +50,8 @@ man näher untersuchen will.
 
 ### Herangehensweisen
 
+*   Arbeitsbuch, Laborjournal, (http://bulletjournal.com)
+
 *   abgewandelt: vier Kraftprinzipien aus WT
 
 *   Gehirn: L-Modus, R-Modus (*Edwards*):
@@ -102,26 +104,54 @@ man näher untersuchen will.
 
 ### Nachbearbeitung
 
-*   Arbeitsbuch, Laborbuch, Logbuch
+Manchmal folgt auf ein gelöstes Probelem schon das nächste und es bleibt kaum
+Zeit für eine Rückschau. Tritt das häufig auf, ist das ein Zeichen, dass eine
+Rückschau umso nötiger ist. Dann kann ich wenigstens eine Tabelle anlegen, in
+der ich die Fehler aufliste, zusammen mit ihrem Schweregrad. Anhand dieser
+Tabelle kann ich dann entscheiden, welche Art von Fehlern den meisten Aufwand
+verursachen und daher die meiste Beachtung verdienen.
 
-*   Rückschau
+Nachdem ich das Problem gelöst habe, kontrolliere ich, ob es wirklich behoben
+ist. Das heißt in allererster Linie, dass ich denjenigen, der mir das Problem
+gemeldet hat, um Bestätigung bitte, dass das Problem behoben ist.
 
-*   Kontrolle der Ergebnisse der Lösung (ist der Fehler wirklich behoben)
+Spätesten jetzt ergänze ich mein Laborbuch mit den Erkenntnissen, die ich bei
+der Problemlösung gewonnen habe. Eventuell schreibe ich einen Artikel darüber,
+um schon durch das Ausformulieren diese Erkenntnisse tiefer in meinem
+Gedächtnis zu verankern.
 
-*   fünf mal warum (Ursachenforschung)
+In der Rückschau kann ich mich fragen, auf welchem anderen Weg ich dieses
+Problem eingrenzen könnte. Gibt es möglicherweise einen schnelleren Weg, der
+mich zur Lösung geführt hätte. Kann ich diesen oder den angewandten Lösungsweg
+eventuell für andere Probleme einsetzen? Wenn ja, für welche? Wie kann ich die
+gewonnenen Kenntnisse verallgemeinern.
 
-*   Kann ich diesen Fehler künftigt vermeiden?
+Die nächste Frage führt mich zu einem tieferen Verständnis des Systems.
+Ich frage zunächst nach allen unmittelbaren Ursachen für das Problem.
+Als nächstes frage ich warum es diese Ursachen gibt.
+Dann nach deren Ursachen.
+In dem ich (mindestens) fünf mal warum frage, komme ich zu Erkenntnissen über
+das Gesamtsystem, die vordergründig nichts mit diesem Problem zu tun haben,
+mir aber helfen das System besser zu verstehen
+Für die Zukunft kann ich dieses Problem dann vielleicht vermeiden oder
+schneller erkennen.
 
-*   Kann ich Erkenntnisse aus dieser Fehlersuche an anderen Stellen
-    verwenden?
+Wenn ich den Fehler in der Rückschau soweit durchgekaut habe, kann ich
+vielleicht die Frage beantworten, ob ich den Fehler hätte vorhersehen können.
+Falls ja, kläre ich wie, welche Voraussetzungen ich dafür schaffen müßte, zum
+Beispiel durch Monitoring, regelmäßige Logauswertung.
 
-*   Hätte ich das vorher sehen können?
+Wenn ich meine Kollegen schulen will, kann ich mir Gedanken machen, wie ich
+diesen Fehler in einem Testsystem hervorrufen kann, um eine möglichst
+realistische Trainingsumgebung zu schaffen, in der das Problem und seine
+Auswirkungen untersucht werden können.
 
-    *   Wenn ja, wie?
-
-    *   Kann ich es jetzt?
-
-    *   Wenn ja, kann ich das automatisieren?
+Schließlich, wenn ich alle Mittel zur Verfügung habe, um auftretende Fehler
+bereits im Entstehen zu erkennen und präventiv zu verhindern, kann ich mir
+Gedanken machen, ob das vielleicht automatisierbar ist. Das ist aber nur der
+letzte Schritt auf dem langen Weg von der erstmaligen Analyse eines Fehlers
+über das schnelle Erkennen und mögliche Vorhersagen bis zum selbstständigen
+Heilen eines Fehlers.
 
 ### Rechner-Totalausfall
 
