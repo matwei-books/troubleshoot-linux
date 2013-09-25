@@ -155,15 +155,51 @@ Heilen eines Fehlers.
 
 ### Rechner-Totalausfall
 
-*   Bootprobleme
+Ein Totalausfall eines Rechners bedeutet für mich, der Rechner selbst ist
+keine große Hilfe bei der Fehlersuche. Das muss nicht heißen, dass der Rechner
+überhaupt nicht mehr reagiert, aber auf jeden Fall stehen mir nicht alle
+Werkzeuge zur Verfügung, die ich sonst zur Analyse einsetzen könnte.
 
-*   Rechner reagiert nicht (mehr) -> SysRequest
+Die folgenden Probleme betrachte ich als Totalausfall eines Rechners.
 
-*   Überlast, Swapping, Thrashing
+*   Hardwarefehler, der Rechner reagiert überhaupt nicht beim Einschalten.
+    Abgesehen vom überprüfen des Stromanschlusses gehe ich darauf hier nicht
+    weiter ein. Wenn nur einzelne Komponenten ausgefallen sind, kann ich
+    versuchen ein Livesystem von CD-ROM oder USB zu starten und damit das
+    System zu analysieren.
 
-*   Hardwarefehler -> ausklammern, wenn nicht mit Software analysierbar
+*   Boot-Probleme, zwar passiert etwas, die Hardware scheint größtenteils in
+    Ordnung, aber das Betriebssystem wird nicht gestartet. Hier analysiere ich
+    den Bootprozess Schritt für Schritt, beobachte, wie weit das System kommt
+    und versuche die Ursache zu ermitteln.
 
-*   Ausfall bei virtuellen Maschinen
+*   Der Rechner ist normal gestartet, hat auch eine Zeitlang (mitunter Wochen)
+    gearbeitet, aber reagiert jetzt nicht mehr.
+    Hier versuche ich, den Rechner mit SysRequest wieder in einen definierten
+    Zustand zu bringen und dann zu analysieren. Falls möglich, werte ich die
+    mit SysRequest gewonnenen Erkenntnisse aus.
+
+*   Überlast, Swapping, Thrashing. Ich sehe oder höre, dass der Rechner
+    intensiv arbeitet. Trotzdem reagiert er sehr langsam. Eventuell kann ich
+    mich auf Grund von Timeouts nicht mal anmelden. Dann bleibt mir nur, den
+    Rechner geordnet runter zu fahren und anschließend zu ermitteln, welche
+    Prozesse die Ressourcen überlastet haben.
+
+*   Ausfall bei virtuellen Maschinen. Im Grunde genommen können die gleichen
+    Probleme wie bei "echten" Maschinen aus Blech auftreten. Hinzu kommen
+    Probleme mit der der Virtualisierungsschicht, zum Beispiel dem verwendeten
+    Bootloader. Neben der gestiegenen Komplexität mit mehr Möglichkeiten für
+    Fehler habe ich zusätzliche Diagnosemöglichkeiten.
+
+    Ich betrachte hier zwei verschiedene Arten von Totalausfällen: Den Ausfall
+    des Virtualisierungs-Hostes, davon sind alle Gastsysteme betroffen. Und
+    den Ausfall eines Gastsystems.
+
+    Wenn der Host betroffen ist, kann ich versuchen, das Problem mit einem
+    Livesystem zu analysieren, falls das möglich ist.
+
+    Bei Problemen mit Gastsystemen sind meine Optionen abhängig von der
+    verwendeten Virtualisierungslösung und deren Diagnosewerkzeugen.
 
 ### Rechner-Teilausfall
 
