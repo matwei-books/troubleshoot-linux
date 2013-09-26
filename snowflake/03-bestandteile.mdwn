@@ -203,17 +203,51 @@ Die folgenden Probleme betrachte ich als Totalausfall eines Rechners.
 
 ### Rechner-Teilausfall
 
-*   Mount-Fehler
+Ein Teilausfall eines Rechners kann sich auf verschiedene Art äußern.
+Bemerkt wird er meistens, wenn einzelne Dienste nicht funktionieren oder
+bestimmte Funktionen nicht ausführen. Auf jeden Fall kann ich mich am Server
+anmelden und Programme in der Shell starten um ihn mit Boardmitteln zu
+untersuchen.
 
-*   Berechtigungen
+Bevor ich den Rechner selbst untersuche, habe ich bereits wichtige
+Informationen gesammelt. Was genau ist das Problem? Wann wurde es erstmalig
+bemerkt? Ist es reproduzierbar? Wann wurde zuletzt etwas an diesem System
+geändert, wann an einem anderen, auf das dieses angewiesen ist? Habe ich
+Monitoring-Daten oder zentrale Logs?
 
-*   Dienst startet nicht
+Als erstes verschaffe ich mir einen Überblick über die angemeldeten Benutzer,
+die laufenden Prozesse und die momentane Systemauslastung (CPU, Memory, I/O).
+In den Logs schaue ich nach Fehlermeldungen.
 
-*   Platte voll
+Mitunter kommt es vor, dass ein Dienst unter einer Benutzerkennung
+funktioniert, unter einer anderen nicht. Das ist meist ein Zeichen, dass
+irgendwas mit den Berechtigungen nicht stimmt. Hier kommt dann ein Abstecher
+in die traditionellen Unix-Berechtigungen und zu den erweiterten Attributen,
+zu AppArmor und SE-Linux (soweit, wie ich damit komme). Rechtefehler kann ich
+zum Beispiel mit strace eingrenzen.
 
-*   *My first five minutes on a server* verarbeiten
+Manchmal startet ein Dienst einfach nicht. In diesem Fall ist es eventuell
+notwendig, die Start-Skripts zu untersuchen. Hier kann ein Ausflug zu den
+verschiedenen Init-Prozessen hin. Bei diesen Problemen helfen die Shell
+(Option `-x`) und strace weiter. Mitunter benötigt ein Dienst zum
+Funktionieren einen anderen, der aber noch nicht gestartet ist. In diesem Fall
+muss ich die Reihenfolge, in der die Dienste gestartet werden, beachten.
 
-*   ein Dienst wartet auf den anderen (Abhängigkeiten, init)
+Ein Fehler, der im Laufe des Betriebes auftreten kann, ist, dass die Platte
+voll wird. In diesem Moment versagen Schreibzugriffe im Dateisystem, auf die
+die Dienste unterschiedlich reagieren. Mitunter kommt es vor, dass die
+Logdateien tagsüber die Platte füllen während in der Nacht beim Rotieren der
+Logs wieder Platz geschaffen wird. Kontinuierliches Monitoring des
+Plattenverbrauchs kann mich hier auf die richtige Spur bringen.
+
+Ein anderes Problem sind Fehler beim Ein- oder Aushängen von Partitionen.
+Beim Einhängen kann es sein, dass der Mountpoint noch nicht existiert, dass
+noch kein Kernelmodul für das betreffende Dateisystem geladen ist oder bei LVM
+die logischen Volumes noch nicht zur Verfügung stehen. Fehler beim Aushängen
+von Partitionen gehen fast immer auf Prozesse zurück, die noch Dateien
+geöffnet haben.
+
+*   *First five minutes on a server* verarbeiten
 
 ### Rechner-Performanceprobleme
 
