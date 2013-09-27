@@ -10,28 +10,28 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/$(PREVIEW) \
                $(DROPBOXDIR)/$(SAMPLE) \
                $(DROPBOXDIR)/preface.mdwn \
-               $(DROPBOXDIR)/ch-1-methoden-empty.mdwn \
-               $(DROPBOXDIR)/chapter03-empty.mdwn \
-               $(DROPBOXDIR)/chapter04-empty.mdwn \
-               $(DROPBOXDIR)/chapter05-empty.mdwn \
-               $(DROPBOXDIR)/chapter06-empty.mdwn \
-               $(DROPBOXDIR)/chapter07-empty.mdwn \
-               $(DROPBOXDIR)/chapter08-empty.mdwn \
-               $(DROPBOXDIR)/chapter09-empty.mdwn \
-               $(DROPBOXDIR)/chapter10-empty.mdwn \
-               $(DROPBOXDIR)/chapter11-empty.mdwn \
-               $(DROPBOXDIR)/chapter12-empty.mdwn \
-               $(DROPBOXDIR)/ch-1-methoden.mdwn \
-               $(DROPBOXDIR)/chapter03.mdwn \
-               $(DROPBOXDIR)/chapter04.mdwn \
-               $(DROPBOXDIR)/chapter05.mdwn \
-               $(DROPBOXDIR)/chapter06.mdwn \
-               $(DROPBOXDIR)/chapter07.mdwn \
-               $(DROPBOXDIR)/chapter08.mdwn \
-               $(DROPBOXDIR)/chapter09.mdwn \
-               $(DROPBOXDIR)/chapter10.mdwn \
-               $(DROPBOXDIR)/chapter11.mdwn \
-               $(DROPBOXDIR)/chapter12.mdwn \
+               $(DROPBOXDIR)/cha-methoden-empty.mdwn \
+               $(DROPBOXDIR)/cha-herangehen-empty.mdwn \
+               $(DROPBOXDIR)/cha-nachbearbeitung-empty.mdwn \
+               $(DROPBOXDIR)/cha-lokal-total-empty.mdwn \
+               $(DROPBOXDIR)/cha-lokal-teil-empty.mdwn \
+               $(DROPBOXDIR)/cha-lokal-perform-empty.mdwn \
+               $(DROPBOXDIR)/cha-lokal-werkzeuge-empty.mdwn \
+               $(DROPBOXDIR)/cha-netz-total-empty.mdwn \
+               $(DROPBOXDIR)/cha-netz-teil-empty.mdwn \
+               $(DROPBOXDIR)/cha-netz-perform-empty.mdwn \
+               $(DROPBOXDIR)/cha-netz-werkzeuge-empty.mdwn \
+               $(DROPBOXDIR)/cha-methoden.mdwn \
+               $(DROPBOXDIR)/cha-herangehen.mdwn \
+               $(DROPBOXDIR)/cha-nachbearbeitung.mdwn \
+               $(DROPBOXDIR)/cha-lokal-total.mdwn \
+               $(DROPBOXDIR)/cha-lokal-teil.mdwn \
+               $(DROPBOXDIR)/cha-lokal-perform.mdwn \
+               $(DROPBOXDIR)/cha-lokal-werkzeuge.mdwn \
+               $(DROPBOXDIR)/cha-netz-total.mdwn \
+               $(DROPBOXDIR)/cha-netz-teil.mdwn \
+               $(DROPBOXDIR)/cha-netz-perform.mdwn \
+               $(DROPBOXDIR)/cha-netz-werkzeuge.mdwn \
                $(DROPBOXDIR)/literatur.mdwn \
                $(DROPBOXDIR)/part1.mdwn \
                $(DROPBOXDIR)/part2.mdwn \
@@ -44,18 +44,17 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
 #
 CHAPTERS = \
     preface.mdwn \
-    ch-1-methoden.mdwn \
-    chapter02.mdwn \
-    chapter03.mdwn \
-    chapter04.mdwn \
-    chapter05.mdwn \
-    chapter06.mdwn \
-    chapter07.mdwn \
-    chapter08.mdwn \
-    chapter09.mdwn \
-    chapter10.mdwn \
-    chapter11.mdwn \
-    chapter12.mdwn \
+    cha-methoden.mdwn \
+    cha-herangehen.mdwn \
+    cha-nachbearbeitung.mdwn \
+    cha-lokal-total.mdwn \
+    cha-lokal-teil.mdwn \
+    cha-lokal-perform.mdwn \
+    cha-lokal-werkzeuge.mdwn \
+    cha-netz-total.mdwn \
+    cha-netz-teil.mdwn \
+    cha-netz-perform.mdwn \
+    cha-netz-werkzeuge.mdwn \
     literatur.mdwn \
 #
 IMAGES = \
@@ -87,10 +86,10 @@ all:
 dropbox: $(DROPBOXFILES)
 
 partial: dropbox
-	leanpub partial_preview
+	sleep 10 && leanpub partial_preview
 
 preview: dropbox
-	leanpub preview
+	sleep 10 && leanpub preview
 
 status:
 	leanpub job_status
