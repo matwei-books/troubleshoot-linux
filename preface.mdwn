@@ -140,5 +140,7 @@ Aus diesem Grund habe ich einige Übungen im Buch eingestreut.
 Bei diesen Übungen kommt es nicht immer auf das konkrete Ergebnis an, sondern
 dass man diese in einer freien Minute ausführt und beobachtet, was passiert.
 
+X> Übungen sind mit diesem Symbol gekennzeichnet.
+
 ## Danksagung
 
