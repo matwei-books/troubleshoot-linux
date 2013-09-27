@@ -1,14 +1,18 @@
+{frontmatter}
+
 # Vorwort {#vorwort}
 
 Ich habe bereits viele Jahre mit Fehlersuche verbracht.
 Sei es als Kind beim Basteln, wenn etwas nicht so funktionierte, wie ich
-dachte. In meinem ersten Beruf bei der Reparatur von Telefonen und
+dachte.
+In meinem ersten Beruf bei der Reparatur von Telefonen und
 Telefonanlagen, die damals noch mit Relais funktionierten, so dass man ihnen
-im wahrsten Sinne des Wortes bei der Arbeit zusehen konnte. Nach dem
-Studium, als Softwareentwickler, beim Debuggen meiner oder fremder
-Programme. Oder später dann als Systemadministrator für UNIX und Netzwerke.
+im wahrsten Sinne des Wortes bei der Arbeit zusehen konnte.
+Nach dem Studium, als Softwareentwickler, beim Debuggen meiner oder fremder
+Programme.
+Oder später dann als Systemadministrator für UNIX und Netzwerke.
 
-Dabe war ich vor allem auf einige Dinge angewiesen um zum Erfolg zu kommen.
+Dabei war ich vor allem auf drei Dinge angewiesen um zum Erfolg zu kommen.
 Das erste und wichtigste ist ein zumindest grundlegendes Verständnis der
 Materie und die Fähigkeit und Möglichkeit, weitere nötige Kenntnisse zu
 erwerben.
@@ -17,83 +21,124 @@ Das zweite ist eine einigermaßen strukturierte Vorgehensweise, die
 mich zumindest in den meisten Fällen schneller zum Ziel führt als andere
 Vorgehensweisen.
 
-A> *Wissenschaftliches versus strukturiertes Vorgehen*
-A>
-A> Ich unterscheide hier zwischen dem wissenschaftlichen Vorgehen, einem
-A> methodischen Untersuchen aller Möglichkeiten zwecks Erkenntnisgewinn und dem
-A> zielgerichteten strukturierten Vorgehen, bei dem ich zunächst die
-A> Möglichkeiten untersuche, die vermutlich am ehesten zum Erfolg führen zwecks
-A> schnellstmöglicher Problembeseitigung.
-
-Eine dritte Voraussetzung ist die entsprechende geistige Einstellung. Ich
-musste sehr oft und werde vermutlich noch oft die Erfahrung machen, dass ich
-mir selbst bei der Lösung eines Problems im Weg stehe:
+Die dritte Voraussetzung ist die entsprechende geistige Einstellung.
+Ich musste sehr oft und werde vermutlich noch oft die Erfahrung machen, dass
+ich mir selbst bei der Lösung eines Problems im Weg stehe:
 
 *   Sei es, dass ich mir vor der Kenntnis aller relevanten Tatsachen
-    bereits eine (dann eventuell falsche) Meinung gebildet hatte.
+    bereits eine (dann eventuell falsche) Meinung bilde.
 *   Sei es, dass ich durch Druck von außen oder selbst erzeugten Druck
-    besonders schnell sein wollte und dann beim oberflächlichen Hinsehen
-    wichtige Details übersah.
-*   Sei es, dass ich angebotene Hilfe nicht annahm, weil ich es selbst
-    schaffen wollte oder so sehr im Problem gefangen war, das ich das
-    Hilfsangebot nicht wahrnahm.
-*   Sei es, dass ich kurz vor dem Ziel aufgab und einfach nicht den
-    letzten Meter gegangen war.
+    besonders schnell sein will und dann beim oberflächlichen Hinsehen
+    wichtige Details übersehe.
+*   Sei es, dass ich angebotene Hilfe nicht annehme, weil ich es selbst
+    schaffen will oder so sehr im Problem gefangen bin, dass ich das
+    Hilfsangebot nicht wahrnehme.
+*   Sei es, dass ich kurz vor dem Ziel aufgebe und einfach nicht den
+    letzten Meter gehe.
 
 In diesem Buch lege ich meine über die Jahre gesammelten Erfahrungen mit
 der Fehlersuche bei Linux-Servern und in IP-Netzwerken nieder.
 
-Ich habe diese beiden Themen kombiniert, weil zum Einen Linux-Server fast
+Ich habe diese beiden Themen kombiniert, weil zum einen Linux-Server fast
 immer über IP-Netzwerke angesprochen werden und daher auf ein gut
-funktionierendes Netzwerk angewiesen sind und zum Anderen Linux-Rechner
+funktionierendes Netzwerk angewiesen sind und zum anderen Linux-Rechner
 (da gehen auch Arbeitsstationen) für mich ideal zur Analyse von
 Netzwerkproblemen geeignet sind.
 
-Zwar benutze ich fast täglich Linux auf dem Desktop, allerdings sind hier
-die am häufigsten verwendeten Programme ein Terminal und ein Webbrowser, die
+Zwar benutze ich fast täglich Linux auf dem Desktop, allerdings verwende ich
+hier am häufigsten ein Terminal und einen Webbrowser, die
 in den meisten Fällen vorzüglich funktionieren, so dass ich kaum Gelegenheit
-hatte Erfahrungen mit der Fehlersuche am Linux-Desktop zu sammeln. Aus
-diesem Grund bleibt dieser Bereich aussen vor.
-
-Meine Motivation ist das mitunter erschreckende Unverständnis einiger
-meiner Kollegen beim einfachen Fehlersuchen. Ich extrapoliere, dass es auch
-anderen so gehen könnte.
+habe Erfahrungen mit der Fehlersuche am Linux-Desktop zu sammeln.
+Aus diesem Grund lasse ich diesen Bereich aussen vor.
 
 ## Für wen ist dieses Buch
 
-Die Zielgruppe ist angehende (und gestandene?) Systemadministratoren für
+Die Zielgruppe sind angehende und gestandene Systemadministratoren für
 Linux und/oder IP-Netzwerke.
+
+Ich setze grundlegende Kenntnisse der Kommandozeile voraus und dass der Leser
+weiss, wie er sie erreicht.
+
+Dieses Buch soll Anfängern über die ersten Hürden bei der Fehlersuche helfen
+und sie bei ihren ersten Schritten begleiten.
+Gestandene Administratoren werden vielleicht die eine oder andere Anregung
+entnehmen können.
 
 ## Wie ist das Buch aufgebaut
 
-Dieses Buch ist in vier Teile gegliedert:
+Dieses Buch ist besteht aus drei Hauptteilen.
 
-*   Teil 1 beschäftigt sich mit dem grundlegenden Vorgehen bei der
-    Fehleranalyse.
-*   In Teil 1 geht es vorwiegend um lokale Probleme an einem
-    Linux-Rechner.
-*   Teil 3 befasst sich mit Netzwerkproblemen.
-*   In Teil 4 geht es um die Nachbereitung eines gelösten und die
-    Vorbereitung auf das nächste Problems.
+**Teil eins** beschäftigt sich mit allgemeinen Themen der Fehlersuche, die
+auch in anderen Bereichen nützlich sein können.
 
+Im *ersten Kapitel* geht es um Methoden, Heuristiken und Modelle, also um
+strukturelle Hilfsmittel, die mir bei bestimmten Problemen der Fehlersuche
+weiterhelfen.
+
+Im *zweiten Kapitel* geht es um die Herangehensweise an ein Problem.
+Wann und wie setze ich die Hilfmittel aus dem vorigen Kapitel ein?
+Wie bereite ich mich auf die Fehlersuche vor?
+Wie kann ich generell besser bei der Fehlersuche werden?
+
+Das *dritte Kapitel* geht auf die Nachbearbeitung eines Problems ein.
+Welche Erkenntnisse kann ich aus der letzen Fehlersuche ziehen?
+Kann ich diesen oder ähnliche Fehler in Zukunft vermeiden?
+
+Die beiden folgenden Teile des Buches sind wie folgt strukturiert: zunächst
+widme ich mich dem Totalausfall (wenn gar nichts mehr geht), dann
+Teilausfällen und danach Performance-Problemen.
+Schließlich stelle ich einige Programme vor, die mir bei der Fehlersuche
+helfen.
+
+**Teil zwei** beschäftigt sich mit lokalen Problemen einzelner Linux-Server.
+
+In *Kapitel vier* geht es um Totalausfälle.
+Das können Hardwarefehler sein, Bootprobleme, ein Rechner der scheinbar oder
+wirklich nicht mehr reagiert oder ein Rechner, der durch Überlast so langsam
+geworden ist, dass ich nicht einmal mehr eine Shell zur Diagnose bekommen kann.
+
+*Kapitel fünf* behandelt Teilausfälle bei Linux-Servern.
+Diese äußern sich meitens darin, dass bestimmte Dienste nicht starten oder
+nicht korrekt arbeiten, oder dass Dateien nicht gespeichert werden können.
+
+I *Kapitel sechs* geht es um die Performance von Linux-Servern.
+Alles funktioniert, aber so richtig schnell ist es nicht.
+Hier geht es darum, herauszufinden, was der Rechner macht, wenn es so lange
+dauert und wie man es eventuell beschleunigen kann.
+
+*Kapitel sieben* schließlich stellt einige der Werkzeuge vor, die ich am
+häufigsten einsetze.
+Zusätzlich zu den wichtigsten Optionen zeige ich einige Anwendungsfälle auf
+oder verweise auf andere Kapitel, in denen das Programm eingesetzt wird.
+
+Der **dritte Teil** des Buches behandelt die Fehlersuche im IP-Netzwerk.
+
+*Kapitel acht* geht auf Totalausfälle im Netz ein.
+Ein Totalausfall im Netzwerk ist für mich gegeben, wenn ein Rechner überhaupt
+keinen Kontakt zum Netzwerk bekommt oder, wenn in einem Netzsegment die
+Basisdienste so weit ausgefallen sind, dass die Rechner in diesem Segment
+ihren Netzanschluß nicht produktiv nutzen können.
+
+In *Kapitel neun* gehe ich auf Teilausfälle im Netzwerk ein.
+Dabei unterscheide ich die Nichterreichbarkeit einzelner Netzsegmente von der
+Nichterreichbarkeit einzelner Dienste.
+
+In *Kapitel zehn* geht es um Performance-Probleme im Netzwerk.
+Wie analysiere ich diese?
+Welche möglichen Abhilfen gibt es?
+
+Und in *Kapitel elf* stelle ich wiederum Werkzeuge vor, die mir bei der
+Fehlersuche im Netz helfen.
+
+Ich habe mir in diesem Buch große Mühe gegeben, eine Hilfe bei der Fehlersuche
+zu bieten.
+Dennoch kann es keine eigene Erfahrung ersetzen.
+Insbesondere, wenn man vor einem schwierigen neuen Problem steht, ist es
+hilfreich, wenn die aus diesem Buch gewonnenen Erkenntnisse und die eigenen
+Erfahrungen abrufbereit sind.
+Aus diesem Grund habe ich einige Übungen im Buch eingestreut.
+Bei diesen Übungen kommt es nicht immer auf das konkrete Ergebnis an, sondern
+dass man diese in einer freien Minute ausführt und beobachtet, was passiert.
 
 ## Danksagung
 
-## Notizen
-
-*   Beim Text und Stil brauche ich mir keine persönlichen und
-    institutionellen Beschränkungen auferlegen. Der Stil sollte dennoch
-    weitgehend neutral sein, in den Beispielen ist die erste (und dritte)
-    Person angemessen.
-*   Ich werde grundlegende (strategische) Methoden, die ich bei der
-    Fehlersuche verwende, vorstellen.
-*   Ich werde einige (taktische) Programme vorstellen, die mir bei der
-    Fehlersuche helfen.
-*   Ich werde die operative Anwendung der grundlegenden Methoden und der
-    Programme in einigen konkreten Fehlersituationen vorstellen.
-*   Ich werde mich auf die Gebiete Linux-Server und (IPv4) Netzwerke
-    beschränken. Grafische Oberflächen bleiben (zunächst) außen vor.
-*   Schreiben, was im Buch voraussichtlich schnell altert und was vermutlich
-    länger gültig ist.
-*   Hinweis, dass eigenes Lernen unerlässlich ist, das Buch nur über die
-    ersten Hürden helfen kann und soll
