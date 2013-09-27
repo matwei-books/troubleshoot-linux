@@ -1,4 +1,50 @@
-# Methoden {#cha-methoden}
+# Methoden, Heuristiken und Modelle {#cha-methoden}
+
+Methoden, Heuristiken und Modelle sind das geistige Rüstzeug, das
+unentbehrlich ist für jeden Problemlöser.
+
+In diesem Kapitel will ich etwas näher auf diese eingehen und die folgenden
+Fragen beantworten.
+Wofür kann ich diese nutzen?
+Welches Ergebnis kann ich von ihnen erwarten?
+Wann setze ich sie ein?
+
+## Begriffe
+
+Im Duden oder anderen Nachschlagewerken kann ich umfangreiche Erklärungen für
+diese drei Begriffe finden, die ich hier nicht detailliert wiedergeben werde.
+
+Um aber eine gemeinsame Sprache zu finden, lege ich hier kurz dar, was ich
+meine, wenn ich in diesem Buch von *Methoden*, *Heuristiken* und *Modellen*
+spreche.
+
+Methode
+: Wenn ich hier von einer Methode spreche, meine ich ein auf Regeln aufbauendes
+  Verfahren um konkrete Erkenntnisse oder praktische Ergebnisse zu erlangen.
+  Eine Methode kann ich nur unter bestimmten Voraussetzungen sinnvoll einsetzen.
+  Sie liefert mir dann jedoch relativ klar definierte Ergebnisse beziehungsweise
+  Erkenntnisse.
+
+Heuristik
+: Unter Heuristik verstehe ich ebenfalls ein Verfahren zur Gewinnung neuer
+  Erkenntnisse.
+  Im Gegensatz zur Methode bekomme ich aber keine klar definierten Ergebnisse,
+  sondern bestenfalls Anhaltspunkte, die mir eine Richtung für die weitere
+  Untersuchung anzeigen.
+
+Modell
+: Unter einem Modell verstehe ich hier ein vereinfachtes Abbild der
+  Wirklichkeit, dass bestimmte, für die Betrachtung wesentliche Merkmale
+  korrekt abbildet und andere ignoriert.
+  Ein und dieselbe Situation kann ich mit verschiedenen Modellen beschreiben.
+  Welches Modell ich wähle, hängt davon ab, welche Eigenschaften ich
+  untersuchen will.
+
+X> Nimm den Duden, ein anderes Nachschlagewerk oder Wikipedia und schlage die
+X> Begriffe *Methode*, *Heuristik* und *Modell* nach.
+X> Lies auch die Erklärungen zu angrenzenden Begriffen.
+X> Vergleiche diese Begriffsbestimmungen mit den hier angegebenen.
+X> Das ganze sollte nicht länger als 15 Minuten in Anspruch nehmen.
 
 ## Entscheidungsbaum {#sec-methoden-entscheidungsbaum}
 
@@ -121,3 +167,90 @@ der Strecke, ob diese Datenpakete nachzuweisen sind. Je nachdem, ob die
 Datenpakete dort auftreten oder nicht, halbiere ich dann die Strecke zum
 Empfänger oder zum Sender. 
 
+# Heuristiken {#cha-heuristik}
+
+Heuristiken wende ich an, wenn alle meine bekannten Methoden nicht
+anwendbar sind oder versagt haben. Oder, wenn ich eine etwas langwierige
+strukturierte Methode abkürzen will um schneller zum Ziel zu kommen.
+
+A> **Methoden und Heuristiken**
+A>
+A> In diesem Buch spreche ich von Methode als klaren strukturierten
+A> Anweisungen, die im Normalfall immer zu einer Lösung gelangen.
+A>
+A> Bei Heuristiken denke ich auch an ein strukturiertes
+A> Vorgehen, dass aber den Erkenntnisgewinn zum Ziel hat und nicht
+A> notwendigerweise direkt zur Lösung des Problems führt.
+
+## Korrelation {#sec-heuristik-korrelation}
+
+Mit einer Korrelation kann man eine Beziehung zwischen zwei oder mehreren
+Merkmalen, Ereignissen oder Zuständen beschreiben. Wichtig ist dabei, zu
+beachten, dass diese Beziehung kausal sein kann aber nicht muss. Im
+mathematischen Sinne beschreibt die Korrelation einen statistischen
+Zusammenhang im Gegensatz zur Proportionalität, die einen festes Verhältnis
+beschreibt.
+
+Im einfachsten Fall kann ich eine Korrelation selbst sehen, zum Beispiel, wenn
+immer die Verbindung zum Netz A wegfällt, sobald ich die Verbindung zum Netz B
+umschalte.
+Das sagt zwar nichts aus über die eigentliche Ursache, aber es gibt mir zum
+einen die Möglichkeit, das Problem kurzfristig temporär aus dem Weg zu
+schaffen und zum anderen, wenn die Zeit geeignet ist, das Problem
+hervorzurufen, um es gründlich zu studieren.
+
+Eine andere Klasse von Problemen, bei denen mir Korrelationen zumindest
+weiterhelfen, sind sogenannte intermittierende Probleme, die sich dem
+andersartigen Zugang entziehen.
+Bei diesen Problem hilft mir am Anfang nur, so viele Daten über das betroffene
+Gesamtsystem wie möglich zu sammeln.
+Bei der Analyse dieser Daten hilft mir dann die Kovarianzanalyse, das heisst,
+ich vergleiche jeweils paarweise verschiedene beobachtete Systemvariablen und
+ermittle die Kovarianz oder den Korrelationskoeffizienten.
+Wichtig dabei ist, dass ich immer die zusammengehörigen Daten in Beziehung
+setze.
+Da das meist über die Uhrzeit passiert, sorge ich also entweder im Vorfeld für
+gleichlaufende Uhren, oder ich muss den Zeitoffset bestimmen und rausrechnen.
+
+Ein Programm, das sehr hilfreich für die Kovarianzanalyse ist, wurde in
+[WSA2011](#bib-wsa2011) beschrieben.
+
+Wichtig bei allen Korrelationsanalysen ist, sich vor Augen zu halten, dass
+uanbhängige Merkmale immer eine Kovarianz von 0 haben.
+
+
+## Abkürzungen und Umwege {#sec-heuristik-abkuerzung-umweg}
+
+### Abkürzungen
+
+Die Frage, wann ein Problem erstmals auftrat (oder bemerkt wurde) und was zu
+dieser Zeit oder davor geändert wurde, kann eine Fehlersuche erheblich
+abkürzen, wenn Sie einen Hinweis ergibt auf eine mögliche Ursache ergibt. Bei
+dieser Fragestellung haben wir es mit einer Korrelation zu tun und dürfen
+nicht vergessen, dass die Änderungen mit dem Problem zu tun haben können, aber
+nicht notwendigerweise müssen.
+
+### Umwege
+
+#### Probe und Gegenprobe
+
+Jeder Test, der erfolgreich ist, sollte durch eine geeignete Gegenprobe
+evaluiert werden, die bestätigt, dass der Test auch versagen kann. Das gleiche
+gilt für fehlgeschlagene Tests. Diese müssen evaluiert werden, ob sie
+funktioniern können.
+
+Wenn ein Verbindungsversuch auf einem Rechner fehlschlägt, versuche ich den
+gleichen Versuch von einem anderen Rechner aus um nachzuweisen, dass er hätte
+funktionieren können. Das hat mich schon häufig davor bewahrt, einen
+Netzwerkfehler zu vermuten, wenn lediglich ein Paketfilter auf dem Zielrechner
+die Verbindung unterbunden hatte.
+
+## Notizen
+
+*   zeitliche Korrelation
+*   Suchmaschine
+*   Supportforen
+*   Definition von Korrelationskoeffizient, Kovarianz
+*   Berechnung davon
+*   Zeitliche Korrelation: Wann trat der Fehler erstmalig auf und was wurde
+    zu dieser Zeit geändert?

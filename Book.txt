@@ -1,12 +1,14 @@
 preface.mdwn
-chapter01-empty.mdwn
-chapter02-empty.mdwn
+part1.mdwn
+ch-1-methoden-empty.mdwn
 chapter03-empty.mdwn
 chapter04-empty.mdwn
+part2.mdwn
 chapter05-empty.mdwn
 chapter06-empty.mdwn
 chapter07-empty.mdwn
 chapter08-empty.mdwn
+part3.mdwn
 chapter09-empty.mdwn
 chapter10-empty.mdwn
 chapter11-empty.mdwn

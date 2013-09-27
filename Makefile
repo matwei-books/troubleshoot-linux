@@ -10,8 +10,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/$(PREVIEW) \
                $(DROPBOXDIR)/$(SAMPLE) \
                $(DROPBOXDIR)/preface.mdwn \
-               $(DROPBOXDIR)/chapter01-empty.mdwn \
-               $(DROPBOXDIR)/chapter02-empty.mdwn \
+               $(DROPBOXDIR)/ch-1-methoden-empty.mdwn \
                $(DROPBOXDIR)/chapter03-empty.mdwn \
                $(DROPBOXDIR)/chapter04-empty.mdwn \
                $(DROPBOXDIR)/chapter05-empty.mdwn \
@@ -22,9 +21,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/chapter10-empty.mdwn \
                $(DROPBOXDIR)/chapter11-empty.mdwn \
                $(DROPBOXDIR)/chapter12-empty.mdwn \
-               $(DROPBOXDIR)/chapter01.mdwn \
-               $(DROPBOXDIR)/chapter01.mdwn \
-               $(DROPBOXDIR)/chapter02.mdwn \
+               $(DROPBOXDIR)/ch-1-methoden.mdwn \
                $(DROPBOXDIR)/chapter03.mdwn \
                $(DROPBOXDIR)/chapter04.mdwn \
                $(DROPBOXDIR)/chapter05.mdwn \
@@ -36,6 +33,9 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/chapter11.mdwn \
                $(DROPBOXDIR)/chapter12.mdwn \
                $(DROPBOXDIR)/literatur.mdwn \
+               $(DROPBOXDIR)/part1.mdwn \
+               $(DROPBOXDIR)/part2.mdwn \
+               $(DROPBOXDIR)/part3.mdwn \
 	       $(DROPBOXDIR)/code/http-injector.pl \
 	       $(DROPBOXDIR)/code/read-syslog.pl \
 	       $(DROPBOXDIR)/code/strace-invocator.sh \
@@ -44,7 +44,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
 #
 CHAPTERS = \
     preface.mdwn \
-    chapter01.mdwn \
+    ch-1-methoden.mdwn \
     chapter02.mdwn \
     chapter03.mdwn \
     chapter04.mdwn \
@@ -74,7 +74,7 @@ $(DROPBOXDIR)/code/%: code/% $(DROPBOXDIR)/code
 	cp $< $@
 
 $(DROPBOXDIR)/code: $(DROPBOXDIR)
-	mkdir $(DROPBOXDIR)/code
+	mkdir -p $(DROPBOXDIR)/code
 
 $(DROPBOXDIR)/images/%.jpg: images/%.jpg
 	cp $< $@
@@ -85,5 +85,11 @@ $(DROPBOXDIR)/images/%.png: images/%.png
 all:
 
 dropbox: $(DROPBOXFILES)
+
+preview: dropbox
+	leanpub preview
+
+status:
+	leanpub job_status
 
 # end of Makefile
