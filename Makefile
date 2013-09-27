@@ -86,6 +86,9 @@ all:
 
 dropbox: $(DROPBOXFILES)
 
+partial: dropbox
+	leanpub partial_preview
+
 preview: dropbox
 	leanpub preview
 
