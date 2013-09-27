@@ -264,6 +264,25 @@ ressourcenhungrige Aktionen hinweist.
 Die wesentlichsten Performancebremsen sind CPU, Hauptspeicher, I/O, schlechte
 Algorithmen/Programmierung, übergroße Jobs.
 
+Über CPU und RAM bekomme ich mit *free*, *uptime*, *top* und *htop* einen
+schnellen Überblick. Etwas genauere Informationen liefern mir*mpstat* und
+*vmstat*.
+Dieses Programm sagt mir für die CPU, ob diese ihre Zeit mehr im Systembereich
+(Kernel), Userland, Leerlauf oder wartend verbringt. Letzteres deutet auf
+übermäßigen Datenverkehr hin, so dass ich mich mehr auf Input/Output
+konzentriere.
+Dabei helfen mir *iostat* und *iostat*.
+
+Wenn ich festgestellt habe, dass der Speicher knapp wird, und das System
+zuviel Zeit mit dem Auslagern von Prozessen verbringt, kann ich mich um neuen
+Hauptspeicher bemühen. Oder ich ermittle die Prozesse, die den meisten
+Speicher verbrauchen und suche nach Wegen den Verbrauch zu senken. Während mir
+free lediglich sagt, dass Speicher ausgelagert wurde, kann mir vmstat
+anzeigen, ob im Moment gerade Hauptspeicher aus- oder eingelagert wird.
+Mit *ps* oder *top* kann ich die Prozesse mit dem meisten Speicherverbrauch
+ermitteln. *Pmap* sagt mir mehr darüber, wie der Speicher in einzelnen
+Prozessen verteilt ist.
+
 Schlechte Algorithmen lassen sich ohne Kenntnis der eingesetzten Software
 schlecht nachweisen und um übergroße Jobs zu identifizieren ist man mitunter
 auch auf die Mithilfe der betreffenden Anwendungssoftware angewiesen, so dass
@@ -271,7 +290,23 @@ ich darauf nicht näher eingehen will.
 Für die anderen Performancebremsen gibt es Bordmittel, die mir bei der Suche
 helfen.
 
+Habe ich Prozesse und darüber Programme identifiziert, die zu viele Ressourcen
+verbrauchen, kann ich mir Gedanken machen, wie ich dem entgegenwirke.
+Ich kann vielleicht die Programme durch andere, weniger ressourcenhungrige
+ersetzen, wenn jene die benötigte Funktionalität haben. Eventuell lassen sich
+einzelne Jobs auf andere Zeiten verlagern. Manchmal hilft es, die Last zu
+verringern indem man sie auf mehrere Rechner verteilt.
+
+Schließlich kann ich mit den Ergebnissen meiner bisherigen Analyse den Kauf
+neuer leistungsfähigerer Hardware begründen.
+
 ### Werkzeuge zur lokalen Fehlersuche
+
+Das wird keine einfache Auflistung der Werkzeuge und ihrer Optionen, sondern
+nur eine Kurzvorstellung mit den wichtigsten Optionen und vielleicht ein paar
+Beispielen. So, wie ich aus den anderen Kapiteln auf dieses verweise, kann ich
+von den einzelnen Werkzeugen auf die Anwendungsfälle in den anderen Kapiteln
+verweisen.
 
 *   Shell {#sec-lokal-werkzeuge-shell}
 
@@ -293,7 +328,7 @@ helfen.
 
 *   GDB der GNU Debugger {#sec-lokal-werkzeuge-gdb}
 
-*   vmstat {#sec-lokal-werkzeuge-vmstat}
+*   vmstat, mpstat, iostat, dstat {#sec-lokal-werkzeuge-vmstat}
 
 *   sysstat {#sec-lokal-werkzeuge-sysstat}
 
@@ -303,10 +338,28 @@ helfen.
 
 *   hdparm {#sec-lokal-werkzeuge-hdparm}
 
+Die Reihenfolge der Werkzeuge steht noch nicht fest. Denkbar sind:
+
+alphabetisch
+: leicht zu finden, passt nicht bei mehreren Werkzeugen in einer Sektion
+
+gruppiert nach Kapitel
+: leicht zu finden, passt nicht bei Nutzung des Werkzeuges in verschiedenen
+  Sektionen.
+
 ### Netzwerk-Totalausfall
 
-Wenn ich einen Netzwerk-Totalausfall diagnostiziert habe, gilt es als erstes,
-überhaupt Kontakt zu einem Netzwerk zu bekommen.
+Bei einem Totalausfall im Netz unterscheide ich, ob ein Rechner nicht im Netz
+erreichbar ist oder ob in einem Netzwerksegment alle Rechner nicht miteinander
+kommunizieren können.
+
+Bei einem einzelnen Rechner muss ich auf irgendeine Art
+Kontakt zu dem Rechner bekommen, am besten direkt. Und ich muss zumindest die
+Adresse und Netzmaske des Netzes kennen, zu dem der Rechner Kontakt aufnehmen
+soll (Ausnahme: WLAN mit DHCP).
+
+Wenn ich einen Netzwerk-Totalausfall an einem Rechner diagnostiziert habe,
+gilt es als erstes, überhaupt Kontakt zu einem Netzwerk zu bekommen.
 Ohne Zugang zum Netz habe ich gar keine Chance, irgendeines der anderen
 Probleme zu analysieren.
 
@@ -321,13 +374,36 @@ SChichten und versuche, sie in Betrieb zu nehmen.
 
 *   Transport (transport)
 
+Bei einem nicht funktionierenden Netzsegment untersuche ich, ob alle
+benötigten Dienste erreichbar sind. Die grundlegendsten Dienste sind DHCP für
+die automatische Adresszuweisung und Informationsverteilung, DNS für die
+Namensauflösung, NTP für die Zeitsynchronisierung und möglicherweise
+Single-Sign-On-Dienste wie Kerberos oder Active Directory.
+
+\pagebreak
+
 ### Netzwerk-Teilausfall
 
-*   verschiedene Formen:
+Bei einem Teilausfall im Netz unterscheide ich die Nichterreichbarkeit
+einzelner Netzsegmente von der Nichterreichbarkeit einzelner Dienste.
 
-    *   einzelne Netzsegmente sind nicht zu erreichen
+Bei einer Trennung von Netzsegmenten, versuche ich herauszufinden, an welcher
+Stelle das Netz getrennt ist.
+Dazu vergleiche ich die noch bekannten Routen (gegebenenfalls an den Gateways)
+mit denen, die laut Netzinformation noch bekannt sind.
+Verwende ich Routingprotokolle im Netz, dann sollten alle abgetrennten
+Netzsegmente fehlen.
+Durch Vergleich mit den Netzen, die auf der Strecke auftauchen sollten, kann
+ich oft das Gateway eingrenzen, bei dem der Ausfall auftrat.
+Bei statischem Routing kann ich nicht über den Vergleich der Routen gehen.
+Dann muss ich den Weg der Datagramme verfolgen. Dabei kann mir das Programm
+*traceroute* helfen.
 
-    *   einzelne Dienste sind nicht zu erreichen
+Wenn einzelne Dienste nicht erreichbar sind, versuche ich zunächst den
+Rechner, auf dem der Dienst laufen soll, zu erreichen. Ist dieser erreichbar
+überprüfe ich die Firewalleinstellungen und ob der Dienst überhaupt gestartet
+ist. Eventuell muss ich das Problem dann als Teilausfall auf einem Rechner
+behandeln.
 
 *   gemeinsame Strategien
 
@@ -350,6 +426,8 @@ SChichten und versuche, sie in Betrieb zu nehmen.
         *   Kontrolle der Firewallregeln, Paketfilter
 
 	*   geht eventuell in lokale Fehlersuche über
+
+\pagebreak
 
 ### Netzwerk-Performanceprobleme
 
@@ -394,6 +472,8 @@ SChichten und versuche, sie in Betrieb zu nehmen.
         *   Entwickler zugänglich?
 
 	*   Einstellungen an der Software, die Latenz berücksichtigen?
+
+\pagebreak
 
 ### Werkzeuge zur Netzwerkfehlersuche
 
