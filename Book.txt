@@ -1,6 +1,6 @@
 preface.mdwn
 part1.mdwn
-cha-methoden-empty.mdwn
+cha-methoden.mdwn
 cha-herangehen-empty.mdwn
 cha-nachbearbeitung-empty.mdwn
 part2.mdwn

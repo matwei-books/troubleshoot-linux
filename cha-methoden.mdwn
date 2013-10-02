@@ -167,29 +167,37 @@ der Strecke, ob diese Datenpakete nachzuweisen sind. Je nachdem, ob die
 Datenpakete dort auftreten oder nicht, halbiere ich dann die Strecke zum
 Empfänger oder zum Sender. 
 
-# Heuristiken {#cha-heuristik}
-
-Heuristiken wende ich an, wenn alle meine bekannten Methoden nicht
-anwendbar sind oder versagt haben. Oder, wenn ich eine etwas langwierige
-strukturierte Methode abkürzen will um schneller zum Ziel zu kommen.
-
-A> **Methoden und Heuristiken**
-A>
-A> In diesem Buch spreche ich von Methode als klaren strukturierten
-A> Anweisungen, die im Normalfall immer zu einer Lösung gelangen.
-A>
-A> Bei Heuristiken denke ich auch an ein strukturiertes
-A> Vorgehen, dass aber den Erkenntnisgewinn zum Ziel hat und nicht
-A> notwendigerweise direkt zur Lösung des Problems führt.
-
 ## Korrelation {#sec-heuristik-korrelation}
 
-Mit einer Korrelation kann man eine Beziehung zwischen zwei oder mehreren
+Mit einer Korrelation kann ich eine Beziehung zwischen zwei oder mehreren
 Merkmalen, Ereignissen oder Zuständen beschreiben. Wichtig ist dabei, zu
 beachten, dass diese Beziehung kausal sein kann aber nicht muss. Im
 mathematischen Sinne beschreibt die Korrelation einen statistischen
 Zusammenhang im Gegensatz zur Proportionalität, die einen festes Verhältnis
 beschreibt.
+
+Oft will ich den Phi-Koeffizient oder Vierfelder-Korrelationskoeffizient für
+zwei dichotome Merkmale ermitteln.
+Um diesen zu berechnen stelle ich eine Kontingenztafel auf, in der ich die
+gemeinsame Häufigkeit der Merkmale aufstelle.
+
+|                           | kein Fehler | Fehler |
+|---------------------------|-------------|--------|
+| Merkmal A trifft zu       |     A       |    B   |
+|---------------------------|-------------|--------|
+| Merkmal A trifft nicht zu |     C       |    D   |
+
+A, B, C, D stehen für die Anzahl der Ereignisse, bei den der Fehler auftrat
+beziehungsweise nicht auftrat und das Merkmal A zutraf oder nicht.
+Als Werte für A, B, C und D kann ich Zeiträume summieren, oder zu regelmäßigen
+Zeitpunkten ermitteln, welcher Fall zutrifft und die entsprechende Variable
+hochzählen.
+
+Der Phi-Koeffizient ermittelt sich dann aus:
+
+{$$}
+\phi = \frac{A D - B C}{\sqrt{(A+B) (C+D) (A+C) (B+D)}}
+{/$$}
 
 Im einfachsten Fall kann ich eine Korrelation selbst sehen, zum Beispiel, wenn
 immer die Verbindung zum Netz A wegfällt, sobald ich die Verbindung zum Netz B
@@ -221,14 +229,27 @@ uanbhängige Merkmale immer eine Kovarianz von 0 haben.
 
 ## Abkürzungen und Umwege {#sec-heuristik-abkuerzung-umweg}
 
+Im Laufe der Zeit, wenn ich einige Erfahrungen mit den Systemen gesammelt
+habe, kann ich bei etlichen Fehlern intuitiv sagen, woran es liegt.
+Damit kann ich mir erhebliche Zeit bei der Fehlersuche ersparen.
+Ich muss jedoch trotzdem im Auge behalten, ob meine Annahmen auf einer realen
+Grundlage beruhen, oder ob mich meine Intuition hier in die Irre führt.
+
+Das heißt, dass ich jedes Mal, wenn ich eine Abkürzung nehme, mich
+vergewissern muss, dass die Voraussetzungen dafür stimmen.
+
 ### Abkürzungen
 
-Die Frage, wann ein Problem erstmals auftrat (oder bemerkt wurde) und was zu
-dieser Zeit oder davor geändert wurde, kann eine Fehlersuche erheblich
-abkürzen, wenn Sie einen Hinweis ergibt auf eine mögliche Ursache ergibt. Bei
-dieser Fragestellung haben wir es mit einer Korrelation zu tun und dürfen
-nicht vergessen, dass die Änderungen mit dem Problem zu tun haben können, aber
-nicht notwendigerweise müssen.
+Eine Möglichkeit, die Fehlersuche abzukürzen, ist durch simple Korrelation.
+Bei der Aufnahme des Fehlers frage ich, wann der Fehler das erste Mal bemerkt
+wurde und wann es das letzte Mal funktioniert hatte.
+Im Rahmen der Fehlersuche, schaue ich nach, was am System in diesem Zeitraum
+geändert wurde und überlege für jede Änderung, ob diese den beschriebenen
+Fehler hervorrufen könnte.
+Dazu benötige ich natürlich eine aussagefähige Protokollierung der Änderungen
+am System.
+Und der Fehler sollte so schnell, wie möglich gemeldet werden, damit der
+Zeitraum, den ich in Betracht ziehe, nicht zu groß wird.
 
 ### Umwege
 
@@ -245,12 +266,22 @@ funktionieren können. Das hat mich schon häufig davor bewahrt, einen
 Netzwerkfehler zu vermuten, wenn lediglich ein Paketfilter auf dem Zielrechner
 die Verbindung unterbunden hatte.
 
-## Notizen
+## Modelle
 
-*   zeitliche Korrelation
-*   Suchmaschine
-*   Supportforen
-*   Definition von Korrelationskoeffizient, Kovarianz
-*   Berechnung davon
-*   Zeitliche Korrelation: Wann trat der Fehler erstmalig auf und was wurde
-    zu dieser Zeit geändert?
+### Prozessmodell
+
+(Kernel, Userland, fork, exec)
+
+### Schnittstellen von Kommandozeilen-Programmen
+
+*   Kommandozeile
+
+*   Umgebung
+
+*   Rückgabewert
+
+*   Datenströme (STDIN, STDOUT, STDERR)
+
+### OSI-Modell
+
+### Zustände einer TCP-Verbindung
