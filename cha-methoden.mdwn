@@ -55,7 +55,7 @@ Dabei helfen mir Entscheidungsbäume. Programmierern ist so etwas
 wahrscheinlich als Programmablaufplan bekannt. Mein grundlegender
 Entscheidungsbaum bei der Fehlersuche sieht immer so aus:
 
-![Allgemeiner Entscheidungsbaum](images/eb-allgemein.png)
+![Allgemeiner Entscheidungsbaum](images/eb-allgemein-drakon.png)
 
 Grundsätzlich werde ich nur tätig, wenn eine der Fragen mit nein beantwortet
 wird und habe damit fast alle Probleme abgedeckt.
@@ -585,3 +585,124 @@ Protokoll-Gateways und Content-Switche für die Lastverteilung die Schichten 1
 bis 7.
 
 ### Zustände einer TCP-Verbindung
+
+Ich betrachte hier die Zustände einner TCP-Verbindung, weil TCP vermutlich das
+am häufigsten im Netz vorkommende Protokoll ist.
+Außerdem ist es komplex genug, um sich wenigstens mit den grundlegenden
+Interna zu beschäftigen und das Verhalten des Protokolls im Störungsfall
+einschätzen zu können.
+
+#### Verbindungsaufbau
+
+Beim Aufbau einer TCP-Verbindung haben wir immer eine passive Seite
+(üblicherweise der Server, bei FTP auch manchmal der Client) und eine aktive
+Seite.
+Die passive Seite befindet sich im Zustand LISTEN.
+
+A> Den Zustand der TCP-Verbindungen auf einem Rechner kann man sich sehr gut
+A> mit dem Befehl
+A>     $ netstat -ant
+A> anzeigen lassen.
+
+Ein erfolgreicher Verbindungsaufbau benötigt drei Datenpakete und geht wie
+folgt vonstatten:
+
+XXX hier das Diagramm TCP-Verbindungsaufbau einfügen
+
+Der Client sendet ein SYN-Paket (das ist ein TCP-Datagramm mit gesetztem
+SYN-Flag) und geht in den Zustand *SYN_SENT*.
+Sobald das SYN-Paket beim Server ankommt, bestätigt dieser es mit einem
+SYN-ACK-Paket und geht in den Zustand *SYN_RCVD*.
+Der Client bestätigt das SYN-ACK-Paket mit ACK und geht in den Zustand
+*ESTABLISHED*.
+Sobald das ACK-Paket beim Server ankommt geht dieser ebenfalls in den Zustand
+*ESTABLISHED* und die Verbindung ist vollständig etabliert.
+
+Nur bei den ersten beiden Datenpaketen kann man vom Netzwerk aus sehen, welche
+Seite die Verbindung aktiv aufgebaut hat.
+
+Wenn an dem betreffenden Port auf Serverseite kein Prozess lauscht oder der
+Server eine Verbindung abweist, sieht das wie folgt aus:
+
+XXX hier das Diagramm TCP-Reset einfügen
+
+Der Client sendet wie eben ein SYN-Paket.
+Von Serverseite aus folgt unmittelbar ein RST-Paket und schon ist es vorbei.
+
+#### Verbindungsabbau
+
+Während für den TCP-Verbindungsaufbau drei Datenpakete reichen, benötigt TCP
+für den Abbau einer Verbindung vier Datenpakete.
+Da sowohl Client als auch Server die Verbindung zuerst schließen können, nenne
+ich die beteiligten Parteien hier A und B:
+
+XXX hier das Diagram TCP-Verbindungsabbau einfügen
+
+A schließt auf seiner Seite einseitig die TCP-Verbindung indem er ein
+FIN-Paket sendet und geht in den Zustand *FIN_WAIT1*.
+B bestätigt das FIN-Paket normal mit ACK und geht in den Zustand *CLOSE_WAIT*.
+Jetzt könnte B noch Daten über die halbgeschlossene Verbindung senden, A
+sendet nichts mehr.
+Irgendwann sendet B ebenfalls ein FIN-Paket und geht in den Zustand *LAST_ACK*
+über.
+Sobald A das FIN-Paket empfängt, bestätigt es dieses mit ACK und geht für die
+doppelte MSL in den Zustand *TIME_WAIT* und danach in den Zustand *CLOSED*.
+B geht mit Empfang der Bestätigung von A sofort in den Zustand *CLOSED*.
+
+Da A noch eine zeitlang im Zustand *TIME_WAIT* verbleibt, kann man auf dem
+betreffenden Rechner mit `netstat -ant` sehen, dass dieser die Verbindung
+zuerst geschlossen hat.
+
+#### Flusssteuerung
+
+Es gibt zwei Aspekte bei der TCP-Flusssteuerung.
+Zum einen teilt der Empfänger dem Sender mit, wie viele Bytes er momentan
+verarbeiten kann.
+Zum anderen will der Sendeer die Datenrate so steuern, dass die Daten so
+schnell wie möglich, aber mit möglichst geringen Verlusten durch Überlastung
+der Verbindung übertragen werden.
+
+Für das erste Problem gibt es im TCP-Header das Feld *Receive Window*.
+In dieses trägt der Empfänger die momentan freie Empfangspuffergröße ein.
+Ein *Receive Window* von 0 bringt die Datenübertragung zum Erliegen und deutet
+darauf hin, dass der Empfänger die Daten nicht schnell genug verarbeiten kann.
+Das kann ein Hinweis sein, bei Performanceproblemen die Situation auf dem
+empfangenden Rechner in Augenschein zu nehmen.
+
+Für die Flusssteuerung zur Vermeidung von Überlast gibt es verschiedene
+Algorithmen, die gemeinsam verwendet werden können.
+Der Sender führt für die Verbindung ein Congestion Window, das ihm anzeigt,
+wieviel Bytes er momentan auf die Leitung schicken könnte.
+
+##### Slow Start und Congestion Avoidance
+
+Bei diesem Verfahren startet die Datenübertragung mit einem Congestion von
+einer Maximum Segment Size (MSS) und erhöht diese mit jedem empfangenen ACK um
+eine MSS.
+Das führt zu einem exponentialen Wachstum des Congestion Windows.
+
+Bei erreichen der *Slow Start Threshold* wird das Congestion Windows nur noch
+um eine MSS erhöht, wenn alle Datenpakete aus dem aktuellen Fenster bestätigt
+wurden. Das führt zu einem linearen Wachstum des Congestion Window.
+
+Wird durch Timeout der Verlust eines Datenpakets festgestellt, beginnt dass
+Congestion Window wieder bei einer MSS.
+
+##### Fast Retransmit und Fast Recovery
+
+Hierbei informiert der Empfänger den Sender über mögliche Paketverluste sobald
+er Datenpakete außer der Reihe empfängt.
+Dazu bestätigt er das letzte Datenpaket in der richtigen Reihenfolge mit jedem
+neu ankommenden Datenpaket außer der Reihe durch sogenannte DUP-ACK (Duplicate
+Acknowledgements).
+Der Sender sendet das verlorene Datenpaket sofort nach dem driten DUP-ACK und
+wartet nicht auf den Timeout.
+Das Congestion Window wird in diesem Fall nur halbiert und nicht wie bei Slow
+Start auf ein MSS reduziert.
+
+##### Selective Acknowledgements (SACK)
+
+Zusätzlich zum letzten regulären Paket bestätigt der Empfänger in den DUP-ACK
+die außer der Reihe angekommenen Datenpakete in zusätzlichen
+TCP-Headerfeldern, so dass diese nicht noch einmal gesendet werden müssen.
+
