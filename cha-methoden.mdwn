@@ -181,11 +181,11 @@ zwei dichotome Merkmale ermitteln.
 Um diesen zu berechnen stelle ich eine Kontingenztafel auf, in der ich die
 gemeinsame Häufigkeit der Merkmale aufstelle.
 
-|                           | kein Fehler | Fehler |
-|---------------------------|-------------|--------|
-| Merkmal A trifft zu       |     A       |    B   |
-|---------------------------|-------------|--------|
-| Merkmal A trifft nicht zu |     C       |    D   |
+|                         | kein Fehler | Fehler |
+|-------------------------|-------------|--------|
+| Merkmal trifft zu       |     A       |    B   |
+|-------------------------|-------------|--------|
+| Merkmal trifft nicht zu |     C       |    D   |
 
 A, B, C, D stehen für die Anzahl der Ereignisse, bei den der Fehler auftrat
 beziehungsweise nicht auftrat und das Merkmal A zutraf oder nicht.
@@ -270,9 +270,93 @@ die Verbindung unterbunden hatte.
 
 ### Prozessmodell
 
-(Kernel, Userland, fork, exec)
+Wenn ich Fehler auf Linux- oder Unix-Systemen suche, ist es vorteilhaft, das
+UNIX-Prozessmodell zumindest in groben Zügen zu verstehen.
+
+Bevor ich auf dieses eingehe, will ich kurz auf die Begriffe Programm und
+Prozess eingehen, da diese im allgemeinen Sprachgebrauch oft vermischt werden.
+
+Ein *Programm* ist nicht mehr als eine Reihe von Instruktionen für den
+Prozessor eines Rechners, die so angeordnet sind, dass deren Abarbeitung mehr
+oder weniger sinnvolles Verhalten des Rechners ermöglicht.
+Das Programm im Sinne des hier besprochenen Prozessmodels ist immer auf den
+entsprechenden Prozessor zugeschnitten.
+Zwar spricht man auch bei Shell-, Perl- oder sonstigen Skripten hin und wieder
+von Programmen, im Sinne der UNIX-Prozessmodells sind dann aber die
+entsprechenden Interpreter, die Programme, welche von eben jenen Skripten
+gesteuert werden können.
+
+Ein *Prozess* demgegenüber ist ein komplexeres Konstrukt, das über spezielle
+Datenstrukturen im Kernel identifiziert wird, Zugang zu bestimmten Dateien im
+Dateisystem hat, Rechenzeit und Hauptspeicher zugeteilt bekommt und ein
+Programm abarbeitet.
+Ein Prozess wird immer durch eine PID identifiziert, über zugordnete Benutzer-
+und Gruppenidentitäten (UID, GID) werden seine Zugriffsrechte auf Ressourcen
+bestimmt.
+
+Wenn jemand sagt, Programm xyz startet, ist damit gemeint, ein Prozess führt
+Programm xyz aus.
+Bildlich kann man einen Prozess mit einem Lebewesen vergleichen und ein
+Programm mit seiner DNA.
+
+Der Lebenszyklus eines Prozesses mit Ausnahme des allerersten, vom Kernel
+gestarteten Prozesses beginnt immer mit dem `fork()` Systemaufruf.
+Dieser Aufruf macht nichts anderes, als eine exakte Kopie des aufrufenden
+Prozesses anzulegen.
+Damit haben wir dann zwei vollkommen identische Prozesse, die sich erst nach
+Rückkehr des `fork()` Systemaufruf unterscheiden, und zwar im Rückgabewert
+desselben.
+Beim aufrufenden Prozess (Parent oder Elternprozess genannt) gibt `fork()` die
+PID des Klonprozesses zurück.
+Beim geklonten Prozess liefert es `0`.
+Das ist die einzige Möglichkeit für das abgearbeitete Programm, zwischen
+diesen beiden Prozessen zu unterscheiden.
+
+Jenachdem, welches Programm gerade an welcher Stelle ausgeführt wurde, werden
+anschließend beide Prozesse das gleiche Programm ausführen (wie zum Beispiel
+die Worker-Prozesse beim Apache HTTP-Dämon) oder ein Prozess beginnt ein
+anderes Programm abzuarbeiten.
+Das führt uns zum nächsten wichtigen Bestandteil, dem Laden eines Programmes
+für die Abarbeitung.
+Nachdem ein Prozess neu erzeugt wurde, arbeitet er zunächst das gleiche
+Prozess wie sein Parent ab.
+Um ein anderes Programm auszuführen, verwendet der Prozess den `exec()`
+Systemaufruf.
+Damit wird der Hauptspeicher des Prozesses mit dem Abbild des neuen Programms
+überlagert. 
+Das neue Programm wird ab einem definierten Eintrittspunkt abgearbeitet.
+Programmargumente und Umgebungsvariablen werden im Hauptspeicher übergeben.
+Dateideskriptoren (offene Dateien) bleiben über einen `exec()` Systemaufruf
+unverändert.
+Da im Hauptspeicher nun das neue Programm ist, gibt es kein Zurück zum alten.
+
+Bleibt als letzter Teil im Lebenszyklus eines UNIX-Prozesses das Ende zu
+besprechen.
+Ein Prozess kann sich durch den `exit()` Systemaufruf selbst beenden oder vom
+Kernel beendet werden (zum Beispiel beim SIGKILL oder Schutzverletzungen).
+In jedem Fall bleibt die Prozessstruktur im Kernel erhalten, bis der Parent
+den Prozessstatus mit `wait()` abfragt.
+Versäumt der Parent-Prozess die Abfrage mit `wait()`, ist das zum Beispiel im
+Prozesslisting mit *ps* sichtbar.
+Wird ein Parent vor dem Child beendet (z.B. bei Dämonprozessen, die die
+Kontrolle sofort an die aufrufende Shell zurückgeben), übernimmt `init`, der
+erste vom Kernel gestartete Prozess die Funktion des Parent und fragt deren
+Status mit `wait()` ab.
+
+X> Suche im Internet zum Thema *unix process model* und schaue in den
+X> Ergebnissen nach Beispiel-Code. Kompiliere diesen und beobachte, was beim
+X> Start der Programme passiert.
 
 ### Schnittstellen von Kommandozeilen-Programmen
+
+Bei der Fehlersuche auf Linux-Servern bewege ich mich fast die gesamte Zeit
+auf der Kommandozeile und rufe die verschiedensten Programme auf.
+Für das Aufrufen von Programmen selbst, brauche ich keine weiteren Kenntnisse.
+Bei der Fehlersuche, ist es auf jeden Fall von Vorteil, wenn ich genau weiß,
+wie ich mit einem Kommandozeilenprogramm kommuniziere.
+Das Buch von Reinhard Fößmeier [[Foessmeier1991]](#bib-foessmeier1991)
+erläutert die verschiedenen Schnittstellen von Kommandozeilenprogrammen unter
+Linux sehr ausführlich.
 
 *   Kommandozeile
 

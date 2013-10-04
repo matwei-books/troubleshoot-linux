@@ -14,6 +14,13 @@ Edwards, Betty;
 Das neue GARANTIERT ZEICHNEN LERNEN: Die Befreiung unserer schöpferischen
 Gestaltungskräfte; Rowohlt, Reinbek bei Hamburg, 2012; ISBN: 978-3-498-01669-2
 
+##### Foessmeier1991 {#bib-foessmeier1991}
+
+Fößmeier, Reinhard;
+Die Schnittstellen von UNIX-Programmen: Tips zur Programm-Organisation unter
+UNIX; Springer, Berlin Heidelberg New York London Paris Tokyo Hong Kong
+Barcelona, 1991; ISBN: 3-540-53521-7
+
 ##### Loukides1996 {#bib-loukides1996}
 
 Loukides, Mike Kosta;
