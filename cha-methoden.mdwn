@@ -55,7 +55,7 @@ Dabei helfen mir Entscheidungsbäume. Programmierern ist so etwas
 wahrscheinlich als Programmablaufplan bekannt. Mein grundlegender
 Entscheidungsbaum bei der Fehlersuche sieht immer so aus:
 
-![Allgemeiner Entscheidungsbaum](images/eb-allgemein-drakon.png)
+![Allgemeiner Entscheidungsbaum](images/eb-allgemein-yed.png)
 
 Grundsätzlich werde ich nur tätig, wenn eine der Fragen mit nein beantwortet
 wird und habe damit fast alle Probleme abgedeckt.
@@ -432,16 +432,16 @@ enthält. Für die Übergabe an aufgerufene Programme gibt es zwei Möglichkeite
     aufgerufenen Programme zu übergeben.
 
 {line-numbers=off,lang="text"}
-        TERM=vt100
-        export TERM
-        ssh server1
+            TERM=vt100
+            export TERM
+            ssh server1
 
 *   Die Variable wird unmittelbar vor Aufruf des Programmes (in der selben
     Zeile) gesetzt. In diesem Fall gilt der Variablenwert nur für diesen, mit
     dieser Zeile gestarteten Prozess.
 
 {line-numbers=off,lang="text"}
-        TERM=vt220 ssh server2
+         TERM=vt220 ssh server2
 
 Da die Kommunikation nur in einer Richtung geht, gibt es keine Möglichkeit,
 für ein aufgerufenes Programm, die Umgebungsvariablen des aufrufenden
@@ -614,7 +614,7 @@ A> anzeigen lassen.
 Ein erfolgreicher Verbindungsaufbau benötigt drei Datenpakete und geht wie
 folgt vonstatten:
 
-XXX hier das Diagramm TCP-Verbindungsaufbau einfügen
+![TCP Verbindungsaufbau](images/tcp-handshake.png)
 
 Der Client sendet ein SYN-Paket (das ist ein TCP-Datagramm mit gesetztem
 SYN-Flag) und geht in den Zustand *SYN_SENT*.
@@ -631,7 +631,7 @@ Seite die Verbindung aktiv aufgebaut hat.
 Wenn an dem betreffenden Port auf Serverseite kein Prozess lauscht oder der
 Server eine Verbindung abweist, sieht das wie folgt aus:
 
-XXX hier das Diagramm TCP-Reset einfügen
+![TCP Verbindungsaufbau gescheitert](images/tcp-handshake-fail.png)
 
 Der Client sendet wie eben ein SYN-Paket.
 Von Serverseite aus folgt unmittelbar ein RST-Paket und schon ist es vorbei.
@@ -643,7 +643,7 @@ für den Abbau einer Verbindung vier Datenpakete.
 Da sowohl Client als auch Server die Verbindung zuerst schließen können, nenne
 ich die beteiligten Parteien hier A und B:
 
-XXX hier das Diagram TCP-Verbindungsabbau einfügen
+![TCP Verbindungsabbau](images/tcp-shutdown.png)
 
 A schließt auf seiner Seite einseitig die TCP-Verbindung indem er ein
 FIN-Paket sendet und geht in den Zustand *FIN_WAIT1*.
