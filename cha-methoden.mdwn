@@ -431,14 +431,16 @@ enthält. Für die Übergabe an aufgerufene Programme gibt es zwei Möglichkeite
     Shell dem Befehl gleich kommt, diese Variable an alle nachfolgend
     aufgerufenen Programme zu übergeben.
 
+{line-numbers=off,lang="text"}
         TERM=vt100
-	export TERM
-	ssh server1
+        export TERM
+        ssh server1
 
 *   Die Variable wird unmittelbar vor Aufruf des Programmes (in der selben
     Zeile) gesetzt. In diesem Fall gilt der Variablenwert nur für diesen, mit
     dieser Zeile gestarteten Prozess.
 
+{line-numbers=off,lang="text"}
         TERM=vt220 ssh server2
 
 Da die Kommunikation nur in einer Richtung geht, gibt es keine Möglichkeit,
@@ -448,6 +450,7 @@ Trick zurück, und zwar indem die Shell die Ausgabe des aufgerufenen Programms
 interpretiert und dieses die Variablenzuweisung in die Standardausgabe
 schreibt.
 
+{line-numbers=off,lang="text"}
     $ echo $abc
     $ eval $(echo abc=def)
     $ echo $abc
@@ -487,6 +490,7 @@ Im folgenden Beispiel liest das Programm `tail` fortlaufend aus einer Logdatei
 und übergibt seine Ausgabe dem Program `grep` als Eingabe, welches alle
 Zeilen ignoriert bis auf diejenigen, die das Wort *CRON* enthalten:
 
+{line-numbers=off,lang="text"}
     $ tail -f /var/log/syslog | grep CRON
 
 Prinzipiell kann über eine S-Schnittstelle ein unbegrenzter Strom von Daten
@@ -497,6 +501,7 @@ Mit dem *Dateiende* (EOF) kann zu einem Datenstrom übermittelt werden, dass
 keine weiteren Daten mehr folgen. In diesem Fall kann ein Programm angemessen
 reagieren und sich zum Beispiel beenden
 
+{line-numbers=off,lang="text"}
     $ zcat /var/log/syslog* | grep CRON
 
 In diesem Beispiel liest das Programm `zcat` alle Dateien aus dem Verzeichnis
@@ -552,15 +557,15 @@ Schicht und stellt ihre Dienste den Instanzen der nächsthöheren Schicht zur
 Verfügung.
 Die folgenden Dienste sind im OSI-Modell definiert:
 
-| Schicht | deutsche Bezeichnung   | englische Bezeichnung |
-|---------|------------------------|-----------------------|
-|    7    | Anwendungsschicht      | application layer     |
-|    6    | Darstellungsschicht    | presentation layer    |
-|    5    | Sitzungsschicht        | session layer         |
-|    4    | Transportschicht       | transport layer       |
-|    3    | Vermittlungsschicht    | network layer         |
-|    2    | Sicherungsschicht      | data link layer       |
-|    1    | Bitübertragungsschicht | physical layer        |
+|   | deutsche Bezeichnung   | englische Bezeichnung |
+|---|------------------------|-----------------------|
+| 7 | Anwendungsschicht      | application layer     |
+| 6 | Darstellungsschicht    | presentation layer    |
+| 5 | Sitzungsschicht        | session layer         |
+| 4 | Transportschicht       | transport layer       |
+| 3 | Vermittlungsschicht    | network layer         |
+| 2 | Sicherungsschicht      | data link layer       |
+| 1 | Bitübertragungsschicht | physical layer        |
 
 Die Instanzen auf Sender und Empfängerseite müssen nach festgelegten Regeln
 (dem Protokoll) arbeiten und bilden dann eine logische horizontale Verbindung
@@ -601,7 +606,9 @@ Die passive Seite befindet sich im Zustand LISTEN.
 
 A> Den Zustand der TCP-Verbindungen auf einem Rechner kann man sich sehr gut
 A> mit dem Befehl
+A>
 A>     $ netstat -ant
+A>
 A> anzeigen lassen.
 
 Ein erfolgreicher Verbindungsaufbau benötigt drei Datenpakete und geht wie
