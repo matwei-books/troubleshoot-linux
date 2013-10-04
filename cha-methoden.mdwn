@@ -513,7 +513,7 @@ beendet sich `zcat`, wodurch seine Standardausgabe geschlossen wird. Das
 daraufhin ebenfalls beendet.
 
 Wenn ich Daten von Hand in die Standardeingabe eines Prozesses schreibe, kann
-ich durch Eingabe von *<CTRL>-D* die Dateiendeinformation für den lesenden
+ich durch Eingabe von *CTRL-D* die Dateiendeinformation für den lesenden
 Prozess erzeugen.
 
 #### Dateien
@@ -536,7 +536,7 @@ Diese Schnittstelle sorgt zum Beispiel dafür, dass beim traditionellen
 Zeilenendezeichen (LF) automatisch ein Wagenrücklauf (CR) ausgeführt wird,
 damit die nächste Zeile wieder am linken Rand beginnt.
 Im sogenannten Cooked Mode sammelt diese Schnittstelle meine Eingabe bis zum
-*<RETURN>* um sie dann als ganze Zeile an den Prozess zu schicken.
+*RETURN* um sie dann als ganze Zeile an den Prozess zu schicken.
 
 Auf der Kommandozeile kann ich über das Programm `stty` auf diese
 Schnittstelle zugreifen und sie bearbeiten. In C-Programmen verwende ich die
@@ -607,6 +607,7 @@ Die passive Seite befindet sich im Zustand LISTEN.
 A> Den Zustand der TCP-Verbindungen auf einem Rechner kann man sich sehr gut
 A> mit dem Befehl
 A>
+{line-numbers=off,lang="text"}
 A>     $ netstat -ant
 A>
 A> anzeigen lassen.
