@@ -40,6 +40,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
 	       $(DROPBOXDIR)/code/read-syslog.pl \
 	       $(DROPBOXDIR)/code/strace-invocator.sh \
                $(DROPBOXDIR)/images/eb-allgemein.png \
+               $(DROPBOXDIR)/images/eb-allgemein-drakon.png \
                $(DROPBOXDIR)/images/eb-netz-totalausfall-rechner.png \
 #
 CHAPTERS = \
