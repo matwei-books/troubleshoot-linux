@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+
+SLUG=troubleshoot-linux-server-and-networks
+TXTLST=Book.txt
+
+TODAY=$(date '+%Y%m%d')
+TMPDIR="tmp-proofreading/${SLUG}-${TODAY}"
+MSCDIR=manuscript
+PRVDIR=preview
+
+TEXTS=$(cat "${MSCDIR}/${TXTLST}")
+
+rm -rf tmp-proofreading
+mkdir -p "${TMPDIR}"
+
+for T in $TEXTS; do
+    cp "${MSCDIR}/${T}" "${TMPDIR}"
+done
+
+cp "${PRVDIR}/${SLUG}-preview.pdf" "${TMPDIR}"
+
+mtn status > "${TMPDIR}/Version"
+
+tar -C tmp-proofreading -czvf "${SLUG}-${TODAY}.tar.gz" .
