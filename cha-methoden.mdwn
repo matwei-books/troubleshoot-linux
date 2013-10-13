@@ -187,7 +187,7 @@ gemeinsame Häufigkeit der Merkmale eintrage.
 | Merkmal trifft nicht zu |     C       |    D   |
 
 A, B, C, D stehen für die Anzahl der Ereignisse, bei den der Fehler auftrat
-beziehungsweise nicht auftrat und das Merkmal A zutraf oder nicht.
+beziehungsweise nicht auftrat und das Merkmal zutraf oder nicht.
 Als Werte für A, B, C und D kann ich Zeiträume summieren, oder zu regelmäßigen
 Zeitpunkten ermitteln, welcher Fall zutrifft und die entsprechende Variable
 hochzählen.
@@ -201,37 +201,38 @@ Der Phi-Koeffizient ermittelt sich dann aus:
 Im einfachsten Fall kann ich eine Korrelation selbst sehen, zum Beispiel, wenn
 immer die Verbindung zum Netz A wegfällt, sobald ich die Verbindung zum Netz B
 umschalte.
-Das sagt zwar nichts aus über die eigentliche Ursache, aber es gibt mir zum
-einen die Möglichkeit, das Problem kurzfristig temporär aus dem Weg zu
-schaffen und zum anderen, wenn die Zeit geeignet ist, das Problem
-hervorzurufen, um es gründlich zu studieren.
+Das sagt zwar nichts aus über die Ursache, es gibt mir aber die Möglichkeit,
+das Problem kurzfristig temporär aus dem Weg zu schaffen und, wenn die Zeit
+geeignet ist, das Problem hervorzurufen, um es gründlich zu studieren.
 
-Eine andere Klasse von Problemen, bei denen mir Korrelationen zumindest
-weiterhelfen, sind sogenannte intermittierende Probleme, die sich dem
-andersartigen Zugang entziehen.
-Bei diesen Problem hilft mir am Anfang nur, so viele Daten über das betroffene
-Gesamtsystem wie möglich zu sammeln.
+Eine andere Klasse von Problemen, bei denen mir Korrelationen weiterhelfen
+können, sind intermittierende Probleme, die sich dem andersartigen Zugang
+entziehen.
+Bei diesen Problem hilft mir am Anfang nur, so viele Daten wie möglich über
+das betroffene Gesamtsystem zu sammeln.
 Bei der Analyse dieser Daten hilft mir dann die Kovarianzanalyse, das heisst,
 ich vergleiche jeweils paarweise verschiedene beobachtete Systemvariablen und
-ermittle die Kovarianz oder den Korrelationskoeffizienten.
+ermittle den Korrelationskoeffizienten.
+
 Wichtig dabei ist, dass ich immer die zusammengehörigen Daten in Beziehung
 setze.
-Da das meist über die Uhrzeit passiert, sorge ich also entweder im Vorfeld für
-gleichlaufende Uhren, oder ich muss den Zeitoffset bestimmen und rausrechnen.
+Da ich den Zusammenhang meist über die Uhrzeit hergestelle, sorge ich also
+entweder im Vorfeld für gleichlaufende Uhren, oder ich muss den Zeitoffset
+bestimmen und rausrechnen.
 
 Ein Programm, das sehr hilfreich für die Kovarianzanalyse ist, wurde in
 [WSA2011](#bib-wsa2011) beschrieben.
 
 Wichtig bei allen Korrelationsanalysen ist, sich vor Augen zu halten, dass
-uanbhängige Merkmale immer eine Kovarianz von 0 haben.
+unabhängige Merkmale immer eine Kovarianz nahe 0 haben.
 
 
 ## Abkürzungen und Umwege {#sec-heuristik-abkuerzung-umweg}
 
-Im Laufe der Zeit, wenn ich einige Erfahrungen mit den Systemen gesammelt
+Im Laufe der Zeit, wenn ich Erfahrungen mit den Systemen gesammelt
 habe, kann ich bei etlichen Fehlern intuitiv sagen, woran es liegt.
 Damit kann ich mir erhebliche Zeit bei der Fehlersuche ersparen.
-Ich muss jedoch trotzdem im Auge behalten, ob meine Annahmen auf einer realen
+Ich muss jedoch immer im Auge behalten, ob meine Annahmen auf einer realen
 Grundlage beruhen, oder ob mich meine Intuition hier in die Irre führt.
 
 Das heißt, dass ich jedes Mal, wenn ich eine Abkürzung nehme, mich
@@ -257,12 +258,12 @@ Zeitraum, den ich in Betracht ziehe, nicht zu groß wird.
 Jeder Test, der erfolgreich ist, sollte durch eine geeignete Gegenprobe
 evaluiert werden, die bestätigt, dass der Test auch versagen kann. Das gleiche
 gilt für fehlgeschlagene Tests. Diese müssen evaluiert werden, ob sie
-funktioniern können.
+funktionieren können.
 
 Wenn ein Verbindungsversuch auf einem Rechner fehlschlägt, versuche ich den
 gleichen Versuch von einem anderen Rechner aus um nachzuweisen, dass er hätte
 funktionieren können. Das hat mich schon häufig davor bewahrt, einen
-Netzwerkfehler zu vermuten, wenn lediglich ein Paketfilter auf dem Zielrechner
+Netzwerkfehler zu vermuten, wenn lediglich ein Paketfilter
 die Verbindung unterbunden hatte.
 
 ## Modelle
@@ -272,18 +273,17 @@ die Verbindung unterbunden hatte.
 Wenn ich Fehler auf Linux- oder Unix-Systemen suche, ist es vorteilhaft, das
 UNIX-Prozessmodell zumindest in groben Zügen zu verstehen.
 
-Bevor ich auf dieses eingehe, will ich kurz auf die Begriffe Programm und
-Prozess eingehen, da diese im allgemeinen Sprachgebrauch oft vermischt werden.
+Bevor ich auf dieses eingehe, will ich kurz die Begriffe Programm und Prozess
+erläutern, da diese im allgemeinen Sprachgebrauch oft vermischt werden.
 
-Ein *Programm* ist nicht mehr als eine Reihe von Instruktionen für den
+Ein *Programm* ist nicht mehr als eine Reihe von Anweisungen für den
 Prozessor eines Rechners, die so angeordnet sind, dass deren Abarbeitung mehr
 oder weniger sinnvolles Verhalten des Rechners ermöglicht.
 Das Programm im Sinne des hier besprochenen Prozessmodels ist immer auf den
-entsprechenden Prozessor zugeschnitten.
-Zwar spricht man auch bei Shell-, Perl- oder sonstigen Skripten hin und wieder
-von Programmen, im Sinne der UNIX-Prozessmodells sind dann aber die
-entsprechenden Interpreter, die Programme, welche von eben jenen Skripten
-gesteuert werden können.
+ausführenden Prozessor zugeschnitten.
+Zwar spricht man auch bei Shell-, Perl- oder sonstigen Skripten
+von Programmen, im Sinne der UNIX-Prozessmodells sind die entsprechenden
+Interpreter die Programme, welche von eben jenen Skripten gesteuert werden.
 
 Ein *Prozess* demgegenüber ist ein komplexeres Konstrukt, das über spezielle
 Datenstrukturen im Kernel identifiziert wird, Zugang zu bestimmten Dateien im
@@ -302,7 +302,7 @@ Der Lebenszyklus eines Prozesses mit Ausnahme des allerersten, vom Kernel
 gestarteten Prozesses beginnt immer mit dem `fork()` Systemaufruf.
 Dieser Aufruf macht nichts anderes, als eine exakte Kopie des aufrufenden
 Prozesses anzulegen.
-Damit haben wir dann zwei vollkommen identische Prozesse, die sich erst nach
+Damit haben wir zwei vollkommen identische Prozesse, die sich erst nach
 Rückkehr des `fork()` Systemaufruf unterscheiden, und zwar im Rückgabewert
 desselben.
 Beim aufrufenden Prozess (Parent oder Elternprozess genannt) gibt `fork()` die
@@ -311,47 +311,44 @@ Beim geklonten Prozess liefert es `0`.
 Das ist die einzige Möglichkeit für das abgearbeitete Programm, zwischen
 diesen beiden Prozessen zu unterscheiden.
 
-Jenachdem, welches Programm gerade an welcher Stelle ausgeführt wurde, werden
+Je nachdem, welches Programm gerade an welcher Stelle ausgeführt wurde, werden
 anschließend beide Prozesse das gleiche Programm ausführen (wie zum Beispiel
 die Worker-Prozesse beim Apache HTTP-Dämon) oder ein Prozess beginnt ein
 anderes Programm abzuarbeiten.
 Das führt uns zum nächsten wichtigen Bestandteil, dem Laden eines Programmes
 für die Abarbeitung.
 Nachdem ein Prozess neu erzeugt wurde, arbeitet er zunächst das gleiche
-Prozess wie sein Parent ab.
-Um ein anderes Programm auszuführen, verwendet der Prozess den `exec()`
-Systemaufruf.
-Damit wird der Hauptspeicher des Prozesses mit dem Abbild des neuen Programms
-überlagert. 
+Programm wie sein Parent ab.
+Um ein anderes Programm auszuführen, verwendet er den `exec()` Systemaufruf.
+Damit wird der Hauptspeicher mit dem Abbild des neuen Programms überlagert. 
 Das neue Programm wird ab einem definierten Eintrittspunkt abgearbeitet.
 Programmargumente und Umgebungsvariablen werden im Hauptspeicher übergeben.
 Dateideskriptoren (offene Dateien) bleiben über einen `exec()` Systemaufruf
 unverändert.
-Da im Hauptspeicher nun das neue Programm ist, gibt es kein Zurück zum alten.
 
 Bleibt als letzter Teil im Lebenszyklus eines UNIX-Prozesses das Ende zu
 besprechen.
 Ein Prozess kann sich durch den `exit()` Systemaufruf selbst beenden oder vom
-Kernel beendet werden (zum Beispiel beim SIGKILL oder Schutzverletzungen).
-In jedem Fall bleibt die Prozessstruktur im Kernel erhalten, bis der Parent
-den Prozessstatus mit `wait()` abfragt.
-Versäumt der Parent-Prozess die Abfrage mit `wait()`, ist das zum Beispiel im
+Kernel beendet werden (zum Beispiel mit SIGKILL oder bei Schutzverletzungen).
+In jedem Fall bleibt die Prozessstruktur so lange im Kernel erhalten, bis der
+Parent den Prozessstatus mit `wait()` abfragt.
+Versäumt der Parent-Prozess die Abfrage mit `wait()`, ist das im
 Prozesslisting mit *ps* sichtbar.
 Wird ein Parent vor dem Child beendet (z.B. bei Dämonprozessen, die die
-Kontrolle sofort an die aufrufende Shell zurückgeben), übernimmt `init`, der
-erste vom Kernel gestartete Prozess die Funktion des Parent und fragt deren
-Status mit `wait()` ab.
+Kontrolle sofort an die Shell zurückgeben), übernimmt `init`, der
+erste vom Kernel gestartete Prozess die Funktion des Parent und fragt den
+Child-Status mit `wait()` ab.
 
 X> Suche im Internet zum Thema *unix process model* und schaue in den
 X> Ergebnissen nach Beispiel-Code. Kompiliere diesen und beobachte, was beim
 X> Start der Programme passiert.
 
-### Schnittstellen beim Aufruf von Programmen
+### Schnittstellen von Programmen
 
 Bei der Fehlersuche auf Linux-Servern bewege ich mich fast die gesamte Zeit
 auf der Kommandozeile und rufe die verschiedensten Programme auf.
 Für das Aufrufen von Programmen selbst, brauche ich keine weiteren Kenntnisse.
-Bei der Fehlersuche, ist es auf jeden Fall von Vorteil, wenn ich genau weiß,
+Bei der Fehlersuche, ist es jedoch von Vorteil, wenn ich genau weiß,
 wie ich mit einem Programm kommunizieren kann.
 Das Buch von Reinhard Fößmeier [[Foessmeier1991]](#bib-foessmeier1991)
 erläutert die verschiedenen Schnittstellen von Programmen unter UNIX sehr
@@ -365,10 +362,10 @@ und die jedes Programm beim Aufruf übergeben bekommt.
 Diese werden von *strace* als Parameter beim `execve()` Systemaufruf
 angezeigt.
 
-Mit dieser Schnittstelle kann ich nur in einer Richtung kommunizieren, von der
+Mit dieser Schnittstelle kann ich nur in einer Richtung kommunizieren: von der
 Aufrufumgebung zum Programm.
 
-Wenn ich (Shell-)Skripts schreibe, kann ich auf diese Parameter mit den
+Wenn ich Shell-Skripts schreibe, kann ich auf diese Parameter mit den
 Variablen `$0`, `$1`, ... zugreifen. In `$#` habe ich die Anzahl der beim
 Aufruf übergebenen Parameter.
 
@@ -384,11 +381,11 @@ Gruppen eingeteilt:
 Optionen
 : bestehen oft aus einem Bindestrich, dem ein einzelnes Zeichen
   folgt. Diese werden unterschieden in Wertoptionen, denen ein Wert
-  nachfolgt und Schaltoption, deren bloßes Vorhandensein ausreicht.
+  nachfolgt und Schaltoptionen, deren bloßes Vorhandensein ausreicht.
 
   Neben den alten Optionen, die aus einem Zeichen bestehen, gibt es seit
-  geraumer Zeit sogenannte lange Optionen, die oft mit zwei Bindestrichen,
-  manchmal mit einem `+` und, seltener, mit einem Bindestrich eingeleitet
+  geraumer Zeit lange Optionen, die oft mit zwei Bindestrichen,
+  manchmal mit einem `+` oder, seltener, mit einem Bindestrich eingeleitet
   werden.
 
 Werteparameter
@@ -410,14 +407,14 @@ Bindestrich beginnt.
 
 #### Umgebungsvariablen
 
-Die Umgebungsvariablen werden bei Fößmeier als U-Schnittstelle bezeichnet.
-Im Gegensatz zu K-Schnittstelle, deren Parameter positionsabhängig sind,
+Umgebungsvariablen bezeichnet Fößmeier als U-Schnittstelle.
+Im Gegensatz zur K-Schnittstelle, deren Parameter positionsabhängig sind,
 können diese Variablen nur über ihren Namen angesprochen werden.
 
 Auch mit dieser Schnittstelle kann ich nur von der Aufrufumgebung in Richtung
 aufgerufenes Programm kommunizieren.
 
-In Shell-Programmen kann man auf diese Variablen, genau wie auf lokale
+In Shell-Skripts kann ich auf diese Variablen, genau wie auf lokale
 Variablen über den Namen mit vorangestelltem `$` zugreifen.
 
 Das Setzen der Umgebungsvariablen für ein aufgerufenes Programm ist abhängig
@@ -444,8 +441,8 @@ enthält. Für die Übergabe an aufgerufene Programme gibt es zwei Möglichkeite
 
 Da die Kommunikation nur in einer Richtung geht, gibt es keine Möglichkeit,
 für ein aufgerufenes Programm, die Umgebungsvariablen des aufrufenden
-Programmes (zum Beispiel der Shell) zu ändern. Dafür greift man auf einen
-Trick zurück, und zwar indem die Shell die Ausgabe des aufgerufenen Programms
+Programmes zu ändern. Bei der Shell greift man dafür  auf einen
+Trick zurück, indem die Shell die Ausgabe des aufgerufenen Programms
 interpretiert und dieses die Variablenzuweisung in die Standardausgabe
 schreibt.
 
@@ -459,16 +456,16 @@ schreibt.
 
 Wenn ein Prozess durch Aufruf von `exit()` endet, kann er einen ganzzahligen
 Wert als Statuscode angeben. Dieser Statuscode und der Zeitpunkt zu dem der
-Prozess endet bilden die sogenannte R-Schnittstelle.
+Prozess endet bilden die R-Schnittstelle.
 
-Der Statuscode wird zum Beispiel von der Shell und dem Programm *make*
-ausgewertet. Der Statuscode `0` wird dabei als erfolgreiche Beendigung des
+Der Statuscode wird von der Shell und dem Programm *make* ausgewertet.
+Der Statuscode `0` wird dabei als erfolgreiche Beendigung des
 Programms gewertet, alle anderen Codes deuten auf ein Problem und sind
 abhängig vom aufgerufenen Programm.
 
 In der Shell kann ich den Statuscode des letzten aufgerufenen Programms in der
-Variable `$?` abfragen. In C-Programmen zum Beispiel durch Aufruf der Funktion
-`wait()`.
+Variable `$?` abfragen.
+In C-Programmen durch Aufruf der Funktion `wait()`.
 
 Wenn ich ein Shell-Skript mit der Option `-e` starte, bricht die Shell ab,
 sobald ein aufgerufenes Programm einen anderen Rückgabewert als `0` hat. Das
@@ -477,7 +474,7 @@ ist auch das Standardverhalten von `make`.
 #### Datenströme
 
 Die S-Schnittstelle fasst alle Schnittstellen zusammen, die aus einem Strom
-von Zeichen bestehen. Das können die sogenannten Standard-Datenströme sein
+von Zeichen bestehen. Das können die Standard-Datenströme sein
 (STDIN, STDOUT, STDERR) oder weitere geöffnete Dateien, Sockets oder Pipes.
 
 Auf der Kommandozeile sind insbesondere die Standard-Datenströme relevant,
@@ -493,27 +490,25 @@ Zeilen ignoriert bis auf diejenigen, die das Wort *CRON* enthalten:
     $ tail -f /var/log/syslog | grep CRON
 
 Prinzipiell kann über eine S-Schnittstelle ein unbegrenzter Strom von Daten
-übertragen werden, zum Beispiel bei zwei über eine Pipe verbundenen Prozessen,
-wie in obigem Beispiel.
+übertragen werden, wie in obigem Beispiel.
 
 Mit dem *Dateiende* (EOF) kann zu einem Datenstrom übermittelt werden, dass
 keine weiteren Daten mehr folgen. In diesem Fall kann ein Programm angemessen
-reagieren und sich zum Beispiel beenden
+reagieren und sich beispielsweise beenden:
 
 {line-numbers=off,lang="text"}
     $ zcat /var/log/syslog* | grep CRON
 
 In diesem Beispiel liest das Programm `zcat` alle Dateien aus dem Verzeichnis
 */var/log*, deren Name mit *syslog* beginnt (komprimiert und unkomprimiert)
-und sendet ihren Inhalt wie im Beispiel davor an `grep`. Wenn der
-unkomprimierte Inhalt aller Dateien zur Standardausgabe geschickt sind,
-beendet sich `zcat`, wodurch seine Standardausgabe geschlossen wird. Das
-übermittelt der Kernel als *Dateiende* bei STDIN an `grep`, welches sich
+und sendet ihren Inhalt wie im Beispiel davor an `grep`.
+Wenn der Inhalt aller Dateien zur Standardausgabe geschickt ist,
+beendet sich `zcat`, wodurch seine Standardausgabe geschlossen wird.
+Das übermittelt der Kernel als *Dateiende* bei STDIN an `grep`, welches sich
 daraufhin ebenfalls beendet.
 
 Wenn ich Daten von Hand in die Standardeingabe eines Prozesses schreibe, kann
-ich durch Eingabe von *CTRL-D* die Dateiendeinformation für den lesenden
-Prozess erzeugen.
+ich mit *CTRL-D* die Dateiendeinformation für den lesenden Prozess erzeugen.
 
 #### Dateien
 
@@ -521,7 +516,7 @@ Die N-Schnitsstelle entspricht dem Inode, der eine Datei in einem Dateisystem
 beschreibt. Diese Schnittstelle enthält Metainformation über die betreffende
 Datei, aber nicht die Daten selbst.
 
-Bei manchen Gerätedateien ist es möglich, darüber Einstellungen an den
+Bei Gerätedateien ist es möglich, darüber Einstellungen an den
 betreffenden Geräten vorzunehmen.
 
 #### Text-Terminal
@@ -531,10 +526,10 @@ das ich meine Eingaben mache und die Ausgaben angezeigt bekomme. Dabei kann
 das Terminal eine normale Computerkonsole sein, eine serielle Konsole oder ein
 Programm wie Xterm.
 
-Diese Schnittstelle sorgt zum Beispiel dafür, dass beim traditionellen
-Zeilenendezeichen (LF) automatisch ein Wagenrücklauf (CR) ausgeführt wird,
+Diese Schnittstelle sorgt dafür, dass beim traditionellen Zeilenendezeichen
+(LF) automatisch ein Wagenrücklauf (CR) ausgeführt wird,
 damit die nächste Zeile wieder am linken Rand beginnt.
-Im sogenannten Cooked Mode sammelt diese Schnittstelle meine Eingabe bis zum
+Im Cooked Mode sammelt diese Schnittstelle meine Eingabe bis zum
 *RETURN* um sie dann als ganze Zeile an den Prozess zu schicken.
 
 Auf der Kommandozeile kann ich über das Programm `stty` auf diese
@@ -543,18 +538,18 @@ Funktion `ioctl()`.
 
 ### OSI-Modell
 
-Ein wichtiges Modell für die Betrachtung von Netzwerkverbindung ist das *Open
-Systems Interconnection Model*.
+Ein wichtiges Modell für die Betrachtung von Netzwerkverbindungen ist das
+*Open Systems Interconnection Model*.
 Dieses dient als Referenzmodell für Netzwerkprotokolle und ist als
 Schichtenmodell ausgeführt.
 Es gibt keine Implementierung des OSI-Modells, dieses dient lediglich der
-Einordnung realer Protokoller und der Kommunikation darüber.
+Einordnung realer Protokolle und der Kommunikation darüber.
 In diesem Modell gibt es sieben aufeinanderfolgende Schichten mit jeweils
 begrenzten Aufgaben.
 Jede Instanz einer Schicht nutzt die Dienste der Instanzen der nächsttieferen
 Schicht und stellt ihre Dienste den Instanzen der nächsthöheren Schicht zur
 Verfügung.
-Die folgenden Dienste sind im OSI-Modell definiert:
+Die folgenden Schichten sind im OSI-Modell definiert:
 
 |   | deutsche Bezeichnung   | englische Bezeichnung |
 |---|------------------------|-----------------------|
@@ -569,7 +564,8 @@ Die folgenden Dienste sind im OSI-Modell definiert:
 Die Instanzen auf Sender und Empfängerseite müssen nach festgelegten Regeln
 (dem Protokoll) arbeiten und bilden dann eine logische horizontale Verbindung
 über diese Schicht. Die in der gleichen Schicht definierten Netzwerkprotokolle
-mit klar definierten Schnittstellen sind untereinander austauschbar.
+mit klar definierten Schnittstellen sind untereinander, abhängig von ihren
+spezifischen Eigenschaften, austauschbar.
 
 Reale Protokolle bilden mitunter mehrere Schichten des OSI-Modells ab. Zum
 Beispiel:
@@ -585,15 +581,14 @@ Beispiel:
 Betrachte ich die Kopplungselemente in einem Computernetzwerk, so decken die
 heute kaum noch gebräuchlichen Hubs und Repeater die Schicht 1 ab, Bridges und
 Switche die Schichten 1 und 2, Router die Schichten 1 bis 3 und schließlich
-Protokoll-Gateways und Content-Switche für die Lastverteilung die Schichten 1
-bis 7.
+Protokoll-Gateways die Schichten 1 bis 7.
 
 ### Zustände einer TCP-Verbindung
 
-Ich betrachte hier die Zustände einner TCP-Verbindung, weil TCP vermutlich das
+Ich betrachte hier die Zustände einer TCP-Verbindung, weil TCP vermutlich das
 am häufigsten im Netz vorkommende Protokoll ist.
 Außerdem ist es komplex genug, um sich wenigstens mit den grundlegenden
-Interna zu beschäftigen und das Verhalten des Protokolls im Störungsfall
+Interna zu beschäftigen und um das Verhalten des Protokolls im Störungsfall
 einschätzen zu können.
 
 #### Verbindungsaufbau
@@ -603,7 +598,7 @@ Beim Aufbau einer TCP-Verbindung haben wir immer eine passive Seite
 Seite.
 Die passive Seite befindet sich im Zustand LISTEN.
 
-A> Den Zustand der TCP-Verbindungen auf einem Rechner kann man sich sehr gut
+A> Den Zustand der TCP-Verbindungen auf einem Rechner kann man sich
 A> mit dem Befehl
 A>
 {line-numbers=off,lang="text"}
@@ -656,7 +651,7 @@ Sobald A das FIN-Paket empfängt, bestätigt es dieses mit ACK und geht für die
 doppelte MSL in den Zustand *TIME_WAIT* und danach in den Zustand *CLOSED*.
 B geht mit Empfang der Bestätigung von A sofort in den Zustand *CLOSED*.
 
-Da A noch eine zeitlang im Zustand *TIME_WAIT* verbleibt, kann man auf dem
+Da A noch eine Zeit lang im Zustand *TIME_WAIT* verbleibt, kann man auf dem
 betreffenden Rechner mit `netstat -ant` sehen, dass dieser die Verbindung
 zuerst geschlossen hat.
 
@@ -665,9 +660,9 @@ zuerst geschlossen hat.
 Es gibt zwei Aspekte bei der TCP-Flusssteuerung.
 Zum einen teilt der Empfänger dem Sender mit, wie viele Bytes er momentan
 verarbeiten kann.
-Zum anderen will der Sendeer die Datenrate so steuern, dass die Daten so
+Zum anderen will der Sender die Datenrate so steuern, dass die Daten so
 schnell wie möglich, aber mit möglichst geringen Verlusten durch Überlastung
-der Verbindung übertragen werden.
+der Leitung übertragen werden.
 
 Für das erste Problem gibt es im TCP-Header das Feld *Receive Window*.
 In dieses trägt der Empfänger die momentan freie Empfangspuffergröße ein.
@@ -683,12 +678,12 @@ wieviel Bytes er momentan auf die Leitung schicken könnte.
 
 ##### Slow Start und Congestion Avoidance
 
-Bei diesem Verfahren startet die Datenübertragung mit einem Congestion von
-einer Maximum Segment Size (MSS) und erhöht diese mit jedem empfangenen ACK um
-eine MSS.
+Bei diesem Verfahren startet die Datenübertragung mit einem Congestion Window
+von einer Maximum Segment Size (MSS) und erhöht diese mit jedem empfangenen
+ACK um eine MSS.
 Das führt zu einem exponentialen Wachstum des Congestion Windows.
 
-Bei erreichen der *Slow Start Threshold* wird das Congestion Windows nur noch
+Bei Erreichen der *Slow Start Threshold* wird das Congestion Windows nur noch
 um eine MSS erhöht, wenn alle Datenpakete aus dem aktuellen Fenster bestätigt
 wurden. Das führt zu einem linearen Wachstum des Congestion Window.
 
@@ -700,9 +695,9 @@ Congestion Window wieder bei einer MSS.
 Hierbei informiert der Empfänger den Sender über mögliche Paketverluste sobald
 er Datenpakete außer der Reihe empfängt.
 Dazu bestätigt er das letzte Datenpaket in der richtigen Reihenfolge mit jedem
-neu ankommenden Datenpaket außer der Reihe durch sogenannte DUP-ACK (Duplicate
+neu ankommenden Datenpaket außer der Reihe durch DUP-ACK (Duplicate
 Acknowledgements).
-Der Sender sendet das verlorene Datenpaket sofort nach dem driten DUP-ACK und
+Der Sender sendet das verlorene Datenpaket sofort nach dem dritten DUP-ACK und
 wartet nicht auf den Timeout.
 Das Congestion Window wird in diesem Fall nur halbiert und nicht wie bei Slow
 Start auf ein MSS reduziert.
