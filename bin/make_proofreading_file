@@ -18,6 +18,7 @@ for T in $TEXTS; do
     cp "${MSCDIR}/${T}" "${TMPDIR}"
 done
 
+cp "${MSCDIR}/${TXTLST}" "${TMPDIR}"
 cp "${PRVDIR}/${SLUG}-preview.pdf" "${TMPDIR}"
 
 mtn status > "${TMPDIR}/Version"
