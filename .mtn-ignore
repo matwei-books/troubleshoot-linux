@@ -9,3 +9,5 @@
 ^recherche$
 \.toc$
 ^TODO.otl$
+^tmp-proofreading$
+^troubleshoot-linux-server-and-networks-[0-9]{8}\.tar\.gz$
