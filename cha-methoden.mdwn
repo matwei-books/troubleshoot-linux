@@ -266,9 +266,7 @@ funktionieren können. Das hat mich schon häufig davor bewahrt, einen
 Netzwerkfehler zu vermuten, wenn lediglich ein Paketfilter
 die Verbindung unterbunden hatte.
 
-## Modelle
-
-### Prozessmodell
+## Prozessmodell
 
 Wenn ich Fehler auf Linux- oder Unix-Systemen suche, ist es vorteilhaft, das
 UNIX-Prozessmodell zumindest in groben Zügen zu verstehen.
@@ -343,7 +341,7 @@ X> Suche im Internet zum Thema *unix process model* und schaue in den
 X> Ergebnissen nach Beispiel-Code. Kompiliere diesen und beobachte, was beim
 X> Start der Programme passiert.
 
-### Schnittstellen von Programmen
+## Schnittstellen von Programmen
 
 Bei der Fehlersuche auf Linux-Servern bewege ich mich fast die gesamte Zeit
 auf der Kommandozeile und rufe die verschiedensten Programme auf.
@@ -354,7 +352,7 @@ Das Buch von Reinhard Fößmeier [[Foessmeier1991]](#bib-foessmeier1991)
 erläutert die verschiedenen Schnittstellen von Programmen unter UNIX sehr
 ausführlich.
 
-#### Kommandozeile
+### Kommandozeile
 
 Die Kommandozeile selbst bezeichnet Fößmeier als K-Schnittstelle.
 Diese bezeichnet eine Reihe von Parameter, die als C-Strings übergeben werden
@@ -405,7 +403,7 @@ die Konvention, dass alle Parameter nach `--` als Namensparameter verarbeitet
 werden, um so auch Dateien bearbeiten zu können, deren Name mit einem
 Bindestrich beginnt.
 
-#### Umgebungsvariablen
+### Umgebungsvariablen
 
 Umgebungsvariablen bezeichnet Fößmeier als U-Schnittstelle.
 Im Gegensatz zur K-Schnittstelle, deren Parameter positionsabhängig sind,
@@ -452,7 +450,7 @@ schreibt.
     $ echo $abc
     def
 
-#### Rückgabewert
+### Rückgabewert
 
 Wenn ein Prozess durch Aufruf von `exit()` endet, kann er einen ganzzahligen
 Wert als Statuscode angeben. Dieser Statuscode und der Zeitpunkt zu dem der
@@ -471,7 +469,7 @@ Wenn ich ein Shell-Skript mit der Option `-e` starte, bricht die Shell ab,
 sobald ein aufgerufenes Programm einen anderen Rückgabewert als `0` hat. Das
 ist auch das Standardverhalten von `make`.
 
-#### Datenströme
+### Datenströme
 
 Die S-Schnittstelle fasst alle Schnittstellen zusammen, die aus einem Strom
 von Zeichen bestehen. Das können die Standard-Datenströme sein
@@ -510,7 +508,7 @@ daraufhin ebenfalls beendet.
 Wenn ich Daten von Hand in die Standardeingabe eines Prozesses schreibe, kann
 ich mit *CTRL-D* die Dateiendeinformation für den lesenden Prozess erzeugen.
 
-#### Dateien
+### Dateien
 
 Die N-Schnitsstelle entspricht dem Inode, der eine Datei in einem Dateisystem
 beschreibt. Diese Schnittstelle enthält Metainformation über die betreffende
@@ -519,7 +517,7 @@ Datei, aber nicht die Daten selbst.
 Bei Gerätedateien ist es möglich, darüber Einstellungen an den
 betreffenden Geräten vorzunehmen.
 
-#### Text-Terminal
+### Text-Terminal
 
 Die T-Schnittstelle bezeichnet das Treiberprogramm für das Text-Terminal über
 das ich meine Eingaben mache und die Ausgaben angezeigt bekomme. Dabei kann
@@ -536,7 +534,7 @@ Auf der Kommandozeile kann ich über das Programm `stty` auf diese
 Schnittstelle zugreifen und sie bearbeiten. In C-Programmen verwende ich die
 Funktion `ioctl()`.
 
-### OSI-Modell
+## OSI-Modell
 
 Ein wichtiges Modell für die Betrachtung von Netzwerkverbindungen ist das
 *Open Systems Interconnection Model*.
@@ -583,7 +581,7 @@ heute kaum noch gebräuchlichen Hubs und Repeater die Schicht 1 ab, Bridges und
 Switche die Schichten 1 und 2, Router die Schichten 1 bis 3 und schließlich
 Protokoll-Gateways die Schichten 1 bis 7.
 
-### Zustände einer TCP-Verbindung
+## Zustände einer TCP-Verbindung
 
 Ich betrachte hier die Zustände einer TCP-Verbindung, weil TCP vermutlich das
 am häufigsten im Netz vorkommende Protokoll ist.
@@ -591,7 +589,7 @@ Außerdem ist es komplex genug, um sich wenigstens mit den grundlegenden
 Interna zu beschäftigen und um das Verhalten des Protokolls im Störungsfall
 einschätzen zu können.
 
-#### Verbindungsaufbau
+### Verbindungsaufbau
 
 Beim Aufbau einer TCP-Verbindung haben wir immer eine passive Seite
 (üblicherweise der Server, bei FTP auch manchmal der Client) und eine aktive
@@ -631,7 +629,7 @@ Server eine Verbindung abweist, sieht das wie folgt aus:
 Der Client sendet wie eben ein SYN-Paket.
 Von Serverseite aus folgt unmittelbar ein RST-Paket und schon ist es vorbei.
 
-#### Verbindungsabbau
+### Verbindungsabbau
 
 Während für den TCP-Verbindungsaufbau drei Datenpakete reichen, benötigt TCP
 für den Abbau einer Verbindung vier Datenpakete.
@@ -655,7 +653,7 @@ Da A noch eine Zeit lang im Zustand *TIME_WAIT* verbleibt, kann man auf dem
 betreffenden Rechner mit `netstat -ant` sehen, dass dieser die Verbindung
 zuerst geschlossen hat.
 
-#### Flusssteuerung
+### Flusssteuerung
 
 Es gibt zwei Aspekte bei der TCP-Flusssteuerung.
 Zum einen teilt der Empfänger dem Sender mit, wie viele Bytes er momentan
@@ -676,7 +674,7 @@ Algorithmen, die gemeinsam verwendet werden können.
 Der Sender führt für die Verbindung ein Congestion Window, das ihm anzeigt,
 wieviel Bytes er momentan auf die Leitung schicken könnte.
 
-##### Slow Start und Congestion Avoidance
+#### Slow Start und Congestion Avoidance
 
 Bei diesem Verfahren startet die Datenübertragung mit einem Congestion Window
 von einer Maximum Segment Size (MSS) und erhöht diese mit jedem empfangenen
@@ -690,7 +688,7 @@ wurden. Das führt zu einem linearen Wachstum des Congestion Window.
 Wird durch Timeout der Verlust eines Datenpakets festgestellt, beginnt dass
 Congestion Window wieder bei einer MSS.
 
-##### Fast Retransmit und Fast Recovery
+#### Fast Retransmit und Fast Recovery
 
 Hierbei informiert der Empfänger den Sender über mögliche Paketverluste sobald
 er Datenpakete außer der Reihe empfängt.
@@ -702,7 +700,7 @@ wartet nicht auf den Timeout.
 Das Congestion Window wird in diesem Fall nur halbiert und nicht wie bei Slow
 Start auf ein MSS reduziert.
 
-##### Selective Acknowledgements (SACK)
+#### Selective Acknowledgements (SACK)
 
 Zusätzlich zum letzten regulären Paket bestätigt der Empfänger in den DUP-ACK
 die außer der Reihe angekommenen Datenpakete in zusätzlichen
