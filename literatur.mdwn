@@ -21,6 +21,13 @@ Die Schnittstellen von UNIX-Programmen: Tips zur Programm-Organisation unter
 UNIX; Springer, Berlin Heidelberg New York London Paris Tokyo Hong Kong
 Barcelona, 1991; ISBN: 3-540-53521-7
 
+##### Kahneman2011 {#bib-kahneman2011}
+
+Kahneman, Daniel;
+Thinking, fast and slow;
+Anchor Canada, 2013;
+ISBN: 978-0-385-67653-3
+
 ##### Loukides1996 {#bib-loukides1996}
 
 Loukides, Mike Kosta;
