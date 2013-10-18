@@ -1,8 +1,7 @@
 # Herangehen {#cha-herangehen}
 
 Neben dem geistigen Rüstzeug, das ich im vorigen Kapitel besprochen habe,
-bestimmt die Art und Weise, wie ich an ein Problem herangehe, oft den
-Erfolg.
+bestimmt die Art und Weise, wie ich an ein Problem herangehe, den Erfolg.
 Natürlich gibt es kein Patentrezept, das ich unverändert auf alle
 Probleme anwenden kann.
 Je nach Wichtigkeit und Dringlichkeit werde ich vielleicht in einem Fall auf
@@ -41,7 +40,6 @@ Eines haben diese Arten von Problemaufnahmen gemeinsam: da ist jemand, der
 seine ganz eigene Vorstellung von der Wichtigkeit, Dringlichkeit und mitunter
 auch von der Lösung des Problems hat.
 Das kann richtig sein oder falsch.
-Mit der Zeit kann jeder einschätzen, wie so eine Meldung zu bewerten ist.
 
 Problematisch daran ist, wenn man sich durch bestimmte Vorurteile auf eine
 falsche Fährte schicken läßt oder wenn durch den im Gespräch aufgebauten Druck
@@ -89,13 +87,13 @@ Je nach dem, wer gerade da ist, kommt dann oft als Erwiderung:
 
 > "Das wusste ich, das er das jetzt sagt."
 
-Ich hatte mich von den Gedanken meines Kollegen und von dem Druck, den er
+Ich habe mich von den Gedanken meines Kollegen und von dem Druck, den er
 bewusst oder unbewusst aufbauen wollte, befreit und ihm den Wind aus den
 Segeln genommen.
 
-Nun konnte ich mich dran machen, die Gedanken, also dass, was mein Kollege
-über das Problem wusste, zu nutzen.
-Anhand des Entscheidungsbaumes fragte ich als nächstes, ob alle Webserver
+Nun kann ich mich dran machen, die Gedanken, also dass, was mein Kollege
+über das Problem weiß, zu nutzen.
+Anhand des Entscheidungsbaumes frage ich als nächstes, ob alle Webserver
 nicht erreichbar sind, oder nur externe, oder gar nur bestimmte und
 welche sie alles ausprobiert hätten.
 
@@ -124,12 +122,12 @@ wenigen (Such-)Worten beschreiben können, dass relevante Seiten möglichst weit
 vorn in den Suchergebnissen dabei sind und das irrelevantes ausgefiltert wird.
 Das heißt, ich muss mein Problem unterscheidbar machen von anderen Problemen.
 In vielen Fällen hilft mir dabei das Systemlog, da Auszüge aus diesem mit
-relevanten Logzeilen oft sehr gut gefunden werden können.
+relevanten Logzeilen oft sehr gut im Internet gefunden werden können.
 
 Wenn ich meine Kollegen befragen will, muss ich daran denken, dass diese ihre
 eigenen Probleme haben und in den meisten Fällen nicht dafür bezahlt
 werden, meine Probleme zu lösen.
-Das mindeste, was ich tun kann, ist das Problem so genau wie möglich zu
+Das mindeste, was ich tun kann, ist, das Problem so genau wie möglich zu
 spezifizieren und genau den Kollegen zu befragen, von dem ich glaube, dass er
 signifikant zur Lösung beitragen kann.
 Natürlich spricht nichts gegen ein zwangloses Gespräch bei Kaffee, Tee oder
@@ -141,11 +139,11 @@ mehr oder weniger höflich wegschickt.
 Ähnlich ist es mit Foren und Mailinglisten.
 Hier muss ich mir Gedanken machen, ob mein Problem überhaupt in das Forum passt
 oder anders herum, welches Forum für mein Problem geeignet ist.
-Natürlich sollte ich vor einer Frage an einen Kollegen oder in ein Forum im
+Natürlich sollte ich vor einer Frage an einen Kollegen oder in einem Forum im
 Internet recherchiert haben, um nicht die gleiche Frage zum hundertsten
 Mal zu stellen.
 
-Ein eigenes Problem, wenn ich jemand anderen zu meinem Problem befrage, ist,
+Wenn ich jemand anderen zu meinem Problem befrage, ist ein eigenes Problem,
 diesen in den richtigen Kontext zu setzen.
 Das heißt, ich muss ihm mitteilen, was ich erreichen will oder wie das System
 vorher funktioniert hat.
@@ -157,7 +155,7 @@ Lösungsweg einfällt.
 
 ## Logs auswerten
 
-Die Systemprotokolle sind bei nicht trivialen Problemen oft das erste, was ich
+Die Systemprotokolle sind bei nicht trivialen Problemen das erste, was ich
 mir ansehe.
 Zum einen geben diese oft schon über eine zeitliche Korrelation einen Hinweis
 über die Art des Problems.
@@ -175,8 +173,8 @@ A> In bestimmten Situationen will ich, neben den eigentlichen
 A> SNMP-Informationen wissen, welcher Rechner wann SNMP-Anfragen gestellt hat.
 A> Auf einem kleinen System mit begrenztem Platz für Lognachrichten würde
 A> das andere wichtige Nachrichten aus dem Puffer drängen, so dass ich
-A> dafür sorge, dass nur berechtigte Systeme SNMP-Anfragen stellen können und
-A> protokolliere nicht jede Anfrage.
+A> dafür sorge, dass nur berechtigte Systeme SNMP-Anfragen stellen können, und
+A> nicht jede Anfrage protokolliert wird.
 
 Noch komplexer wird es, wenn erst mehrere Lognachrichten zusammen eine Aussage
 zu einem Problem machen können, wie zum Beispiel beim Durchlaufen einer E-Mail
@@ -206,11 +204,11 @@ Dann kann ich versuchen, die Version aus dem Cache der Suchmaschine
 anzuschauen.
 Wenn der Link zu einer Mailingliste ging, kann ich versuchen, ein anderes
 Archiv dieser Mailingliste ausfindig zu machen.
-Oder ich schaue nach, ob ich die Website im Internetarchiv, der Wayback
-Machine finde.
+Oder ich schaue nach, ob ich die Website im Internetarchiv, der
+[Wayback Machine](https://archive.org/web/) finde.
 
-T> Beinahe das Wichtigste an einer Internetsuche ist ein Zeitlimit nachdem ich
-T> die Suche abbreche.
+T> Beinahe das Wichtigste an einer Internetsuche ist ein Zeitlimit, nach dem
+T> ich die Suche abbreche.
 T> Eventuell kann ich später, wenn ich mehr Erkenntnisse gewonnen habe, eine
 T> neue Suche starten.
 
@@ -298,7 +296,7 @@ Dadurch kann ich jederzeit Seiten aus dem Laborbuch kopieren und weitergeben.
 Im Laufe der Jahre hatte ich mir bereits einen bestimmten Stil erarbeitet,
 als ich auf [Bullet Journal](http://bulletjournal.com/) als Methode für
 handgeschriebene Aufzeichnungen stieß, die sich ideal damit ergänzt.
-Im Laufe der Zeit wird sich dieser Stil sicher noch etliche Mal ändern.
+Im Laufe der Zeit wird sich dieser Stil sicher noch etliche Male ändern.
 
 ## Wenn ich feststecke
 
@@ -323,7 +321,7 @@ Ergebnisse aus dem Unterbewusstsein zurückgreifen.
 
 Das Bewusstsein nutzt einen Bereich des Gehirns, der entwicklungsgeschichtlich
 jung ist.
-Dieser Modus arbeitet langsam, dafür ist er methodisch und in Lage,
+Dieser Modus arbeitet langsam, dafür ist er methodisch und in der Lage,
 logische Schlussfolgerungen herzuleiten.
 Dieser Modus benötigt sehr viel Energie.
 
@@ -333,7 +331,7 @@ Dieser Modus arbeitet schnell, intuitiv und effizient.
 
 Ist der bewusste Modus aktiv, schweigt der unbewusste.
 Durch die Pause für den bewussten Modus bekam der unbewusste Modus
-Gelegenheit, das Problem auf seine Arbeit zu bearbeiten.
+Gelegenheit, das Problem auf seine Art zu bearbeiten.
 Die Ergebnisse des Unterbewusstsein treten dann als eine Art Geistesblitz in
 das Bewusstsein.
 Natürlich müssen diese Ergebnisse noch evaluiert werden und es gibt keine
