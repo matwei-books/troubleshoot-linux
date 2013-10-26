@@ -1,7 +1,4 @@
-# Nach der Fehlersuche ist vor der Fehlersuche {#cha-netz-nachbearbeitung}
-
-Nach dem letzten Fehler wird es einen nächsten geben. Was kann ich tun, um
-zu vermeiden, dass es noch einmal den selben Fehler geben wird.
+# Nachbereitung
 
 Es heißt, Voraussagen sind schwierig, besonders für die Zukunft. Für die
 Vergangenheit ist es einfacher.
@@ -11,9 +8,113 @@ Beobachtet man diese Leute genauer, stellt man vielleicht fest, das sie
 keine Voraussagen über die Zukunft machen, sondern über die Vergangenheit.
 Der Volksmund nennt dieses Phänomen auch Erfahrung.
 
-## Was habe ich gelernt {#sec-was-habe-ich-gelernt}
+Manchmal folgt der nächste Fehler so schnell, dass kaum Zeit für die Rückschau
+bleibt.
+Tritt dieser Umstand häufiger auf, ist das ein Zeichen dafür, dass eine
+Rückschau umso nötiger ist.
+Dann sollte ich mir wenigstens eine Liste oder Tabelle anlegen, in der ich die
+aufgetretenen Fehler zusammen mit ihrem Schweregrad festhalte.
+So habe ich später eine Entscheidungsgrundlage, wenn Zeit da ist, sich einem
+Thema intensiver zu widmen.
 
-## Monitoring {#sec-monitoring}
+## Kontrolle der Erledigung
+
+Auf jeden Fall sollte ich jedesmal kontrollieren, ob der Fehler wirklich
+behoben ist und nicht nur verdeckt.
+Ich habe mir zur Angewohnheit gemacht, ein Ticket erst zu schließen, wenn ich
+eine Bestätigung von dem bekommen habe, der mir das Problem gemeldet hat.
+
+Das kann, gerade bei Performanceproblemen, mitunter problematisch sein, wenn
+der Erstmelder eine andere Vorstellung von erledigt hat, als ich.
+In diesem Fall helfen manchmal SLAs, die man natürlich vorher vereinbart haben
+sollte.
+
+A> Der kurioseste Fall, der mir bisher begegegnete, war ein Kunde, der bei
+A> einer Rückfrage zu einem Performanceproblem, anstelle eine Verbesserung zu
+A> bestätigen oder verneinen, die Gegenfrage stellte, ob ihn das etwas kostet.
+
+## Vertiefung der Erkenntnisse
+
+Um zu einem tieferen Verständnis des Systems zu kommen, kann ich fünfmal warum
+fragen.
+Das erste *warum* fragt nach den unmittelbaren Ursachen des konkreten, soeben
+gelösten Problems.
+Dabei berücksichtige ich, dass ein Problem meist nur einen Auslöser aber oft
+mehrere Ursachen hat.
+Das zweite *warum* fragt nach deren Ursachen, dann nach deren Ursachen und so
+weiter.
+Am Ende kenne ich die wesentlichen Aspekte des Systems, die schließlich zu
+diesem Fehler geführt haben.
+
+Natürlich reicht es nicht, nur nach den Ursachen zu fragen.
+Vielmehr muss ich in jeder Stufe überlegen, welche Möglichkeiten es gibt, die
+entsprechende Ursache zu beseitigen.
+Falls das nicht möglich ist, finde ich vielleicht wenigstens ein paar
+Systemparameter, die ich im Monitoring-System beobachten kann und die mir bei
+der nächsten Fehlersuche dann behilflich sind.
+
+## Verallgemeinerung der Erkenntnisse
+
+Spätestens jetzt ist es an der Zeit, das Laborbuch mit den während der
+Fehlersuche gewonnenen Erkenntnissen zu ergänzen.
+Eventuell schreibe ich auch einen Artikel zum Thema.
+Das hilft mir gleich in mehrfacher Hinsicht.
+Zum einen verankert das Ausformulieren die Erkenntnisse besser im Gehirn.
+Dann kann ich den Artikel zur Schulung der Kollegen heranziehen.
+Und schließlich kann ich ihn vielleicht später bei ähnlich gelagerten
+Problemen zu Rate ziehen.
+
+Habe ich genug Zeit für die Rückschau, dann überlege ich, ob ich dieses
+Problem auch auf andere Art hätte eingrenzen können.
+Gibt es vielleicht einen schnelleren Weg, der mich auch zur Lösung geführt
+hätte.
+Oder einen, der weniger aufwendig gewesen wäre.
+
+Im Gegenzug kann ich mich fragen, ob mein diesmal verwendeter Lösungsweg auch
+für andere Probleme einsetzbar ist.
+Wenn ja, für welche?
+
+In der Verallgemeinerung führen mich diese Fragen und ihre Antworten zu einem
+an meine konkrete Umgebung und Situation angepassten Entscheidungsbaum, der
+zukünftige Fehlersuchen beschleunigen kann.
+
+## Probleme verhindern
+
+Habe ich mich soweit mit dem System und diesem speziellen Fehler vertraut
+gemacht, kann ich überlegen, wie ich das Auftreten dieses Fehlers hätte
+vorhersehen und verhindern können, ohne dabei die Funktionalität des
+Gesamtsystems zu beeinträchtigen.
+Falls das möglich ist, schaffe ich die entsprechenden Voraussetzungen.
+
+A> Hier muss ich eine Balance finden.
+A> Natürlich möchte ich, dass das System störungsfrei arbeitet und zuverlässig
+A> seine Dienste erbringt.
+A> Wenn das System jedoch überwiegend damit beschäftigt ist, sich selbst zu
+A> beobachten und Fehlerzustände zu vermeiden, so dass kaum noch Ressourcen
+A> für die eigentliche Arbeit da sind, habe ich es definitiv übertrieben.
+
+## Schulungen
+
+Um meine Kollegen zu schulen, kann ich mir Gedanken machen, wie ich diesen,
+eben gelösten Fehler in einem Testsystem gezielt hervorrufen kann um eine
+möglichst realistische Trainingssituation zu schaffen, in der das Problem und
+die Auswirkungen in aller Ruhe studiert werden können.
+
+Das setzt voraus, das mir ein geeignetes Testsystem zur Verfügung steht.
+Und das den Kollegen der Wert des Trainings für ihre tägliche Arbeit bewusst
+ist.
+
+Damit kommen wir in den Bereich der Vorbereitung auf den nächsten Fehler,
+indem ich die Herangehensweise auf den Prüfstand stelle und nötigenfalls
+anpasse.
+
+Dabei mache ich mir Gedanken über meine Gewohnheiten.
+Dab mein Handeln sehr stark von Gewohnheiten dominiert wird, stelle ich diese
+an dieser Stelle gleich mit auf den Prüfstein.
+Welche Gewohnheiten haben mir bei der letzten Fehlersuche geholfen und welche
+waren eher hinderlich.
+Dementsprechend kann ich mich nun daran machen, nutzlose oder gar schädliche
+Gewohnheiten allmählich durch bessere zu ersetzen.
 
 ## Zwei Bewusstseinsmodi {#sec-zwei-bewusstseinsmodi}
 
@@ -75,12 +176,3 @@ In [Edwards2012](#bib-edwards2012) beschreibt die Autorin am
 Beispiel des Zeichnenlernens, einige Übungen zum gezielten Umschalten der
 beiden Modi, die sie L-Modus und R-Modus nennt.
 
-
-## Notizen
-
-*   Problem: ein Auslöser, mehrere Ursachen
-  
-    Nachbereitung: fünf mal warum, System umgestalten, so dass Auslöser erkannt
-    wird (Monitoring), aber nicht zum Problem führt
-
-    Kann ich den Fehler durch Monitoring vermeiden?
