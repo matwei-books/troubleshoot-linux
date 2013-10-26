@@ -80,15 +80,17 @@ Wann und wie setze ich die Hilfmittel aus dem vorigen Kapitel ein?
 Wie bereite ich mich auf die Fehlersuche vor?
 Wie kann ich generell besser bei der Fehlersuche werden?
 
-Das *dritte Kapitel* geht auf die Nachbearbeitung eines Problems ein.
+Das *dritte Kapitel* geht auf die Nachbearbeitung eines Problems ein, die
+immer auch eine Vorbereitung auf das nächste Problem ist.
 Welche Erkenntnisse kann ich aus der letzen Fehlersuche ziehen?
 Kann ich diesen oder ähnliche Fehler in Zukunft vermeiden?
 
-Die beiden folgenden Teile des Buches sind wie folgt strukturiert: zunächst
-widme ich mich dem Totalausfall (wenn gar nichts mehr geht), dann
-Teilausfällen und danach Performance-Problemen.
-Schließlich stelle ich einige Programme vor, die mir bei der Fehlersuche
-helfen.
+Die beiden folgenden Teile des Buches sind ähnlich strukturiert.
+Als erstes widme ich mich dem Totalausfall (wenn gar nichts mehr geht),
+dann Teilausfällen und was ich darunter verstehe und schließlich Problemen mit
+der Performance.
+Am Schluß der beiden Teile stelle ich jeweils einige Programme vor, die ich
+bei der Fehlersuche häufig einsetze.
 
 **Teil zwei** beschäftigt sich mit lokalen Problemen einzelner Linux-Server.
 
