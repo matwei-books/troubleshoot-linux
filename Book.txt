@@ -4,7 +4,7 @@ cha-methoden.mdwn
 cha-herangehen.mdwn
 cha-nachbearbeitung.mdwn
 part2.mdwn
-cha-lokal-total-empty.mdwn
+cha-lokal-total.mdwn
 cha-lokal-teil-empty.mdwn
 cha-lokal-perform-empty.mdwn
 cha-lokal-werkzeuge-empty.mdwn

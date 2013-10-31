@@ -1,5 +1,53 @@
 # Totalausfall {#cha-lokal-totalausfall}
 
+Ein Totalausfall bedeutet für mich zuallererst, der Rechner selbst ist keine
+große Hilfe bei der Fehlersuche.
+Das muss nicht heißen, dass der Rechner überhaupt nicht mehr reagiert, aber
+auf jeden Fall stehen mir nicht alle Werkzeuge zur Verfügung, die ich sonst
+zur Analyse einsetzen könnte.
+
+Ich betrachte die folgenden Probleme als Totalausfall eines Rechners.
+
+*  Hardwarefehler, der Rechner reagiert überhaupt nicht beim Einschalten.
+   Abgesehen von dem Tipp, den Stromanschluss zu überprüfen, gehe ich darauf
+   hier nicht weiter ein.
+
+
+*  Boot-Probleme, zwar passiert etwas, die Hardware scheint größtenteils in
+   Ordnung, aber das Betriebssystem wird nicht gestartet.
+   Hier analysiere ich den Bootprozess Schritt für Schritt, beobachte, wie
+   weit das System kommt und versuche die Ursache zu ermitteln.
+
+*  Der Rechner war normal gestartet, hat eine Zeit lang gearbeitet, aber jetzt
+   reagiert er nicht mehr.
+   Hier versuche ich zunächst den Rechner mit Magic SysRequest halbwegs
+   geordnet neu zu starten und nachträglich zu analysieren.
+   Falls möglich, werte ich die mit SysRequest gewonnenen Erkenntnisse aus.
+
+*  Überlast, Swapping, Thrashing. Ich sehe oder höre, dass der Rechner
+   intensiv arbeitet.
+   Trotzdem reagiert er sehr langsam.
+   Auf Grund von Timeouts kann ich mich nicht einmal mehr anmelden, in einer
+   angemeldeten Shell bekomme ich kein Programm gestartet.
+   Wenn ich die Last nicht auf anderem Weg vom Rechner nehmen kann, bleibt mir
+   auch hier nur, den Rechner neu zu starten.
+   Anschließend versuche ich zu ermitteln, was die Überlast ausgelöst hatte.
+
+*  Ausfälle bei virtuellen Maschinen.
+   Das sind oft die gleichen Fehler wie bei "echten" Maschinen aus Blech.
+   Hinzu kommen Probleme mit der Virtualisierungsschicht.
+   Im Gegenzug bekomme ich mehr Diagnosemöglichkeiten an die Hand.
+
+   Hier gibt es neben dem Totalausfall des Gastsystems noch die Möglichkeit,
+   das das Wirtssystem ausgefallen ist. Diese Fehler behandle ich, wie oben
+   beschrieben.
+
+   Bei den Gastsystemen sind meine Optionen abhängig von der verwendeten
+   Virtualisierungslösung und deren Diagnosewerkzeugen.
+   Manchmal kann ich einfach die Festplattenpartitionen des Gastsystems im
+   Hostsystem oder einem anderen Gastsystem einhängen und dann dort untersuchen.
+   Damit stehen mir dann zusätzliche Werkzeuge zur Verfügung.
+
 ## Bootprobleme {#sec-lokal-bootprobleme}
 
 Eine Art von Totalausfall eines Linux-Servers sind Bootprobleme. Wenn der
@@ -129,6 +177,26 @@ Bootmanagers beschädigt. Grub2 zum Beispiel speichert einen Teil des
 Bootmanagers direkt hinter dem MBR vor der ersten Partition. Eventuell ist
 auch die Partition beziehungsweise das Dateisystem, welches weitere Teile des
 Bootmanagers enthält, beeschädigt.
+
+A> #### Grub-Shell
+A> 
+A> Bei Bootproblemen kann ich den Rechner vielleicht mit der Grub-Shell starten.
+A> In dieser lande ich automatisch, wenn Grub seine Dateien nicht finden kann.
+A> Alternativ gelange ich dorthin, wenn ich im Auswahlmenü mit der Taste `c` die
+A> Konsole oder mit `e` den Editor aufrufe.
+A> Mit `help` bekomme ich alle verfügbaren Befehle angezeigt, mit `help Befehl`
+A> die Hilfe zu einem Befehl.
+A> Mit der Tabulatortaste greife ich auf die automatische Vervollständigung zu,
+A> wo diese zur Verfügung steht.
+A> Mit `boot` kann ich den Rechner schließlich mit meinen Änderungen starten
+A> lassen beziehungsweise mit `reboot` ganz von vorn anfangen.
+A> Das ist praktisch, wenn ich eigentlich in das BIOS wollte, aber den rechten
+A> Zeitpunkt verpasst habe.
+A> 
+A> Wichtig ist, falls ich den Rechner mit meinen Änderungen starten konnte, dass
+A> ich die Änderungen permanent in der Grub-Konfiguration ablege.
+A> Das ist distributionsabhängig, die Anleitung der entsprechenden Distribution
+A> hilft mir da weiter.
 
 Wenn eine Vertauschung der Bootreihenfolge und ein zusätzlicher Datenträger
 ausgeschlossen werden können, starte ich den Rechner von einem Live- oder
@@ -305,6 +373,27 @@ Ich brauche also das Rootkennwort oder eine andere Möglichkeit, eine
 Root-Shell auf dem Rechner zu bekommen (wie zum Beispiel die Option
 `init=/bin/sh`).
 
+A> #### der erste Prozess: init
+A> 
+A> Bei der Erläuterung des [UNIX-Prozessmodelles](#sec-unix-prozessmodell) hatte
+A> ich erwähnt, dass der Lebenszyklus aller Prozesse bis auf den ersten mit dem
+A> `fork()` Systemaufruf beginnt.
+A> Dieser erste Prozess wird vom Kernel gestartet und führt traditionell das
+A> Programm */sbin/init* aus.
+A> Dieses Programm liest seine Konfiguration ein und startet entsprechend dieser
+A> andere Prozesse, welche die Hardware initialisieren oder Dienste
+A> bereitstellen.
+A> Mit dem Kernelparameter `init`, denn der Bootlader an den Kernel übergibt,
+A> kann ich ein anderes Programm bestimmen, dass als erstes gestartet wird.
+A> Mit `init=/bin/sh` lege ich zum Beispiel die Standard-Shell als Startprogramm
+A> fest.
+A> Das ist im Normalfall nicht sinnvoll, da diese Shell keinerlei
+A> Initialisierung vornimmt und somit keine Dateisysteme (ausser dem
+A> Root-Dateisystem) einhängt und auch sonst keine Dienste startet.
+A> In Notfällen, wenn *init* beschädigt ist, oder ich das Kennwort von *root*
+A> nicht weiss, kann ich aber die nötigen Initialisierungen selbst vornehmen
+A> und damit das System wieder benutzbar machen.
+
 Dann starte ich die Dateisystemüberprüfung und -reparatur von Hand für alle
 benötigten Dateisysteme und starte den Rechner anschließend neu. Läuft deer
 Rechner wieder, muss ich nun noch schauen, ob und gegebenenfalls welche
@@ -435,6 +524,29 @@ und diesen Snapshot nur-lesend einzuhängen. Dabei muss ich aber bedenken, dass
 Dateien, die in der VM geöffnet waren, eventuell in einem inkonsistenten
 Zustand sind. Für Backups kann ich jedoch die VM kurz runterfahren, den
 Snapshot anlegen und die VM gleich wieder starten.
+
+A> #### Reparatur mit chroot
+A> 
+A> Manchmal geht die Reparatur eines Systems einfacher, wenn ich den Datenträger
+A> in einem anderen anderen System (Live-System von DVD oder Reparatursystem bei
+A> einer VM) einhänge und mit `chroot` in das defekte System wechsle.
+A> Damit die chroot-Umgebung funktioniert, benötige ich mehr als nur das
+A> Dateisystem.
+A> Viele Programme greifen auf die Informationen des *proc*, *dev* und *sys*
+A> Dateisystems zurück, die ich ohne Vorkehrungen nicht in der chroot-Umgebung
+A> habe.
+A> Darum gehe ich wie folgt vor:
+A> 
+A>     # mount /dev/sdXY /mnt/rescue
+A>     # mount /dev/sdXZ /mnt/rescue/boot
+A>     # mount -o bind /dev /mnt/rescue/dev
+A>     # mount -o bind /sys /mnt/rescue/sys
+A>     # mount -o bind /proc /mnt/rescue/proc
+A>     # chroot /mnt/rescue
+A> 
+A> Dann kann ich zum Beispiel aus der chroot-Umgebung heraus den Bootlader
+A> *grub* mit `grub-install /dev/sdX` erneut im MBR installieren.
+A> Oder mit `update-grub` die Steuerdatei neu zusammensetzen lassen.
 
 ## Fehlersuche beim Initramfs {#sec-lokal-initramfs}
 
@@ -604,13 +716,3 @@ ich über die Datei /proc/sys/kernel/sysrq. Steht in dieser 0, ist Magic
 SysRequest deaktiviert. Bei einer 1 sind alle Funktionen aktiv, bei einer
 höheren Zahl erfahre ich aus der oben erwähnten Datei sysrq.txt, welche
 Funktionen aktiv sind.
-
-## Notizen
-
-*   Partitionen von Festplattenimage einhängen
-
-*   Kasten: grub editieren
-
-*   Kasten 'Zugriff von außen' aus c't 2012/6/S.199
-
-*   Was macht und wie funktioniert `init=/bin/sh`?

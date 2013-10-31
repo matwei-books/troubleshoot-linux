@@ -266,7 +266,7 @@ funktionieren können. Das hat mich schon häufig davor bewahrt, einen
 Netzwerkfehler zu vermuten, wenn lediglich ein Paketfilter
 die Verbindung unterbunden hatte.
 
-## Prozessmodell
+## Prozessmodell {#sec-unix-prozessmodell}
 
 Wenn ich Fehler auf Linux- oder Unix-Systemen suche, ist es vorteilhaft, das
 UNIX-Prozessmodell zumindest in groben Zügen zu verstehen.
