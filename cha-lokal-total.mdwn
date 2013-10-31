@@ -1,6 +1,6 @@
 # Totalausfall {#cha-lokal-totalausfall}
 
-Ein Totalausfall bedeutet für mich zuallererst, der Rechner selbst ist keine
+Ein Totalausfall bedeutet für mich zuallererst: der Rechner selbst ist keine
 große Hilfe bei der Fehlersuche.
 Das muss nicht heißen, dass der Rechner überhaupt nicht mehr reagiert, aber
 auf jeden Fall stehen mir nicht alle Werkzeuge zur Verfügung, die ich sonst
@@ -11,7 +11,6 @@ Ich betrachte die folgenden Probleme als Totalausfall eines Rechners.
 *  Hardwarefehler, der Rechner reagiert überhaupt nicht beim Einschalten.
    Abgesehen von dem Tipp, den Stromanschluss zu überprüfen, gehe ich darauf
    hier nicht weiter ein.
-
 
 *  Boot-Probleme, zwar passiert etwas, die Hardware scheint größtenteils in
    Ordnung, aber das Betriebssystem wird nicht gestartet.
@@ -43,7 +42,7 @@ Ich betrachte die folgenden Probleme als Totalausfall eines Rechners.
    beschrieben.
 
    Bei den Gastsystemen sind meine Optionen abhängig von der verwendeten
-   Virtualisierungslösung und deren Diagnosewerkzeugen.
+   Virtualisierungslösung und deren Werkzeugen zur Diagnose.
    Manchmal kann ich einfach die Festplattenpartitionen des Gastsystems im
    Hostsystem oder einem anderen Gastsystem einhängen und dann dort untersuchen.
    Damit stehen mir dann zusätzliche Werkzeuge zur Verfügung.
@@ -55,7 +54,7 @@ Rechner gar nicht erst startet, kann er seine Dienste nicht erfüllen, von
 Performance gar nicht zu reden.
 
 Zwar treten Bootprobleme eher selten auf, wenn sie erstmal da sind, bekommen
-sie aber die volle Konzentration, weil eben wirklich ``nichts mehr geht``.
+sie aber die volle Konzentration, weil eben wirklich "nichts mehr geht".
 
 Um die Bootprobleme eines kaputten Systems diagnostizieren und beheben zu
 können, muss ich das Verhalten eines gesunden Systems beim Startvorgang
@@ -76,10 +75,10 @@ einteilen:
 3.  Der Bootloader als Bestandteil des Bootmanagers lädt den Kernel und
     das Initramfs und startet den Kernel. Hier werden Änderungen, die ich
     ebentuell im Bootmanager vorgenommen habe, zum ersten Mal wirksam.
-4.  Der Kernel nimmt die wichtsten Systemkomponenten in Betrieb und
+4.  Der Kernel nimmt die wichtigsten Systemkomponenten in Betrieb und
     startet ein Initialisierungsskript vom Initramfs. In dieser Phase kann ich
     nicht eingreifen, nur beobachten.
-5.  Das Initialisierungsskript vom Initramfs lädt Treiber, überprüft das
+5.  Das Initialisierungsskript des Initramfs lädt Treiber, überprüft das
     Root-Dateisystem und hängt dieses ein. Bei Problemen startet es eine
     Shell, in der das Problem interaktiv bearbeitet werden kann.
 6.  Sobald das Root-Dateisystem als rootfs eingehängt ist, übergibt das
@@ -99,7 +98,7 @@ Weise an die Lösung des Problems herangehe, ist es wichtig, dass ich die
 einzelnen Phasen erkennen und auseinander halten kann.
 
 Dazu muss ich gegebenenfalls die nötigen Startinformationen erst freilegen.
-Das können zum einen BIOS-Einstellungen sein, die abhängig von der Hard- und
+Das können zum einen Einstellungen im BIOS sein, die abhängig von der Hard- und
 Firmware und daher nicht Thema dieses Buches sind. Gerade viele moderne
 Linux-Distributionen verstecken die Informationen, die Linux-Kernel und System
 auf den Bildschirm schicken. Mit dem Bootmanager kann ich die betreffenden
@@ -163,7 +162,7 @@ BIOS beim PC), weil diese Einfluss auf das Verhalten des Kernels haben können.
 
 ### Probleme mit dem Bootmanager
 
-Bleibt nach den Selbsstests der Firmware der Bildschirm schwarz, kommt eine
+Bleibt nach den Selbsttests der Firmware der Bildschirm schwarz, kommt eine
 Meldung wie 'Operating system not found' oder erscheinen Fehlermeldungen von
 Grub, Lilo oder welcher Bootmanager vorhanden ist, haben wir ein Problem mit
 dem Bootmanager.
@@ -178,7 +177,7 @@ Datenträger durcheinander gebracht. Eventuell ist die Installation des
 Bootmanagers beschädigt. Grub2 zum Beispiel speichert einen Teil des
 Bootmanagers direkt hinter dem MBR vor der ersten Partition. Eventuell ist
 auch die Partition beziehungsweise das Dateisystem, welches weitere Teile des
-Bootmanagers enthält, beeschädigt.
+Bootmanagers enthält, beschädigt.
 
 A> #### Grub-Shell
 A> 
@@ -197,8 +196,7 @@ A> Zeitpunkt verpasst habe.
 A> 
 A> Wichtig ist, falls ich den Rechner mit meinen Änderungen starten konnte, dass
 A> ich die Änderungen permanent in der Grub-Konfiguration ablege.
-A> Das ist distributionsabhängig, die Anleitung der entsprechenden Distribution
-A> hilft mir da weiter.
+A> Das ist abhängig von der Distribution, deren Anleitung hilft mir da weiter.
 
 Wenn eine Vertauschung der Bootreihenfolge und ein zusätzlicher Datenträger
 ausgeschlossen werden können, starte ich den Rechner von einem Live- oder
@@ -222,7 +220,7 @@ nach Änderungen in den BIOS-Einstellungen. Daher versuche ich
 herauszubekommen, ob eine dieser Bedingungen hier vorliegt und ob ich diese
 möglicherweise rückgängig machen kann.
 
-Testweise kann ich alle Peripherie (USB, seriell, parallel, ...) und oder
+Zum Test kann ich alle Peripherie (USB, seriell, parallel, ...) und oder
 alle nicht zum Booten benötigten Komponenten entfernen. Falls das System dann
 startet, füge ich nach die einzelnen Komponenten wieder hinzu, bis der Fehler
 wieder auftritt.
@@ -237,7 +235,7 @@ Nach Ausgabe einiger Zeilen bleibt der Kernel eventuell mit der Meldung
 'Kernel panic' stehen.
 
 Das kann an einer fehlerhaften Kernkomponente, wie Prozessor, Speicher,
-Chipsatz auf dem Mainboard leigen. Insbesondere, wenn der Kernel gleich nach
+Chipsatz auf dem Mainboard liegen. Insbesondere, wenn der Kernel gleich nach
 dem Anlaufen ohne Panic abbricht. In diesem Fall muss ich mit den
 Kernelparametern experimentieren. Eventuell hilft eine Internet-Suche nach der
 gleichen Hardware in Zusammenhang mit Problemen bei Linux.
@@ -308,7 +306,7 @@ eine Fehlermeldung produziert, welche via syslog protokolliert werden kann (im
 Gegensatz zu einem Kernel-Panik, bei dem kein Logging mehr möglich ist). Wenn
 der Kernel ein Problem entdeckt, gibt er eine `Oops` Nachricht aus und
 beendet den verursachenden Prozess. Die offizielle Dokumentation dazu findet
-sich in der Datei oops_tracing.txt bei der Kernel-Dokumentation. Sobald ein
+sich in der Datei *oops_tracing.txt* bei der Kernel-Dokumentation. Sobald ein
 System einen `Oops` erlebt hat, arbeiten einige interne Ressourcen nicht
 mehr korrekt. Das wiederum kann zu weiteren `Oops` und schließlich zum
 Kernel-Panik führen. Daher ist es bei der Analyse wichtig, sich zunächst auf
@@ -322,7 +320,7 @@ Der Kernel findet sein Root-Dateisystem nicht. Das kann an einem fehlenden
 oder defekten Initramfs liegen. Oder das in der Kernel-Kommandozeile genannte
 Dateisystem ist nicht erreichbar.
 
-Als erstes sehe ich mir hier die Booloader-Konfiguration genau an. Ist das
+Als erstes sehe ich mir hier die Bootloader-Konfiguration genau an. Ist das
 Initramfs korrekt angegeben? Ist das Root-Dateisystem korrekt angegeben? Ist
 (zum Beispiel bei NFS-Rootfs) der Server mit dem Rootfs erreichbar und auf ihm
 das Dateisystem mit dem entsprechenden Protokoll? Eventuell muss ich den
@@ -363,16 +361,18 @@ problematisches Modul identifiziert, kann ich dieses mit
     ...
     error checking filesystem
     ...
-    Give root password for rescue shell or type Control-D for reboot.
+    Give root password for rescue shell or type\
+     Control-D for reboot.
 
 Der Init-Daemon hat ein Problem beim Dateisystemcheck erkannt und bietet mir
-an, dieses in einer Shell zu beheben. Dazu muss ich das Rootkennwort wissen.
+an, dieses in einer Shell zu beheben. Dazu muss ich das Kennwort von *root*
+wissen.
 
-Ein Neustart mit Steuerung-D wird mir nicht weiterhelfen, da wir es hier mit
+Ein Neustart mit `<CTRL>-D` wird mir nicht weiterhelfen, da wir es hier mit
 einem schwerwiegenden Problem im Dateisystem zu tun haben und beim nächsten
 Start genauso weit kommen würden.
 
-Ich brauche also das Rootkennwort oder eine andere Möglichkeit, eine
+Ich brauche also das Kennwort oder eine andere Möglichkeit, eine
 Root-Shell auf dem Rechner zu bekommen (wie zum Beispiel die Option
 `init=/bin/sh`).
 
@@ -386,19 +386,19 @@ A> Programm */sbin/init* aus.
 A> Dieses Programm liest seine Konfiguration ein und startet entsprechend dieser
 A> andere Prozesse, welche die Hardware initialisieren oder Dienste
 A> bereitstellen.
-A> Mit dem Kernelparameter `init`, denn der Bootlader an den Kernel übergibt,
+A> Mit dem Kernelparameter `init`, denn der Bootloader an den Kernel übergibt,
 A> kann ich ein anderes Programm bestimmen, dass als erstes gestartet wird.
 A> Mit `init=/bin/sh` lege ich zum Beispiel die Standard-Shell als Startprogramm
 A> fest.
 A> Das ist im Normalfall nicht sinnvoll, da diese Shell keinerlei
-A> Initialisierung vornimmt und somit keine Dateisysteme (ausser dem
+A> Initialisierung vornimmt und somit keine Dateisysteme (außer dem
 A> Root-Dateisystem) einhängt und auch sonst keine Dienste startet.
 A> In Notfällen, wenn *init* beschädigt ist, oder ich das Kennwort von *root*
-A> nicht weiss, kann ich aber die nötigen Initialisierungen selbst vornehmen
+A> nicht weiß, kann ich aber die nötigen Initialisierungen selbst vornehmen
 A> und damit das System wieder benutzbar machen.
 
-Dann starte ich die Dateisystemüberprüfung und -reparatur von Hand für alle
-benötigten Dateisysteme und starte den Rechner anschließend neu. Läuft deer
+Dann starte ich die Dateisystemüberprüfung von Hand für alle
+benötigten Dateisysteme und starte den Rechner anschließend neu. Läuft der
 Rechner wieder, muss ich nun noch schauen, ob und gegebenenfalls welche
 Dateien ich aus dem Backup ersetzen muss.
 
@@ -410,11 +410,11 @@ Habe ich den Rechner selbst aufgesetzt und mir notiert, welche Partitionen mit
 welchem Dateisystem wo eingehängt sind, dann ist es wirklich so einfach. Bei
 einem fremden Rechner, oder wenn es ein älteres Gerät ist, zu dem ich keine
 Aufzeichnungen habe, dann muss ich noch herausfinden, welche Partitionen ich
-mit fsck überprüfen muss.
+mit `fsck` überprüfen muss.
 
 In der Bildschirmmeldung steht, bei welcher Partition die automatische
-Überprüfung aufgegeben hat. Nötigenfalls kann ich mit Shift-PgUp nach oben
-blättern, wenn die Meldung schon nach oben rausgerollt ist.
+Überprüfung aufgegeben hat. Nötigenfalls kann ich mit `<Shift>-<PgUp>` nach oben
+blättern, wenn die Meldung schon nach oben hinaus gerollt ist.
 
 Aber je nach Alter des Rechners und verwendeter Linux Distribution steht dann
 da entweder ein Gerätename wie /dev/sda1, ein Label wie ``rootfs'' oder eine
@@ -436,15 +436,15 @@ Das Programm blkid zeigt mir sowohl Label als auch UUIDs an:
 
 {line-numbers=off,lang="text"}
     # blkid
-    /dev/sda1: UUID="f779141e-e3b1-4521-9333-9dde9de0b64f" TYPE="ext3" 
-    /dev/sda5: LABEL="swap" UUID="bc3aa59f-55fc-460d-86ef-cf72ce99b70b" TYPE="swap" 
+    /dev/sda1: UUID="f7...4f" TYPE="ext3" 
+    /dev/sda5: LABEL="swap" UUID="bc.." TYPE="swap"
 
 Alternativ kann ich die Gerätedateien mit findfs bestimmen:
 
 {line-numbers=off,lang="text"}
     # findfs LABEL=swap
     /dev/sda5
-    # findfs UUID=f779141e-e3b1-4521-9333-9dde9de0b64f
+    # findfs UUID=f779141e-...-9dde9de0b64f
     /dev/sda1
 
 Habe ich keines dieser Programme, aber file, dann kann ich mir auch wie folgt
@@ -454,19 +454,20 @@ behelfen (Umbruch ist von mir eingefügt):
     # dd if=/dev/sda1 of=sda1 bs=4096 count=1
     1+0 records in
     1+0 records out
-    4096 bytes (4.1 kB) copied, 0.000275722 s, 14.9 MB/s
+    4096 bytes (4.1 kB) copied, 0.00.. s, 14.9 MB/s
     # dd if=/dev/sda5 of=sda5 bs=4096 count=1
     1+0 records in
     1+0 records out
-    4096 bytes (4.1 kB) copied, 0.000103642 s, 39.5 MB/s
+    4096 bytes (4.1 kB) copied, 0.00.. s, 39.5 MB/s
     # file sda1 sda5
     sda1: Linux rev 1.0 ext3 filesystem data, \
-    UUID=f779141e-e3b1-4521-9333-9dde9de0b64f (needs journal recovery) \
+    UUID=f77...0b64f (needs journal recovery) \
     (large files)
-    sda5: Linux/i386 swap file (new style), version 1 (4K pages), \
-    size 1319329 pages, LABEL=swap, UUID=bc3aa59f-55fc-460d-86ef-cf72ce99b70b
+    sda5: Linux/i386 swap file (new style), \
+    version 1 (4K pages), size 1319329 pages, \
+    LABEL=swap, UUID=bc3aa59f-...-cf72ce99b70b
 
-Da file bei der direkten Abfrage der Gerätedateien nur deren Typ angeben
+Da `file` bei der direkten Abfrage der Gerätedateien nur deren Typ angeben
 würde, kopiere ich den ersten Block des Dateisystems in eine Datei und lasse
 diese dann von file analysieren.
 
@@ -505,23 +506,32 @@ die Offsets als Anzahl von Sektoren zu je 512 Byte ausgibt:
     # fdisk -l -u /dev/camion/ssh3 
 
     Disk /dev/camion/ssh3: 4294 MB, 4294967296 bytes
-    255 heads, 63 sectors/track, 522 cylinders, total 8388608 sectors
+    255 heads, 63 sectors/track, 522 cylinders,\
+     total 8388608 sectors
     Units = sectors of 1 * 512 = 512 bytes
-    Sector size (logical/physical): 512 bytes / 4096 bytes
-    I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+    Sector size (logical/physical): 512 bytes /\
+     4096 bytes
+    I/O size (minimum/optimal): 4096 bytes /\
+     4096 bytes
     Disk identifier: 0x000c48f7
 
-                Device Boot      Start         End      Blocks   Id  System
-    /dev/camion/ssh3p1            2048     7706623     3852288   83  Linux
-    /dev/camion/ssh3p2         7708670     8386559      338945    5  Extended
-    Partition 2 does not start on physical sector boundary.
-    /dev/camion/ssh3p5         7708672     8386559      338944   82  Linux swap
+                Device Boot      Start         End\
+          Blocks   Id  System
+    /dev/camion/ssh3p1            2048     7706623\
+         3852288   83  Linux
+    /dev/camion/ssh3p2         7708670     8386559\
+          338945    5  Extended
+    Partition 2 does not start on physical sector \
+    boundary.
+    /dev/camion/ssh3p5         7708672     8386559\
+          338944   82  Linux swap
 
-Der Offset für die Systempartition `ssh3p1` ist $512 * 2048$, also
+Der Offset für die Systempartition `ssh3p1` ist {$$}512 \times 2048{$$}, also
 1048576. Damit kann ich diese Partition im Hostsystem wie folgt einhängen:
 
 {line-numbers=off,lang="text"}
-    # mount /dev/camion/ssh3 /tmp/mnt -o loop,offset=1048576
+    # mount /dev/camion/ssh3 /tmp/mnt \
+            -o loop,offset=1048576
 
 Wenn ich fertig bin, hänge ich die Partition normal mit umount wieder aus.
 
@@ -545,6 +555,7 @@ A> Dateisystems zurück, die ich ohne Vorkehrungen nicht in der chroot-Umgebung
 A> habe.
 A> Darum gehe ich wie folgt vor:
 A> 
+{line-numbers=off,lang="text"}
 A>     # mount /dev/sdXY /mnt/rescue
 A>     # mount /dev/sdXZ /mnt/rescue/boot
 A>     # mount -o bind /dev /mnt/rescue/dev
@@ -621,7 +632,9 @@ Das kann ich mit chroot überprüfen.
 Anschließend baue ich ein neues Initramfs:
 
 {line-numbers=off,lang="text"}
-    # find . | cpio -oH newc | gzip -c > /boot/initrd-test.img
+    # find . \
+    | cpio -oH newc \
+    | gzip -c > /boot/initrd-test.img
 
 Anschließend muss ich dem Bootloader klarmachen, dass er das modifizierte
 Initramfs laden soll.
@@ -706,7 +719,7 @@ Die genannten Schlüsseltasten bewirken das folgende:
 | e | alle Prozesse außer Prozess 1 (init) mit SIGTERM beenden    |
 | i | alle Prozesse außer Prozess 1 (init) mit SIGKILL abschießen |
 | s | alle Dateisystempuffer auf Platte schreiben (sync)          |
-| u | alle Dateisystempuffer nur-lesend einhängen                 |
+| u | alle Dateisysteme nur-lesend einhängen                      |
 | b | Neustart                                                    |
 
 Insbesondere die letzten drei Funktionen bewirken, dass das Dateisystem vor
