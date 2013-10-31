@@ -48,6 +48,15 @@ ISBN 978-1-4717-2849-5
 
 ## Artikel in Zeitschriften, Proceedings, ...
 
+##### Bartsch2013 {#bib-bartsch2013}
+Bartsch, Michael; Service Level Agreements - rechtliche Aspekte;
+Informatik-Spektrum, Volume 36, Ausgabe 5, Oktober 2013, S. 449ff;
+DOI 10.1007/s00287-013-0712-1
+
+In diesem Beitrag für Nichtjuristen geht der Autor in verständlicher Form auf
+die rechtlichen Aspekte von Service Level Agreements als Bestandteil von
+IT-Verträgen ein.
+
 ##### Bonwick1994 {#bib-bonwick1994}
 Bonwick, Jeff; The slab allocator: an object-caching kernel memory
 allocator; Proceedings of the USENIX Summer 1994 Technical Conference on
@@ -60,4 +69,8 @@ der German Unix User Group; Ausgabe 2012/1, S. 61ff
 ##### WSA2011 {#bib-wsa2011}
 Weigend, Johannes and Siedersleben, Johannes and Adersberger, Josef;
 Dynamische Analyse mit dem Software-EKG; Informatik-Spektrum, Volume 34,
-Ausgabe 5, S. 484ff
+Ausgabe 5, Oktober 2011, S. 484ff;
+DOI 10.1007/s00287-011-0541-z
+
+In diesem Papier zeigen die Autoren, wie man komplexe heterogene Systeme
+analysieren kann, wenn man mit einfachen Methoden nicht weiter kommt.

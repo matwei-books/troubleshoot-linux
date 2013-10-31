@@ -38,6 +38,11 @@ einer Rückfrage zu einem Performanceproblem, anstelle eine Verbesserung zu
 bestätigen oder verneinen, die Gegenfrage stellte, ob ihn das etwas kostet.
 Auch dieser Situation kann man mit klaren Vereinbarungen beikommen.
 
+In dem Artikel [[Bartsch2013](#bib-bartsch2013)] geht der Autor auf einige
+rechtliche Aspekte der Gestaltung von Service Level Agreements (SLA) als
+Bestandteil von IT-Verträgen in auch für Nichtjuristen verständlicher Form
+ein.
+
 ## Vertiefung der Erkenntnisse
 
 Um zu einem tieferen Verständnis des Systems zu kommen, kann ich fünfmal warum
