@@ -118,10 +118,12 @@ Beispiel die folgenden Kerneloptionen:
 
 Außerdem gibt es bei Grub2 eventuell in der Konfiguration die Zeile
 
+{line-numbers=off,lang="text"}
     set gfxpayload=$linux_gfx_mode
 
 die ich ändere in
 
+{line-numbers=off,lang="text"}
     set gfxpayload=text
 
 Habe ich die Bootinformationen sichtbar gemacht, kann ich mit Ihrer Hilfe den
@@ -357,6 +359,7 @@ problematisches Modul identifiziert, kann ich dieses mit
 
 ### Stopp bei der Dateisystemüberprüfung
 
+{line-numbers=off,lang="text"}
     ...
     error checking filesystem
     ...
@@ -431,12 +434,14 @@ UUID hilft es mir leider nicht.
 
 Das Programm blkid zeigt mir sowohl Label als auch UUIDs an:
 
+{line-numbers=off,lang="text"}
     # blkid
     /dev/sda1: UUID="f779141e-e3b1-4521-9333-9dde9de0b64f" TYPE="ext3" 
     /dev/sda5: LABEL="swap" UUID="bc3aa59f-55fc-460d-86ef-cf72ce99b70b" TYPE="swap" 
 
 Alternativ kann ich die Gerätedateien mit findfs bestimmen:
 
+{line-numbers=off,lang="text"}
     # findfs LABEL=swap
     /dev/sda5
     # findfs UUID=f779141e-e3b1-4521-9333-9dde9de0b64f
@@ -445,6 +450,7 @@ Alternativ kann ich die Gerätedateien mit findfs bestimmen:
 Habe ich keines dieser Programme, aber file, dann kann ich mir auch wie folgt
 behelfen (Umbruch ist von mir eingefügt):
 
+{line-numbers=off,lang="text"}
     # dd if=/dev/sda1 of=sda1 bs=4096 count=1
     1+0 records in
     1+0 records out
@@ -495,6 +501,7 @@ Option `-l` die Partitionen und deren Offsets auf. Da wir letztere genau
 bestimmen müssen, verwenden wir zusätzlich die Option `-u`, damit fdisk
 die Offsets als Anzahl von Sektoren zu je 512 Byte ausgibt:
 
+{line-numbers=off,lang="text"}
     # fdisk -l -u /dev/camion/ssh3 
 
     Disk /dev/camion/ssh3: 4294 MB, 4294967296 bytes
@@ -513,6 +520,7 @@ die Offsets als Anzahl von Sektoren zu je 512 Byte ausgibt:
 Der Offset für die Systempartition `ssh3p1` ist $512 * 2048$, also
 1048576. Damit kann ich diese Partition im Hostsystem wie folgt einhängen:
 
+{line-numbers=off,lang="text"}
     # mount /dev/camion/ssh3 /tmp/mnt -o loop,offset=1048576
 
 Wenn ich fertig bin, hänge ich die Partition normal mit umount wieder aus.
@@ -602,6 +610,7 @@ Bei Debian-basierten Distributionen ist das Initramfs ein komprimiertes
 cpio-Archiv im Verzeichnis /boot.
 Dieses kann ich wie folgt entpacken:
 
+{line-numbers=off,lang="text"}
     # zcat /boot/initrd.img-$(uname -r) | cpio -idmv
 
 Nun kann ich in den entpackten Verzeichnissen die Skripts anpassen und
@@ -611,6 +620,7 @@ sind.
 Das kann ich mit chroot überprüfen.
 Anschließend baue ich ein neues Initramfs:
 
+{line-numbers=off,lang="text"}
     # find . | cpio -oH newc | gzip -c > /boot/initrd-test.img
 
 Anschließend muss ich dem Bootloader klarmachen, dass er das modifizierte
@@ -648,6 +658,7 @@ Bei Debian und darauf basierenden Distributionen sind das:
 Nachdem ich die Änderungen eingearbeitet habe, erzeuge ich ein Initramfs nach
 Art des Hauses:
 
+{line-numbers=off,lang="text"}
     # update-initramfs -k $(uname -r) -u
 
 Anschließend starte ich den Rechner neu und verifiziere meine Änderungen.
