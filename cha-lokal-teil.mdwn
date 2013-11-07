@@ -1,10 +1,101 @@
 # Partieller Ausfall {#cha-lokal-teilausfall}
 
+## Die ersten Minuten auf dem Server
+
+Bevor ich mich wegen eines Problems an einem Server anmelde, habe ich bereits
+einige Informationen gesammelt.
+
+*   Wie äußert sich das Problem?
+
+*   Wann wurde es zuerst bemerkt?
+
+*   Ist es reproduzierbar?
+
+*   Gibt es zeitliche Muster (zum Beispiel, wenn das Problem immer zur
+    gleichen Stunde auftritt)?
+
+*   Sind alle betroffen oder nur ein Teil der Nutzer?
+
+Damit habe ich schon eine gewisse Vorstellung, wonach ich schauen werde, wenn
+ich mich anmelde.
+Zusätzlich habe ich die Gewohnheit entwickelt, bestimmte Informationen immer
+abzufragen, wenn ich mich an einem Server anmelde.
+Damit bekomme ich einen intuitiven Einblick in den Allgemeinzustand des
+Servers und eventuell weitere Hinweise.
+
+### uptime, w, last
+
+Das Programm `uptime` zeigt mir neben der Systemzeit, wie lange der letzte
+Systemstart zurückliegt, wieviel Benutzer momentan angemeldet sind und die
+durchschnittliche Systemlast der letzten Minute, der letzten fünf Minuten und
+der letzten fünfzehn Minuten.
+
+Eine Abweichung der Systemzeit erschwert zum einen die Korrelation von
+Lognachrichten.
+Außerdem kann sie bei einigen kryptographischen Protokollen, wie zum Beispiel
+*kerberos*, die Verbindung stören.
+
+Die Zeit seit dem letzten Neustart kann auf frühere Probleme hinweisen, wenn
+diese unerwartet kurz ist, der Rechner also außerplanmäßig neu gestartet
+wurde.
+
+Die Anzahl der Benutzer zeigt mir an, ob ich mit jemand Kontakt aufnehmen
+muss, bevor ich schwerwiegende Eingriffe in das System vornehme.
+
+Die Last schließlich zeigt an, wieviel Prozesse in dem betreffenden
+Zeitraum durchschnittlich auf Rechenzeit gewartet haben.
+Eine Durchschnittswert, der kleiner ist als die Anzahl der Prozessoren
+bedeutet, dass die Prozessoren Freilauf hatten, der Server also nicht
+ausgelastet war.
+Ist der Durchschnittswert größer als die Anzahl der Prozessoren bedeutet das,
+dass während des betreffenden Zeitabschnitts mehr Rechenleistung benötigt
+wurde als zur Verfügung stand.
+In diesem Fall ist der Trend interessant, den ich durch Vergleich der Last
+für die drei Zeiträume erkennen kann.
+Bei steigender Last versuche ich so schnell wie möglich für Entlastung zu
+sorgen.
+Ist der Trend fallend, brauche ich nichts unmittelbar zu unternehmen, außer
+die Last weiter im Auge zu behalten.
+Das System kommt nach einer Lastspitze gerade von selbst wieder in den
+normalen Betriebsbereich.
+Natürlich werde ich versuchen die Ursache der Lastspitze zu ermitteln, um zu
+entscheiden, welche präventiven Maßnahmen ich für die Zukunft ergreifen will.
+
+Eine Alternative zu *uptime* ist das Programm `w`.
+Dieses zeigt in der ersten Zeile die gleichen Daten an wie *uptime*.
+In den nachfolgenden zeigt es, wer gerade angemeldet ist, wann er das letzte
+Mal etwas eingegeben hat und welches Programm er zuletzt aufgerufen hat.
+Damit weiß ich gleich, mit wem ich Kontakt aufnehmen muss, wenn noch jemand
+anderes angemeldet ist.
+Das Programm `w` entnimmt, ebenso wie das Programm `who` die Informationen
+über angemeldete Benutzer per Voreinstellung der Datei */var/log/utmp*.
+
+Falls ich den Beginn des Problems mit letzten Änderungen am System korrelieren
+will, rufe ich das Programm `last` auf.
+Dieses Programm zeigt an, wer wann und wie lange am System angemeldet war und
+außerdem die letzten Systemstarts.
+Meist begrenze ich die Anzahl der angezeigten Zeilen, da mich nur die
+letzten Anmeldungen interessieren:
+
+    $ last -5
+    mathias  pts/2        :0.0             Thu Nov  7 07:38   still logged in   
+    mathias  pts/1        :0.0             Thu Nov  7 07:33   still logged in   
+    mathias  pts/0        :0.0             Thu Nov  7 07:21   still logged in   
+    reboot   system boot  3.2.0-55-generic Thu Nov  7 06:48 - 07:57  (01:08)    
+    mathias  pts/1        :0.0             Wed Nov  6 09:10 - 11:49  (02:39)    
+
+`last` entnimmt diese Daten per Voreinstellung der Datei */var/log/wtmp*.
+Diese Datei wird üblicherweise am Monatsanfang umbenannt in */var/log/wtmp.1*,
+so dass immer nur die Daten des laufenden Monats zur Verfügung stehen.
+Will ich die Anmeldungen des Vormonats sehen, gebe ich dieses explizit an:
+
+    $ last -f /var/log/wtmp.1
+
 ## Mount-Fehler {#sec-mount-fehler}
 
 ### mount: / is busy
 
-Dieser Fehler tritt mitunter bei umount auf, aber auch, wenn ich ein
+Dieser Fehler tritt mitunter bei `umount` auf, aber auch, wenn ich ein
 Dateisystem von read-write auf read-only umhängen will.
 Die Meldung `is busy` deutet es schon an, der Kernel, genauer gesagt
 das Dateisystem ist (noch) beschäftigt.
@@ -29,7 +120,7 @@ A>
 A> Abgesehen von den möglichen Sicherheitsproblemen, die die alte Bibliothek
 A> vielleicht noch hat und damit auch die alten Prozesse, kann ich nun das
 A> Dateisystem mit der alten Bibliothek nicht read-only umhängen. Denn die
-A> alte Bibliothek ist zwas nicht mehr im Dateisystem gelinkt, die
+A> alte Bibliothek ist zwar nicht mehr im Dateisystem gelinkt, die
 A> betreffenden Blöcke können aber erst freigegeben werden, wenn der letzte
 A> Prozess, der sie verwendet, beendet ist. Und erst danach kann ich das
 A> Dateisystem read-only umhängen.
@@ -44,7 +135,7 @@ am schnellsten mit:
 
     # fuser -vm $mntpnt
 
-Diesen Befehl rufe ich mit Superuserprivilegien auf, um alle Prozesse
+Diesen Befehl rufe ich mit den Privilegien von *root* auf, um alle Prozesse
 angezeigt zu bekommen.
 Dabei interessieren mich neben der PID und dem Prozessnamen (COMMAND) vor
 allem die Angaben unter ACCESS. Insbesondere Prozesse mit `F` und
