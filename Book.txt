@@ -5,7 +5,7 @@ cha-herangehen.mdwn
 cha-nachbearbeitung.mdwn
 part2.mdwn
 cha-lokal-total.mdwn
-cha-lokal-teil-empty.mdwn
+cha-lokal-teil.mdwn
 cha-lokal-perform-empty.mdwn
 cha-lokal-werkzeuge-empty.mdwn
 part3.mdwn
