@@ -77,6 +77,7 @@ außerdem die letzten Systemstarts.
 Meist begrenze ich die Anzahl der angezeigten Zeilen, da mich nur die
 letzten Anmeldungen interessieren:
 
+{line-numbers=off,lang="text"}
     $ last -5
     mathias pts/2      ..Thu Nov 7 07:38   still...
     mathias pts/1      ..Thu Nov 7 07:33   still...
@@ -89,6 +90,7 @@ Diese Datei wird üblicherweise am Monatsanfang umbenannt in */var/log/wtmp.1*,
 so dass immer nur die Daten des laufenden Monats zur Verfügung stehen.
 Will ich die Anmeldungen des Vormonats sehen, gebe ich dieses explizit an:
 
+{line-numbers=off,lang="text"}
     $ last -f /var/log/wtmp.1
 
 Wenn nur ein Konto für alle Anmeldungen verwendet wird, kann ich mit `history`
@@ -99,12 +101,13 @@ Falls der Benutzer die csh verwendet, schaue ich stattdessen in *.history*.
 
 ### free - Hauptspeicher
 
-Der zweiter Befehl, der mir hilft ein schnelles Bild über den Zustand der
+Der zweite Befehl, der mir hilft ein schnelles Bild über den Zustand der
 Maschine zu bekommen, ist `free`.
 
+{line-numbers=off,lang="text"}
     $  free -m
-                 total used free shared buffers c..
-    Mem:          7734 3466 4267      0     676  ..
+                 total used free shared buffers c...
+    Mem:          7734 3466 4267      0     676  ...
     -/+ buffers/cache: 1432 6301
     Swap:         5153    0 5153
 
@@ -126,14 +129,17 @@ Dieser zeigt mir den verfügbaren Platz auf den Dateisystemen der eingehängten
 Partitionen an.
 Ich rufe diesen Befehl zweimal auf, einmal mit Option `-i`, für die Statistik
 der Inodes und einmal ohne für die Belegung des Plattenplatzes.
+Die Option `-h` ist lediglich für die Ausgabe in menschenlesbarer Form,
+was zum Beispiel heisst, 586G statt der Anzahl in Bytes.
 
-    $ df -hi
-    Filesystem     Inodes IUsed IFree IUse% Mounted on
-    /dev/sda1         37M  2.7M   35M    8% /
-    ...
+{line-numbers=off,lang="text"}
     $ df -h
-    Filesystem      Size  Used Avail Use% Mounted on
-    /dev/sda1       586G  207G  350G  38% /
+    Filesystem   Size  Used Avail Use% Mounted on
+    /dev/sda1    586G  207G  350G  38% /
+    ...
+    $ df -hi
+    Filesystem  Inodes IUsed IFree IUse% Mounted on
+    /dev/sda1      37M  2.7M   35M    8% /
     ...
 
 Mich interessiert vor allem die Spalte mit der prozentualen Nutzung.
@@ -154,24 +160,23 @@ Der nächste Befehl `pstree` zeigt mir, ob die notwendigen Prozesse laufen und
 ob gegebenenfalls Prozesse zuviel sind.
 Die Ausgabe des Befehls sieht auf jeder Maschine anders aus, entsprechend den
 Diensten, die diese anbietet.
-Mit etwas Erfahrung sehe ich damit aber schon intuitiv, ob ein Rechner "krank"
-ist.
+Mit etwas Erfahrung sehe ich damit schon intuitiv, ob ein Rechner "krank" ist.
 
+{line-numbers=off,lang="text"}
     $ pstree -A
     init-+-courierlogger---authdaemond---5*[auth...
          |-2*[courierlogger---couriertcpd]
-	 |-cron
-	 |-famd
-	 |-getty
-	 |-master-+-pickup
-	 |        |-qmgr
-	 |        `-tlsmgr
-	 |-ntpd
-	 |-portmap
-	 |-rsyslogd---3*[{rsyslogd}]
-	 |-sshd---sshd---sshd---bash---pstree
-	 |-6*[stunnel4]
-	 `-udevd
+         |-cron
+         |-getty
+         |-master-+-pickup
+         |        |-qmgr
+         |        `-tlsmgr
+         |-ntpd
+         |-portmap
+         |-rsyslogd---3*[{rsyslogd}]
+         |-sshd---sshd---sshd---bash---pstree
+         |-6*[stunnel4]
+         `-udevd
 
 Der Befehl `ps aux`, auf Systemen, die `pstree` nicht installiert haben, ist
 weit weniger übersichtlich und daher nur ein schwacher Ersatz.
