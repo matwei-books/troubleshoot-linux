@@ -23,7 +23,7 @@ abzufragen, wenn ich mich an einem Server anmelde.
 Damit bekomme ich einen intuitiven Einblick in den Allgemeinzustand des
 Servers und eventuell weitere Hinweise.
 
-### uptime, w, last
+### uptime, w, last - Systemlast und Benutzer
 
 Das Programm `uptime` zeigt mir neben der Systemzeit, wie lange der letzte
 Systemstart zurückliegt, wieviel Benutzer momentan angemeldet sind und die
@@ -78,11 +78,11 @@ Meist begrenze ich die Anzahl der angezeigten Zeilen, da mich nur die
 letzten Anmeldungen interessieren:
 
     $ last -5
-    mathias  pts/2        :0.0             Thu Nov  7 07:38   still logged in   
-    mathias  pts/1        :0.0             Thu Nov  7 07:33   still logged in   
-    mathias  pts/0        :0.0             Thu Nov  7 07:21   still logged in   
-    reboot   system boot  3.2.0-55-generic Thu Nov  7 06:48 - 07:57  (01:08)    
-    mathias  pts/1        :0.0             Wed Nov  6 09:10 - 11:49  (02:39)    
+    mathias pts/2      ..Thu Nov 7 07:38   still...
+    mathias pts/1      ..Thu Nov 7 07:33   still...
+    mathias pts/0      ..Thu Nov 7 07:21   still...
+    reboot  system boot..Thu Nov 7 06:48 - 07:57...
+    mathias pts/1      ..Wed Nov 6 09:10 - 11:49...
 
 `last` entnimmt diese Daten per Voreinstellung der Datei */var/log/wtmp*.
 Diese Datei wird üblicherweise am Monatsanfang umbenannt in */var/log/wtmp.1*,
@@ -90,6 +90,97 @@ so dass immer nur die Daten des laufenden Monats zur Verfügung stehen.
 Will ich die Anmeldungen des Vormonats sehen, gebe ich dieses explizit an:
 
     $ last -f /var/log/wtmp.1
+
+Wenn nur ein Konto für alle Anmeldungen verwendet wird, kann ich mit `history`
+nachschauen, was zuletzt gemacht wurde.
+Bei mehreren Konten schaue ich in der Datei *.bash_history* im
+Benutzerverzeichnis des in der fraglichen Zeit angemeldeten Benutzers nach.
+Falls der Benutzer die csh verwendet, schaue ich stattdessen in *.history*.
+
+### free - Hauptspeicher
+
+Der zweiter Befehl, der mir hilft ein schnelles Bild über den Zustand der
+Maschine zu bekommen, ist `free`.
+
+    $  free -m
+                 total used free shared buffers c..
+    Mem:          7734 3466 4267      0     676  ..
+    -/+ buffers/cache: 1432 6301
+    Swap:         5153    0 5153
+
+Dieser Befehl zeigt mir den insgesamt vorhandenen, den benutzten und den
+freien Speicher an.
+Außerdem wieviel des Speichers für dynamisch vergebene Dateisystem-Caches
+verwendet wurde.
+Mich interessiert jedoch vor allem die letzte Zeile, die angibt, wieviel
+Auslagerungsspeicher zur Verfügung steht und wieviel davon bereits benutzt
+wurde.
+Gerade bei hoher Systemlast sorgt auf Festplatten ausgelagerter RAM für eine
+weitere spürbare Verlangsamung des Systems, so dass ich hier schnell für
+Abhilfe sorgen möchte.
+
+### df - Plattenplatz
+
+Der dritte Befehl schließlich ist `df`.
+Dieser zeigt mir den verfügbaren Platz auf den Dateisystemen der eingehängten
+Partitionen an.
+Ich rufe diesen Befehl zweimal auf, einmal mit Option `-i`, für die Statistik
+der Inodes und einmal ohne für die Belegung des Plattenplatzes.
+
+    $ df -hi
+    Filesystem     Inodes IUsed IFree IUse% Mounted on
+    /dev/sda1         37M  2.7M   35M    8% /
+    ...
+    $ df -h
+    Filesystem      Size  Used Avail Use% Mounted on
+    /dev/sda1       586G  207G  350G  38% /
+    ...
+
+Mich interessiert vor allem die Spalte mit der prozentualen Nutzung.
+Hat diese 100% erreicht, muss ich mit Ausfällen von Diensten rechnen, die, für
+sich betrachtet, unter Umständen nicht gleich auf ein Problem mit dem
+Plattenplatz gedeutet hätten.
+Ab einer Nutzung von 80-90% mache ich mir Gedanken, wie ich für zusätzlichen
+verfügbaren Plattenplatz sorgen kann.
+
+Die verfügbaren Inodes in einem Dateisystem werden eher selten aufgebraucht.
+Dazu müssten auf dem Dateisystem viele kleine Dateien angelegt sein.
+Bei Mailservern mit Postfächern im Maildir-Format oder bei Newsservern kann
+das jedoch vorkommen.
+
+### pstree, ps - laufende Prozesse
+
+Der nächste Befehl `pstree` zeigt mir, ob die notwendigen Prozesse laufen und
+ob gegebenenfalls Prozesse zuviel sind.
+Die Ausgabe des Befehls sieht auf jeder Maschine anders aus, entsprechend den
+Diensten, die diese anbietet.
+Mit etwas Erfahrung sehe ich damit aber schon intuitiv, ob ein Rechner "krank"
+ist.
+
+    $ pstree -A
+    init-+-courierlogger---authdaemond---5*[auth...
+         |-2*[courierlogger---couriertcpd]
+	 |-cron
+	 |-famd
+	 |-getty
+	 |-master-+-pickup
+	 |        |-qmgr
+	 |        `-tlsmgr
+	 |-ntpd
+	 |-portmap
+	 |-rsyslogd---3*[{rsyslogd}]
+	 |-sshd---sshd---sshd---bash---pstree
+	 |-6*[stunnel4]
+	 `-udevd
+
+Der Befehl `ps aux`, auf Systemen, die `pstree` nicht installiert haben, ist
+weit weniger übersichtlich und daher nur ein schwacher Ersatz.
+
+Mit diesen ersten vier Befehlen, die ich beinahe gewohneitsmäßig nach der
+Anmeldung am Server aufrufe, bekomme ich sehr schnell eine intuitive
+Einschätzung - ein Gefühl - für den Zustand des Systems.
+Alle weiteren Schritte hängen vom konkreten Problem und der Situation auf dem
+Rechner ab.
 
 ## Mount-Fehler {#sec-mount-fehler}
 
