@@ -36,6 +36,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/part1.mdwn \
                $(DROPBOXDIR)/part2.mdwn \
                $(DROPBOXDIR)/part3.mdwn \
+               $(DROPBOXDIR)/kolophon.mdwn \
+               $(DROPBOXDIR)/revision.mdwn \
 	       $(DROPBOXDIR)/code/http-injector.pl \
 	       $(DROPBOXDIR)/code/read-syslog.pl \
 	       $(DROPBOXDIR)/code/strace-invocator.sh \
@@ -96,11 +98,13 @@ CHAPTERS = \
 IMAGES = \
     images/eb-allgemein.png \
 #
+.PHONY: revision.mdwn
+
 $(DROPBOXDIR)/%.mdwn: %.mdwn
 	cp $< $@
 
 $(DROPBOXDIR)/%-empty.mdwn: %.mdwn
-	grep '^#' $< | grep -v '## Tip' | sed -e 's/^/\n/' > $@
+	grep '^#' $< | grep -v '^###' | sed -e 's/^/\n/' > $@
 
 $(DROPBOXDIR)/%.txt: %.txt
 	cp $< $@
@@ -127,10 +131,12 @@ dropbox: $(DROPBOXFILES)
 partial: dropbox
 	sleep 10 && leanpub partial_preview
 
-preview: dropbox
+preview: dropbox revision.mdwn
 	sleep 10 && leanpub preview
 
 status:
 	leanpub job_status
 
+clean:
+	rm -f revision.mdwn
 # end of Makefile

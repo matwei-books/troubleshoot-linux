@@ -14,3 +14,5 @@ cha-netz-teil-empty.mdwn
 cha-netz-perform-empty.mdwn
 cha-netz-werkzeuge-empty.mdwn
 literatur.mdwn
+kolophon.mdwn
+revision.mdwn

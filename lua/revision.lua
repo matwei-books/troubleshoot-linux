@@ -39,13 +39,15 @@ function command_revision()
     base_date = certdate(txt)
 
     say(preamble_text)
-    say("Diese Ausgabe basiert auf Revision " .. base_rev)
-    say("von " .. base_date .. ".")
+    say("Diese Ausgabe basiert auf Revision  ")
+    say(base_rev .. " von " .. base_date .. ".")
     if 0 < string.len(changed) or "" == base_rev then
         rc, txt = mtn_automate("get_current_revision_id")
         curr_rev = string.match(txt,"%x+")
 	say("")
-        say("In diesem Buch sind Änderungen bis " .. os.date('%Y-%m-%d'))
-	say("enthalten, die temporäre Revision ist " .. curr_rev .. ".")
+        say("Die Ausgabe beinhaltetet Aktualisierungen bis "
+	    .. os.date('%Y-%m-%d %H:%M,'))
+	say("die zeitweilige Revision ist  ")
+	say(curr_rev .. ".")
     end
 end
