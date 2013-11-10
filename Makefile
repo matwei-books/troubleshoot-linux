@@ -47,6 +47,37 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/images/tcp-handshake.png \
                $(DROPBOXDIR)/images/tcp-shutdown.png \
 #
+
+SOURCES = $(BOOK) \
+          $(PREVIEW) \
+          $(SAMPLE) \
+          preface.mdwn \
+          cha-methoden.mdwn \
+          cha-herangehen.mdwn \
+          cha-nachbearbeitung.mdwn \
+          cha-lokal-total.mdwn \
+          cha-lokal-teil.mdwn \
+          cha-lokal-perform.mdwn \
+          cha-lokal-werkzeuge.mdwn \
+          cha-netz-total.mdwn \
+          cha-netz-teil.mdwn \
+          cha-netz-perform.mdwn \
+          cha-netz-werkzeuge.mdwn \
+          literatur.mdwn \
+          part1.mdwn \
+          part2.mdwn \
+          part3.mdwn \
+	  code/http-injector.pl \
+	  code/read-syslog.pl \
+	  code/strace-invocator.sh \
+          images/eb-allgemein-drakon.png \
+          images/eb-allgemein.png \
+          images/eb-allgemein-yed.png \
+          images/eb-netz-totalausfall-rechner.png \
+          images/tcp-handshake-fail.png \
+          images/tcp-handshake.png \
+          images/tcp-shutdown.png \
+#
 CHAPTERS = \
     preface.mdwn \
     cha-methoden.mdwn \
@@ -63,7 +94,7 @@ CHAPTERS = \
     literatur.mdwn \
 #
 IMAGES = \
-    images/eb-allgmein.png \
+    images/eb-allgemein.png \
 #
 $(DROPBOXDIR)/%.mdwn: %.mdwn
 	cp $< $@
@@ -86,6 +117,9 @@ $(DROPBOXDIR)/images/%.jpg: images/%.jpg
 $(DROPBOXDIR)/images/%.png: images/%.png
 	cp $< $@
 
+revision.mdwn: $(SOURCES) $(IMAGES) Makefile lua/revision.lua
+	mtn --rcfile lua/revision.lua revision > .revision.mdwn
+	mv .revision.mdwn revision.mdwn
 all:
 
 dropbox: $(DROPBOXFILES)
