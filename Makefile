@@ -123,7 +123,7 @@ $(DROPBOXDIR)/images/%.png: images/%.png
 
 revision.mdwn: $(SOURCES) $(IMAGES) Makefile lua/revision.lua
 	mtn --rcfile lua/revision.lua revision > .revision.mdwn
-	cmp .revision.mdwn $@ || mv .revision.mdwn $@
+	cmp --quiet .revision.mdwn $@ || mv .revision.mdwn $@
 all:
 
 dropbox: $(DROPBOXFILES)
