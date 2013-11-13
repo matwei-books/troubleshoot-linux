@@ -5,7 +5,9 @@ cha-herangehen-empty.mdwn
 cha-nachbearbeitung-empty.mdwn
 part2.mdwn
 cha-lokal-total-empty.mdwn
-cha-lokal-teil-empty.mdwn
+cha-5.mdwn
+cha-5-erste-minute.mdwn
+cha-5-mount-probleme.mdwn
 cha-lokal-perform-empty.mdwn
 cha-lokal-werkzeuge-empty.mdwn
 part3.mdwn

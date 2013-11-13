@@ -14,7 +14,6 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-herangehen-empty.mdwn \
                $(DROPBOXDIR)/cha-nachbearbeitung-empty.mdwn \
                $(DROPBOXDIR)/cha-lokal-total-empty.mdwn \
-               $(DROPBOXDIR)/cha-lokal-teil-empty.mdwn \
                $(DROPBOXDIR)/cha-lokal-perform-empty.mdwn \
                $(DROPBOXDIR)/cha-lokal-werkzeuge-empty.mdwn \
                $(DROPBOXDIR)/cha-netz-total-empty.mdwn \
@@ -25,7 +24,9 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-herangehen.mdwn \
                $(DROPBOXDIR)/cha-nachbearbeitung.mdwn \
                $(DROPBOXDIR)/cha-lokal-total.mdwn \
-               $(DROPBOXDIR)/cha-lokal-teil.mdwn \
+               $(DROPBOXDIR)/cha-5.mdwn \
+               $(DROPBOXDIR)/cha-5-erste-minute.mdwn \
+               $(DROPBOXDIR)/cha-5-mount-probleme.mdwn \
                $(DROPBOXDIR)/cha-lokal-perform.mdwn \
                $(DROPBOXDIR)/cha-lokal-werkzeuge.mdwn \
                $(DROPBOXDIR)/cha-netz-total.mdwn \
@@ -58,7 +59,9 @@ SOURCES = $(BOOK) \
           cha-herangehen.mdwn \
           cha-nachbearbeitung.mdwn \
           cha-lokal-total.mdwn \
-          cha-lokal-teil.mdwn \
+          cha-5.mdwn \
+          cha-5-erste-minute.mdwn \
+          cha-5-mount-probleme.mdwn \
           cha-lokal-perform.mdwn \
           cha-lokal-werkzeuge.mdwn \
           cha-netz-total.mdwn \
@@ -86,7 +89,9 @@ CHAPTERS = \
     cha-herangehen.mdwn \
     cha-nachbearbeitung.mdwn \
     cha-lokal-total.mdwn \
-    cha-lokal-teil.mdwn \
+    cha-5.mdwn \
+    cha-5-erste-minute.mdwn \
+    cha-5-mount-probleme.mdwn \
     cha-lokal-perform.mdwn \
     cha-lokal-werkzeuge.mdwn \
     cha-netz-total.mdwn \
