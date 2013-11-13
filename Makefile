@@ -13,7 +13,6 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-methoden-empty.mdwn \
                $(DROPBOXDIR)/cha-herangehen-empty.mdwn \
                $(DROPBOXDIR)/cha-nachbearbeitung-empty.mdwn \
-               $(DROPBOXDIR)/cha-lokal-total-empty.mdwn \
                $(DROPBOXDIR)/cha-lokal-perform-empty.mdwn \
                $(DROPBOXDIR)/cha-lokal-werkzeuge-empty.mdwn \
                $(DROPBOXDIR)/cha-netz-total-empty.mdwn \
@@ -23,7 +22,11 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-methoden.mdwn \
                $(DROPBOXDIR)/cha-herangehen.mdwn \
                $(DROPBOXDIR)/cha-nachbearbeitung.mdwn \
-               $(DROPBOXDIR)/cha-lokal-total.mdwn \
+               $(DROPBOXDIR)/cha-4.mdwn \
+               $(DROPBOXDIR)/cha-4-bootprobleme.mdwn \
+               $(DROPBOXDIR)/cha-4-vm.mdwn \
+               $(DROPBOXDIR)/cha-4-initramfs.mdwn \
+               $(DROPBOXDIR)/cha-4-magic-sysrequest.mdwn \
                $(DROPBOXDIR)/cha-5.mdwn \
                $(DROPBOXDIR)/cha-5-erste-minute.mdwn \
                $(DROPBOXDIR)/cha-5-mount-probleme.mdwn \
@@ -58,7 +61,11 @@ SOURCES = $(BOOK) \
           cha-methoden.mdwn \
           cha-herangehen.mdwn \
           cha-nachbearbeitung.mdwn \
-          cha-lokal-total.mdwn \
+          cha-4.mdwn \
+          cha-4-bootprobleme.mdwn \
+          cha-4-vm.mdwn \
+          cha-4-initramfs.mdwn \
+          cha-4-magic-sysrequest.mdwn \
           cha-5.mdwn \
           cha-5-erste-minute.mdwn \
           cha-5-mount-probleme.mdwn \
@@ -88,7 +95,11 @@ CHAPTERS = \
     cha-methoden.mdwn \
     cha-herangehen.mdwn \
     cha-nachbearbeitung.mdwn \
-    cha-lokal-total.mdwn \
+    cha-4.mdwn \
+    cha-4-bootprobleme.mdwn \
+    cha-4-vm.mdwn \
+    cha-4-initramfs.mdwn \
+    cha-4-magic-sysrequest.mdwn \
     cha-5.mdwn \
     cha-5-erste-minute.mdwn \
     cha-5-mount-probleme.mdwn \

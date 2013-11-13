@@ -4,7 +4,11 @@ cha-methoden.mdwn
 cha-herangehen-empty.mdwn
 cha-nachbearbeitung-empty.mdwn
 part2.mdwn
-cha-lokal-total-empty.mdwn
+cha-4.mdwn
+cha-4-bootprobleme.mdwn
+cha-4-vm.mdwn
+cha-4-initramfs.mdwn
+cha-4-magic-sysrequest.mdwn
 cha-5.mdwn
 cha-5-erste-minute.mdwn
 cha-5-mount-probleme.mdwn
