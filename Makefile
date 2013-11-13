@@ -98,7 +98,7 @@ CHAPTERS = \
 IMAGES = \
     images/eb-allgemein.png \
 #
-.PHONY: revision.mdwn
+.PHONY: proofreading revision.mdwn
 
 $(DROPBOXDIR)/%.mdwn: %.mdwn
 	cp $< $@
@@ -133,6 +133,9 @@ partial: dropbox
 
 preview: dropbox revision.mdwn
 	sleep 10 && leanpub preview
+
+proofreading:
+	bin/make_proofreading_file
 
 status:
 	leanpub job_status
