@@ -5,14 +5,17 @@ SLUG=troubleshoot-linux-server-and-networks
 TXTLST=Book.txt
 
 TODAY=$(date '+%Y%m%d')
-TMPDIR="tmp-proofreading/${SLUG}-${TODAY}"
+TMPBAS="tmp-proofr"
+TMPDIR="${TMPBAS}/${SLUG}-${TODAY}"
 MSCDIR=manuscript
 PRVDIR=preview
+OUTDIR=proofr
 
 TEXTS=$(cat "${MSCDIR}/${TXTLST}")
 
 rm -rf tmp-proofreading
 mkdir -p "${TMPDIR}"
+mkdir -p "${OUTDIR}"
 
 for T in $TEXTS; do
     cp "${MSCDIR}/${T}" "${TMPDIR}"
@@ -21,6 +24,4 @@ done
 cp "${MSCDIR}/${TXTLST}" "${TMPDIR}"
 cp "${PRVDIR}/${SLUG}-preview.pdf" "${TMPDIR}"
 
-mtn status > "${TMPDIR}/Version"
-
-tar -C tmp-proofreading -czvf "${SLUG}-${TODAY}.tar.gz" .
+tar -C ${TMPBAS} -czvf "${OUTDIR}/${SLUG}-${TODAY}.tar.gz" .

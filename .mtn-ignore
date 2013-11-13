@@ -6,8 +6,10 @@
 \.out$
 \.pdf$
 ^preview$
+^proofr$
+^revision\.mdwn$
 ^recherche$
 \.toc$
 ^TODO.otl$
-^tmp-proofreading$
+^tmp-proofr$
 ^troubleshoot-linux-server-and-networks-[0-9]{8}\.tar\.gz$
