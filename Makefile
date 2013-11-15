@@ -13,31 +13,24 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-methoden-empty.mdwn \
                $(DROPBOXDIR)/cha-herangehen-empty.mdwn \
                $(DROPBOXDIR)/cha-nachbearbeitung-empty.mdwn \
-               $(DROPBOXDIR)/cha-lokal-perform-empty.mdwn \
-               $(DROPBOXDIR)/cha-lokal-werkzeuge-empty.mdwn \
-               $(DROPBOXDIR)/cha-netz-total-empty.mdwn \
-               $(DROPBOXDIR)/cha-netz-teil-empty.mdwn \
-               $(DROPBOXDIR)/cha-netz-perform-empty.mdwn \
-               $(DROPBOXDIR)/cha-netz-werkzeuge-empty.mdwn \
                $(DROPBOXDIR)/cha-methoden.mdwn \
                $(DROPBOXDIR)/cha-herangehen.mdwn \
                $(DROPBOXDIR)/cha-nachbearbeitung.mdwn \
-               $(DROPBOXDIR)/cha-4.mdwn \
-               $(DROPBOXDIR)/cha-4-bootprobleme.mdwn \
-               $(DROPBOXDIR)/cha-4-vm.mdwn \
-               $(DROPBOXDIR)/cha-4-initramfs.mdwn \
-               $(DROPBOXDIR)/cha-4-magic-sysrequest.mdwn \
-               $(DROPBOXDIR)/cha-5.mdwn \
-               $(DROPBOXDIR)/cha-5-erste-minute.mdwn \
-               $(DROPBOXDIR)/cha-5-mount-probleme.mdwn \
-               $(DROPBOXDIR)/cha-lokal-perform.mdwn \
-               $(DROPBOXDIR)/cha-7.mdwn \
-               $(DROPBOXDIR)/cha-7-vmstat.mdwn \
-               $(DROPBOXDIR)/cha-lokal-werkzeuge.mdwn \
-               $(DROPBOXDIR)/cha-netz-total.mdwn \
-               $(DROPBOXDIR)/cha-netz-teil.mdwn \
-               $(DROPBOXDIR)/cha-netz-perform.mdwn \
-               $(DROPBOXDIR)/cha-netz-werkzeuge.mdwn \
+               $(DROPBOXDIR)/cha-04.mdwn \
+               $(DROPBOXDIR)/cha-04-bootprobleme.mdwn \
+               $(DROPBOXDIR)/cha-04-vm.mdwn \
+               $(DROPBOXDIR)/cha-04-initramfs.mdwn \
+               $(DROPBOXDIR)/cha-04-magic-sysrequest.mdwn \
+               $(DROPBOXDIR)/cha-05.mdwn \
+               $(DROPBOXDIR)/cha-05-erste-minute.mdwn \
+               $(DROPBOXDIR)/cha-05-mount-probleme.mdwn \
+               $(DROPBOXDIR)/cha-06.mdwn \
+               $(DROPBOXDIR)/cha-07.mdwn \
+               $(DROPBOXDIR)/cha-07-vmstat.mdwn \
+               $(DROPBOXDIR)/cha-08.mdwn \
+               $(DROPBOXDIR)/cha-09.mdwn \
+               $(DROPBOXDIR)/cha-10.mdwn \
+               $(DROPBOXDIR)/cha-11.mdwn \
                $(DROPBOXDIR)/literatur.mdwn \
                $(DROPBOXDIR)/part1.mdwn \
                $(DROPBOXDIR)/part2.mdwn \
@@ -63,21 +56,26 @@ SOURCES = $(BOOK) \
           cha-methoden.mdwn \
           cha-herangehen.mdwn \
           cha-nachbearbeitung.mdwn \
-          cha-4.mdwn \
-          cha-4-bootprobleme.mdwn \
-          cha-4-vm.mdwn \
-          cha-4-initramfs.mdwn \
-          cha-4-magic-sysrequest.mdwn \
-          cha-5.mdwn \
-          cha-5-erste-minute.mdwn \
-          cha-5-mount-probleme.mdwn \
+          cha-04.mdwn \
+          cha-04-bootprobleme.mdwn \
+          cha-04-vm.mdwn \
+          cha-04-initramfs.mdwn \
+          cha-04-magic-sysrequest.mdwn \
+          cha-05.mdwn \
+          cha-05-erste-minute.mdwn \
+          cha-05-mount-probleme.mdwn \
+          cha-06.mdwn \
           cha-lokal-perform.mdwn \
-          cha-7.mdwn \
-          cha-7-vmstat.mdwn \
+          cha-07.mdwn \
+          cha-07-vmstat.mdwn \
           cha-lokal-werkzeuge.mdwn \
+          cha-08.mdwn \
           cha-netz-total.mdwn \
+          cha-09.mdwn \
           cha-netz-teil.mdwn \
+          cha-10.mdwn \
           cha-netz-perform.mdwn \
+          cha-11.mdwn \
           cha-netz-werkzeuge.mdwn \
           literatur.mdwn \
           part1.mdwn \
@@ -99,23 +97,23 @@ CHAPTERS = \
     cha-methoden.mdwn \
     cha-herangehen.mdwn \
     cha-nachbearbeitung.mdwn \
-    cha-4.mdwn \
-    cha-4-bootprobleme.mdwn \
-    cha-4-vm.mdwn \
-    cha-4-initramfs.mdwn \
-    cha-4-magic-sysrequest.mdwn \
-    cha-5.mdwn \
-    cha-5-erste-minute.mdwn \
-    cha-5-mount-probleme.mdwn \
-    cha-lokal-perform.mdwn \
-    cha-7.mdwn \
-    cha-7-vmstat.mdwn \
-    cha-lokal-werkzeuge.mdwn \
-    cha-netz-total.mdwn \
-    cha-netz-teil.mdwn \
-    cha-netz-perform.mdwn \
-    cha-netz-werkzeuge.mdwn \
+    cha-04.mdwn \
+    cha-04-bootprobleme.mdwn \
+    cha-04-vm.mdwn \
+    cha-04-initramfs.mdwn \
+    cha-04-magic-sysrequest.mdwn \
+    cha-05.mdwn \
+    cha-05-erste-minute.mdwn \
+    cha-05-mount-probleme.mdwn \
+    cha-06.mdwn \
+    cha-07.mdwn \
+    cha-07-vmstat.mdwn \
+    cha-08.mdwn \
+    cha-09.mdwn \
+    cha-10.mdwn \
+    cha-11.mdwn \
     literatur.mdwn \
+    kolophon.mdwn \
 #
 IMAGES = \
     images/eb-allgemein.png \

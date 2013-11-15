@@ -1,0 +1,5 @@
+# Totalausfall des Netzwerks {#cha-netz-totalausfall}
+
+Habe ich an einem Rechner überhaupt keine Netzverbindung, oder kann ich ein
+ganzes Netzsegment nicht erreichen, spreche ich von einem Totalausfall.
+

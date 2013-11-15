@@ -1,0 +1,6 @@
+# Performance des Rechners {#cha-lokal-performance}
+
+Der Rechner funktioniert zwar, aber alles erscheint zäh und in Zeitlupe
+abzulaufen. Jobs brauchen eine gefühlte Ewigkeit, die Tastatur scheint mit
+8 Baud angeschlossen. Irgendwo sind Engpässe, aber wo?
+
