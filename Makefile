@@ -31,6 +31,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-5-erste-minute.mdwn \
                $(DROPBOXDIR)/cha-5-mount-probleme.mdwn \
                $(DROPBOXDIR)/cha-lokal-perform.mdwn \
+               $(DROPBOXDIR)/cha-7.mdwn \
                $(DROPBOXDIR)/cha-lokal-werkzeuge.mdwn \
                $(DROPBOXDIR)/cha-netz-total.mdwn \
                $(DROPBOXDIR)/cha-netz-teil.mdwn \

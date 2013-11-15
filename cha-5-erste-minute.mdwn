@@ -22,7 +22,7 @@ abzufragen, wenn ich mich an einem Server anmelde.
 Damit bekomme ich einen intuitiven Einblick in den Allgemeinzustand des
 Servers und eventuell weitere Hinweise.
 
-### uptime, w, last - Systemlast und Benutzer
+### uptime, vmstat - Systemlast
 
 Das Programm `uptime` zeigt mir neben der Systemzeit, wie lange der letzte
 Systemstart zurückliegt, wieviel Benutzer momentan angemeldet sind und die
@@ -59,6 +59,43 @@ Das System kommt nach einer Lastspitze gerade von selbst wieder in den
 normalen Betriebsbereich.
 Natürlich werde ich versuchen die Ursache der Lastspitze zu ermitteln, um zu
 entscheiden, welche präventiven Maßnahmen ich für die Zukunft ergreifen will.
+
+Mit dem Programm `vmstat` bekomme ich ein genaueres Gefühl dafür, wie es einer
+Maschine im Moment gerade geht.
+Beim Anmelden an der Maschine rufe ich dieses oft wie folgt auf:
+
+{line-numbers=off,lang="text"}
+    $ vmstat -SM 1 5
+
+Das kostet mich etwa 5 Sekunden, bis die vollständige Ausgabe erscheint:
+
+{line-numbers=off,lang="text"}
+    procs --memory--- -swap- ---io-- -system- ----cpu----
+     r  b swpd..cache si  so  bi  bo   in  cs us sy id wa
+     1  0    0..  651  0   0 113  14  105 192  3  2 94  1
+     0  0    0..  651  0   0   0   0   78 192  2  0 98  0
+     0  0    0..  651  0   0   0   0   88 231  1  1 98  0
+     0  0    0..  651  0   0   0   0   73 189  1  1 98  0
+     0  0    0..  651  0   0   0   0   91 201  1  1 98  0
+
+Um mich mit dem Rechner vertraut zu machen, das heißt möglichst vor einem
+Problem, schaue ich mir die Spalten unter *system* und *cpu* an.
+Insbesondere die Anzahl der Interrupts (*in*) und Kontextwechsel (*cs*) sowie
+dir Prozentwert der CPU-Idle-Zeit (*id*) geben mir eine Idee dafür, was auf
+dem betreffenden Rechner "normal" ist.
+Diese Normalwerte kann ich auch in der Rechnerdokumentation festhalten.
+
+Weichen diese Werte signifikant ab, hat der Rechner ein Lastproblem und ich
+schaue mir die anderen Werte an.
+Außerdem lass ich dann das Programm oft mit den Optionen `vmstat -SM 1`
+dauerhauft in einer Extra-Konsole laufen um meine Bemühungen, die Rechnerlast
+zu reduzieren, verifizieren zu können.
+
+Sind unter *swap* Werte ungleich 0 zu sehen, heißt das dass das Betriebssystem
+in diesem Moment Hauptspeicher aus- (*so*) oder einlagert (*si*).
+Das deutet eindeutig auf Speicherprobleme hin.
+
+### w, last - Benutzer
 
 Eine Alternative zu *uptime* ist das Programm `w`.
 Dieses zeigt in der ersten Zeile die gleichen Daten an wie *uptime*.
