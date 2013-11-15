@@ -13,7 +13,8 @@ cha-5.mdwn
 cha-5-erste-minute.mdwn
 cha-5-mount-probleme.mdwn
 cha-lokal-perform-empty.mdwn
-cha-lokal-werkzeuge-empty.mdwn
+cha-7.mdwn
+cha-7-vmstat.mdwn
 part3.mdwn
 cha-netz-total-empty.mdwn
 cha-netz-teil-empty.mdwn

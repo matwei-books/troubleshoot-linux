@@ -13,7 +13,8 @@ cha-5.mdwn
 cha-5-erste-minute.mdwn
 cha-5-mount-probleme.mdwn
 cha-lokal-perform.mdwn
-cha-lokal-werkzeuge.mdwn
+cha-7.mdwn
+cha-7-vmstat.mdwn
 part3.mdwn
 cha-netz-total.mdwn
 cha-netz-teil.mdwn

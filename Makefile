@@ -32,6 +32,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-5-mount-probleme.mdwn \
                $(DROPBOXDIR)/cha-lokal-perform.mdwn \
                $(DROPBOXDIR)/cha-7.mdwn \
+               $(DROPBOXDIR)/cha-7-vmstat.mdwn \
                $(DROPBOXDIR)/cha-lokal-werkzeuge.mdwn \
                $(DROPBOXDIR)/cha-netz-total.mdwn \
                $(DROPBOXDIR)/cha-netz-teil.mdwn \
@@ -71,6 +72,8 @@ SOURCES = $(BOOK) \
           cha-5-erste-minute.mdwn \
           cha-5-mount-probleme.mdwn \
           cha-lokal-perform.mdwn \
+          cha-7.mdwn \
+          cha-7-vmstat.mdwn \
           cha-lokal-werkzeuge.mdwn \
           cha-netz-total.mdwn \
           cha-netz-teil.mdwn \
@@ -105,6 +108,8 @@ CHAPTERS = \
     cha-5-erste-minute.mdwn \
     cha-5-mount-probleme.mdwn \
     cha-lokal-perform.mdwn \
+    cha-7.mdwn \
+    cha-7-vmstat.mdwn \
     cha-lokal-werkzeuge.mdwn \
     cha-netz-total.mdwn \
     cha-netz-teil.mdwn \
