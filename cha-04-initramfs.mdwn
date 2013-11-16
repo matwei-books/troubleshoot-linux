@@ -1,25 +1,15 @@
 
-## Fehlersuche beim Initramfs {#sec-lokal-initramfs}
+## Fehlersuche im Initramfs {#sec-lokal-initramfs}
 
 Einen wesentlichen Einfluss auf den Systemstart hat das Initramfs.
 Das ist ein kleines, komprimiertes Dateisystem, das zusammen mit dem Kernel
 vom Bootloader in den Hauptspeicher geladen wird und dann für das Laden beim
 Start benötigter Treiber und deren Konfiguration zuständig ist.
-Damit ist es möglich, einen modularen Kernel, wie er bei den beisten
+Damit ist es möglich, einen modularen Kernel, wie er bei den meisten
 Distributionen heutzutage verwendet wird, an unterschiedliche Hardware
 anzupassen.
 Somit ist es nur noch in seltenen Fällen nötig, einen Kernel speziell für
 eine bestimmte Maschine zu kompilieren.
-
-Im Rahmen der Fehlersuche beschäftige ich mich mit dem Initramfs eigentlich
-nur, wenn ein System nicht startet. Dabei interessieren mich vor allem
-folgende Fragen:
-
-*   Wie funktioniert das Initramfs?
-
-*   Wie kann ich Fehler im Initramfs finden?
-
-*   Wie mache ich eine gefundene Lösung permanent?
 
 ### Wie funktioniert das Initramfs?
 
@@ -32,6 +22,14 @@ In dieses entpackt er das komprimierte Initramfs.
 Anschließend startet er das Skript init in der Wurzel der virtuellen RAM-Disk.
 Alles weitere kann durch Analyse dieses Skripts erschlossen werden und ist von
 Distribution zu Distribution verschieden.
+
+Im Rahmen der Fehlersuche beschäftige ich mich mit dem Initramfs nur,
+wenn ein System nicht startet.
+Dabei interessieren mich vor allem folgende Fragen:
+
+*   Wie kann ich Fehler im Initramfs finden?
+
+*   Wie mache ich eine gefundene Lösung permanent?
 
 ### Wie kann ich Fehler im Initramfs finden?
 
@@ -70,7 +68,7 @@ Anschließend baue ich ein neues Initramfs:
 
 Anschließend muss ich dem Bootloader klarmachen, dass er das modifizierte
 Initramfs laden soll.
-Bei Grup ist das kein Problem, da ich die Booteinträge während des
+Bei Grub ist das kein Problem, da ich die Booteinträge während des
 Bootvorgangs modifizieren kann.
 Bei anderen Bootloadern muss ich diesen gegebenenfalls neu konfigurieren
 und/oder installieren.
@@ -81,13 +79,14 @@ TFTP-Server an, so dass das modifizierte Initramfs geladen wird.
 
 Habe ich im vorigen Schritt eine Lösung für mein Problem gefunden, dann will
 ich diese dauerhaft im System verankern.
-Hier kommt aber das Problem in's Spiel, dass bei jedem Kernelupdate oder der
+Hier kommt das Problem in's Spiel, dass bei jedem Kernelupdate oder der
 Installation von Kernelmodulen automatisch ein neues Initramfs erzeugt wird.
 Dabei werden meine Änderungen ignoriert, wenn ich sie nicht an den richtigen
 Stellen unterbringe.
 
 #### Permanente Initramfs-Modifikationen bei Debian GNU/Linux
-Bei Debian und darauf basierenden Distributionen sind das:
+
+Bei Debian und darauf basierenden Distributionen sind diese Stellen:
 
 *   /etc/initramfs-tools/scripts - für eigene Skripts
 
