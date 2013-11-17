@@ -2,7 +2,13 @@ preface.mdwn
 part1.mdwn
 cha-methoden.mdwn
 cha-herangehen-empty.mdwn
-cha-nachbearbeitung-empty.mdwn
+cha-03.mdwn
+cha-03-kontrolle.mdwn
+cha-03-vertiefung.mdwn
+cha-03-verallgemeinern.mdwn
+cha-03-verhindern.mdwn
+cha-03-schulung.mdwn
+cha-03-detail-gesamt.mdwn
 part2.mdwn
 cha-04.mdwn
 cha-05.mdwn

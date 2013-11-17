@@ -12,10 +12,15 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/preface.mdwn \
                $(DROPBOXDIR)/cha-methoden-empty.mdwn \
                $(DROPBOXDIR)/cha-herangehen-empty.mdwn \
-               $(DROPBOXDIR)/cha-nachbearbeitung-empty.mdwn \
                $(DROPBOXDIR)/cha-methoden.mdwn \
                $(DROPBOXDIR)/cha-herangehen.mdwn \
-               $(DROPBOXDIR)/cha-nachbearbeitung.mdwn \
+               $(DROPBOXDIR)/cha-03.mdwn \
+               $(DROPBOXDIR)/cha-03-kontrolle.mdwn \
+               $(DROPBOXDIR)/cha-03-vertiefung.mdwn \
+               $(DROPBOXDIR)/cha-03-verallgemeinern.mdwn \
+               $(DROPBOXDIR)/cha-03-verhindern.mdwn \
+               $(DROPBOXDIR)/cha-03-schulung.mdwn \
+               $(DROPBOXDIR)/cha-03-detail-gesamt.mdwn \
                $(DROPBOXDIR)/cha-04.mdwn \
                $(DROPBOXDIR)/cha-04-bootprobleme.mdwn \
                $(DROPBOXDIR)/cha-04-vm.mdwn \
@@ -56,7 +61,13 @@ SOURCES = $(BOOK) \
           preface.mdwn \
           cha-methoden.mdwn \
           cha-herangehen.mdwn \
-          cha-nachbearbeitung.mdwn \
+          cha-03.mdwn \
+          cha-03-kontrolle.mdwn \
+          cha-03-vertiefung.mdwn \
+          cha-03-verallgemeinern.mdwn \
+          cha-03-verhindern.mdwn \
+          cha-03-schulung.mdwn \
+          cha-03-detail-gesamt.mdwn \
           cha-04.mdwn \
           cha-04-bootprobleme.mdwn \
           cha-04-vm.mdwn \
@@ -98,7 +109,13 @@ CHAPTERS = \
     preface.mdwn \
     cha-methoden.mdwn \
     cha-herangehen.mdwn \
-    cha-nachbearbeitung.mdwn \
+    cha-03.mdwn \
+    cha-03-kontrolle.mdwn \
+    cha-03-vertiefung.mdwn \
+    cha-03-verhindern.mdwn \
+    cha-03-verallgemeinern.mdwn \
+    cha-03-schulung.mdwn \
+    cha-03-detail-gesamt.mdwn \
     cha-04.mdwn \
     cha-04-bootprobleme.mdwn \
     cha-04-vm.mdwn \
