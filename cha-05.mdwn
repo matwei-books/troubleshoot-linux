@@ -1,2 +1,6 @@
 # Partieller Ausfall {#cha-lokal-teilausfall}
 
+Bei einem Teilausfall auf einem Server sind nur einzelne Dienste des Systems
+betroffen.
+Dann steht mir, im Gegensatz zum Totalausfall, meist die gesamte Vielfalt an
+Werkzeugen zur Diagnose zur Verfügung.
