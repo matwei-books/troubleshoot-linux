@@ -13,7 +13,7 @@ Das erscheint zumindest bei grafischen Oberflächen für die Administration
 als der einfachste Weg.
 Allerdings muss ich dann immer zwischen dem Hostsystem beziehungsweise der
 Administrationsoberfläche und der VM, mit der ich das Festplattenimage
-untersuche wechseln.
+untersuche, wechseln.
 Dadurch verliere ich Zeit beim Zuordnen, Ein- und Aushängen und den
 Startversuchen.
 
@@ -76,7 +76,7 @@ eventuell in einem inkonsistenten Zustand sind.
 A> #### Reparatur mit chroot
 A> 
 A> Manchmal geht die Reparatur eines Systems einfacher, wenn ich den Datenträger
-A> in einem anderen anderen System (Live-System von DVD oder Reparatursystem bei
+A> in einem anderen System (Live-System von DVD oder Reparatursystem bei
 A> einer VM) einhänge und mit `chroot` in das defekte System wechsle.
 A> Damit die chroot-Umgebung funktioniert, benötige ich mehr als nur das
 A> Dateisystem.

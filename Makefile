@@ -26,6 +26,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-05-mount-probleme.mdwn \
                $(DROPBOXDIR)/cha-06.mdwn \
                $(DROPBOXDIR)/cha-07.mdwn \
+               $(DROPBOXDIR)/cha-07-busybox.mdwn \
                $(DROPBOXDIR)/cha-07-vmstat.mdwn \
                $(DROPBOXDIR)/cha-08.mdwn \
                $(DROPBOXDIR)/cha-09.mdwn \
@@ -67,6 +68,7 @@ SOURCES = $(BOOK) \
           cha-06.mdwn \
           cha-lokal-perform.mdwn \
           cha-07.mdwn \
+          cha-07-busybox.mdwn \
           cha-07-vmstat.mdwn \
           cha-lokal-werkzeuge.mdwn \
           cha-08.mdwn \
@@ -107,6 +109,7 @@ CHAPTERS = \
     cha-05-mount-probleme.mdwn \
     cha-06.mdwn \
     cha-07.mdwn \
+    cha-07-busybox.mdwn \
     cha-07-vmstat.mdwn \
     cha-08.mdwn \
     cha-09.mdwn \

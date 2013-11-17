@@ -24,8 +24,8 @@ Mit normalen Mitteln werde ich dieser Situation nicht mehr Herr, da ich
 nicht genug Einfluss nehmen kann.
 Als letzter Ausweg bliebe hier nur ein hartes Ausschalten des Systems mit den
 entsprechenden Folgen, wie Fehlern im Dateisystem und beschädigten Dateien.
-Bei einer sehr großen Platte würde allein der Dateisystemcheck ewig dauern,
-bis das System wieder einsatzfähig wäre.
+Bei einer sehr großen Platte würde es allein wegen des Dateisystemchecks ewig
+dauern, bis das System wieder einsatzfähig wäre.
 
 Hier hilft mir der Magic SysRequest, wenn ich Zugang zur Konsole habe.
 Der Magic SysRequest besteht aus der Tastenkombination `<Alt>` plus
@@ -39,12 +39,12 @@ jeweils einigen Sekunden Abstand die Tasten `r`, `e`, `i`,
 
 Die genannten Schlüsseltasten bewirken das folgende:
 
-| r | X11 die Tastatur entziehen                                  |
-| e | alle Prozesse außer Prozess 1 (init) mit SIGTERM beenden    |
-| i | alle Prozesse außer Prozess 1 (init) mit SIGKILL abschießen |
-| s | alle Dateisystempuffer auf Platte schreiben (sync)          |
-| u | alle Dateisysteme nur-lesend einhängen                      |
-| b | Neustart                                                    |
+| r | X11 die Tastatur entziehen                           |
+| e | alle Prozesse außer Prozess 1 mit SIGTERM beenden    |
+| i | alle Prozesse außer Prozess 1 mit SIGKILL abschießen |
+| s | alle Dateisystempuffer auf Platte schreiben          |
+| u | alle Dateisysteme nur-lesend einhängen               |
+| b | Neustart                                             |
 
 Insbesondere die letzten drei Funktionen bewirken, dass das Dateisystem vor
 dem Neustart sauber ausgehängt wird.

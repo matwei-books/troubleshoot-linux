@@ -26,8 +26,8 @@ ein:
     startet ein Initialisierungsskript vom Initramfs. In dieser Phase kann ich
     nicht eingreifen, nur beobachten.
 5.  Das Initialisierungsskript des Initramfs lädt Treiber, überprüft das
-    Root-Dateisystem und hängt dieses ein. Bei Problemen startet es eine
-    Shell, in der das Problem interaktiv bearbeitet werden kann.
+    Root-Dateisystem und hängt dieses ein. Bei einem Problem startet es eine
+    Shell, in der dieses interaktiv bearbeitet werden kann.
 6.  Sobald das Root-Dateisystem als rootfs eingehängt ist, übergibt das
     Initialisierungsskript an den Initd des Systems, der über Skripts weitere
     Dateisysteme einhängt sowie Hintergrunddienste und Anmeldeprogramme startet.
@@ -44,12 +44,14 @@ Weise an die Lösung herangehe, ist es wichtig, dass ich die
 einzelnen Phasen erkennen und auseinander halten kann.
 
 Dazu muss ich gegebenenfalls die nötigen Startinformationen erst freilegen.
-Das können zum einen Einstellungen im BIOS sein, die abhängig von der Hard- und
-Firmware und daher nicht Thema dieses Buches sind. Gerade viele moderne
-Linux-Distributionen verstecken die Informationen, die Linux-Kernel und System
-auf den Bildschirm schicken. Mit dem Bootmanager kann ich die betreffenden
-Kerneloptionen ändern, um mehr Informationen zu erhalten. So entferne ich zum
-Beispiel die folgenden Kerneloptionen:
+Das können zum einen Einstellungen im BIOS sein, die abhängig von der Hard-
+und Firmware und daher nicht Thema dieses Buches sind.
+
+Viele moderne Linux-Distributionen verstecken die Informationen,
+die Linux-Kernel und System auf den Bildschirm schicken.
+Mit dem Bootmanager kann ich die betreffenden Kerneloptionen ändern,
+um mehr Informationen zu erhalten.
+So entferne ich zum Beispiel die folgenden Kerneloptionen:
 
 *  `quiet`
 
@@ -74,9 +76,9 @@ Gibt es bei Grub2 in der Konfiguration die Zeile
 Habe ich die Bootinformationen sichtbar gemacht, kann ich mit Ihrer Hilfe den
 Bootvorgang besser diagnostizieren und die einzelnen Phasen unterscheiden.
 
-Nach den Firmwaremeldungen meldet sich der Bootmanager. Manchmal nur mit einer
-kurzen Zeile, die den Namen des Bootmanagers enthält, oft
-aber auch mit einem Menü, aus dem ich das System, welches starten soll,
+Nach den Firmwaremeldungen meldet sich der Bootmanager.
+Manchmal nur mit einer kurzen Zeile, die den Namen des Bootmanagers enthält.
+Oft aber auch mit einem Menü, aus dem ich das System, welches starten soll,
 auswählen kann.
 Fehlt das Menü, kann ich es mit `<ESC>` oder `<TAB>` hervorrufen,
 bevor der Bootloader den Kernel lädt.
@@ -97,7 +99,7 @@ anmelden kann, betrachte ich den Systemstart als abgeschlossen, auch wenn im
 Hintergrund noch der eine oder andere Dienst gestartet wird.
 
 Mit dem Wissen um die Übergänge zwischen den einzelnen Phasen des Startvorgangs
-kann ich mich den Problemen in den einzelnen Bootphasen zu wenden.
+kann ich mich den Problemen in den einzelnen Bootphasen zuwenden.
 
 Da Probleme mit der Firmware abhängig von der konkreten Hardware sind,
 behandle ich diese hier nicht weiter.
@@ -168,7 +170,7 @@ nach Änderungen in den BIOS-Einstellungen.
 Daher versuche ich herauszubekommen, ob eine dieser Bedingungen hier vorliegt
 und ob ich diese rückgängig machen kann.
 
-Zum Test kann ich alle Peripherie (USB, seriell, parallel, ...) und oder
+Zum Test kann ich alle Peripherie (USB, seriell, parallel, ...) und
 alle nicht zum Booten benötigten Komponenten entfernen.
 Falls das System dann startet, füge ich nach und nach die einzelnen
 Komponenten wieder hinzu, bis der Fehler wieder auftritt.
@@ -182,7 +184,7 @@ schließlich die Kombination beider.
 Nach Ausgabe einiger Zeilen bleibt der Kernel mit der Meldung
 'Kernel panic' stehen.
 
-Das kann an einer fehlerhaften Kernkomponente, wie Prozessor, Speicher,
+Das kann an einer fehlerhaften Kernkomponente, wie Prozessor, Speicher oder
 Chipsatz auf dem Mainboard liegen.
 Insbesondere, wenn der Kernel gleich nach dem Anlaufen ohne Panik abbricht.
 In diesem Fall muss ich mit den Kernelparametern experimentieren.
@@ -202,7 +204,7 @@ Bei Problemen mit Treibern versuche ich meist die folgenden Strategien:
     dieses Treibers unterbinden.
 
 Wenn bereits nach einigen Zeilen der Bildschirm schwarz wird oder das System
-neu startet, könnte es auch am Grafiktreiber liegen, falls die Zeilen davor
+neu startet, könnte es am Grafiktreiber liegen, falls die Zeilen davor
 nicht auf andere Ursachen hindeuten.
 
 Als erstes kann ich den Standard-VGA-Textmodus mit dem Kernelparameter
@@ -217,8 +219,6 @@ Sitzen die Probleme tiefer, kann ich versuchen, die Debug-Informationen des
 Direct Rendering Manager (DRM) des Kernels mittels des Kernelparameters
 `drm.debug=14` auszuwerten.
 Auch die DRM-Treiber bieten Optionen, mit denen ich experimentieren kann.
-Auf diese gehe ich an dieser Stelle jedoch nicht weiter
-ein, da das zu weit ab vom Thema führen würde.
 
 #### Attempted to kill init
 
@@ -357,7 +357,7 @@ A> und damit das System wieder benutzbar machen.
 
 Dann starte ich die Dateisystemüberprüfung von Hand für alle
 benötigten Dateisysteme und starte den Rechner anschließend neu. Läuft der
-Rechner wieder, muss ich nun noch schauen, ob und gegebenenfalls welche
+Rechner wieder, muss ich nun noch schauen, ob und welche
 Dateien ich aus dem Backup ersetzen muss.
 
 Problem erkannt, Problem gelöst. 
@@ -371,7 +371,7 @@ mit `fsck` überprüfen muss.
 
 In der Bildschirmmeldung steht, bei welcher Partition die automatische
 Überprüfung aufgegeben hat. Nötigenfalls kann ich mit `<Shift>-<PgUp>` nach oben
-blättern, wenn die Meldung schon nach oben hinaus gerollt ist.
+blättern, wenn die Meldung schon nach oben hinaus geschoben wurde.
 
 Je nach Alter des Rechners und verwendeter Linux Distribution steht da entweder
 ein Gerätename wie /dev/sda1, ein Label wie ``rootfs'' oder eine UUID.
@@ -428,5 +428,5 @@ behelfen (Umbruch ist von mir eingefügt):
 
 Da `file` bei der direkten Abfrage der Gerätedateien nur deren Typ angeben
 würde, kopiere ich den ersten Block des Dateisystems in eine Datei und lasse
-diese dann von file analysieren.
+diese dann von `file` analysieren.
 

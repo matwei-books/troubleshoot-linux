@@ -40,7 +40,7 @@ Root-Dateisystems passiert.
 Bei den automatisch erzeugten Initramfs der verschiedenen Distributionen lande
 ich bei Problemen manchmal in einer Shell und kann darin dann versuchen, mit
 den Werkzeugen des Initramfs das Problem zu analysieren.
-Da auf der Initramfs fast immer busybox vorhanden ist, stehen mir hier oft
+Da auf dem Initramfs fast immer `busybox` vorhanden ist, stehen mir hier oft
 mehr Werkzeuge zur Verfügung, als auf den ersten Blick ersichtlich ist.
 
 Bekomme ich keine Shell oder fehlt mir ein Werkzeug, dann komme ich nicht
@@ -84,7 +84,7 @@ Installation von Kernelmodulen automatisch ein neues Initramfs erzeugt wird.
 Dabei werden meine Änderungen ignoriert, wenn ich sie nicht an den richtigen
 Stellen unterbringe.
 
-#### Permanente Initramfs-Modifikationen bei Debian GNU/Linux
+#### Permanente Änderungen bei Debian GNU/Linux
 
 Bei Debian und darauf basierenden Distributionen sind diese Stellen:
 
