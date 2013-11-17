@@ -9,10 +9,10 @@ mitgeteilt, interessiert mich als erstes, ob ich in dem betreffenden
 Netzsegment bin oder aussen.
 In dem Segment bin ich zum Beispiel, wenn der erste verfügbare Rechner an das
 betreffende Segment angeschlossen ist.
-In diesem Fall kann ich meist so vorgehen, prüfe ich als erstes, wie im
-[Abschnitt über Netzwerktotalausfall](#sec-gar-kein-netz) beschrieben,
+In diesem Fall kann ich meist so vorgehen, dass ich als erstes, wie im
+[Abschnitt über Netzwerktotalausfall](#sec-gar-kein-netz) beschrieben, prüfe,
 ob das problematische Netzsegment in sich funktioniert.
-Habe ich mich von der Funktionisfähigkeit
+Habe ich mich von der Funktionsfähigkeit
 des Netzsegmentes überzeugt oder es funktionsfähig gemacht, kommt als
 nächstes die Verbindung zu anderen Netzen dran.
 
