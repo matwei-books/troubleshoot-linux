@@ -56,16 +56,16 @@ mit seinem eigenen Namen auf:
        or: function [arguments]...
 
         BusyBox is a multi-call binary that combines \
-	many common Unix
+        many common Unix
         utilities into a single executable. Most people \
-	will create a
+        will create a
         link to busybox for each function they wish to \
-	use and BusyBox
+        use and BusyBox
         will act like whatever it was invoked as.
 
     Currently defined functions:
         [, [[ , acpid, addgroup, adduser, adjtimex, ar, \
-	arping, ash, awk,
+        arping, ash, awk,
         ...
         xargs, xz, xzcat, yes, zcat
 
@@ -90,9 +90,9 @@ implementierten Befehle verstanden wird:
         -s  Make symlinks instead of hardlinks
         -f  Remove existing destinations
         -n  Don't dereference symlinks - treat like \
-	    normal file
+            normal file
         -b  Make a backup of the target (if exists) \
-	    before link operation
+            before link operation
         -S suf  Use suffix instead of ~ when making \
-	    backup files
+            backup files
 
