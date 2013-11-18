@@ -14,7 +14,7 @@ Das macht es ideal für eingebettete Systeme und kleine Systemumgebungen.
 
 Damit bin ich beim Punkt, warum man Busybox kennen sollte.
 Es befindet sich auf dem InitRamFS, dem ersten Dateisystem, das zusammen mit
-dem Kernel vom Bootlader geladen wird.
+dem Kernel vom Bootloader geladen wird.
 Auf Live-CDs, beim Netboot und bei Rescue-Disks kann ich mit Busybox rechnen.
 Auch in kleineren Einzelgeräten, wie Routern, wird es oft eingesetzt.
 

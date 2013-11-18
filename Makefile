@@ -11,9 +11,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/$(SAMPLE) \
                $(DROPBOXDIR)/preface.mdwn \
                $(DROPBOXDIR)/cha-methoden-empty.mdwn \
-               $(DROPBOXDIR)/cha-herangehen-empty.mdwn \
                $(DROPBOXDIR)/cha-methoden.mdwn \
-               $(DROPBOXDIR)/cha-herangehen.mdwn \
+               $(DROPBOXDIR)/cha-02.mdwn \
                $(DROPBOXDIR)/cha-03.mdwn \
                $(DROPBOXDIR)/cha-03-kontrolle.mdwn \
                $(DROPBOXDIR)/cha-03-vertiefung.mdwn \
@@ -60,7 +59,7 @@ SOURCES = $(BOOK) \
           $(SAMPLE) \
           preface.mdwn \
           cha-methoden.mdwn \
-          cha-herangehen.mdwn \
+          cha-02.mdwn \
           cha-03.mdwn \
           cha-03-kontrolle.mdwn \
           cha-03-vertiefung.mdwn \
@@ -108,7 +107,7 @@ SOURCES = $(BOOK) \
 CHAPTERS = \
     preface.mdwn \
     cha-methoden.mdwn \
-    cha-herangehen.mdwn \
+    cha-02.mdwn \
     cha-03.mdwn \
     cha-03-kontrolle.mdwn \
     cha-03-vertiefung.mdwn \
