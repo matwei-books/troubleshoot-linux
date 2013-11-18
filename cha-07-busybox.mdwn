@@ -1,27 +1,25 @@
 
 ## busybox {#sec-lokal-werkzeuge-busybox}
 
-Dieses Programm sollte man kennen, wenn man Fehler in Linux-Rechnern sucht.
-
 Busybox kombiniert Miniversionen vieler gebräuchlicher UNIX-Befehle in einem
 Programm.
 Es ist mit Blick auf Größenoptimierung und geringe Ressourcen geschrieben.
 Für ein arbeitsfähiges System benötige ich nur noch ein */dev*
 Verzeichnis mit den Gerätedateien, ein */etc* Verzeichnis mit den
 Konfigurationsdateien und einen Linux-Kernel.
-Busybox ist extrem anpassungsfähig, beim Kompilieren kann ich festlegen,
-welche Befehle mit hineinkommen und so die Funktionalität gegen die
-Programmgröße abwägen.
-Damit ist es ideal für eingebettete Systeme und kleine Systemumgebungen.
+Busybox ist extrem anpassungsfähig.
+Beim Kompilieren kann ich festlegen, welche Befehle mit hineinkommen und
+so die Funktionalität gegen die Programmgröße abwägen.
+Das macht es ideal für eingebettete Systeme und kleine Systemumgebungen.
 
-Damit bin ich wieder beim Punkt, warum man Busybox kennen sollte.
+Damit bin ich beim Punkt, warum man Busybox kennen sollte.
 Es befindet sich auf dem InitRamFS, dem ersten Dateisystem, das zusammen mit
 dem Kernel vom Bootlader geladen wird.
 Auf Live-CDs, beim Netboot und bei Rescue-Disks kann ich mit Busybox rechnen.
-Auch in kleineren Einzelgeräten, wie Routern, wird es gern eingesetzt.
+Auch in kleineren Einzelgeräten, wie Routern, wird es oft eingesetzt.
 
-Busybox ist ein so genanntes Multi-Call-Binary.
-Das heisst, es verhält sich komplett anders, je nachdem, wie es aufgerufen
+Busybox ist ein Multi-Call-Binary.
+Das heißt, es verhält sich komplett anders, je nachdem, wie es aufgerufen
 wird.
 Sämtliche UNIX-Befehle, die beim Kompilieren aktiviert wurden, kann ich auf
 zwei Arten aufrufen.
@@ -32,15 +30,18 @@ an:
     $ /bin/busybox cp file file.bak
 
 Oder ich erzeuge einen Link auf Busybox mit dem Namen des Befehls und rufe
-es dann direkt auf:
+es über diesen Link auf:
 
 {line-numbers=off,lang="text"}
     $ /bin/busybox ln -s /bin/busybox ./cp
     $ ./cp file file.bak
 
+Hätte ich `busybox` stattdessen über einen Link namens `mv` aufgerufen, wäre
+die Datei nicht kopiert sondern umbenannt worden.
+
 Weil Busybox extrem konfigurierbar ist, möchte ich vielleicht wissen, welche
-Funktionen mein konkretes Binary kennt. Dazu rufe ich Busybox ohne Argumente
-mit seinem eigenen Namen auf:
+Funktionen mein konkretes Binary kennt.
+Dazu rufe ich Busybox ohne Argumente auf:
 
 {line-numbers=off,lang="text"}
     $ busybox
@@ -71,9 +72,9 @@ mit seinem eigenen Namen auf:
 
 Da die in Busybox implementierten Versionen der UNIX-Befehle von den
 täglich benutzten in Details abweichen, muss ich die genauen Optionen wissen.
-Neben der Handbuchseite, die ich in einer eingeschränkten Umgebung oft
-nicht zur Verfügung habe, hilft mir auch hier wieder Busybox selbst.
-Ich rufe den Befehl mit der Option --help auf, die von den meisten der
+Neben der Handbuchseite, die ich in einer kleinen Umgebung oft
+nicht zur Verfügung habe, hilft mir hierbei Busybox selbst.
+Ich rufe den Befehl mit der Option `--help` auf, die von den meisten der
 implementierten Befehle verstanden wird:
 
 {line-numbers=off,lang="text"}
