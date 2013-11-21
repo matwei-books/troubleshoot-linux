@@ -11,6 +11,14 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/$(SAMPLE) \
                $(DROPBOXDIR)/preface.mdwn \
                $(DROPBOXDIR)/cha-01.mdwn \
+               $(DROPBOXDIR)/cha-01-entscheidungsbaum.mdwn \
+               $(DROPBOXDIR)/cha-01-bisektion.mdwn \
+               $(DROPBOXDIR)/cha-01-korrelation.mdwn \
+               $(DROPBOXDIR)/cha-01-abkuerzungen.mdwn \
+               $(DROPBOXDIR)/cha-01-prozessmodell.mdwn \
+               $(DROPBOXDIR)/cha-01-schnittstellen.mdwn \
+               $(DROPBOXDIR)/cha-01-osi-modell.mdwn \
+               $(DROPBOXDIR)/cha-01-zustaende-tcp.mdwn \
                $(DROPBOXDIR)/cha-02.mdwn \
                $(DROPBOXDIR)/cha-02-problemaufnahme.mdwn \
                $(DROPBOXDIR)/cha-02-selber-denken.mdwn \
@@ -64,6 +72,14 @@ SOURCES = $(BOOK) \
           $(SAMPLE) \
           preface.mdwn \
           cha-01.mdwn \
+          cha-01-entscheidungsbaum.mdwn \
+          cha-01-bisektion.mdwn \
+          cha-01-korrelation.mdwn \
+          cha-01-abkuerzungen.mdwn \
+          cha-01-prozessmodell.mdwn \
+          cha-01-schnittstellen.mdwn \
+          cha-01-osi-modell.mdwn \
+          cha-01-zustaende-tcp.mdwn \
           cha-02.mdwn \
           cha-02-problemaufnahme.mdwn \
           cha-02-selber-denken.mdwn \
@@ -118,6 +134,14 @@ SOURCES = $(BOOK) \
 CHAPTERS = \
     preface.mdwn \
     cha-01.mdwn \
+    cha-01-entscheidungsbaum.mdwn \
+    cha-01-bisektion.mdwn \
+    cha-01-korrelation.mdwn \
+    cha-01-abkuerzungen.mdwn \
+    cha-01-prozessmodell.mdwn \
+    cha-01-schnittstellen.mdwn \
+    cha-01-osi-modell.mdwn \
+    cha-01-zustaende-tcp.mdwn \
     cha-02.mdwn \
     cha-02-problemaufnahme.mdwn \
     cha-02-selber-denken.mdwn \
