@@ -1,0 +1,97 @@
+
+## Problemaufnahme
+
+Bei der Aufnahme eines Problems entscheide ich oft schon, wie ich damit
+umgehen werde.
+Um ein Problem zu lösen, muss ich es zuallererst verstehen.
+Dabei hilft mir der im vorigen Kapitel vorgestellte Entscheidungsbaum, an der
+richtigen Stelle die richtigen Fragen zu stellen:
+
+*   Besteht das Problem genau jetzt, unter bestimmten Bedingungen oder nur
+    sporadisch?
+
+*   Funktioniert dann, wenn es auftritt, überhaupt noch etwas?
+
+*   Was muss alles zusammen spielen?
+
+*   Wie schnell soll es sein?
+
+*   Und wie kriege ich das alles heraus?
+
+Wenn ich ein Problem selbst feststelle, kann ich diese Fragen meist in meinem
+Rhythmus, das heißt mit der nötigen Sorgfalt beantworten.
+
+Problematisch kann es werden, wenn andere ihr Problem an mich herantragen.
+Sei es ein Kunde, der mich anruft, weil ich gerade Telefondienst habe.
+Sei es ein Kollege, der mal eben sein Problem herüber trägt oder der Chef, der
+irgendetwas schnell erledigt haben will.
+
+Eines haben diese Arten von Problemaufnahmen gemeinsam: da ist jemand, der
+seine ganz eigene Vorstellung von der Wichtigkeit, Dringlichkeit und mitunter
+auch von der Lösung des Problems hat.
+Das kann richtig sein oder falsch.
+
+Problematisch daran ist, wenn man sich durch bestimmte Vorurteile auf eine
+falsche Fährte schicken läßt oder wenn durch den im Gespräch aufgebauten Druck
+das klare Denken beeinträchtigt ist.
+
+Hier helfen mir vier Kraftprinzipien, die ich aus der Kampfkunst
+kenne und für Problemlösungen einsetze um den Kopf frei zu bekommen.
+Diese lauten:
+
+*  Mach dich frei von deiner eigenen Kraft.
+
+*  Mach dich frei von der Kraft deines Gegners.
+
+*  Nutze die Kraft des Gegners.
+
+*  Füge deine eigene Kraft hinzu.
+
+Nun ist das hier kein Buch über Kampfkunst, und ich bin auch nicht berufen
+über dieses Thema zu schreiben.
+Was mache ich also mit diesen Prinzipien?
+Wie setze ich sie ein?
+
+Der Schlüssel liegt darin, das Wort *Kraft* durch *Gedanken* (oder
+*Vorurteil*) zu ersetzen.
+
+Wie mache ich frei von meinen eigenen Gedanken?
+Dazu ein Beispiel.
+Ich bin auf Arbeit meist einer der letzten, der geht, weil ich dann
+noch die eine oder andere Änderung vornehmen kann, ohne damit rechnen zu
+müssen, unterbrochen zu werden oder jemand zu beeinträchtigen.
+Am Ende kontrolliere ich, ob alles funktioniert, und mache Feierabend.
+Am nächsten Morgen komme ich zur Arbeit und werde vom Kollegen am
+Telefondienst mit leicht hektischer und etwas vorwurfsvoller Stimme empfangen:
+
+> "Im Rathaus geht das INTERNET nicht!"
+
+Natürlich weiß ich noch, was ich am Vorabend gemacht habe, aber das tut
+nichts zur Sache, ich will erst herauskriegen, was nicht funktioniert.
+Ich mache mich also frei von meinen Gedanken an den letzten Tag,
+konzentriere mich auf das Problem von heute und antworte in neutralem Ton:
+
+> "Das ist aber schade."
+
+Je nach dem, wer gerade da ist, kommt dann oft als Erwiderung:
+
+> "Das wusste ich, das er das jetzt sagt."
+
+Ich habe mich von den Gedanken meines Kollegen und von dem Druck, den er
+bewusst oder unbewusst aufbauen wollte, befreit und ihm den Wind aus den
+Segeln genommen.
+
+Nun kann ich mich dran machen, die Gedanken, also dass, was mein Kollege
+über das Problem weiß, zu nutzen.
+Anhand des Entscheidungsbaumes frage ich als nächstes, ob alle Webserver
+nicht erreichbar sind, oder nur externe, oder gar nur bestimmte und
+welche sie alles ausprobiert hätten.
+
+An diesem Tag musste ich keine eigenen Gedanken mehr hinzufügen, weil noch
+während der ersten Fragen klar wurde, dass nur einzelne Webserver im
+Internet betroffen waren und das Problem sich selbst gelöst hatte.
+
+In diesem Fall wäre der Kollege am Telefondienst auch gut beraten gewesen,
+selbst fundiert zurückzufragen.
+Aber genau für Kollegen wie ihn ist ja dieses Buch.
+

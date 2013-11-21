@@ -2,6 +2,12 @@ preface.mdwn
 part1.mdwn
 cha-methoden.mdwn
 cha-02.mdwn
+cha-02-problemaufnahme.mdwn
+cha-02-selber-denken.mdwn
+cha-02-logs.mdwn
+cha-02-fragen.mdwn
+cha-02-laborbuch.mdwn
+cha-02-feststecken.mdwn
 cha-03.mdwn
 cha-03-kontrolle.mdwn
 cha-03-vertiefung.mdwn

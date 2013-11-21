@@ -13,6 +13,12 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-methoden-empty.mdwn \
                $(DROPBOXDIR)/cha-methoden.mdwn \
                $(DROPBOXDIR)/cha-02.mdwn \
+               $(DROPBOXDIR)/cha-02-problemaufnahme.mdwn \
+               $(DROPBOXDIR)/cha-02-selber-denken.mdwn \
+               $(DROPBOXDIR)/cha-02-logs.mdwn \
+               $(DROPBOXDIR)/cha-02-fragen.mdwn \
+               $(DROPBOXDIR)/cha-02-laborbuch.mdwn \
+               $(DROPBOXDIR)/cha-02-feststecken.mdwn \
                $(DROPBOXDIR)/cha-03.mdwn \
                $(DROPBOXDIR)/cha-03-kontrolle.mdwn \
                $(DROPBOXDIR)/cha-03-vertiefung.mdwn \
@@ -60,6 +66,12 @@ SOURCES = $(BOOK) \
           preface.mdwn \
           cha-methoden.mdwn \
           cha-02.mdwn \
+          cha-02-problemaufnahme.mdwn \
+          cha-02-selber-denken.mdwn \
+          cha-02-logs.mdwn \
+          cha-02-fragen.mdwn \
+          cha-02-laborbuch.mdwn \
+          cha-02-feststecken.mdwn \
           cha-03.mdwn \
           cha-03-kontrolle.mdwn \
           cha-03-vertiefung.mdwn \
@@ -108,6 +120,12 @@ CHAPTERS = \
     preface.mdwn \
     cha-methoden.mdwn \
     cha-02.mdwn \
+    cha-02-problemaufnahme.mdwn \
+    cha-02-selber-denken.mdwn \
+    cha-02-logs.mdwn \
+    cha-02-fragen.mdwn \
+    cha-02-laborbuch.mdwn \
+    cha-02-feststecken.mdwn \
     cha-03.mdwn \
     cha-03-kontrolle.mdwn \
     cha-03-vertiefung.mdwn \
