@@ -1,6 +1,6 @@
 preface.mdwn
 part1.mdwn
-cha-methoden.mdwn
+cha-01.mdwn
 cha-02.mdwn
 cha-02-problemaufnahme.mdwn
 cha-02-selber-denken.mdwn

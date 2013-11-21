@@ -10,8 +10,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/$(PREVIEW) \
                $(DROPBOXDIR)/$(SAMPLE) \
                $(DROPBOXDIR)/preface.mdwn \
-               $(DROPBOXDIR)/cha-methoden-empty.mdwn \
-               $(DROPBOXDIR)/cha-methoden.mdwn \
+               $(DROPBOXDIR)/cha-01.mdwn \
                $(DROPBOXDIR)/cha-02.mdwn \
                $(DROPBOXDIR)/cha-02-problemaufnahme.mdwn \
                $(DROPBOXDIR)/cha-02-selber-denken.mdwn \
@@ -64,7 +63,7 @@ SOURCES = $(BOOK) \
           $(PREVIEW) \
           $(SAMPLE) \
           preface.mdwn \
-          cha-methoden.mdwn \
+          cha-01.mdwn \
           cha-02.mdwn \
           cha-02-problemaufnahme.mdwn \
           cha-02-selber-denken.mdwn \
@@ -118,7 +117,7 @@ SOURCES = $(BOOK) \
 #
 CHAPTERS = \
     preface.mdwn \
-    cha-methoden.mdwn \
+    cha-01.mdwn \
     cha-02.mdwn \
     cha-02-problemaufnahme.mdwn \
     cha-02-selber-denken.mdwn \
