@@ -17,7 +17,9 @@ tmpdir=$(mktemp -d /tmp/$progname.XXXXX)
 date > $tmpdir/invocation
 
 echo "#----- args -----" >> $tmpdir/invocation
-for arg in "$@"; do echo $arg >> $tmpdir/invocation; done
+for arg in "$@"; do
+  echo $arg >> $tmpdir/invocation;
+done
 
 echo "#----- id -----" >> $tmpdir/invocation
 id >> $tmpdir/invocation

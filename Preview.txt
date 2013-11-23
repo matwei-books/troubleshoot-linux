@@ -36,6 +36,9 @@ cha-05-mount-probleme.mdwn
 cha-06.mdwn
 cha-07.mdwn
 cha-07-busybox.mdwn
+cha-07-ltrace.mdwn
+cha-07-shell.mdwn
+cha-07-strace.mdwn
 cha-07-vmstat.mdwn
 part3.mdwn
 cha-08.mdwn

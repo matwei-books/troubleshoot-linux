@@ -45,6 +45,9 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-06.mdwn \
                $(DROPBOXDIR)/cha-07.mdwn \
                $(DROPBOXDIR)/cha-07-busybox.mdwn \
+               $(DROPBOXDIR)/cha-07-ltrace.mdwn \
+               $(DROPBOXDIR)/cha-07-shell.mdwn \
+               $(DROPBOXDIR)/cha-07-strace.mdwn \
                $(DROPBOXDIR)/cha-07-vmstat.mdwn \
                $(DROPBOXDIR)/cha-08.mdwn \
                $(DROPBOXDIR)/cha-09.mdwn \
@@ -108,6 +111,9 @@ SOURCES = $(BOOK) \
           cha-lokal-perform.mdwn \
           cha-07.mdwn \
           cha-07-busybox.mdwn \
+          cha-07-ltrace.mdwn \
+          cha-07-shell.mdwn \
+          cha-07-strace.mdwn \
           cha-07-vmstat.mdwn \
           cha-lokal-werkzeuge.mdwn \
           cha-08.mdwn \
@@ -170,6 +176,9 @@ CHAPTERS = \
     cha-06.mdwn \
     cha-07.mdwn \
     cha-07-busybox.mdwn \
+    cha-07-ltrace.mdwn \
+    cha-07-shell.mdwn \
+    cha-07-strace.mdwn \
     cha-07-vmstat.mdwn \
     cha-08.mdwn \
     cha-09.mdwn \

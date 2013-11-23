@@ -1,0 +1,81 @@
+
+## Shell {#sec-lokal-werkzeuge-shell}
+
+Ein wichtiges Hilfsmittel bei der Fehlersuche ist die Shell. Dies in
+zweierlei Hinsicht: zum einen starte ich in einer interaktiven Shell die
+Kommandos, mit denen ich den Fehler eingrenzen will, zum anderen verwende
+ich die Shell für simple, schnell zusammengestrickte Programme, die mich bei
+der Fehlersuche unterstützen.
+
+Bei der Problemeingrenzung bevorzuge ich eine Shell mit History-Funktion und
+Kommandozeilenergänzung (commandline completion).
+Die History-Funktion benutze ich vor allem Dingen, um bereits ausgeführte
+Befehle wieder hervorzuholen, gegebenenfalls geringfügig zu ändern und noch
+einmal auszuführen. Die Kommandozeilenergänzung beschleunigt den Zusammenbau
+von neuen Befehlen, in denen die Shell (meist nach Eingabe von `<TAB>`)
+die Zeile komplettiert oder - bei mehreren möglichen Vervollständigungen -
+die nächsten Argumente vorschlägt. Das halte ich für unverzichtbar um bei
+der Fehlersuche den Gedankenflug nicht abreißen zu lassen.
+Ich bin an die Bash gewähnt, aber andere Shells können das meist ebensogut.
+
+Für Shell-Scripts bevorzuge ich als kleinsten gemeinsamen Nenner die Bourne
+Shell (`/bin/sh`). Auf manchen Systemen ist `/bin/sh` nur ein Link
+auf die Bash. Das ist kein Problem, weil diese als Bourne Again Shell in der
+Lage ist, Bourne Shell Skripts auszuführen. Da andererseits nicht jede
+Bourne Shell kompatible Shell in der Lage ist, Bash-Erweiterungen zu
+verstehen, beschränke ich mich auf den kleinsten gemeinsamen Nenner.
+
+Ich will hier keine komplette Einführung in die Programmierung mit der
+Bourne Shell geben, sondern verweise stattdessen auf die Handbuchseiten.
+Stattdessen stelle ich ein Skript vor, das ich in dieser oder ähnlicher Form
+bereits mehrfach für die Fehlersuche verwendet habe und gehe dann auf die
+Einzelheiten ein.
+
+### Strace Invocator
+
+Manchmal habe ich ein Problem mit einem Programm, bei dem ich auf strace
+(siehe Abschnitt zu [strace](#sec-lokal-werkzeuge-strace)) zurückgreife,
+um das Programm bei der Arbeit zu beobachten.
+Wenn dieses Programm jedoch nicht von Kommandozeile,
+sondern von einem anderen Programm gestartet wird, greife ich auf folgenden
+Trick zurück: Ich benenne das Programm um indem ich an den Namen die Endung
+`.orig` anhänge. Unter dem ursprünglichen Programmnamen platziere ich
+einen Link auf dieses Skript:
+
+<<[strace-invocator](code/strace-invocator.sh)
+
+Zeile 1 zeigt an, dass das Skript mit der Bourne Shell läuft.
+
+In Zeile 3 bestimme ich den Namen des aufgerufenen Programms und in Zeile 4
+den Namen des eigentlichen Programms.
+
+In Zeile 6 bis 11 habe ich eine kleine Funktion, mit der ich das Skript mit
+Fehlermeldung und -code beenden kann.
+
+In Zeile 13 teste ich, ob das Originalprogramm da und ausführbar ist und
+breche andernfalls ab. Dazu nutze ich die oben definierte Funktion.
+
+In Zeile 15 lege ich ein temporäres Verzeichnis mit eindeutigem Namen an.
+Damit kann ich mich bei der Auswertung in aller Ruhe auf jeden einzelnen
+Aufruf des Programms konzentrieren.
+
+In den Zeilen 17 bis 28 halte ich verschiedene Informationen zum Aufruf
+fest. Und zwar die aktuelle Zeit, ide übergebenen Argumente, die
+Benutzer-Id, unter der der Prozess läuft und die Umgebungsvariablen.
+
+In Zeile 30 schließlich rufe ich via strace das Originalprogramm mit allen
+Argumenten auf. Diesen Aufruf kann ich noch modifizieren, wenn ich an der
+Standardeingabe für das Programm interessiert bin:
+
+{line-numbers=off,lang="bash"}
+    tee $tmpdir/stdin \
+      | strace -f -o $tmpdir/strace.out $origin "$@"
+
+Oder, wenn ich sowohl an der Standardeingabe als auch an der Standardausgabe
+interessiert bin:
+
+{line-numbers=off,lang="bash"}
+    tee $tmpdir/stdin \
+    | strace -f -o $tmpdir/strace.out $origin "$@" \
+    | tee $tmpdir/stdout
+
