@@ -79,3 +79,49 @@ interessiert bin:
     | strace -f -o $tmpdir/strace.out $origin "$@" \
     | tee $tmpdir/stdout
 
+### Fehler in Shell-Skripts suchen
+
+Manchmal vermute ich ein Problem in einem Shell-Skript selbst.
+Dann hilft es mir, die Shell mit der Option `-x` zu starten.
+Damit sehe ich, wie die Shell das Skript abarbeitet.
+
+Nehmen wir als Beispiel ein Skript, das mir ausgibt, in welchem
+Verzeichnis ich mich gerade befinde und zu welchem Projekt dieses gehört:
+
+    #!/bin/sh
+    PROJECT=.project
+    HERE=$PWD
+    echo "($HERE)"
+    while test "/" != "$HERE"; do
+        if [ -f "$HERE/$PROJECT" ]; then
+    	echo "===" $(cat "$HERE/$PROJECT") "==="
+    	break
+        fi
+        HERE=$(dirname $HERE)
+    done
+
+Die Ausgabe des Skripts sieht in einem Verzeichnis so aus:
+
+    $ where
+    (/home/mathias/A/2012/12/07)
+    === GDB Tests ===
+
+Mit Shell-Debugging:
+
+    $ sh -x ~/bin/where
+    + PROJECT=.project
+    + HERE=/home/mathias/A/2012/12/07/t1
+    + echo (/home/mathias/A/2012/12/07/t1)
+    (/home/mathias/A/2012/12/07/t1)
+    + test / != /home/mathias/A/2012/12/07/t1
+    + [ -f /home/mathias/A/2012/12/07/t1/.project ]
+    + dirname /home/mathias/A/2012/12/07/t1
+    + HERE=/home/mathias/A/2012/12/07
+    + test / != /home/mathias/A/2012/12/07
+    + [ -f /home/mathias/A/2012/12/07/.project ]
+    + cat /home/mathias/A/2012/12/07/.project
+    + echo === GDB Tests ===
+    === GDB Tests ===
+    + break
+    
+Damit kann ich genau sehen, was in dem betreffenden Verzeichnis passiert.
