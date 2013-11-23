@@ -40,6 +40,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-04-magic-sysrequest.mdwn \
                $(DROPBOXDIR)/cha-05.mdwn \
                $(DROPBOXDIR)/cha-05-erste-minute.mdwn \
+               $(DROPBOXDIR)/cha-05-dienste.mdwn \
                $(DROPBOXDIR)/cha-05-mount-probleme.mdwn \
                $(DROPBOXDIR)/cha-06.mdwn \
                $(DROPBOXDIR)/cha-07.mdwn \
@@ -101,6 +102,7 @@ SOURCES = $(BOOK) \
           cha-04-magic-sysrequest.mdwn \
           cha-05.mdwn \
           cha-05-erste-minute.mdwn \
+          cha-05-dienste.mdwn \
           cha-05-mount-probleme.mdwn \
           cha-06.mdwn \
           cha-lokal-perform.mdwn \
@@ -163,6 +165,7 @@ CHAPTERS = \
     cha-04-magic-sysrequest.mdwn \
     cha-05.mdwn \
     cha-05-erste-minute.mdwn \
+    cha-05-dienste.mdwn \
     cha-05-mount-probleme.mdwn \
     cha-06.mdwn \
     cha-07.mdwn \
