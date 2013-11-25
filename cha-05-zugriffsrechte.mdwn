@@ -1,0 +1,774 @@
+
+## Zugriffsprobleme
+
+Ein Indiz für ein Zugriffsproblem ist zum Beispiel ein fehlgeschlagener
+Systemaufruf, den ich in der Ausgabe von *strace* finden kann, wie diesen hier:
+
+    open("tmp/abc", O_RDONLY) = -1 EACCES (Permission denied)
+
+Um Zugriffsprobleme analysieren zu können, muss ich wenigstens die Grundlagen
+der Zugriffskontrolle verstehen.
+
+Ich fange meine Betrachtungen mit der traditionellen benutzerbestimmten
+Zugriffskontrolle (discretionary access control, DAC) an und widme mich in den
+nachfolgenden Artikeln den Mechanismen für zwingend erforderliche
+Zugriffskontrolle (mandatory access control, MAC).
+
+Allen Mechanismen für Zugriffskontrolle gemeinsam ist, dass in dem Moment, in
+dem ein Subjekt (ein Prozess) eine Aktion, wie zum Beispiel Lesen oder
+Schreiben, auf ein Objekt (eine Datei) anwenden will, die Zugriffsrechte
+geprüft und dann gewährt oder verweigert werden.
+
+### Traditionelle Unix-Dateirechte
+
+Im traditionellen Zugriffsmodell werden die Zugriffsrechte zusammen mit den
+Informationen über den Eigentümer und die Gruppe der Datei im Inode geführt,
+und zwar als Bitmap mit je drei Bits, die die grundlegenden Rechte für den
+Dateieigentümer, die Eigentümergruppe sowie alle anderen bestimmen.
+In dieser Reihenfolge werden die Rechte auch geprüft und angewandt.
+
+#### Grundlegende Rechte
+
+Das Leserecht (**r**, read) bedeutet für reguläre und Gerätedateien, dass
+Daten aus dieser gelesen werden dürfen. Für Verzeichnisse bedeutet es, dass
+diese aufgelistet werden dürfen.
+
+Das Schreibrecht (**w**, write) bedeutet für reguläre Dateien und
+Gerätedateien, dass Daten dorthin geschrieben werden dürfen. Bei
+Verzeichnissen bedeutet es, dass Einträge neu angelegt beziehungsweise
+entfernt werden dürfen, unabhängig von den Rechten der Datei, auf die
+der betreffende Eintrag verweist. Somit ist es möglich, eine Datei zu löschen
+oder umzubenennen, auf die man keine Schreib- oder Leserechte besitzt.
+
+Das Ausführrecht (**x**, execute) bei einer regulären Datei bedeutet, dass sie
+als Prozess ausgeführt werden kann.
+Dabei ist bei einer Binärdatei nicht einmal das Leserecht auf diese Datei nötig.
+Bei einem ausführbaren Skript wird das Leserecht benötigt, da der
+Skript-Interpreter die Datei lesen muss, um ihr Programm abzuarbeiten.
+Bei einem Verzeichnis bedeutet das **x** Bit, dass ich in das Verzeichnis
+wechseln und darin verzeichnete Dateien benutzen darf.
+Dafür ist kein Leserecht erforderlich, wenn ich den Namen der Datei kenne.
+
+#### Sonderrechte
+
+Zusätzlich zu den Standardrechten gibt es drei Bits für Sonderrechte.
+
+Das *setuid* Bit bei einer ausführbaren Datei bedeutet, dass diese nicht
+unter der UID des aufrufenden Prozesses, sondern unter der der Datei
+ausgeführt wird.
+
+Das *setgid* Bit bei einem Verzeichnis bewirkt, dass in diesem Verzeichnis
+neu angelegte Dateien automatisch der Gruppe des Verzeichnisses anstelle der
+aktiven Gruppe des erzeugenden Prozesses zugeordnet werden.
+
+Das *sticky* Bit bewirkt bei einem Verzeichnis, dass Dateien in diesem
+Verzeichnis nur von ihrem Eigentümer oder *root* gelöscht werden dürfen.
+Bei einer ausführbaren Datei bewirkte es früher, dass der Programmcode nach
+der Ausführung im Hauptspeicher verblieb. 
+Das brachte Vorteile bei Programmen, die sehr häufig benutzt wurden und dann
+nicht mehr jedesmal von der Platte geladen werden mussten.
+Bei modernen Systemen ist das obsolet.
+
+#### Einschränkungen
+
+Die Zugriffsrechte können durch Optionen beim Einhängen des Dateisystems
+eingeschränkt werden. Diese kann ich mit dem Befehl `mount` ohne Parameter
+anzeigen lassen.
+
+Die Option *noexec* bewirkt, dass das **x** Bit keinen Effekt hat. Damit
+gekennzeichnete Dateien können nicht einfach durch Angabe ihres Pfades
+gestartet werden.
+
+Die Option *nosuid* bewirkt, dass das **setuid** Bit keinen Effekt hat.
+Ausführbare Dateien werden immer mit der UID des aufrufenden Prozesses
+ausgeführt.
+
+#### Programme zum Ansehen und Bearbeiten der Zugriffsrechte
+
+Um die traditionellen Zugriffsrechte einer Datei anzusehen kann ich das
+Program `ls` mit der Option `-l` verwenden:
+
+    $ ls -a -l
+    insgesamt 116
+    drwxr-xr-x 2 mathias mathias  4096 Okt  5 10:19 .
+    drwxr-xr-x 5 mathias mathias  4096 Sep 30 22:26 ..
+    -rw-r--r-- 1 mathias mathias    34 Sep 30 22:26 .project
+    ...
+
+Das Programm zeigt mir in der ersten Spalte den Typ und die Rechte der Datei
+an, in der dritten Spalte den Eigentümer und in der vierten die Gruppe.
+
+Um den Eigentümer einer Datei zu ändern, verwende ich das Programm *chown*.
+Diese Operation ist nur *root* erlaubt, da alle anderen Benutzer
+damit ihre Rechte an der Datei verlieren würden.
+
+Die Gruppe einer Datei kann ich mit *chgrp* ändern. Das darf sowohl der
+Eigentümer der Datei als auch *root*.
+
+Die Dateirechte ändere ich mit dem Programm *chmod*. Auch diese
+Operation darf nur der Eigentümer oder *root*.
+
+Details zu den Programmen finden sich in den entsprechenden Handbuchseiten.
+
+### Dateiattribute
+
+Wenn ich die Standardzugriffsrechte auf eine Datei kontrolliert habe
+und im Log keine Hinweise auf Hardware-Fehler finde, der Zugriff auf diese Datei
+aber trotzdem merkwürdige Ergebnisse liefert, ist es an der Zeit, die
+Dateiattribute des Dateisystems in Betracht zu ziehen.
+
+Dazu verwende ich das Program `lsattr`:
+
+    $ ls -l tmp/abc 
+    -rw-r--r-- 1 mathias mathias 4 Okt  9 11:11 tmp/abc
+    $ touch tmp/abc 
+    touch: "tmp/abc" kann nicht berührt werden: Keine Berechtigung
+    $ echo def > tmp/abc
+    bash: tmp/abc: Keine Berechtigung
+    $ lsattr tmp/abc 
+    ----i---------- tmp/abc
+
+Ändern kann ich die Attribute mit dem Programm `chattr`.
+
+    $ sudo chattr -i tmp/abc 
+    $ echo def > tmp/abc 
+    $ cat tmp/abc 
+    def
+
+Die Handbuchseite listet sämtliche Aufrufoptionen des Programmes und alle
+möglichen Dateiattribute auf.
+Ich gehe hier kurz auf die wichtigsten für das Thema Fehlersuche ein.
+
+Bei Dateien mit dem Attribut `a` kann ich den vorhandenen Text nicht
+verändern, sondern lediglich neuen Text hinzufügen.
+Dieses Attribut ist damit eine gute Wahl für Logdateien.
+
+Dateien mit dem Attribut `c` werden komprimiert auf der Platte abgelegt.
+Das ist im Normalbetrieb nicht weiter von Belang.
+Es beeinträchtigt aber die Möglichkeit, Dateien nach einem Plattencrash zu
+retten, weil Programme, welche Dateien anhand ihrer Signatur erkennen, damit
+nicht funktionieren.
+
+Dateien mit dem Attribut `i` kann ich nicht ändern, löschen oder umbenennen.
+Ich kann keinen zusätzlichen (Hard-)Link anlegen und den Dateiinhalt nicht
+ändern.
+
+Bei Dateien mit dem Attribut `s` werden alle Blöcke beim Löschen mit `0x0`
+überschrieben und diese vor dem Löschen auf die Platte zurückgeschrieben.
+Das heißt, diese Dateien sind nicht wiederherstellbar. (Darauf würde ich mich
+bei hochsensiblen Daten nicht verlassen, da mitunter die Elektronik des
+Speichermediums Sektoren vor dem Betriebssystem verbirgt und damit meine
+Anstrengungen, eine Datei sicher zu löschen, zunichte macht.)
+
+Demgegenüber werden Dateien mit dem Attribut `u` explizit beim Löschen
+gesichert, so dass deren Wiederherstellung auch bei intensiver Plattennutzung
+möglich ist.
+
+Schließlich sind noch Dateien mit dem Attribut `t` interessant.
+Bei diesen gibt es kein *tail merge*.
+Beim *Tail-Merging* wird der freie Platz im letzten Dateiblock für mehrere
+Dateien in einem gemeinsamen Block verwendet.
+Damit kann zum Beispiel der Bootlader LILO nicht umgehen.
+Mit diesem Attribut für die Datei mit dem Kernel-Image wird Tail-Merging
+unterdrückt und es gibt keine Probleme mit dem Bootlader.
+
+Bleibt zum Schluss nur noch anzumerken, dass *ext2* und *ext3* die Attribute
+`c`, `s` und `u` nicht honorieren.
+Diese beiden Dateisystem verwenden auch kein Tail-Merging.
+
+### POSIX Capabilities
+
+Wer sich tiefer in das Thema einarbeiten möchte, dem empfehle ich
+die Seite von Chris Friedhoff zum Thema
+[POSIX Capabilities & File POSIX Capabilities](http://www.friedhoff.org/posixfilecaps.html).
+Hier zeige ich nur, wie man einen Einstieg in das Thema findet,
+um sich im Rahmen einer Fehlersuche ein Bild machen zu können.
+Trotzdem komme ich nicht um einige Grundlagen herum.
+
+#### Worum geht es?
+
+Das Ziel bei der Entwicklung der POSIX Capabilities war, die alles umfassenden
+Privilegien des *root* Benutzers aufzuteilen in einzelne Privilegien, die je
+nach Bedarf einzelnen Prozessen und/oder Programmen zugewiesen werden.
+Traditionell darf ein Prozess, der unter UID 0 läuft, in einem
+UNIX-System fast alles: auf alle Speicherbereiche, alle Geräte, alle Dateien
+zugreifen, Netzwerkschnittstellen direkt nutzen, ...
+
+Wenn ein Programm, wie zum Beispiel *ping*, welches direkt auf die
+Netzwerkschnittstelle zugreift, nur eines dieser Privilegien benötigt, dann
+bekommt der Prozess, der es ausführt mit dem SUID-Bit alle anderen Privilegien
+ebenfalls.
+Gelingt es einem Angreifer, einen Programmfehler auszunutzen, kann er dadurch
+seine Privilegien erhöhen, also die Rechte von *root* erlangen.
+
+Genau an dieser Stelle setzen die POSIX Capabilities an.
+Auf einem System, das diese kennt, kann ich dem Programm *ping* das SUID-Bit
+entfernen und stattdessen die Capability `CAP_NET_RAW` vergeben.
+Damit funktioniert das Programm wie vorher, bei einem ausgenutzten
+Programmfehler gewinnt der Angreifer maximal genau dieses Privileg.
+
+#### Wie funktionieren die POSIX Capabilities?
+
+Welche Capabilities es im Einzelnen gibt, erfahre ich aus der Handbuchseite
+*capabilities* in Sektion 7 (`man 7 capabilities`), oder direkt aus der Datei
+*/usr/include/linux/capabilities.h*.
+
+Capabilities werden zum einen für ausführbare Dateien festgelegt und zum
+anderen für Prozesse.
+Sie können das Kennzeichen *permitted* (erlaubt), *effective* (aktiv) oder
+*inheritable* (vererbbar) haben.
+Alle Capabilities mit einem bestimmten Kennzeichen bilden das entsprechende
+Set.
+
+Das Permitted Set einer Datei verleiht die entsprechenden Capabilities dem
+Prozess, der sie ausführt.
+Das Permitted Set eines Prozesses enthält alle Capabilities, die dieser
+Prozess verwenden könnte.
+
+Das Inheritable Set einer Datei geht nur dann in das Permitted Set eines
+Prozesses ein, wenn dieser die entsprechenden Kennzeichen ebenfalls in seinem
+Inherited Set hat.
+Damit ist es möglich, die an eine Datei vergebenen Capabilities nur
+ausgewählten Prozessen verfügbar zu machen, die über die entsprechenden
+inheritable Kennzeichen verfügen.
+
+Das Effective Set einer Datei benötigt zusätzlich noch das effective oder
+inheritable Kennzeichen der einzelnen Capabilities. Dann setzt es das
+Effective Set des Prozesses für die Capabilities, die im Permitted Set des
+Prozesses enthalten sind.
+
+Für Details verweise ich auf den bereits erwähnten Artikel von Chris
+Friedhoff.
+
+#### Was muss ich tun?
+
+Kommen wir zum praktischen Teil, am Beispiel von *ping*.
+Nachdem ich das SUID-Bit entfernt habe, funktioniert das Programm nicht mehr:
+
+    $  ls -l /bin/ping
+    -rwxr-xr-x 1 root root 35712 Nov  8  2011 /bin/ping
+    $ ping -c1 localhost
+    ping: icmp open socket: Operation not permitted
+
+Die Ursache wird mir hier schon angegeben, *strace* zeigt es noch einmal
+deutlich:
+
+     $ strace ping -c1 localhost 2>&1|grep EPERM
+     socket(PF_INET, SOCK_RAW, IPPROTO_ICMP) = -1 EPERM (Operation not permitted)
+
+Mit dem Programm *setcap* kann ich *ping* die benötigte Capability verleihen:
+
+     $ sudo setcap cap_net_raw=ep /bin/ping
+     $ getcap /bin/ping
+     /bin/ping = cap_net_raw+ep
+     $  ping -c1 localhost
+     PING localhost (127.0.0.1) 56(84) bytes of data.
+     64 bytes from localhost (127.0.0.1): icmp_req=1 ttl=64 time=0.107 ms
+
+     --- localhost ping statistics ---
+     1 packets transmitted, 1 received, 0% packet loss, time 0ms
+     rtt min/avg/max/mdev = 0.107/0.107/0.107/0.000 ms
+
+Und schon funktioniert es wieder.
+Damit kann jeder auf dem System *ping* verwenden, ohne dass dieses
+Programm mit den Rechten von *root* laufen muss.
+Will ich die Anzahl der Prozesse und/oder Benutzer einschränken, die das
+Programm nutzen können, verwende ich statt dem Kennzeichen *permitted* das
+Kennzeichen *inheritable*:
+
+     $ sudo setcap cap_net_raw=ei /bin/ping
+     $ getcap /bin/ping
+     /bin/ping = cap_net_raw+ei
+     $ /sbin/getpcaps $$
+     Capabilities for `4848': =
+     $ ping -c1 localhost
+     ping: icmp open socket: Operation not permitted
+
+Da die File-Capability mit dem Kennzeichen *inheritable* nur wirksam wird, wenn
+auch der Prozess das Kennzeichen *inheritable* für
+diese Capability besitzt, fehlen mir nun die nötigen Rechte.
+
+Diese kann ich zum Beispiel beim Login am System, oder (zum Test) mit *su*
+bekommen, wenn ich *libpam-cap* installiert habe.
+Dazu füge ich die folgende Zeile in */etc/pam.d/su* ein
+
+    auth        required    pam_cap.so
+
+und "vererbe" mir via */etc/security/capability.conf* die nötigen
+Capabilities:
+
+    $ egrep -v '^\s*(|#.*)$' /etc/security/capability.conf 
+    cap_net_raw mathias
+    none  *
+
+Nun muss ich mir noch die nötigen Rechte holen:
+
+    $ /sbin/getpcaps $$
+    Capabilities for `4848': =
+    $ su - mathias
+    Password: 
+    $ /sbin/getpcaps $$
+    Capabilities for `22807': = cap_net_raw+i
+    $ ping -c1 localhost
+    PING localhost (127.0.0.1) 56(84) bytes of data.
+    64 bytes from localhost (127.0.0.1): icmp_req=1 ttl=64 time=0.103 ms
+
+    --- localhost ping statistics ---
+    1 packets transmitted, 1 received, 0% packet loss, time 0ms
+    rtt min/avg/max/mdev = 0.103/0.103/0.103/0.000 ms
+
+Und schon geht es wieder.
+
+Halten wir fest, dass ich für die Analyse von Problemen vier Programme
+verwenden kann:
+
+*   **strace**, das mir anzeigt, bei welcher Operation ich
+    Zugriffsprobleme habe.
+
+*   **getcap**, das mir die Capabilities einer Datei anzeigt.
+
+*   **setcap**, mit dem ich diese setzen kann.
+
+*   **getpcaps**, dass mir die Capabilities von Prozessen anzeigt.
+
+Und natürlich die Datei */usr/include/linux/capabilities.h* beziehungsweise
+die Handbuchseite *capabilities*, welche mir zeigen, welche Capabilities ich
+verwenden kann.
+
+### AppArmor
+
+Auch bei AppArmor reiße ich das Thema nur kurz aus dem Blickwinkel Fehlersuche
+an.
+Für weiterführende Informationen zu AppArmor verweise ich auf die
+Projekt-Homepage <http://apparmor.net/>
+
+Wie jedes Sicherheitssystem, dass unerlaubte Aktivitäten verhindern soll, kann
+es auch bei AppArmor vorkommen, das erlaubte Aktivitäten gestört oder
+verhindert werden.
+Habe ich bei einem Problem AppArmor im Verdacht, überprüfe ich als erstes, ob
+es überhaupt aktiv ist.
+Dazu verwende ich das Programm `aa-status`:
+
+    # aa-status
+    apparmor module is loaded.
+    22 profiles are loaded.
+    20 profiles are in enforce mode.
+       /sbin/dhclient
+       ...
+       /usr/share/gdm/guest-session/Xsession
+    2 profiles are in complain mode.
+       /usr/sbin/libvirtd
+       /usr/sbin/ntpd
+    3 processes have profiles defined.
+    1 processes are in enforce mode.
+       /usr/sbin/cupsd (727) 
+    2 processes are in complain mode.
+       /usr/sbin/libvirtd (1667) 
+       /usr/sbin/ntpd (1436) 
+    0 processes are unconfined but have a profile defined.
+
+AppArmor beschränkt nur Anwendungen, für die Profile definiert sind.
+Falls AppArmor nicht aktiviert ist oder keine Profile geladen sind, kann ich
+in den meisten Fällen davon ausgehen, dass die Probleme nicht von AppArmor
+verursacht werden.
+
+#### Nachrichten im Logfile
+
+Wenn AppArmor aktiviert ist, schaue ich als nächstes nach Nachrichten im
+Systemlog.
+Diese finde ich unter Ubuntu zum Beispiel mit
+
+    # grep type=1400 /var/log/syslog
+
+Ist AppArmor aktiviert, aber ich sehe keine Logmeldungen, überprüfe ich den
+Audit-Modus:
+
+    # cat /sys/module/apparmor/parameters/audit
+    normal
+
+Der Audit-Modus kann die folgenden Werte haben:
+
+*   **normal**
+
+*   **quiet_denied** - verweigerte Zugriffe werden nicht protokolliert
+
+*   **quiet** - das Modul protokolliert gar nichts
+
+*   **noquiet** - das Modul überschreibt Profilregeln, die einzelne
+      Nachrichten unterdrücken
+
+*   **all** - gibt alle Prüfungen für alle Zugangsanfragen aus, auch für
+      erlaubte Zugriffe
+
+Um den Audit-Modus zu ändern, schreibe ich in die Datei:
+
+    # echo -n all > /sys/module/apparmor/parameters/audit
+
+#### Audit-Einstellungen der Profile
+
+AppArmor prüft nur Tasks (Prozesse), für die es ein Profil gibt.
+Dabei kennt es vier Modi:
+
+*   **Enforce mode** - nur Statusereignisse (Laden von Profilen, ...) und
+      Ereignisse, die nicht zugelassen wurden, erzeugen Audit-Nachrichten.
+
+*   **Complain mode** - wie *Enforce Mode*, außer dass es den Nachrichtentyp
+      von verboten zu erlaubt ändert, so dass AppArmor diese Anwendung nicht
+      beschränkt.
+      In diesem Modus protokolliert AppArmor nur unbekanntes Verhalten.
+
+*   **Audit mode** - schreibt eine Protokollnachricht für jedes Ereignis,
+      egal ob erlaubt oder verboten.
+
+*   **Kill mode** - schreibt eine Protokollnachricht für jedes verbotene
+      Ereignis und beendet die Anwendung.
+
+Profile können Kennzeichen (Flags) enthalten, die das Audit beeinflussen.
+
+*   **Deny rule** - jede Regel, die diesen Präfix enthält, wird ohne
+      Protokollnachricht abgewiesen. Das setzt man ein, wenn
+      die abgewiesenen Ereignisse bekannt sind und nicht die Systemlogs
+      vollschreiben sollen.
+
+*   **Audit rule** - mit diesem Präfix werden die Ereignisse dieser Regel
+      protokolliert.
+
+#### Beschränkungen eines Prozesses untersuchen
+
+Wenn ich ein Problem mit AppArmor untersuche, schaue ich zunächst, ob der
+betreffende Prozess überhaupt von AppArmor beschränkt wird.
+Das kann ich entweder mit `ps` oder indem ich mir die entsprechenden Attribute
+des Prozesses im *proc* Dateisystem anschaue:
+
+    # ps -Z 727
+    LABEL               PID TTY STAT TIME COMMAND
+    /usr/sbin/cupsd     727 ?   Ss   0:01 /usr/sbin/cupsd -F
+    # cat /proc/727/attr/current 
+    /usr/sbin/cupsd (enforce)
+    # ps -Z 1667
+    LABEL               PID TTY STAT TIME COMMAND
+    /usr/sbin/libvirtd 1667 ?   Sl   0:00 /usr/sbin/libvirtd -d
+    # cat /proc/1667/attr/current 
+    /usr/sbin/libvirtd (complain)
+    # ps -Z 1
+    LABEL               PID TTY STAT TIME COMMAND
+    unconfined            1 ?   Ss   0:00 /sbin/init
+    # cat /proc/1/attr/current 
+    unconfined
+
+#### Probleme mit AppArmor behandeln
+
+Das beste, was ich tun kann, ist, die *denied* Nachrichten im Systemlog zu
+betrachten, deren Ursache zu verstehen und dann das Profil anzupassen.
+
+Um ein Profil anzupassen kann ich das Program `aa-logprof` verwenden.
+Dieses interaktive Programm durchsucht die Protokolldatei und schlägt bei
+unbekannten AppArmor-Ereignissen Änderungen am jeweiligen Profil vor.
+Wenn das Programm sich beendet, schreibt es die Änderungen in die Profildatei
+und die geänderten Profile werden neu geladen.
+Nötigenfalls werden die Profile laufender Prozesse aktualisiert.
+
+Alternativ kann ich die Profildatei unter */etc/apparmor.d/* mit einem Editor
+direkt bearbeiten und mit
+
+    # apparmor_parser -r /etc/apparmor.d/$profile
+
+neu laden.
+
+**Wichtig!** Ich kann zwar einem laufenden Prozess zusätzliche Rechte
+gewähren. Will ich aber einer laufenden Anwendung Rechte entziehen, habe ich
+nur die Möglichkeit, das Profil ganz zu entfernen, es anschließend (mit
+weniger Rechten) wieder hinzuzufügen und dann den Prozess neu zu starten.
+
+#### Profile in den Beschwerdemodus setzen
+
+Wenn ich ein Profil gerade nicht anpassen kann, kann ich es
+in den Beschwerdemodus setzen.
+Entweder zeitweilig (bis zum Reboot):
+
+    # apparmor_parser -Cr /etc/apparmor.d/$profile
+
+Oder permanent:
+
+    # aa-complain $profile
+
+Dann sollte die entsprechende Anwendung sich verhalten, wie eine
+unbeschränkte, während AppArmor weiterhin Protokollnachrichten schreibt.
+
+### SELinux
+
+[SELinux](http://selinuxproject.org/)
+ist, wie AppArmor ein Mandatory Access Control System.
+Das heißt, die Vergabe von Rechten unter dem Einflussbereich von SELinux liegt
+nicht im Ermessensspielraum des Benutzers, sondern wird vom System durch
+Richtlinien und Regeln vorgegeben.
+
+SELinux besteht aus einem Kernelmodul, unterstützenden Werkzeugen und
+Konfigurationsdateien.
+Die Zugriffskontrolle kann damit sehr feinkörnig eingestellt werden.
+Dabei funktioniert SELinux völlig unabhängig von den traditionellen
+Benutzernamen und Gruppen.
+
+#### Wie stelle ich fest, ob SELinux aktiv ist?
+
+Um herauszufinden, ob auf dem untersuchten System SELinux läuft, schaue ich
+nach, ob es ein Verzeichnis */selinux/* gibt und ob dieses Dateien enthält.
+Der Befehl `mount` sollte anzeigen, dass an diesem Punkt im Dateisystem ein
+*selinuxfs* eingehängt ist:
+
+    $ mount | grep selinux
+    none on /selinux type selinuxfs (rw,relatime)
+
+Mit `sestatus` bekomme ich erste Informationen über den Zustand von SELinux
+auf dem betrachteten System:
+
+    $ sudo sestatus
+    SELinux status:                 enabled
+    SELinuxfs mount:                /selinux
+    Current mode:                   enforcing
+    Mode from config file:          permissive
+    Policy version:                 24
+    Policy from config file:        default
+
+Bei einem konkreten Problem bekomme ich erste Hinweise durch eine
+Kontextabfrage:
+
+    $ ls -Z /etc/fstab 
+    system_u:object_r:etc_t:s0 /etc/fstab
+    $ ps -Z
+    LABEL                             PID TTY          TIME CMD
+    unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 1215 pts/0 00:00:00 bash
+    unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 1359 pts/0 00:00:00 ps
+    $ id
+    uid=1000(mathias) gid=1000(mathias) \
+    Gruppen=1000(mathias),4(adm),24(cdrom),25(floppy),27(sudo),\
+    29(audio),30(dip),44(video),46(plugdev) \
+    Kontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+#### Betriebsmodi
+
+SELinux kennt zwei Modi:
+Im Zwangsmodus (*enforcing mode*) verweigert der Kernel jede Aktion,
+für die SELinux die Erlaubnis verweigert.
+Im zulassenden Modus (*permissive mode*) gelten die Beschränkungen des
+traditionellen Rechtesystems, SELinux protokolliert nur verweigerte Aktionen.
+
+Als *root* kann ich zwischen beiden Modi mit dem Programm `setenforce`
+umschalten.
+
+    # setenforce 0
+
+schaltet in den permissive Mode.
+
+    # setenforce 1
+
+schaltet in den enforcing Mode.
+
+Mit dem Kernelparameter `enforcing=0` kann ich den permissive Mode bereits
+beim Rechnerstart erzwingen.
+Damit kann ich einem System temporär wieder auf die Beine helfen, dessen
+Richtlinien und Regeln überhaupt kein Arbeiten mehr erlauben.
+
+#### Konzepte
+
+Eine Richtlinie (Policy) als Grundkonzept von SELinux ist eine Sammlung von
+Vereinbarungen und Regeln, die dem SELinux-Kern sagen, was erlaubt ist, was
+nicht und wie er sich in verschiedenen Situationen verhalten soll.
+
+Dabei unterscheidet man zwischen gezielten Richtlinien (*targeted policy*),
+die nur wenige Anwendungen einschränken und strengen
+Richtlinien (*strict policy*), die versuchen, alle Aktivitäten des Rechners
+mit SELinux zu kontrollieren.
+
+Richtlinien werden kompiliert und können als Binärmodule jederzeit ge- und
+entladen werden.
+Beim Start des Rechners lädt *init* eine Anfangsrichtlinie (*initial
+policy*).
+
+Das zweite wichtige Konzept bei SELinux ist der Kontext.
+Jeder Prozess und Socket, jede Datei und Pipe ist mit einem Kontext markiert,
+den ich zum Beispiel mit `ps -Z`, oder `ls -Z` erfragen kann.
+
+Der Kontext ist unabhängig von der traditionellen UNIX-UID oder -GID.
+Programme mit gesetztem SUID-Bit, `su` oder `sudo` ändern den Kontext
+nicht:
+
+    $ id
+    uid=1000(mathias) gid=1000(mathias)
+    ...
+    Kontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+    $ sudo id
+    uid=0(root) gid=0(root) Gruppen=0(root)
+    Kontext=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+Der Kontext besteht aus den drei Teilen Benutzer, Rolle und Typ.
+Den Typ nennt man bei Prozessen Domain.
+Alle drei Teile sind nur Namen, die erst durch die Regeln einer
+Richtlinie eine Bedeutung für SELinux bekommen.
+
+Der Kontext von Dateien wird in den erweiterten Attributen gespeichert.
+Mit `chcon` kann ich den Kontext einer Datei temporär ändern.
+Für dauerhafte Änderungen verwende ich `setfiles`.
+
+Auf Dateisystemen ohne erweiterte Attribute, wie VFAT, ISO, NFS oder Samba,
+bekommen alle Dateien einen einheitlichen Kontext, entsprechend den Optionen
+beim Einhängen mit `mount`.
+
+#### Informationen zu verweigerten Zugriffen finden
+
+Die wichtigste Eigenschaft von SELinux ist, dass es alle Aktionen protokollieren
+kann.
+Damit ist wirklich alles gemeint, also sowohl genehmigte Aktionen als auch
+abgewiesene Aktionen.
+Im laufenden Betrieb ist es in den meisten Fällen nicht notwendig, jede
+einzelne Aktion zu protokollieren, die abgewiesenen sind auf jeden Fall
+interessant.
+
+Wo ich die Protokolle von SELinux finde, hängt von der benutzten Distribution
+ab, meist finde ich sie unterhalb von */var/log/*.
+Läuft auf dem System der Linux Audit Dämon, finde ich die Protokolle in
+*/var/log/audit/audit.log* oder */var/log/audit.log*.
+Andernfalls suche ich nach einer Datei *avc.log*.
+
+Beim Betrachten der Audit-Protokolle gilt es ein paar Dinge im Kopf zu
+behalten:
+
+1.  Nicht jede Ablehnung die ich in den Protokollen finde, stellt ein
+    Problem dar.
+    Einige sind nur kosmetischer Natur, sie treten auf, beeinflussen aber das
+    Verhalten der Anwendung nicht.
+    Diese Ablehnungen kann ich in den Regeln durch `dontaudit` Anweisungen
+    von der Protokollierung ausnehmen.
+
+2.  Ablehnungen werden protokolliert, wenn sie auftreten.
+    Das bedeutet, dass ich jede Menge davon sehen werde von denen viele nichts
+    mit dem Problem zu tun haben, das ich gerade untersuche.
+
+3.  Wenn zu viele Ablehnungen hintereinander kommen, kann es vorkommen, dass
+    der Linux-Kernel einige unterdrückt.
+    Wenn das passiert taucht eine Nachricht auf, die angibt wie viele
+    Meldungen unterdrückt wurden.
+    Das heißt dann, dass ich im Log nicht alles finde, was SELinux gemeldet hat.
+
+##### Logeinträge untersuchen
+
+In den SELinux-Tutorials im Gentoo Wiki findet sich eine gute
+[Anleitung zur Auswertung der SELinux Protokolle](https://wiki.gentoo.org/wiki/SELinux/Tutorials/Where_to_find_SELinux_permission_denial_details).
+
+Betrachten wir als Beispiel eine Ablehnung im *audit.log* des Audit-Dämons,
+die ich am Text `type=AVC` am Zeilenanfang erkenne:
+
+    type=AVC \
+    msg=audit(1384529907.797:27): \
+    avc:  \
+    denied  \
+    { execute } \
+    for pid=2347 \
+    comm="hello" \
+    path="/lib/i686/cmov/libc-2.11.3.so" \
+    dev=sda1 ino=105872 \
+    scontext=unconfined_u:unconfined_r:haifux_t:s0-s0:c0.c1023 \
+    tcontext=system_u:object_r:lib_t:s0 tclass=file
+
+AVC steht für *Access Vector Cache*.
+
+Die einzelnen Teile bedeuten:
+
+*   `type=AVC`
+
+    Der Protokolltyp.
+    Diesen finde ich nur in der Datei *audit.log*.
+
+*   `msg=audit(1384529907.797:27)`
+
+    Der Zeitstempel in Sekunden seit *epoch*, also seit dem ersten Januar 1970.
+    Diesen kann ich mit `date -d @1384529907` in ein besser lesbares Format
+    umwandeln.
+
+*   avc
+
+    Nochmal der Protokolltyp, also ein AVC-Eintrag.
+
+*   denied
+
+    Wie SELinux entschieden hat, entweder *denied* oder *granted*.
+    Im permissive Mode steht hier ein *denied*, auch wenn die Operation dann
+    ausgeführt wurde.
+
+*   { execute }
+
+    Die Operation, für die um Erlaubnis gefragt wurde.
+    Das können auch mehrere Operationen sein.
+
+*   for pid=2347
+
+    Die ID des Prozesses, der die Aktion ausführen wollte.
+
+*   comm="hello"
+
+    Der Befehl (ohne Optionen und auf 15 Zeichen beschränkt), den der Prozess
+    ausführt, dessen Operation abgewiesen wurde.
+
+*   path="/lib/i686/cmov/libc-2.11.3.so"
+
+    Die Zieldatei der Operation.
+    Dazu muss man wissen, dass
+    */lib/i686/cmov/libc-2.11.3.so* die Standard-C-Bibliothek ist, die das
+    Programm *hello* als eine der ersten öffnet und mit *mmap()* und dem
+    Argument `PROT_EXEC` in seinen Speicherbereich einblenden will.
+
+    Das bedeutet, dass der *execve()* Systemaufruf bereits ausgeführt wurde,
+    aber SELinux das Laden der Standard-C-Bibliothek unterbunden hat.
+
+*   dev=sda1
+
+    Das Gerät (Dateisystem), auf dem sich die Zieldatei der Operation befindet.
+
+*   ino=105872
+
+    Die Inodenummer auf dem Gerät.
+    Um die entsprechende Datei zu finden, ermittle ich zunächst den Mountpoint
+    des Gerätes und verwende dann `find`:
+
+        # mntpnt="$(mount|grep sda1\ on|cut -f3 -d\ )"
+        # find $mntpnt -xdev -inum 105872
+
+*   scontext=unconfined_u:unconfined_r:haifux_t:s0-s0:c0.c1023
+
+    Der Quellcontext (*source context*) des Prozesses (die Domain).
+
+*   tcontext=system_u:object_r:lib_t:s0 tclass=file
+
+    Der Zielkontext (*target context*) der Ressource, auf die zugegriffen
+    werden soll, in diesem Fall die Datei.
+
+#### Versteckte Ablehnungen
+
+Ich hatte schon angedeutet, dass *kosmetische* Ablehnungen, welche
+normalerweise nicht das Verhalten einer Anwendung beeinflussen mit `dontaudit`
+Anweisungen von der Protokollierung ausgenommen werden können.
+
+Sollte ich bei meiner Fehlersuche den Verdacht haben, dass eine dieser
+versteckten Ablehnungen mein Problem verursacht, schaue ich als erstes nach,
+wie viele es überhaupt gab:
+
+    # seinfo --stats|grep audit
+       Auditallow:         19    Dontaudit:        4601
+
+Möchte ich die versteckten Ablehnungen im Protokoll sehen, dann kann ich mit
+*semodule* die `dontaudit` Anweisungen deaktivieren:
+
+    # semodule --disable_dontaudit --build
+
+Habe ich genug davon, aktiviere ich sie wieder:
+
+    # semodule --build
+
+Damit habe ich einen Einstieg in die Fehlersuche bei Problemen mit SELinux
+gegeben.
+Natürlich kann man damit noch nicht alle Probleme lösen, doch sollte es
+zumindest bei den ersten Schritten helfen.
+
+
+

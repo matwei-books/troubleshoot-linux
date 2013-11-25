@@ -32,6 +32,7 @@ cha-04-magic-sysrequest.mdwn
 cha-05.mdwn
 cha-05-erste-minute.mdwn
 cha-05-dienste.mdwn
+cha-05-zugriffsrechte.mdwn
 cha-05-mount-probleme.mdwn
 cha-06.mdwn
 cha-07.mdwn
