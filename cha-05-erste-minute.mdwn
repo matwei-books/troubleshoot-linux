@@ -1,22 +1,6 @@
 
 ## Die ersten Minuten auf dem Server
 
-Bevor ich mich wegen eines Problems an einem Server anmelde, habe ich bereits
-einige Informationen gesammelt.
-
-*   Wie äußert sich das Problem?
-
-*   Wann wurde es zuerst bemerkt?
-
-*   Ist es reproduzierbar?
-
-*   Gibt es zeitliche Muster (zum Beispiel, wenn das Problem immer zur
-    gleichen Stunde auftritt)?
-
-*   Sind alle betroffen oder nur ein Teil der Nutzer?
-
-Damit habe ich schon eine gewisse Vorstellung, wonach ich schauen werde, wenn
-ich mich anmelde.
 Zusätzlich habe ich die Gewohnheit entwickelt, bestimmte Informationen immer
 abzufragen, wenn ich mich an einem Server anmelde.
 Damit bekomme ich einen intuitiven Einblick in den Allgemeinzustand des
@@ -24,78 +8,39 @@ Servers und eventuell weitere Hinweise.
 
 ### uptime, vmstat - Systemlast
 
-Das Programm `uptime` zeigt mir neben der Systemzeit, wie lange der letzte
-Systemstart zurückliegt, wieviel Benutzer momentan angemeldet sind und die
-durchschnittliche Systemlast der letzten Minute, der letzten fünf Minuten und
+Das Programm `uptime` zeigt mir neben der Systemzeit, wie lange der
+Systemstart zurückliegt, wieviel Benutzer angemeldet sind und die
+durchschnittliche Systemlast der letzten, der letzten fünf und
 der letzten fünfzehn Minuten.
 
-Eine Abweichung der Systemzeit erschwert zum einen die Korrelation von
-Lognachrichten.
+Eine Abweichung der Systemzeit erschwert die Korrelation von Lognachrichten.
 Außerdem kann sie bei einigen kryptographischen Protokollen, wie zum Beispiel
 *kerberos*, die Verbindung stören.
 
-Die Zeit seit dem letzten Neustart kann auf frühere Probleme hinweisen, wenn
-diese unerwartet kurz ist, der Rechner also außerplanmäßig neu gestartet
-wurde.
+Die Zeit seit dem letzten Neustart kann auf vorangegangene Probleme hinweisen,
+wenn die Zeit unerwartet kurz ist, weil der Rechner also außerplanmäßig neu
+gestartet wurde.
 
 Die Anzahl der Benutzer zeigt mir an, ob ich mit jemand Kontakt aufnehmen
 muss, bevor ich schwerwiegende Eingriffe in das System vornehme.
 
 Die Last schließlich zeigt an, wieviel Prozesse in dem betreffenden
 Zeitraum durchschnittlich auf Rechenzeit gewartet haben.
-Eine Durchschnittswert, der kleiner ist als die Anzahl der Prozessoren
-bedeutet, dass die Prozessoren Freilauf hatten, der Server also nicht
+Ein Durchschnittswert, der kleiner ist als die Anzahl der Prozessoren
+bedeutet, dass die Prozessoren Freilauf hatten, der Server nicht
 ausgelastet war.
 Ist der Durchschnittswert größer als die Anzahl der Prozessoren bedeutet das,
 dass während des betreffenden Zeitabschnitts mehr Rechenleistung benötigt
 wurde als zur Verfügung stand.
 In diesem Fall ist der Trend interessant, den ich durch Vergleich der Last
 für die drei Zeiträume erkennen kann.
-Bei steigender Last versuche ich so schnell wie möglich für Entlastung zu
-sorgen.
+Bei steigender Last versuche ich für Entlastung zu sorgen.
 Ist der Trend fallend, brauche ich nichts unmittelbar zu unternehmen, außer
 die Last weiter im Auge zu behalten.
 Das System kommt nach einer Lastspitze gerade von selbst wieder in den
 normalen Betriebsbereich.
 Natürlich werde ich versuchen die Ursache der Lastspitze zu ermitteln, um zu
 entscheiden, welche präventiven Maßnahmen ich für die Zukunft ergreifen will.
-
-Mit dem Programm `vmstat` bekomme ich ein genaueres Gefühl dafür, wie es einer
-Maschine im Moment gerade geht.
-Beim Anmelden an der Maschine rufe ich dieses oft wie folgt auf:
-
-{line-numbers=off,lang="text"}
-    $ vmstat -SM 1 5
-
-Das kostet mich etwa 5 Sekunden, bis die vollständige Ausgabe erscheint:
-
-{line-numbers=off,lang="text"}
-    procs --memory--- -swap- ---io-- -system- ----cpu----
-     r  b swpd..cache si  so  bi  bo   in  cs us sy id wa
-     1  0    0..  651  0   0 113  14  105 192  3  2 94  1
-     0  0    0..  651  0   0   0   0   78 192  2  0 98  0
-     0  0    0..  651  0   0   0   0   88 231  1  1 98  0
-     0  0    0..  651  0   0   0   0   73 189  1  1 98  0
-     0  0    0..  651  0   0   0   0   91 201  1  1 98  0
-
-Um mich mit dem Rechner vertraut zu machen, das heißt möglichst vor einem
-Problem, schaue ich mir die Spalten unter *system* und *cpu* an.
-Insbesondere die Anzahl der Interrupts (*in*) und Kontextwechsel (*cs*) sowie
-dir Prozentwert der CPU-Idle-Zeit (*id*) geben mir eine Idee dafür, was auf
-dem betreffenden Rechner "normal" ist.
-Diese Normalwerte kann ich auch in der Rechnerdokumentation festhalten.
-
-Weichen diese Werte signifikant ab, hat der Rechner ein Lastproblem und ich
-schaue mir die anderen Werte an.
-Außerdem lass ich dann das Programm oft mit den Optionen `vmstat -SM 1`
-dauerhauft in einer Extra-Konsole laufen um meine Bemühungen, die Rechnerlast
-zu reduzieren, verifizieren zu können.
-
-Sind unter *swap* Werte ungleich 0 zu sehen, heißt das dass das Betriebssystem
-in diesem Moment Hauptspeicher aus- (*so*) oder einlagert (*si*).
-Das deutet eindeutig auf Speicherprobleme hin.
-
-### w, last - Benutzer
 
 Eine Alternative zu *uptime* ist das Programm `w`.
 Dieses zeigt in der ersten Zeile die gleichen Daten an wie *uptime*.
@@ -135,9 +80,50 @@ Bei mehreren Konten schaue ich in der Datei *.bash_history* im
 Benutzerverzeichnis des in der fraglichen Zeit angemeldeten Benutzers nach.
 Falls der Benutzer die csh verwendet, schaue ich stattdessen in *.history*.
 
+### vmstat
+
+Mit dem Programm `vmstat` bekomme ich ein genaueres Gefühl dafür, wie es einer
+Maschine im Moment gerade geht.
+Beim Anmelden an der Maschine rufe ich dieses oft wie folgt auf:
+
+{line-numbers=off,lang="text"}
+    $ vmstat -SM 1 5
+
+Das kostet mich etwa 5 Sekunden, bis die vollständige Ausgabe erscheint:
+
+{line-numbers=off,lang="text"}
+    procs --memory--- -swap- ---io-- -system- ----cpu----
+     r  b swpd..cache si  so  bi  bo   in  cs us sy id wa
+     1  0    0..  651  0   0 113  14  105 192  3  2 94  1
+     0  0    0..  651  0   0   0   0   78 192  2  0 98  0
+     0  0    0..  651  0   0   0   0   88 231  1  1 98  0
+     0  0    0..  651  0   0   0   0   73 189  1  1 98  0
+     0  0    0..  651  0   0   0   0   91 201  1  1 98  0
+
+Die erste Zeile zeigt die Durchschnittswerte des Systems an.
+Ich konzentriere mich auf die folgenden vier Zeilen, die die Werte der
+jeweiligen Sekunde anzeigen.
+
+Um mich mit dem Rechner vertraut zu machen, das heißt vor einem
+Problem, schaue ich mir die Spalten unter *system* und *cpu* an.
+Insbesondere die Anzahl der Interrupts (*in*) und Kontextwechsel (*cs*) sowie
+der Prozentwert der CPU-Idle-Zeit (*id*) geben mir eine Idee dafür, was auf
+dem betreffenden Rechner "normal" ist.
+Diese Normalwerte kann ich auch in der Rechnerdokumentation festhalten.
+
+Weichen diese Werte signifikant ab, hat der Rechner ein Lastproblem und ich
+schaue mir die anderen Werte an.
+Außerdem lasse ich dann das Programm oft mit den Optionen `vmstat -SM 1`
+dauerhaft in einer Extra-Konsole laufen um meine Bemühungen, die Rechnerlast
+zu reduzieren, verifizieren zu können.
+
+Sind unter *swap* Werte ungleich 0 zu sehen, heißt das dass das Betriebssystem
+in diesem Moment Hauptspeicher aus- (*so*) oder einlagert (*si*).
+Das deutet auf Speicherprobleme hin.
+
 ### free - Hauptspeicher
 
-Der zweite Befehl, der mir hilft ein schnelles Bild über den Zustand der
+Der dritte Befehl, der mir hilft ein Bild über den Zustand der
 Maschine zu bekommen, ist `free`.
 
 {line-numbers=off,lang="text"}
@@ -160,13 +146,13 @@ Abhilfe sorgen möchte.
 
 ### df - Plattenplatz
 
-Der dritte Befehl schließlich ist `df`.
+Der vierte Befehl schließlich ist `df`.
 Dieser zeigt mir den verfügbaren Platz auf den Dateisystemen der eingehängten
 Partitionen an.
 Ich rufe diesen Befehl zweimal auf, einmal mit Option `-i`, für die Statistik
 der Inodes und einmal ohne für die Belegung des Plattenplatzes.
-Die Option `-h` ist lediglich für die Ausgabe in menschenlesbarer Form,
-was zum Beispiel heisst, 586G statt der Anzahl in Bytes.
+Die Option `-h` ist lediglich für die Ausgabe in lesbarer Form,
+zum Beispiel 586G statt der Anzahl in Bytes.
 
 {line-numbers=off,lang="text"}
     $ df -h
@@ -178,21 +164,21 @@ was zum Beispiel heisst, 586G statt der Anzahl in Bytes.
     /dev/sda1      37M  2.7M   35M    8% /
     ...
 
-Mich interessiert vor allem die Spalte mit der prozentualen Nutzung.
+Mich interessiert die Spalte mit der prozentualen Nutzung.
 Hat diese 100% erreicht, muss ich mit Ausfällen von Diensten rechnen, die, für
-sich betrachtet, unter Umständen nicht gleich auf ein Problem mit dem
+sich betrachtet, nicht gleich auf ein Problem mit dem
 Plattenplatz gedeutet hätten.
 Ab einer Nutzung von 80-90% mache ich mir Gedanken, wie ich für zusätzlichen
 verfügbaren Plattenplatz sorgen kann.
 
-Die verfügbaren Inodes in einem Dateisystem werden eher selten aufgebraucht.
+Die verfügbaren Inodes in einem Dateisystem werden seltener aufgebraucht.
 Dazu müssten auf dem Dateisystem viele kleine Dateien angelegt sein.
 Bei Mailservern mit Postfächern im Maildir-Format oder bei Newsservern kann
 das jedoch vorkommen.
 
 ### pstree, ps - laufende Prozesse
 
-Der nächste Befehl `pstree` zeigt mir, ob die notwendigen Prozesse laufen und
+Der letzte Befehl, `pstree`, zeigt mir, ob die notwendigen Prozesse laufen und
 ob gegebenenfalls Prozesse zuviel sind.
 Die Ausgabe des Befehls sieht auf jeder Maschine anders aus, entsprechend den
 Diensten, die diese anbietet.
@@ -215,10 +201,10 @@ Mit etwas Erfahrung sehe ich damit schon intuitiv, ob ein Rechner "krank" ist.
          `-udevd
 
 Der Befehl `ps aux`, auf Systemen, die `pstree` nicht installiert haben, ist
-weit weniger übersichtlich und daher nur ein schwacher Ersatz.
+weit weniger übersichtlich und nur ein schwacher Ersatz.
 
-Mit diesen ersten vier Befehlen, die ich beinahe gewohneitsmäßig nach der
-Anmeldung am Server aufrufe, bekomme ich sehr schnell eine intuitive
+Mit diesen ersten vier Befehlen, die ich gewohnheitsmäßig nach der
+Anmeldung am Server aufrufe, bekomme ich schnell eine intuitive
 Einschätzung - ein Gefühl - für den Zustand des Systems.
 Alle weiteren Schritte hängen vom konkreten Problem und der Situation auf dem
 Rechner ab.

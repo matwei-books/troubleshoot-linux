@@ -30,6 +30,7 @@ cha-04-vm.mdwn
 cha-04-initramfs.mdwn
 cha-04-magic-sysrequest.mdwn
 cha-05.mdwn
+cha-05-erste-minute.mdwn
 cha-06.mdwn
 cha-07.mdwn
 cha-07-busybox.mdwn
