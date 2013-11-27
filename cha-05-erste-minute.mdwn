@@ -17,8 +17,8 @@ Eine Abweichung der Systemzeit erschwert die Korrelation von Lognachrichten.
 Außerdem kann sie bei einigen kryptographischen Protokollen, wie zum Beispiel
 *kerberos*, die Verbindung stören.
 
-Die Zeit seit dem letzten Neustart kann auf vorangegangene Probleme hinweisen,
-wenn die Zeit unerwartet kurz ist, weil der Rechner also außerplanmäßig neu
+Die Zeit seit dem letzten Neustart weist auf vorangegangene Probleme hin,
+wenn sie unerwartet kurz ist, weil der Rechner außerplanmäßig neu
 gestartet wurde.
 
 Die Anzahl der Benutzer zeigt mir an, ob ich mit jemand Kontakt aufnehmen
@@ -203,7 +203,7 @@ Mit etwas Erfahrung sehe ich damit schon intuitiv, ob ein Rechner "krank" ist.
 Der Befehl `ps aux`, auf Systemen, die `pstree` nicht installiert haben, ist
 weit weniger übersichtlich und nur ein schwacher Ersatz.
 
-Mit diesen ersten vier Befehlen, die ich gewohnheitsmäßig nach der
+Mit diesen ersten fünf Befehlen, die ich gewohnheitsmäßig nach der
 Anmeldung am Server aufrufe, bekomme ich schnell eine intuitive
 Einschätzung - ein Gefühl - für den Zustand des Systems.
 Alle weiteren Schritte hängen vom konkreten Problem und der Situation auf dem
