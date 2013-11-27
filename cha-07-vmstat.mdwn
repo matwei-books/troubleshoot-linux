@@ -3,16 +3,16 @@
 
 Das Programm vmstat verwende ich, um bei lokalen Performanceengpässen einen
 Überblick über das Gesamtsystem zu bekommen. Es liefert mir statistische
-Informationen über Prozesse, Speicher, I/O, Platen- und CPU-Aktivitäten.
+Informationen über Prozesse, Speicher, I/O, Platten- und CPU-Aktivitäten.
 Durch die kompakte Darstellung kann ich im Wiederholungsmodus  ein Gefühl
-für die normale Aktivität des Gesamtsystems bekommen und sehe dann, wenn ein
-Performanceengpass auftritt, manchmal sofort, ob es ein allgemeines
+für die normale Aktivität des Gesamtsystems bekommen.
+Wenn ein Performanceengpass auftritt, sehe ich sofort, ob es ein allgemeines
 Ressourcenproblem ist (zuwenig Speicher, zu schwache CPU, zu langsame
-Platte, ...) oder ob ich mich doch eher mit dem betreffenden Programm
+Platte, ...) oder ob ich mich eher mit dem betreffenden Programm
 beschäftigen muss.
 
-Für die meisten Optionen sind keine speziellen Privilegien erforderlich, das
-heißt, ich kann mit vmstat auch als normaler Benutzer mal eben nachsehen,
+Für die meisten Optionen sind keine speziellen Privilegien erforderlich.
+Ich kann mit vmstat auch als normaler Benutzer mal eben nachsehen,
 wie es dem System geht.
   
 Im Wiederholungsmodus zeigt das Programm in der ersten Zeile für alle Werte
@@ -33,15 +33,15 @@ ausgibt. Auch hier steht in der ersten Zeile der Durchschnitt seit
 Systemstart, so dass ich gleich ab der zweiten Zeile sehen kann, womit das
 System besonders beschäftigt ist.
 
-Gebe ich auch eine Zahl für `anzahl` an, dann beendet sich vmstat nach
+Gebe ich zusätzlich eine Zahl für `anzahl` an, dann beendet sich vmstat nach
 soviel Perioden, wie angegeben.
 
 Die Ausgabe von vmstat in diesem Modus bedeutet folgendes:
 
 *Procs*
-: Unter `r` steht hier die Anzahl der Prozesse, die laufen
-  können und unter `b` steht die Anzahl der Prozesse in
-  uninteruptible sleep, das heißt der Prozesse, die im Kernelcode auf I/O
+: Unter `r` steht die Anzahl der Prozesse, die laufen
+  können und unter `b` die Anzahl der Prozesse in
+  uninteruptible sleep, der Prozesse, die im Kernelcode auf I/O
   warten.
 
 *Memory*
@@ -66,7 +66,7 @@ Die Ausgabe von vmstat in diesem Modus bedeutet folgendes:
 
 *CPU*
 : Diese Spalten zeigen prozentual, wie die CPU ihre Zeit
-  verbringt. Unter`us` steht der Anteil, den die CPU mit Code in
+  verbringt. Unter `us` steht der Anteil, den die CPU mit Code in
   Benutzerprogrammen verbringt. Unter `sy` steht die Zeit für das
   Abarbeiten von Systemaufrufen und unter `id` die untätige (idle)
   Zeit. Bis zum Kernel 2.5.41 zählte auch die Zeit, in der die CPU auf I/O
@@ -84,7 +84,7 @@ des Arbeitsspeichers. Weitere Informationen hierzu finden sich in
 [Bonwick1994](#bib-bonwick1994).
 
 Mit Option `-d` zeigt vmstat einmalig Diskstatistiken für alle Disk
-Devices (das können auch RAM-Disks und Loop Devices sein) an.
+Devices an, das können auch RAM-Disks und Loop Devices sein.
 Dabei bedeuten:
 
 *Reads/Writes*
@@ -109,7 +109,7 @@ Dabei bedeuten:
 Mit Option `-D` zeigt vmstat einmalig zusammengefasste Statistiken zu
 allen Disks.
 
-Und mit `-p partition` schließlich zeigt vmstat einmalig Statistiken fü
+Und mit `-p partition` schließlich zeigt vmstat einmalig Statistiken für
 diese Partition. Hierbei bedeuten in der Ausgabe:
 
 *reads*
