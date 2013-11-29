@@ -1,9 +1,9 @@
 
 ## strace {#sec-lokal-werkzeuge-strace}
 
-Strace ist ein Werkzeug, dass ich einsetze, wenn mir das Verhalten eines
-Programmes unklar ist. Wenn ich Probleme mit Zugriffsrechten vermute, aber
-keinen Anhaltspunkt in den Fehlermeldungen oder Systemprotokollen finde.
+Strace setze ich ein, wenn mir das Verhalten eines Programmes unklar ist.
+Wenn ich Probleme mit Zugriffsrechten vermute, aber keinen Anhaltspunkt in
+den Fehlermeldungen oder Systemprotokollen finde.
 Wenn ich mit einem Programm noch wenig Erfahrung habe, kaum Hilfe zu meinem
 Problem im Internet finde, aber das Problem trotzdem so schnell wie möglich
 beheben will.
@@ -13,15 +13,16 @@ mit strace ein.
 Strace hilft mir, wenn ich beobachten will, wie ein Programm
 mit seiner Umgebung interagiert. Es setzt dazu an der Kernelschnittstelle
 an und protokolliert alle Systemaufrufe mit den Parametern und Ergebnissen.
-Diese werden im Protokoll ähnlich den Systemaufrufen in der
-Programmiersprache C dargestellt: das Ergebnis steht hinter einem
-Gleichheitszeichen am Ende der Zeile, die Systemzeit steht vor dem
-Systemaufruf. Wenn ich mehrere Prozesse beobachte und in dieselbe Datei
-protokolliere, steht auch noch die Prozess-ID am Anfang der Zeile.
+Diese stellt es im Protokoll ähnlich den Systemaufrufen in der
+Programmiersprache C dar, mit folgendem Unterschied: das Ergebnis steht
+hinter einem Gleichheitszeichen am Ende der Zeile, die Systemzeit steht
+vor dem Systemaufruf.
+Wenn ich mehrere Prozesse beobachte und in dieselbe Datei protokolliere,
+steht zusätzlich die Prozess-ID am Anfang der Zeile.
 
-Um die Ausgabe von strace interpretieren zu können, ist es hilfreich die
-Sektion der Handbuchseiten zu installiert zu haben. Diese befinden sich bei
-Debian-basierten Systemen im Paket manpages-dev.
+Um die Ausgabe von strace interpretieren zu können, ist es hilfreich, die
+Sektion 2 der Handbuchseiten zu installiert zu haben.
+Diese befinden sich bei Debian-basierten Systemen im Paket *manpages-dev*.
 
 Da strace Systemaufrufe der beobachteten Prozesse protokolliert, verlangsamt
 sich deren Ablauf, was zu zusätzlichen Problemen bei der Fehlersuche führen
@@ -30,14 +31,15 @@ kann. Dessen muss ich mir beim Einsatz von strace immer bewusst sein.
 Ich persönlich setze strace bei der Fehlersuche meist auf eine der folgenden
 Weisen ein.
 
-Bei Problemen mit mit Programmen, die von Hand aufgerufen werden, starte ich
+Bei Problemen mit Programmen, die von Hand aufgerufen werden, starte ich
 das betreffende Programm wie gewohnt, allerdings setze ich am Anfang der
-Kommandozeile strace mit einigen Optionen ein. Aus
+Kommandozeile strace mit einigen Optionen ein.
+So wird aus
 
 {line-numbers=off,lang="bash"}
     $ make xyz
 
-wird dann
+dann
 
 {line-numbers=off,lang="bash"}
     $ strace -f -o make.strace make xyz
@@ -52,19 +54,19 @@ Dabei bedeuten die Optionen
 
 Bei Problemen mit bereits gestarteten Prozessen verwende ich die Option
 `-p PID` um mich mit dem betreffenden Prozess zu verbinden. Alle
-weiteren Optionen verwende ich wie gehabt, auf die Angabe des Programmnamens
+weiteren Optionen bleiben wie gehabt, auf die Angabe des Programmnamens
 und der Programmparameter kann ich verzichten.
 
 Schwieriger ist es, wenn ein Programm ein zweites aufruft, dieses ein
-drittes und so weiter. Wenn ich nur an einem der Programme interessiert bin
-und nicht genau weiss, von welchem Prozess beziehungsweise Programm dieses
-gestartet wird, helfe ich mir mit einem Trick. Ich benenne das eigentliche
-Programm um und ersetze es durch ein Skript, welche alle mich
-interessierenden Werte wie zum Beispiel die Aufrufparameter, die Umgebung,
-die UID/GID, die Standardeingabe und/oder -ausgabe protokolliert und
-schließlich das Originalprogramm via strace aufruft.
-
-Damit bekomme ich meist genügend Informationen, um das Problem zu lösen.
+drittes und so weiter.
+Wenn ich nur an einem der Programme interessiert bin und nicht genau weiß,
+von welchem Prozess beziehungsweise Programm dieses gestartet wird,
+helfe ich mir mit einem Trick.
+Ich benenne das Programm um und ersetze es durch ein Skript, welches alle
+mich interessierenden Werte protokolliert und schließlich
+das Originalprogramm via strace aufruft.
+Dieses Skript ist im Abschnitt zur [Shell](#sec-lokal-werkzeuge-shell) näher
+beschrieben.
 Natürlich darf ich am Ende nicht vergessen, das Skript wieder durch das
 Originalprogramm zu ersetzen.
 
