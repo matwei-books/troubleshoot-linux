@@ -1,0 +1,88 @@
+
+## PID 1: Init
+
+Je nach Alter und verwendeter Distribution des Linux-Systems habe ich es mit
+einem der folgenden Programme zu tun bei */sbin/init*, dem ersten vom Kernel
+gestarteten Programm.
+
+*   SysVInit
+
+*   Upstart
+
+*   Systemd
+
+Bei sehr alten Systemen besteht noch die Möglichkeit, dass ein BSD-Init im
+Einsatz ist.
+Ehrlich gesagt, habe ich sowas schon sehr lange nicht gesehen.
+
+### SysVInit
+
+Dabei handelt es sich um einen der ältesten Init-Dämonen unter Linux.
+Er wird über die Datei */etc/inittab* gesteuert.
+Bei diesem Dämon wird der Rechner in einem von mehreren möglichen "Runlevel"
+betrieben, die bestimmten Systemzuständen zugeordnet werden.
+Je nachdem, in welchem Zustand sich das System gerade befindet, werden
+bestimmte Dienste ausgeführt oder beendet.
+
+Die Runlevel selbst unterscheiden sich je nach Distribution.
+Die folgende Zuordnung trifft jedoch für die meisten zu:
+
+| 0     | aus, hinunterfahren, beenden                    |
+| 1 / S | Systemstart, Single-User                        |
+| 2-5   | Multi-User, mit Netzwerk, graphische Oberfläche |
+| 6     | Neustart                                        |
+
+Den aktuellen Runlevel kann ich mit dem Befehl `runlevel` erfragen.
+
+Für jeden Runlevel `$rl` gibt es ein Verzeichnis */etc/rc$rl.d/*, in dem sich
+Skripts zum Beenden von Diensten (*K...*) und zum Starten von Diensten
+(*S...*) befinden.
+Bei jedem Wechsel des Runlevel ruft `init` ein Skript auf, das im Wesentlichen
+nichts anderes macht, als die Skripts deren Namen mit K beginnt, mit der
+Option `stop` aufzurufen und die Skripts, deren Name mit S beginnt, mit der
+Option `start` aufzurufen.
+Vergleichbar diesem Shellcode:
+
+{line-numbers=off,lang="text"}
+    for k in /etc/rc$rl.d/K*; do
+        $k stop
+    done
+    for s in /etc/rc$rl.d/S*; do
+        $s start
+    done
+
+Die Reihenfolge, in der die Skripts aufgerufen werden, hängt vom Namen des
+Skripts ab.
+Der Name setzt sich zusammen aus dem Buchstabe `K` oder `S`, einer
+zweistelligen Zahl und dem eigentlichen Namen des Skripts.
+Die Reihenfolge wird durch die Zahl bestimmt.
+
+Üblicherweise wird das eigentliche Skript im Verzeichnis */etc/init.d/* oder
+*/etc/rc/init.d/* abgelegt und in den Runlevel-Verzeichnissen nur ein
+symbolischer Link darauf, dessen Name der obigen Konvention entspricht.
+
+Etwas komplizierter, als eben beschrieben, verläuft das Starten und Anhalten
+von Diensten, wenn SysVInit mit Makefile-ähnlicher Parallelverarbeitung läuft.
+In diesem Fall müssen die Abhängigkeiten für die Startreihenfolge in allen
+Skripts in Kommentarkopfzeilen korrekt beschrieben sein.
+
+Für das Aktivieren und Deaktivieren von Boot-Skripts empfiehlt sich auf
+Debian-basierenden Systemen das Programm `update-rc.d`, welches die
+erforderlichen Skripts von */etc/rc$rl.d/* zu den Skripts in */etc/init.d/*
+anlegt.
+Dieses Skript kann auf zweierlei Arten aufgerufen werden.
+Im älteren (Legacy-)Modus werden Reihenfolge und Runlevel auf der
+Kommandozeile vorgegeben.
+Im Default-Modus bestimmt es mittels `insserv` die Abhängigkeiten aus den
+LSB-konformen Kommentarkopfzeilen der Skripts und berechnet damit die
+Reihenfolge.
+
+Die Handbuchseite zu `insserv` gibt Auskunft zur Bedeutung der
+Kommentarkopfzeilen.
+Dieses Skript wird auch zur Berechnung der Abhängigkeiten herangezogen.
+
+Sollte ich feststellen, dass die Reihenfolge geändert werden muss, brauche ich
+nicht die Zeilen im Skript selbst ändern, sondern kann diese mit
+entsprechenden Dateien im Verzeichnis */etc/insserv.override/* überschreiben.
+befinden sich in den Runlevel-Verzeichnissen nur Links auf die
+Skripts, die selbst meist im Verzeichnis */etc/init.d/* abgelegt sind.
