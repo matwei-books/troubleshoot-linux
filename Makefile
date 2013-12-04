@@ -45,6 +45,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-05-zugriffsrechte.mdwn \
                $(DROPBOXDIR)/cha-05-mount-probleme.mdwn \
                $(DROPBOXDIR)/cha-06.mdwn \
+               $(DROPBOXDIR)/cha-06-cpu.mdwn \
                $(DROPBOXDIR)/cha-07.mdwn \
                $(DROPBOXDIR)/cha-07-busybox.mdwn \
                $(DROPBOXDIR)/cha-07-ltrace.mdwn \
@@ -112,6 +113,7 @@ SOURCES = $(BOOK) \
           cha-05-zugriffsrechte.mdwn \
           cha-05-mount-probleme.mdwn \
           cha-06.mdwn \
+          cha-06-cpu.mdwn \
           cha-lokal-perform.mdwn \
           cha-07.mdwn \
           cha-07-busybox.mdwn \
@@ -180,6 +182,7 @@ CHAPTERS = \
     cha-05-zugriffsrechte.mdwn \
     cha-05-mount-probleme.mdwn \
     cha-06.mdwn \
+    cha-06-cpu.mdwn \
     cha-07.mdwn \
     cha-07-busybox.mdwn \
     cha-07-ltrace.mdwn \
