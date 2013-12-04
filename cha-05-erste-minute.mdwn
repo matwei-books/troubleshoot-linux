@@ -176,6 +176,18 @@ Dazu müssten auf dem Dateisystem viele kleine Dateien angelegt sein.
 Bei Mailservern mit Postfächern im Maildir-Format oder bei Newsservern kann
 das jedoch vorkommen.
 
+Platzprobleme auf den Laufwerken können sich auf verschiedene Art bemerkbar
+machen, noch bevor ich sie mir beim Besuch des Rechners entdecke.
+Das Problem ist, dass sie von aussen meist nicht als solche erkennbar sind,
+weil lediglich ein oder mehrere Dienste den Betrieb einstellen.
+Insbesondere, wenn diese durch große Protokolldateien verursacht werden, kann
+es passieren, dass scheinbar genügend Platz ist, wenn ich mich anmelde und
+nachsehe.
+In der Nacht werden oft die Protokolldateien rotiert und dadurch wieder Platz
+geschaffen, bis der Plattenplatz erneut aufgebraucht ist.
+Aus diesem Grund ist es sinnvoll, den Plattenplatz automatisch, zum Beispiel
+von Nagios, überwachen zu lassen.
+
 ### pstree, ps - laufende Prozesse
 
 Der letzte Befehl, `pstree`, zeigt mir, ob die notwendigen Prozesse laufen und
