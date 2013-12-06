@@ -37,6 +37,10 @@ Loukides, Mike Kosta;
 System Performance Tuning; O'Reilly, Sebastopol, 1996;  
 ISBN 0-937175-60-9
 
+Obwohl schon etwas älter, führt dieses Buch doch grundlegend in das Gebiet des
+Performance-Tuning von UNIX-Systemen ein. 2002 gab es eine zweite Auflage mit
+Gian-Paolo D. Musumeci als Koautor.
+
 ##### Sloan2001 {#bib-sloan2001}
 
 Sloan, Joseph D.;

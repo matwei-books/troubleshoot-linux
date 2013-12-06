@@ -22,3 +22,5 @@ Hardware zu investieren, ein oder mehrere leistungsstärkere Prozessoren,
 mehr RAM, schnellere Festplatten und Netzwerkkarten.
 Oder ich verteile die Last auf mehrere Systeme.
 
+Als Einführung in das Gebiet empfehle ich [Loukides1996](#bib-loukides1996),
+das 2002 in zweiter Auflage erschien.
