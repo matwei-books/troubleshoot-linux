@@ -1,3 +1,65 @@
 
-## CPU als Engpass
+## Engpass CPU
 
+Habe ich festgestellt, dass die CPU den Engpass des Systems bildet, dann will
+ich als nächstes wissen, was sie da gerade macht.
+Mit `vmstat` habe ich nicht nur herausbekommen, dass die CPU bremst, sondern
+auch, ob sie mehr im Userland, das heißt mit dem Code des Benutzerprogramms
+und den Bibliotheken, oder im Systembereich als mit dem Kernelcode beschäftigt
+ist.
+
+Außerrdem kann ich an Hand der Anzahl der Interrupts und Kontextwechsel
+einschätzen, ob die CPU vorwiegend mit wenigen Prozessen zu tun hat oder
+zwischen vielen verschiedenen Programmen hin und herspringt.
+Im letzteren Fall kann das Abschalten einiger Dienste zu einer spürbaren
+Entlastung führen.
+
+Welche Prozesse die meiste Rechenzeit benötigen, ermittle ich mit `top` und
+`ps`.
+Dabei setze ich `top` ein, um interaktiv die Prozesse mit der meisten
+Systemzeit zu finden.
+Mit `ps` sortiere ich die Prozesse wie folgt:
+
+    $ ps k-%cpu
+      PID TTY      STAT   TIME COMMAND
+     4288 ?        Sl     1:16 /usr/lib/firefox/firefox
+     3578 tty7     Rs+    0:39 /usr/bin/X :0 -auth ...
+     4086 ?        Sl     0:08 gnome-terminal
+     ...
+     5212 pts/3    R+     0:00 ps k-%cpu -e
+     5213 pts/3    S+     0:00 less
+
+Habe ich im Moment keine Möglichkeit, weitere Dienste zu beenden, kann ich mit
+`renice` den Scheduler anweisen, bestimmte Prozesse höher oder niedriger zu
+priorisieren.
+
+Langfristig kann ich mit Systemaccounting den Ressourcenbedarf der einzelnen
+Programme festhalten und diesen für weitere Entscheidungen heranziehen.
+Dabei muss ich bedenken, dass die Accountingprogramme zwar den
+Ressourcenbedarf mehr oder weniger gut erfassen und Hilfe für die allgemeine
+Dimensionierung des Rechners geben können, aber im konkreten Überlastfall
+keine direkte Hilfe bieten.
+Sie können im Nachinein zeigen, ob bestimmte Programme mehr Ressourcen als
+üblich benötigt haben oder häufiger als sonst gelaufen sind.
+Außerdem benötigen die Accounting-Programme selbst Ressourcen und tragen auf
+diese Weise selbst mit zum Problem bei.
+
+Einige Programme lassen sich so konfigurieren, dass sie weniger Ressourcen
+verbrauchen.
+Da ich dazu keine allgemeinen Hinweise geben kann, verweise ich hier auf die
+Dokumentation der entsprechenden Software.
+Ist das nicht möglich, kann ich das Programm vielleicht durch ein anderes
+ersetzen, dass weniger Ressourcen benötigt.
+
+Schließlich habe ich noch die Möglichkeit, durch Hardware-Erweiterungen das
+System zu beschleunigen.
+Eine oder mehrere zusätzliche CPU, schnellere CPU oder Hardware-Beschleuniger
+für Verschlüsselungen können das System beschleunigen.
+
+Eventuell muss ich die Dienste des Systems auf mehrere Maschinen verteilen.
+Das kann ich auf verschiedene Art machen: ich kann mehrere gleich
+konfigurierte Systeme nehmen und die Last zwischen diesen aufteilen, ich
+kann die verschiedenen Teilaufgaben auf verschiedene Maschinen verteilen, zum
+Beispiel eine Maschine für die Verschlüsselung, eine für die Anwendung und
+eine für die Datenbank. Und natürlich kann ich beide Formen gleichzeitig
+verwenden und je nach Bedarf mischen.
