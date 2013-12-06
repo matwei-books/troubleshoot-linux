@@ -7,34 +7,33 @@ Bis mich Nagios oder ein verärgerter Kunde darauf aufmerksam macht, dass
 mindestens ein Dienst nicht funktioniert.
 
 Also noch einmal anmelden und den Dienst von Hand starten.
-Wie das genau geht, hängt von dem verwendeten `init` Dämon ab, darauf gehe ich
-im Kapitel über Werkzeuge zur lokalen Fehlersuche ein.
+Wie das genau geht, hängt von dem verwendeten `init` Dämon ab,
+darauf bin ich im vorigen Abschnitt eingegangen.
 
-### Dienst läßt sich von Hand starten
-
-Funktioniert der Dienst jetzt, ist zunächst alles in Ordnung, die Kunden
-können arbeiten.
-Es bleibt jedoch eine Ungewissheit, warum der Dienst nicht automatisch
-gestartet wurde.
-
-A> Es gab eine Zeit in der es unter Administratoren als besonders
+A> Es gab eine Zeit in der es unter Administratoren als
 A> verdienstvoll galt, eine möglichst hohe Systemlaufzeit zu erreichen.
-A> Laufzeiten von X mal hundert Betriebstagen waren keine Seltenheit.
-A> Ich gebe zu, das auch ich mich daran beteiligt habe.
-A> Für Einzelsysteme, die ständig benötigte Dienste anbieten, ist das auch
-A> heute noch sinnvoll.
+A> Laufzeiten von **x** mal hundert Betriebstagen waren keine Seltenheit.
+A> Ich gebe zu, das ich mich daran beteiligt habe.
+A> Für Einzelsysteme, die ständig benötigte Dienste anbieten, halte ich das
+A> heute noch für sinnvoll.
 A> 
-A> Die Gewichte verschieben sich jedoch, sobald man aber eine größere Anzahl
-A> von Systemen betreuen muss und genügend Redundanz im Netz vorhanden ist,
+A> Die Gewichte verschieben sich jedoch, sobald man eine größere Anzahl
+A> von Systemen betreuen muss, und genügend Redundanz im Netz vorhanden ist,
 A> dass es auf das einzelne System nicht mehr so sehr ankommt.
 A> Dann ist wichtiger, dass das System schnell startet und vor allem
-A> vollständig.
-A> Das heißt mit allen definierten Diensten.
+A> vollständig, das heißt, mit allen definierten Diensten.
 A> Aus diesem Grund habe ich mir angewöhnt, Server häufiger neu zu starten
 A> und anschließend zu kontrollieren, ob alle Dienste verfügbar sind.
 A> 
 A> Bei dieser Gelegenheit kann ich gleich sehen, welchen Einfluss der Ausfall
 A> des konkreten Servers auf das Gesamtsystem hat.
+
+### Dienst läßt sich von Hand starten
+
+Funktioniert der Dienst jetzt, ist zunächst alles in Ordnung, die Kunden
+können arbeiten.
+Es bleibt jedoch die Ungewissheit, warum der Dienst nicht automatisch
+startete.
 
 Wenn ich keinen offensichtlichen Grund finde, warum ein Dienst nicht lief,
 also keine direkten Hinweise in den Logs finde und auch niemand den Dienst
@@ -44,7 +43,7 @@ Systemstart untersuchen.
 Lässt sich der Dienst problemlos von Hand starten, kommen folgende Gründe
 in Frage:
 
-*   Ein anderer benötigter Dienst war noch nicht gestartet;
+*   ein anderer benötigter Dienst war noch nicht gestartet;
 
 *   eine benötigte Ressource war belegt;
 
@@ -53,22 +52,21 @@ in Frage:
 *   es gab ein Rechteproblem.
 
 Bei einem Problem mit einem fehlenden anderen Dienst muss ich
-gegebenenfalls mit der Reihenfolge experimentieren.
-Manchmal ist das Problem schwierig zu erkennen.
+mit der Reihenfolge experimentieren.
 
 Als erstes schalte ich die Protokollierung des Bootvorgangs ein.
 Bei Systemen, die auf Debian basieren und SysVInit verwenden kann ich
 dafür in der Datei */etc/default/rcS* die Variable `VERBOSE=yes` setzen..
 
-Oft kann ich dann an Hand der Reihenfolge in der die Dienste gestartet
-werden, schon sehen, was nicht in Ordnung ist.
-Wie ich die Reihenfolge anpasse steht bei der Beschreibung der `init`
+Oft kann ich dann an Hand der Reihenfolge, in der die Dienste starten,
+schon sehen, was nicht in Ordnung ist.
+Wie ich die Reihenfolge anpasse, steht bei der Beschreibung der `init`
 Programme.
 
-Rechteprobleme bei Startskripten sind eher selten, da diese von `init` mit
-`UID=0` gestartet werden, genauso, wie ich sie von Hand aufrufe.
+Rechteprobleme bei Startskripten sind eher selten, da `init` diese mit
+`UID=0` startet, genauso, wie ich sie von Hand aufrufe.
 Denkbar sind Probleme mit Mandatory Access Control Systemen, wie SELinux,
-wenn die Skripts in unterschiedlichem Kontext laufen, jenachdem, ob ich
+wenn die Skripts in unterschiedlichem Kontext laufen, je nachdem, ob ich
 sie von Hand starte oder `init` sie startet.
 
 Manchmal startet ein Dienst nicht, weil eine benötigte Ressource belegt ist.
@@ -78,7 +76,7 @@ einem anderen Programm benutzt wird und über eine Datei in */var/lock/*
 gesperrt wird.
 Wenn ich Glück habe, finde ich einen Hinweis darauf in den
 Systemprotokollen.
-Andernfalls kann ich es mit `strace` entdecken.
+Andernfalls kann ich das mit `strace` entdecken.
 
 A> Bei Debian gibt es in einigen Versionen ein Problem, wenn *ntp* (der
 A> Zeit-Dämon) und *ntpdate* (das Programm zum Setzen der Systemzeit)
@@ -99,15 +97,15 @@ A> bleibt.
 
 ### Dienst läßt sich nicht von Hand starten
 
-Startet ein Dienst auch nicht, wenn ich ihn von Hand starte, dann habe ich
-zunächst die Systemprotokolle.
-Gegenüber dem Systemstart habe ich den Vorteil, dass erheblich weniger
-Lognachrichten auszuwerten sind, um die betreffenden Zeilen zu finden.
-Zudem kann ich den Startzeitpunkt selbst festlegen und brauche nur einen
+Startet ein Dienst auch nicht, wenn ich ihn von Hand starte, dann schaue ich
+als erstes in die Systemprotokolle.
+Gegenüber dem Systemstart muss ich viel weniger Zeilen auswerten,
+um die gesuchten zu finden.
+Ich kann den Startzeitpunkt selbst festlegen und muss nur einen
 begrenzten Zeitabschnitt untersuchen.
 
-Finde ich trotzdem nichts, so greife ich auf die Shell und eventuell auf
-`strace` als Werkzeug zurück.
+Finde ich trotzdem nichts, so greife ich auf die Shell und auf `strace`
+als Werkzeuge zurück.
 
 Die Shell, mit der Option `-x` gestartet, zeigt jeden aufgerufenen Befehl, 
 und jede gesetzte Variable an.
@@ -118,12 +116,12 @@ Reicht auch das nicht und ich weiß nur, welches Binärprogramm nicht
 richtig arbeitet, aber nicht warum, dann setze ich `strace` ein.
 Damit finde ich auch in schwierigen Fällen oft noch die Ursache eines
 Problems.
-In den meisten Fällen ist es eine Datei, die sich nicht am erwarteten
+In vielen Fällen ist es eine Datei, die sich nicht am erwarteten
 Platz befindet oder ein Problem mit Zugriffsrechten.
 
-Statt `strace` kann ich auch `ltrace` verwenden, das außer Systemaufrufen
+Statt `strace` kann ich `ltrace` verwenden, das außer Systemaufrufen
 auch Bibliotheksaufrufe protokolliert und somit den Prozess noch
 detaillierter beobachtet.
 Dafür habe ich dann wiederum noch mehr Protokollzeilen auszuwerten, was
-das Finden der relevanten Zeilen auch nicht einfacher macht.
+das Finden der relevanten Zeilen nicht einfacher macht.
 
