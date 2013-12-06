@@ -212,8 +212,8 @@ Mit etwas Erfahrung sehe ich damit schon intuitiv, ob ein Rechner "krank" ist.
          |-6*[stunnel4]
          `-udevd
 
-Der Befehl `ps aux`, auf Systemen, die `pstree` nicht installiert haben, ist
-weit weniger übersichtlich und nur ein schwacher Ersatz.
+Der Befehl `ps xjf`, auf Systemen, die `pstree` nicht installiert haben, ist
+weniger übersichtlich und nur ein schwacher Ersatz.
 
 Mit diesen ersten fünf Befehlen, die ich gewohnheitsmäßig nach der
 Anmeldung am Server aufrufe, bekomme ich schnell eine intuitive
