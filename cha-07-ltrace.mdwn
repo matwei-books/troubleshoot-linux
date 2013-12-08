@@ -1,8 +1,7 @@
 
 ## ltrace {#sec-lokal-werkzeuge-ltrace}
 
-Ltrace ist, ähnlich strace
-(siehe Abschnitt zu [strace](#sec-lokal-werkzeuge-strace)),
+Ltrace ist, ähnlich [strace](#sec-lokal-werkzeuge-strace),
 ein Programm, mit dem ich einem Prozess bei der
 Arbeit zusehen kann. Im Gegensatz zu strace, welches nur die
 Kernel-Schnittstelle beobachtet, zeigt ltrace den Aufruf von
@@ -19,51 +18,52 @@ Die folgenden Optionen sind für die Fehlersuche mit ltrace interessant. Für
 eine komplette Liste der Optionen verweise ich auf die Handbuchseite.
 
 *-S*
-: Mit dieser Option zeigt ltrace zusätzlich zu den
-Bibliotheksaufrufen auch Systemaufrufe an der Kernelschnittstelle.
-Diesen wird in der Ausgabe `SYS_` vorangestellt.
+: Mit dieser Option zeigt ltrace zusätzlich zu den Bibliotheksaufrufen auch
+  Systemaufrufe an der Kernelschnittstelle.
+  Diesen wird in der Ausgabe `SYS_` vorangestellt.
 
 *-L*
-: Diese Option ist nur zusammen mit `-S` sinnvoll, da sie die
-Ausgabe der Bibliotheksaufrufe unterdrückt. Mit beiden Optionen zusammen
-zeigt ltrace etwa das gleiche an wie strace, der einzige Unterschied ist
-das vorangestellte `SYS_` bei ltrace.
+: Diese Option ist nur zusammen mit `-S` sinnvoll, da sie die Ausgabe der
+  Bibliotheksaufrufe unterdrückt.
+  Mit beiden Optionen zusammen zeigt ltrace etwa das gleiche an wie strace,
+  der auffälligste Unterschied ist das vorangestellte `SYS_` bei ltrace.
 
 *-e expr*
-: Damit kann ich die Ereignisse/Funktionen, die angezeigt
-werden sollen, einschränken. Funktionen, die ich nicht sehen will,
-kennzeichne ich mit vorangestelltem `!`. So kann ich zum Beispiel
-mit `ltrace -e malloc,free` nachschauen, ob angeforderter Speicher
-auch wieder freigegeben wird, was insbesondere bei langlaufenden
-Prozessen von Belang ist.
+: Damit kann ich die Ereignisse und Funktionen einschränken, die angezeigt
+  werden sollen.
+  Funktionen, die ich nicht sehen will, kennzeichne ich mit vorangestelltem `!`.
+  So kann ich zum Beispiel mit `ltrace -e malloc,free` nachschauen, ob
+  angeforderter Speicher auch wieder freigegeben wird.
+  Das interessiert mich insbesondere bei lange laufenden Prozessen.
 
 *-f*
-: Diese Option bewirkt, genau wie bei strace, das auch
-Kindprozesse mit beobachtet werden.
+: Diese Option bewirkt, genau wie bei strace, das auch Kindprozesse mit
+  beobachtet werden.
 
 *-o dateiname*
-: Das bewirkt, ebenfalls wie bei strace, das die Ausgabe
-von ltrace in die angegebene Datei anstatt zu STDERR ausgegeben wird.
+: Damit gibt ltrace, genau wie strace, die Ausgabe in die angegebene Datei
+  anstatt zu STDERR aus.
 
 *-p pid*
- Mit dieser Option kann ich, wie bei strace, einen bereits
-      laufenden Prozess untersuchen.
+: Mit dieser Option kann ich, wie bei strace, einen bereits laufenden
+  Prozess untersuchen.
 
 *-i*
 : Mit dieser Option zeigt ltrace den Befehlszeiger zu jedem Funktionsaufruf.
 
 *-r*
-: Damit fügt ltrace relative Zeitstempel in die Ausgabe, mit denen
-ich zum Beispiel die Verzögerungen durch Timeouts genauer eingrenzen kann.
+: Damit fügt ltrace relative Zeitstempel in die Ausgabe, mit denen ich die
+  Verzögerungen durch Timeouts genauer eingrenzen kann.
 
 *-T*
-: Mit dieser Option zeigt ltrace die Zeit, die für die
-Funktionsaufrufe benötigt wurde.
+: Mit dieser Option zeigt ltrace die Zeit, die für die Funktionsaufrufe
+  benötigt wurde.
 
 *-l dateiname*
-: Diese Option erlaubt mir die Beobachtung
-einzuschränken auf Funktionsaufrufe aus dieser Bibliothek. Ich muss den
-kompletten Pfad zur Bibliothek angeben. Welche Bibliotheken ein Programm
-verwendet, bekomme ich mit ldd heraus. Wenn ich an mehreren Bibliotheken
-interessiert bin, kann ich diese Option mehrfach angeben.
+: Diese Option erlaubt mir, die Beobachtung einzuschränken auf
+  Funktionsaufrufe aus der angegebenen Bibliothek.
+  Ich muss den kompletten Pfad zur Bibliothek angeben.
+  Welche Bibliotheken ein Programm verwendet, bekomme ich mit ldd heraus.
+  Wenn ich an mehreren Bibliotheken interessiert bin, kann ich diese Option
+  mehrfach angeben.
 
