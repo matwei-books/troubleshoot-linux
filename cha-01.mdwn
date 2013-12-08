@@ -37,9 +37,3 @@ Modell
   Welches Modell ich wähle, hängt davon ab, welche Eigenschaften ich
   untersuchen will.
 
-X> Nimm den Duden, ein anderes Nachschlagewerk oder Wikipedia und schlage die
-X> Begriffe *Methode*, *Heuristik* und *Modell* nach.
-X> Lies auch die Erklärungen zu angrenzenden Begriffen.
-X> Vergleiche diese Begriffsbestimmungen mit den hier angegebenen.
-X> Das ganze sollte nicht länger als 15 Minuten in Anspruch nehmen.
-

@@ -6,3 +6,6 @@ Dieses Buch ist im Markdown-Format mit Erweiterungen von
 Anschließend wurden aus den Markdown-Quelldateien
 die PDF-, EPUB- and MOBI-Versionen erzeugt.
 
+Der Entscheidungsbaum im ersten Kapitel habe ich mit
+[yEd](http://www.yworks.com/de/products_yed_about.html) gezeichnet und für die
+Bucherstellung im PNG-Format exportiert.
