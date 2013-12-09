@@ -46,6 +46,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-05-mount-probleme.mdwn \
                $(DROPBOXDIR)/cha-06.mdwn \
                $(DROPBOXDIR)/cha-06-cpu.mdwn \
+               $(DROPBOXDIR)/cha-06-ram.mdwn \
                $(DROPBOXDIR)/cha-07.mdwn \
                $(DROPBOXDIR)/cha-07-busybox.mdwn \
                $(DROPBOXDIR)/cha-07-ltrace.mdwn \
@@ -72,6 +73,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/images/tcp-handshake-fail.png \
                $(DROPBOXDIR)/images/tcp-handshake.png \
                $(DROPBOXDIR)/images/tcp-shutdown.png \
+               $(DROPBOXDIR)/images/top-sorted-by-mem.png \
 #
 
 SOURCES = $(BOOK) \
@@ -114,6 +116,7 @@ SOURCES = $(BOOK) \
           cha-05-mount-probleme.mdwn \
           cha-06.mdwn \
           cha-06-cpu.mdwn \
+          cha-06-ram.mdwn \
           cha-lokal-perform.mdwn \
           cha-07.mdwn \
           cha-07-busybox.mdwn \
@@ -183,6 +186,7 @@ CHAPTERS = \
     cha-05-mount-probleme.mdwn \
     cha-06.mdwn \
     cha-06-cpu.mdwn \
+    cha-06-ram.mdwn \
     cha-07.mdwn \
     cha-07-busybox.mdwn \
     cha-07-ltrace.mdwn \
