@@ -31,6 +31,7 @@ cha-04-initramfs.mdwn
 cha-04-magic-sysrequest.mdwn
 cha-05.mdwn
 cha-05-erste-minute.mdwn
+cha-05-init-programme.mdwn
 cha-05-dienste.mdwn
 cha-06.mdwn
 cha-07.mdwn
