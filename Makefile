@@ -47,6 +47,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-06.mdwn \
                $(DROPBOXDIR)/cha-06-cpu.mdwn \
                $(DROPBOXDIR)/cha-06-ram.mdwn \
+               $(DROPBOXDIR)/cha-06-io.mdwn \
                $(DROPBOXDIR)/cha-07.mdwn \
                $(DROPBOXDIR)/cha-07-busybox.mdwn \
                $(DROPBOXDIR)/cha-07-ltrace.mdwn \
@@ -117,6 +118,7 @@ SOURCES = $(BOOK) \
           cha-06.mdwn \
           cha-06-cpu.mdwn \
           cha-06-ram.mdwn \
+          cha-06-io.mdwn \
           cha-lokal-perform.mdwn \
           cha-07.mdwn \
           cha-07-busybox.mdwn \
@@ -187,6 +189,7 @@ CHAPTERS = \
     cha-06.mdwn \
     cha-06-cpu.mdwn \
     cha-06-ram.mdwn \
+    cha-06-io.mdwn \
     cha-07.mdwn \
     cha-07-busybox.mdwn \
     cha-07-ltrace.mdwn \

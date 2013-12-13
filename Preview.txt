@@ -38,6 +38,7 @@ cha-05-mount-probleme.mdwn
 cha-06.mdwn
 cha-06-cpu.mdwn
 cha-06-ram.mdwn
+cha-06-io.mdwn
 cha-07.mdwn
 cha-07-busybox.mdwn
 cha-07-ltrace.mdwn
