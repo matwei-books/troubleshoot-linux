@@ -1,6 +1,6 @@
-# Netzwerkperfomance {#cha-netz-performance}
+# Totalausfall des Netzwerks {#cha-netz-totalausfall}
 
-Manchmal scheint alles in Ordnung zu sein und trotzdem sind die Kunden nicht
-zufrieden. Performance ist ein heikles Thema, weil jeder seine eigene
-Vorstellung davon hat, was ausreichende Performance ist.
+{#sec-gar-kein-netz}
+Habe ich an einem Rechner überhaupt keine Netzverbindung, oder kann ich ein
+ganzes Netzsegment nicht erreichen, spreche ich von einem Totalausfall.
 

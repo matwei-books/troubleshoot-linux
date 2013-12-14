@@ -1,26 +1,23 @@
-# Performance des Rechners {#cha-lokal-performance}
+# Partieller Ausfall {#cha-lokal-teilausfall}
 
-Der Rechner funktioniert zwar, aber alles erscheint zäh und in Zeitlupe
-abzulaufen. Jobs brauchen eine gefühlte Ewigkeit, die Tastatur scheint mit
-8 Baud angeschlossen. Irgendwo sind Engpässe, aber wo?
+Bei einem teilweisen Ausfall auf einem Server sind nur einzelne Dienste des
+Systems betroffen.
+Dann steht mir, im Gegensatz zum Totalausfall, meist die gesamte Vielfalt an
+Werkzeugen zur Diagnose zur Verfügung.
 
-Drei wesentliche Engpässe beim Betrieb eines Rechners sind CPU, Hauptspeicher
-und I/O.
-Welcher von diesen drei im Moment gerade den Betrieb hemmt, bekomme ich sehr
-schnell mit dem Befehl `vmstat` heraus.
-Damit weiß ich allerdings erst, wo ich suchen muss, die eigentliche Ursache
-muss ich dann noch ermitteln.
+Bevor ich mich wegen eines Problems an einem Server anmelde, habe ich bereits
+einige Informationen gesammelt.
 
-Oft ist es einfach nur eine Überlast, das heisst, das System erhält temporär
-mehr Aufgaben, als es bewältigen kann.
-Dann werde ich zunächst alles tun, um die Last zu reduzieren.
-Anschließend mache ich mir Gedanken, wie ich die zu erwartende Last bewältigen
-kann.
+*   Wie äußert sich das Problem?
 
-Mitunter kann ich die Ergebnisse meiner Analyse nutzen, um gezielt in neue
-Hardware zu investieren, ein oder mehrere leistungsstärkere Prozessoren,
-mehr RAM, schnellere Festplatten und Netzwerkkarten.
-Oder ich verteile die Last auf mehrere Systeme.
+*   Wann wurde es zuerst bemerkt?
 
-Als Einführung in das Gebiet empfehle ich [Loukides1996](#bib-loukides1996),
-das 2002 in zweiter Auflage erschien.
+*   Ist es reproduzierbar?
+
+*   Gibt es zeitliche Muster (zum Beispiel, wenn das Problem immer zur
+    gleichen Stunde auftritt)?
+
+*   Sind alle betroffen oder nur ein Teil der Nutzer?
+
+Damit habe ich schon eine gewisse Vorstellung, wonach ich schauen werde, wenn
+ich mich anmelde.

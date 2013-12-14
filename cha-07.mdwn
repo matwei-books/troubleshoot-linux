@@ -1,13 +1,26 @@
-# Werkzeuge zur lokalen Fehlersuche {#cha-lokal-werkzeuge}
+# Performance des Rechners {#cha-lokal-performance}
 
-Linux stellt mir eine Unmenge an Werkzeugen für die Fehlersuche zur Verfügung.
-Etliche davon kommen mir sowohl bei Total- als auch bei Partialausfällen
-zu gute.
-Andere bei Performanceproblemen.
-Einige sind so nützlich, dass sie immer wieder bei den unterschiedlichsten
-Problemen zum Einsatz kommen.
-Da es mir schwerfällt, die einzelnen Werkzeuge bestimmten Kategorien
-zuzuordnen, stelle ich diese nachfolgend in alphabetischer Reihenfolge vor.
-Das erleichtert zumindest das Wiederfinden, wenn man schnell etwas
-nachschlagen möchte.
+Der Rechner funktioniert zwar, aber alles erscheint zäh und in Zeitlupe
+abzulaufen. Jobs brauchen eine gefühlte Ewigkeit, die Tastatur scheint mit
+8 Baud angeschlossen. Irgendwo sind Engpässe, aber wo?
 
+Drei wesentliche Engpässe beim Betrieb eines Rechners sind CPU, Hauptspeicher
+und I/O.
+Welcher von diesen drei im Moment gerade den Betrieb hemmt, bekomme ich sehr
+schnell mit dem Befehl `vmstat` heraus.
+Damit weiß ich allerdings erst, wo ich suchen muss, die eigentliche Ursache
+muss ich dann noch ermitteln.
+
+Oft ist es einfach nur eine Überlast, das heisst, das System erhält temporär
+mehr Aufgaben, als es bewältigen kann.
+Dann werde ich zunächst alles tun, um die Last zu reduzieren.
+Anschließend mache ich mir Gedanken, wie ich die zu erwartende Last bewältigen
+kann.
+
+Mitunter kann ich die Ergebnisse meiner Analyse nutzen, um gezielt in neue
+Hardware zu investieren, ein oder mehrere leistungsstärkere Prozessoren,
+mehr RAM, schnellere Festplatten und Netzwerkkarten.
+Oder ich verteile die Last auf mehrere Systeme.
+
+Als Einführung in das Gebiet empfehle ich [Loukides1996](#bib-loukides1996),
+das 2002 in zweiter Auflage erschien.
