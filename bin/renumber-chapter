@@ -1,0 +1,15 @@
+#!/bin/bash
+# vim: set sw=2 ts=2 tw=78 et si:
+#
+
+FROM=$1
+TO=$2
+
+[ $# -lt 2 ] && echo "Gebrauch: $0 <von> <nach>" 1>&2 && exit 1
+
+for file in  cha-$FROM.mdwn cha-$FROM-*.mdwn; do
+  if [ -f "$file" ]; then
+    to="cha-$TO${file#cha-$FROM}"
+    echo mtn mv $file $to
+  fi
+done
