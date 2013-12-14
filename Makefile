@@ -51,6 +51,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-07.mdwn \
                $(DROPBOXDIR)/cha-07-busybox.mdwn \
                $(DROPBOXDIR)/cha-07-ltrace.mdwn \
+               $(DROPBOXDIR)/cha-07-perl.mdwn \
                $(DROPBOXDIR)/cha-07-shell.mdwn \
                $(DROPBOXDIR)/cha-07-strace.mdwn \
                $(DROPBOXDIR)/cha-07-vmstat.mdwn \
@@ -123,6 +124,7 @@ SOURCES = $(BOOK) \
           cha-07.mdwn \
           cha-07-busybox.mdwn \
           cha-07-ltrace.mdwn \
+          cha-07-perl.mdwn \
           cha-07-shell.mdwn \
           cha-07-strace.mdwn \
           cha-07-vmstat.mdwn \
@@ -193,6 +195,7 @@ CHAPTERS = \
     cha-07.mdwn \
     cha-07-busybox.mdwn \
     cha-07-ltrace.mdwn \
+    cha-07-perl.mdwn \
     cha-07-shell.mdwn \
     cha-07-strace.mdwn \
     cha-07-vmstat.mdwn \

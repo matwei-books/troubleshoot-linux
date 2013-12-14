@@ -42,6 +42,7 @@ cha-06-io.mdwn
 cha-07.mdwn
 cha-07-busybox.mdwn
 cha-07-ltrace.mdwn
+cha-07-perl.mdwn
 cha-07-shell.mdwn
 cha-07-strace.mdwn
 cha-07-vmstat.mdwn
