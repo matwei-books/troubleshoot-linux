@@ -49,6 +49,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-07-io.mdwn \
                $(DROPBOXDIR)/cha-08.mdwn \
                $(DROPBOXDIR)/cha-08-busybox.mdwn \
+               $(DROPBOXDIR)/cha-08-fuser.mdwn \
                $(DROPBOXDIR)/cha-08-ltrace.mdwn \
                $(DROPBOXDIR)/cha-08-perl.mdwn \
                $(DROPBOXDIR)/cha-08-shell.mdwn \
@@ -124,6 +125,7 @@ SOURCES = $(BOOK) \
           cha-lokal-perform.mdwn \
           cha-08.mdwn \
           cha-08-busybox.mdwn \
+          cha-08-fuser.mdwn \
           cha-08-ltrace.mdwn \
           cha-08-perl.mdwn \
           cha-08-shell.mdwn \
@@ -197,6 +199,7 @@ CHAPTERS = \
     cha-07-io.mdwn \
     cha-08.mdwn \
     cha-08-busybox.mdwn \
+    cha-08-fuser.mdwn \
     cha-08-ltrace.mdwn \
     cha-08-perl.mdwn \
     cha-08-shell.mdwn \
