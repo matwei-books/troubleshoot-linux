@@ -21,6 +21,7 @@ cha-03-schulung.mdwn
 cha-03-detail-gesamt.mdwn
 part2.mdwn
 cha-04.mdwn
+cha-04-dateien.mdwn
 cha-04-prozessmodell.mdwn
 cha-04-schnittstellen.mdwn
 cha-05.mdwn

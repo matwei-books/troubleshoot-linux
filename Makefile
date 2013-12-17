@@ -30,6 +30,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-03-schulung.mdwn \
                $(DROPBOXDIR)/cha-03-detail-gesamt.mdwn \
                $(DROPBOXDIR)/cha-04.mdwn \
+               $(DROPBOXDIR)/cha-04-dateien.mdwn \
                $(DROPBOXDIR)/cha-04-prozessmodell.mdwn \
                $(DROPBOXDIR)/cha-04-schnittstellen.mdwn \
                $(DROPBOXDIR)/cha-05.mdwn \
@@ -105,6 +106,7 @@ SOURCES = $(BOOK) \
           cha-03-schulung.mdwn \
           cha-03-detail-gesamt.mdwn \
           cha-04.mdwn \
+          cha-04-dateien.mdwn \
           cha-04-prozessmodell.mdwn \
           cha-04-schnittstellen.mdwn \
           cha-05.mdwn \
@@ -180,6 +182,7 @@ CHAPTERS = \
     cha-03-schulung.mdwn \
     cha-03-detail-gesamt.mdwn \
     cha-04.mdwn \
+    cha-04-dateien.mdwn \
     cha-04-prozessmodell.mdwn \
     cha-04-schnittstellen.mdwn \
     cha-05.mdwn \
