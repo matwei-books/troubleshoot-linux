@@ -4,28 +4,32 @@
 Ein Indiz für ein Zugriffsproblem ist zum Beispiel ein fehlgeschlagener
 Systemaufruf, den ich in der Ausgabe von *strace* finden kann, wie diesen hier:
 
-    open("tmp/abc", O_RDONLY) = -1 EACCES (Permission denied)
+{line-numbers=off,lang="text"}
+    open("abc", O_RDONLY) = -1 EACCES (Permission denied)
 
-Um Zugriffsprobleme analysieren zu können, muss ich wenigstens die Grundlagen
-der Zugriffskontrolle verstehen.
+Um Zugriffsprobleme analysieren zu können, muss ich die Grundlagen
+der Zugriffskontrolle verstehen. Ausserdem ist ein minimales Verständnis der
+Rolle von Dateien und Verzeichnissen nötig, wie im Grundlagenkapitel zu Linux
+gegeben.
 
-Ich fange meine Betrachtungen mit der traditionellen benutzerbestimmten
-Zugriffskontrolle (discretionary access control, DAC) an und widme mich in den
-nachfolgenden Artikeln den Mechanismen für zwingend erforderliche
-Zugriffskontrolle (mandatory access control, MAC).
+Ich beginne meine Betrachtungen mit der traditionellen benutzerbestimmten
+Zugriffskontrolle (discretionary access control, DAC) an und und komme danach
+zu erweiterten Dateiattributen, Capabilities, AppArmor und SELinux.
 
-Allen Mechanismen für Zugriffskontrolle gemeinsam ist, dass in dem Moment, in
-dem ein Subjekt (ein Prozess) eine Aktion, wie zum Beispiel Lesen oder
-Schreiben, auf ein Objekt (eine Datei) anwenden will, die Zugriffsrechte
-geprüft und dann gewährt oder verweigert werden.
+Allen Mechanismen für Zugriffskontrolle gemeinsam ist, dass in dem Moment
+die Zugriffsrechte geprüft, und gewährt oder verweigert werden,
+in dem ein Subjekt (ein Prozess) eine Aktion, wie zum Beispiel Lesen oder
+Schreiben, auf ein Objekt (eine Datei) anwenden will,
 
 ### Traditionelle Unix-Dateirechte
 
-Im traditionellen Zugriffsmodell werden die Zugriffsrechte zusammen mit den
-Informationen über den Eigentümer und die Gruppe der Datei im Inode geführt,
+Im traditionellen Zugriffsmodell führt das Dateisystem die Informationen über
+die Zugriffsrechte zusammen mit den Informationen über den Eigentümer und die
+Gruppe der Datei im Inode,
 und zwar als Bitmap mit je drei Bits, die die grundlegenden Rechte für den
 Dateieigentümer, die Eigentümergruppe sowie alle anderen bestimmen.
-In dieser Reihenfolge werden die Rechte auch geprüft und angewandt.
+In dieser Reihenfolge prüft der Kernel auch die Rechte gegen die UID und GID
+des Prozesses.
 
 #### Grundlegende Rechte
 
@@ -34,16 +38,23 @@ Daten aus dieser gelesen werden dürfen. Für Verzeichnisse bedeutet es, dass
 diese aufgelistet werden dürfen.
 
 Das Schreibrecht (**w**, write) bedeutet für reguläre Dateien und
-Gerätedateien, dass Daten dorthin geschrieben werden dürfen. Bei
-Verzeichnissen bedeutet es, dass Einträge neu angelegt beziehungsweise
+Gerätedateien, dass Daten dorthin geschrieben werden dürfen.
+Bei Verzeichnissen bedeutet es, dass Einträge neu angelegt beziehungsweise
 entfernt werden dürfen, unabhängig von den Rechten der Datei, auf die
-der betreffende Eintrag verweist. Somit ist es möglich, eine Datei zu löschen
-oder umzubenennen, auf die man keine Schreib- oder Leserechte besitzt.
+der betreffende Eintrag verweist.
+Somit ist es möglich, eine Datei zu löschen oder umzubenennen, auf die man
+keine Schreib- oder Leserechte besitzt.
+Das ist auch einsichtig, wenn man sich vor Augen hält, dass ein
+Verzeichniseintrag nichts weiter ist, als ein Name für und ein Verweis auf
+eine Datei und nur insofern die Eigenschaften einer Datei beeinflusst, dass im
+Inode gezählt wird, wie viele Verweise auf eine Datei es gibt.
+Erst, nachdem der letzte Verweis entfernt wurde, wird der von der Datei
+belegte Speicherplatz wirklich freigegeben.
 
 Das Ausführrecht (**x**, execute) bei einer regulären Datei bedeutet, dass sie
-als Prozess ausgeführt werden kann.
+von einem Prozess ausgeführt werden kann.
 Dabei ist bei einer Binärdatei nicht einmal das Leserecht auf diese Datei nötig.
-Bei einem ausführbaren Skript wird das Leserecht benötigt, da der
+Bei einem ausführbaren Skript benötige ich das Leserecht, da der
 Skript-Interpreter die Datei lesen muss, um ihr Programm abzuarbeiten.
 Bei einem Verzeichnis bedeutet das **x** Bit, dass ich in das Verzeichnis
 wechseln und darin verzeichnete Dateien benutzen darf.
