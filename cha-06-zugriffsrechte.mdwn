@@ -8,7 +8,7 @@ Systemaufruf, den ich in der Ausgabe von *strace* finden kann, wie diesen hier:
     open("abc", O_RDONLY) = -1 EACCES (Permission denied)
 
 Um Zugriffsprobleme analysieren zu können, muss ich die Grundlagen
-der Zugriffskontrolle verstehen. Ausserdem ist ein minimales Verständnis der
+der Zugriffskontrolle verstehen. Außerdem ist ein minimales Verständnis der
 Rolle von Dateien und Verzeichnissen nötig, wie im Grundlagenkapitel zu Linux
 gegeben.
 
@@ -27,7 +27,7 @@ Im traditionellen Zugriffsmodell führt das Dateisystem die Informationen über
 die Zugriffsrechte zusammen mit den Informationen über den Eigentümer und die
 Gruppe der Datei im Inode,
 und zwar als Bitmap mit je drei Bits, die die grundlegenden Rechte für den
-Dateieigentümer, die Eigentümergruppe sowie alle anderen bestimmen.
+Dateieigentümer, die Gruppe sowie alle anderen bestimmen.
 In dieser Reihenfolge prüft der Kernel auch die Rechte gegen die UID und GID
 des Prozesses.
 
@@ -96,7 +96,7 @@ Dateien werden immer mit der UID des aufrufenden Prozesses ausgeführt.
 #### Programme zum Ansehen und Bearbeiten der Zugriffsrechte
 
 Um die traditionellen Zugriffsrechte einer Datei anzusehen kann ich das
-Program `ls` mit der Option `-l` verwenden:
+Programm `ls` mit der Option `-l` verwenden:
 
 {line-numbers=off,lang="text"}
     $ ls -a -l
@@ -123,11 +123,11 @@ Details zu den Programmen finden sich in den entsprechenden Handbuchseiten.
 
 ### Erweiterte Dateiattribute
 
-Wenn ich die Standardzugriffsrechte auf eine Datei in Ordnung sind, ich aber
+Wenn die Standardzugriffsrechte einer Datei in Ordnung sind, ich aber
 trotzdem keinen Zugriff habe, prüfe ich als nächstes die erweiterten Attribute
 des Dateisystems für diese Datei.
 
-Zum Anzeigen verwende ich das Program `lsattr`:
+Zum Anzeigen verwende ich das Programm `lsattr`:
 
 {line-numbers=off,lang="text"}
     $ ls -l tmp/abc 
@@ -167,7 +167,7 @@ Bei Dateien mit dem Attribut `s` werden beim Löschen alle Blöcke mit `0x0`
 überschrieben und diese vor dem Löschen der Datei auf die Platte
 zurückgeschrieben.
 Das heißt, diese Dateien sind nicht wiederherstellbar.
-Bei hochsensiblen Daten würde ich mich jedoch nicht darauf verlassen,
+Bei sensiblen Daten würde ich mich jedoch nicht darauf verlassen,
 da mitunter die Elektronik des
 Speichermediums Sektoren vor dem Betriebssystem verbirgt und damit meine
 Anstrengungen, eine Datei sicher zu löschen, zunichte macht.
@@ -443,7 +443,7 @@ Dabei kennt es vier Modi:
 
 Profile können Kennzeichen (Flags) enthalten, die das Audit beeinflussen.
 
-*   **Deny rule** - jede passende Ereigniss zu einer Regel, die diesen Präfix
+*   **Deny rule** - jedes passende Ereignis zu einer Regel, die diesen Präfix
       enthält, wird ohne Protokollnachricht abgewiesen.
       Das setzt man ein, wenn
       die abgewiesenen Ereignisse bekannt sind und nicht die Systemlogs
@@ -456,8 +456,8 @@ Profile können Kennzeichen (Flags) enthalten, die das Audit beeinflussen.
 
 Wenn ich ein Problem mit AppArmor untersuche, schaue ich zunächst, ob der
 betreffende Prozess überhaupt von AppArmor beschränkt wird.
-Das kann ich entweder mit `ps` oder indem ich mir die entsprechenden Attribute
-des Prozesses im *proc* Dateisystem anschaue:
+Das kann ich entweder mit `ps` machen oder indem ich mir die entsprechenden
+Attribute des Prozesses im *proc* Dateisystem anschaue:
 
 {line-numbers=off,lang="text"}
     # ps -Z 727
@@ -478,7 +478,7 @@ des Prozesses im *proc* Dateisystem anschaue:
 
 #### Probleme mit AppArmor behandeln
 
-Ich kann das Program `aa-logprof` verwenden, um ein Profil anzupassen.
+Ich kann das Programm `aa-logprof` verwenden, um ein Profil anzupassen.
 Dieses interaktive Programm durchsucht die Protokolldatei und schlägt bei
 unbekannten AppArmor-Ereignissen Änderungen am jeweiligen Profil vor.
 Am Ende schreibt es die Änderungen in die Profildatei und lädt die
@@ -728,7 +728,7 @@ Die einzelnen Teile bedeuten:
     Im permissive Mode steht hier ein *denied*, auch wenn die Operation dann
     ausgeführt wurde.
 
-*   { execute }
+*   `{ execute }`
 
     Die Operation, für die um Erlaubnis gefragt wurde.
     Das können auch mehrere Operationen sein.
