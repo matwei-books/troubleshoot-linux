@@ -95,3 +95,12 @@ POSIX.1-2008 definiert eine Standardschnittstelle und -umgebung für
 Betriebssysteme, einschließlich eines Befehlsinterpreters (Shell) und
 allgemeiner Hilfsprogramme um die Portabilität von Anwendungen auf der Ebene
 des Quellcodes zu unterstützen.
+
+##### POSIX.FileCap {#bib-web-posix-capabilities}
+Chris Friedhoff;
+POSIX Capabilities & File POSIX Capabilities;
+<http://www.friedhoff.org/posixfilecaps.html>
+Aufgerufen: 2013-12-20
+
+Dieser Artikel, 2008 geschrieben, führt mit praktischen Beispielen in den
+Umgang mit POSIX Capabilities ein.
