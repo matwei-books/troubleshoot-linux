@@ -34,6 +34,7 @@ cha-06-erste-minute.mdwn
 cha-06-init-programme.mdwn
 cha-06-dienste.mdwn
 cha-06-zugriffsrechte.mdwn
+cha-06-mount-probleme.mdwn
 cha-07.mdwn
 cha-08.mdwn
 cha-08-busybox.mdwn
