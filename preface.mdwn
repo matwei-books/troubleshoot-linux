@@ -71,22 +71,24 @@ Dieses Buch ist besteht aus drei Hauptteilen.
 **Teil eins** beschäftigt sich mit allgemeinen Themen der Fehlersuche, die
 auch in anderen Bereichen nützlich sein können.
 
-Im *ersten Kapitel* geht es um Methoden, Heuristiken und Modelle, also um
+Im ersten Kapitel geht es um Methoden, Heuristiken und Modelle, also um
 strukturelle Hilfsmittel, die mir bei bestimmten Problemen der Fehlersuche
 weiterhelfen.
 
-Im *zweiten Kapitel* geht es um die Herangehensweise an ein Problem.
+Im zweiten Kapitel geht es um die Herangehensweise an ein Problem.
 Wann und wie setze ich die Hilfmittel aus dem vorigen Kapitel ein?
 Wie bereite ich mich auf die Fehlersuche vor?
 Wie kann ich generell besser bei der Fehlersuche werden?
 
-Das *dritte Kapitel* geht auf die Nachbearbeitung eines Problems ein, die
+Das dritte Kapitel geht auf die Nachbearbeitung eines Problems ein, die
 immer auch eine Vorbereitung auf das nächste Problem ist.
 Welche Erkenntnisse kann ich aus der letzen Fehlersuche ziehen?
 Kann ich diesen oder ähnliche Fehler in Zukunft vermeiden?
 
 Die beiden folgenden Teile des Buches sind ähnlich strukturiert.
-Als erstes widme ich mich dem Totalausfall (wenn gar nichts mehr geht),
+Zunächst führe ich in einige Grundlagen ein, die als Hintergrundwissen für die
+folgenden Kapitel benötigt werden.
+Als nächstes widme ich mich dem Totalausfall (wenn gar nichts mehr geht),
 dann Teilausfällen und was ich darunter verstehe und schließlich Problemen mit
 der Performance.
 Am Schluß der beiden Teile stelle ich jeweils einige Programme vor, die ich
@@ -94,42 +96,45 @@ bei der Fehlersuche häufig einsetze.
 
 **Teil zwei** beschäftigt sich mit lokalen Problemen einzelner Linux-Server.
 
-In *Kapitel vier* geht es um Totalausfälle.
+Das erste Kapitel dieses Teiles stellt als Grundlagenwissen für die lokale
+Fehlersuche auf Linux-Systemen vor.
+
+In nächsten Kapitel geht es um Totalausfälle.
 Das können Hardwarefehler sein, Bootprobleme, ein Rechner der scheinbar oder
 wirklich nicht mehr reagiert oder ein Rechner, der durch Überlast so langsam
 geworden ist, dass ich nicht einmal mehr eine Shell zur Diagnose bekommen kann.
 
-*Kapitel fünf* behandelt Teilausfälle bei Linux-Servern.
+Das folgende Kapitel behandelt Teilausfälle bei Linux-Servern.
 Diese äußern sich meitens darin, dass bestimmte Dienste nicht starten oder
 nicht korrekt arbeiten, oder dass Dateien nicht gespeichert werden können.
 
-I *Kapitel sechs* geht es um die Performance von Linux-Servern.
+Im anschließenden Kapitel geht es um die Performance von Linux-Servern.
 Alles funktioniert, aber so richtig schnell ist es nicht.
 Hier geht es darum, herauszufinden, was der Rechner macht, wenn es so lange
 dauert und wie man es eventuell beschleunigen kann.
 
-*Kapitel sieben* schließlich stellt einige der Werkzeuge vor, die ich am
-häufigsten einsetze.
+Das letzte Kapitel des zweiten Teils schließlich stellt einige der Werkzeuge
+vor, die ich am häufigsten einsetze.
 Zusätzlich zu den wichtigsten Optionen zeige ich einige Anwendungsfälle auf
-oder verweise auf andere Kapitel, in denen das Programm eingesetzt wird.
+oder verweise auf Kapitel, in denen das Programm eingesetzt wird.
 
 Der **dritte Teil** des Buches behandelt die Fehlersuche im IP-Netzwerk.
 
-*Kapitel acht* geht auf Totalausfälle im Netz ein.
+Das erste Kapitel dieses Teiles geht auf Totalausfälle im Netz ein.
 Ein Totalausfall im Netzwerk ist für mich gegeben, wenn ein Rechner überhaupt
 keinen Kontakt zum Netzwerk bekommt oder, wenn in einem Netzsegment die
 Basisdienste so weit ausgefallen sind, dass die Rechner in diesem Segment
 ihren Netzanschluß nicht produktiv nutzen können.
 
-In *Kapitel neun* gehe ich auf Teilausfälle im Netzwerk ein.
+Im nächsten Kapitel gehe ich auf Teilausfälle im Netzwerk ein.
 Dabei unterscheide ich die Nichterreichbarkeit einzelner Netzsegmente von der
 Nichterreichbarkeit einzelner Dienste.
 
-In *Kapitel zehn* geht es um Performance-Probleme im Netzwerk.
+Das darauf folgende Kapitel behandelt Performance-Probleme im Netzwerk.
 Wie analysiere ich diese?
 Welche möglichen Abhilfen gibt es?
 
-Und in *Kapitel elf* stelle ich wiederum Werkzeuge vor, die mir bei der
+Und im letzten Kapitel stelle ich wiederum Werkzeuge vor, die mir bei der
 Fehlersuche im Netz helfen.
 
 Ich habe mir in diesem Buch große Mühe gegeben, eine Hilfe bei der Fehlersuche
