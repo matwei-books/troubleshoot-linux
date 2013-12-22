@@ -36,6 +36,7 @@ cha-06-dienste.mdwn
 cha-06-zugriffsrechte.mdwn
 cha-06-mount-probleme.mdwn
 cha-07.mdwn
+cha-07-cpu.mdwn
 cha-08.mdwn
 cha-08-busybox.mdwn
 cha-08-ltrace.mdwn
