@@ -124,7 +124,6 @@ SOURCES = $(BOOK) \
           cha-07-cpu.mdwn \
           cha-07-ram.mdwn \
           cha-07-io.mdwn \
-          cha-lokal-perform.mdwn \
           cha-08.mdwn \
           cha-08-busybox.mdwn \
           cha-08-fuser.mdwn \
