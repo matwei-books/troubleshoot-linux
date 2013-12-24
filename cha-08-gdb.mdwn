@@ -31,18 +31,18 @@ gewünschten Prozess werden kann.
 
 Ich kann den GNU Debugger auf verschiedene Arten starten:
 
-gdb options program [core]
+*gdb options program [core]*
 : So starte ich, wenn ich einen Prozess postmortal analysieren will
   (mit `core`) oder, wenn ich ein Programm nur beim Ablauf verfolgen will
   (ohne `core`). Dabei ist `program` der Name der Programmdatei und
 `core` der Name des Corefiles.
 
-gdb options --args program arguments
+*gdb options --args program arguments*
 : Hier gebe ich dem
   Programm, dass ich beobachten will gleich die Kommandozeilenargumente
   beim Aufruf des GDB mit.
 
-gdbtui options
+*gdbtui options*
 : Das startet den GDB mit einer
   Textbenutzeroberfläche, bei der im oberen Teil der aktuelle Quelltext
   angezeigt wird und im unteren Teil die Befehle und Ausgaben des GDB.

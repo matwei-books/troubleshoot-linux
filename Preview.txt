@@ -48,8 +48,8 @@ cha-08-ltrace.mdwn
 cha-08-netstat.mdwn
 cha-08-perl.mdwn
 cha-08-shell.mdwn
-cha-08-sysstat.mdwn
 cha-08-strace.mdwn
+cha-08-sysstat.mdwn
 cha-08-vmstat.mdwn
 part3.mdwn
 cha-09.mdwn

@@ -9,12 +9,27 @@ Christiansen, Tom and Torkington, Nathan;
 Perl Kochbuch; O'Reilly, Köln, 2000;  
 ISBN: 3-89721-140-8
 
+Neben dem Kamel-Buch (*Programmieren mit Perl*) ist das für mich das
+wichtigste Buch bei der Arbeit mit Perl.
+Der Vorteil dieses Buches, vom Standpunkt der Fehlersuche, ist die
+Darbietung als anwendungsbereite Rezepte, so dass ich mich auf das zu
+lösende Problem konzentrieren kann und nicht auf die subtilen Feinheiten
+der Programmiersprache umschalten muss.
+
 ##### Edwards2012 {#bib-edwards2012}
 
 Edwards, Betty;
 Das neue GARANTIERT ZEICHNEN LERNEN: Die Befreiung unserer schöpferischen
 Gestaltungskräfte; Rowohlt, Reinbek bei Hamburg, 2012;  
 ISBN: 978-3-498-01669-2
+
+Dieses Buch hat vordergründig rein gar nichts mit Fehlersuche zu tun.
+Betty Edwards gibt in diesem Buch einige Tipps zum Umschalten der
+verschiedenen Gehirn-Modi, konkret zwischen dem logisch-analytischen und dem
+bildlich-intuitiven Denken.
+Für die erfolgreiche Fehlersuche insbesondere bei schwierigen Problemen ist es
+vorteilhaft mit beiden Modi souverän umzugehen.
+Dabei kann dieses Buch helfen.
 
 ##### Foessmeier1991 {#bib-foessmeier1991}
 
@@ -24,12 +39,21 @@ UNIX; Springer, Berlin Heidelberg New York London Paris Tokyo Hong Kong
 Barcelona, 1991;  
 ISBN: 3-540-53521-7
 
+Eigentlich eher für Programmierer, die Software für UNIX schreiben, gedacht,
+war dieses Buch eine Offenbarung für mich um zu verstehen, wie Programme
+unter UNIX (und Linux) kommunizieren.
+
 ##### Kahneman2011 {#bib-kahneman2011}
 
 Kahneman, Daniel;
 Thinking, fast and slow;
 Anchor Canada, 2013;  
 ISBN: 978-0-385-67653-3
+
+Noch ein Buch, das sich mit den Gegebenheiten und Wechselwirkungen der
+verschiedenen Gehirn-Modi befasst.
+Nicht direkt zum Thema Fehlersuche, aber sehr erhellend darüber, warum und wie
+man sich immer wieder selbst an der Nase herumführt.
 
 ##### Loukides1996 {#bib-loukides1996}
 
@@ -48,10 +72,18 @@ Network troubleshooting tools;
 O'Reilly, Sebastopol, 2001;  
 ISBN 978-0-596-00186-5
 
+Dieses Buch stellt etliche Werkzeuge für die Fehlersuche vor und zeigt wie man
+mit relativ einfachen Werkzeugen komplexe Fragen beantworten kann.
+
 ##### Weidner2012 {#bib-weidner2012}
 Weidner, Mathias; Linux kopflos mit PC Engines ALIX;
 Lulu Press, Raleigh, 2012;  
 ISBN 978-1-4717-2849-5
+
+Ein Buch über kleine lüfterlose Rechner, auf denen man mit Linux verschiedene
+Projekte realisieren kann.
+Das Buch geht unter anderem auf verschiedene Probleme unter dem Aspekt
+begrenzter Ressourcen ein.
 
 ## Artikel in Zeitschriften, Proceedings, ...
 
@@ -72,6 +104,9 @@ USENIX Summer 1994 Technical Conference - Volume 1, S. 6
 ##### Koenig2012 {#bib-koenig2012}
 König, Harald; strace für Linux-Versteher; UpTimes - Mitgliederzeitschrift
 der German Unix User Group; Ausgabe 2012/1, S. 61ff
+
+Harald König zeigt in seinem Artikel welche Informationen über ein
+Linux-Programm er mit *strace* gewinnen kann.
 
 ##### WSA2011 {#bib-wsa2011}
 Weigend, Johannes and Siedersleben, Johannes and Adersberger, Josef;
