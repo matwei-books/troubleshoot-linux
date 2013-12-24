@@ -8,7 +8,7 @@ Programmabsturzes ermitteln will oder wenn ich einen Programmfehler vermute
 und finden will.
 
 Um mit dem Debugger zu arbeiten benötige ich Zugriff auf die Quellen, aus
-denen das betreffende Programm übersetzt wurde [^gdb-machine-code].
+denen das Programm übersetzt wurde[^gdb-machine-code].
 Außerdem brauche ich die Symboltabellen des Programms damit der Debugger die
 Maschinenbefehle des Binärprogramms den Quellcodezeilen zuordnen kann.
 Diese gibt es, wenn beim Übersetzen des Programms mit dem
@@ -22,7 +22,7 @@ kann ich die Symboltabellen über das entsprechende Paket mit der Endung
 		     Horizonts dieses Buches.
 
 Um einen Prozess postmortal zu analysieren, muss ich das System anweisen, ein
-sogenanntes Corefile zu schreiben, das den Zustand des Prozesses beim
+Corefile zu schreiben, das den Zustand des Prozesses beim
 Programmabsturz enthält.
 Dazu kann ich in der Bash mit dem Befehl `ulimit -c size` die
 maximale Größe des Corefiles festlegen, die das Betriebssystem schreibt.
@@ -31,7 +31,7 @@ gewünschten Prozess werden kann.
 
 Ich kann den GNU Debugger auf verschiedene Arten starten:
 
-gdb options program [ core ]
+gdb options program [core]
 : So starte ich, wenn ich einen Prozess postmortal analysieren will
   (mit `core`) oder, wenn ich ein Programm nur beim Ablauf verfolgen will
   (ohne `core`). Dabei ist `program` der Name der Programmdatei und
@@ -118,7 +118,7 @@ quit
 
 GDB ist ein sehr mächtiges Werkzeug für die Fehlersuche und auch sehr
 komplex in der Anwendung. Da die Bedienung nicht einfach ist und es auch
-einiger Vorkehrungen für den erfolgreichen Einsatz bedarf, setze ich ihn
+einiger Vorkehrungen für den erfolgreichen Einsatz bedarf, setze ich es
 selten ein, quasi als Ultima Ratio. Trotzdem ist es sinnvoll, sich
 gelegentlich hinzusetzen und zum Test das eine oder andere Programm im
 Debugger zu beobachten und zu analysieren, damit es im Ernstfall
