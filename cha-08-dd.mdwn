@@ -1,0 +1,74 @@
+
+## dd {#sec-lokal-werkzeuge-dd}
+
+Ein eher unscheinbares, aber sehr nützliches Werkzeug ist `dd`.
+Bei der Fehlersuche verwende ich es um
+
+*   Daten und Dateien von einem anderen Rechner zu kopieren,
+
+*   Backups von Partitionstabellen zu machen, und
+
+*   defekte Festplattensektoren zu "reparieren".
+
+### Daten und Dateien von einem anderen Rechner kopieren
+
+Um Dateien zwischen zwei Rechnern hin und her zu kopieren, verwende ich am
+liebsten `scp` oder `rsync`.
+
+In manchen Fällen, wenn beide Befehle nicht zur Verfügung stehen oder ich
+Daten von einer Gerätedatei kopieren möchte, greife ich auf `dd` zurück.
+
+Bei kleinen Linux-Routern, die von einer read-only eingehängten Flash-Disk
+betrieben werden, sichere ich die Flash-Disk mit folgendem Befehl (auf einem
+anderen Rechner):
+
+    $ ssh root@r-xyz dd if=/dev/sda | dd of=r-xyz.image
+
+Mit SSH starte ich auf dem Router einen Prozess mit `dd`, der den Inhalt von
+*/dev/sda*, der ersten Festplatte, zur Standardausgabe schreibt. Die
+Standardausgabe dieses Prozesses leite ich via SSH und Pipe an einen lokalen
+Prozess mit `dd`, der von Standardeingabe liest und in die Datei *r-xyz.image*
+schreibt.
+
+### Partitionstabellen sichern und wiederherstellen
+
+Partitionstabellen sichere ich vor allem, wenn ich mehrere Betriebssysteme
+auf einer Festplatte installieren will und damit rechnen muß, dass das
+Linux-System unbootbar wird, wenn ich ein anderes System installiere.
+Aber auch, wenn ich die Partitionen manipuliere, weil sich beispielsweise die
+Größe eines Festplattenimages geändert hat.
+Ebenso ist die Sicherung vor der Installation eines Bootloaders in der
+Partitionstabelle angezeigt.
+
+    # dd if=/dev/sda of=sda.image bs=512 count=1
+
+Dieser Befehl sichert mir die Partionstabelle.
+
+    # dd if=sda.image of=/dev/sda
+
+Dieser Befehl stellt sie wieder her.
+Natürlich muss ich die Image-Datei zwischendurch an einem sicheren und
+erreichbaren Ort lagern.
+
+### Reparieren von Festplatensektoren
+
+Der dritte Anwendungsfall ist das "Reparieren" von defekten
+Festplattensektoren.
+
+Moderne Festplatten haben etwas ungenutzten Plattenplatz, mit denen sie
+defekte Sektoren ersetzen.
+Allerdings nur, wenn auf den betreffenden Block geschrieben wird.
+
+    # dd if=/dev/null of=/dev/sda1 bs=BLOCKSIZE seek=OFFSET count=1 \
+         oflag=direct,dsync
+
+Mit diesem Befehl beschreibe ich gezielt einen Sektor der Festplatte.
+Dabei ist `BLOCKSIZE` die Größe eines Sektors der Festplatte und `OFFSET` die
+Differenz zwischen dem defekten Sektor und dem Anfang der Partition in
+Sektoren.
+Wenn die Plattenelektronik beim Schreiben bemerkt, dass der ursprüngliche
+Block defekt ist, ersetzt sie diesen durch einen Reserveblock und die
+Festplatte ist "repariert".
+
+Wie ich herausbekomme, welchen Sektor ich beschreiben muss, ist ***FIXME***
+beschrieben.
