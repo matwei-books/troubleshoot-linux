@@ -65,6 +65,21 @@ Obwohl schon etwas älter, führt dieses Buch doch grundlegend in das Gebiet des
 Performance-Tuning von UNIX-Systemen ein. 2002 gab es eine zweite Auflage mit
 Gian-Paolo D. Musumeci als Koautor.
 
+##### Polya2010 {#bib-polya2010}
+
+Pólya, George;
+Schule des Denkens: Vom Lösen mathematischer Probleme;
+Narr Francke Attempto Verlag, 2010;
+ISBN 978-3-7720-0608-1
+
+Dieses Buch ist schon sehr alt, das merkt man beim Lesen am heute teilweise
+unüblichen Sprachgebrauch. Außerdem geht es um das Lösen mathematischer
+Probleme. Wer sich davon nicht abschrecken läßt, kann daraus wunderbare
+Inspirationen für das Lösen von Problemen ziehen. Pólya geht von vier Phasen
+der Problemlösung aus, die er in seinem Buch dann ausführlich erläutert. 
+Die vier Phasen sind: 1. verstehe die Aufgabe, 2. mache einen Plan, 3. führe
+den Plan aus, 4. prüfe die erhaltene Lösung.
+
 ##### Sloan2001 {#bib-sloan2001}
 
 Sloan, Joseph D.;
