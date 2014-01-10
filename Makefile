@@ -21,6 +21,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-02-logs.mdwn \
                $(DROPBOXDIR)/cha-02-fragen.mdwn \
                $(DROPBOXDIR)/cha-02-laborbuch.mdwn \
+               $(DROPBOXDIR)/cha-02-hilfsaufgabe.mdwn \
                $(DROPBOXDIR)/cha-02-feststecken.mdwn \
                $(DROPBOXDIR)/cha-03.mdwn \
                $(DROPBOXDIR)/cha-03-kontrolle.mdwn \
@@ -102,6 +103,7 @@ SOURCES = $(BOOK) \
           cha-02-logs.mdwn \
           cha-02-fragen.mdwn \
           cha-02-laborbuch.mdwn \
+          cha-02-hilfsaufgabe.mdwn \
           cha-02-feststecken.mdwn \
           cha-03.mdwn \
           cha-03-kontrolle.mdwn \
@@ -182,6 +184,7 @@ CHAPTERS = \
     cha-02-logs.mdwn \
     cha-02-fragen.mdwn \
     cha-02-laborbuch.mdwn \
+    cha-02-hilfsaufgabe.mdwn \
     cha-02-feststecken.mdwn \
     cha-03.mdwn \
     cha-03-kontrolle.mdwn \

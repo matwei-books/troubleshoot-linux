@@ -1,0 +1,45 @@
+
+## Hilfsaufgaben
+
+Eine Hilfsaufgabe erledige ich nicht um ihrer selbst willen, sondern weil ich
+hoffe, dass ich damit mein ursprüngliches Problem lösen kann.
+Natürlich sollte die Hilfsaufgabe einfacher zu lösen sein, als das
+ursprüngliche Problem.
+
+Das Ziel ist also das ursprüngliche Problem, die Hilfsaufgabe ist nur ein
+Mittel zum Zweck.
+Das ist wichtig, wenn ich gefragt werde, warum ich auf einmal etwas anderes
+mache, als ein momentan wichtiges oder dringendes Problem zu bearbeiten.
+Die Hilfsaufgabe, auch wenn sie nichts mit dem eigentlichen Problem zu tun hat,
+ist ein Baustein zur Lösung.
+Zumindest sollte das so sein.
+Ist das nicht so, muss ich mich fragen, ob ich das Problem wirklich verstanden
+habe.
+
+Allerdings kann es passieren, dass ich mit einer Hilfsaufgabe lediglich
+nachweise, dass eine bestimmte Ursache nicht in Frage kommt.
+Das hilft mir dann insofern weiter, als ich mich nun guten Gewissens mit
+voller Kraft auf die Suche nach anderen Ursachen machen kann.
+
+Nicht zuletzt füge ich mit einer gelösten Hilfsaufgabe meinem Werkzeugkasten
+neue Mittel hinzu, die mir bei zukünftigen Problemen helfen können.
+
+Eine Hilfsaufgabe kann mir auf verschiedene Weise helfen.
+Ich kann das Resultat der Hilfsaufgabe für die Lösung des ursprünglichen
+Problems einsetzen, zum Beispiel indem ich ein Skript oder Programm schreibe,
+dessen Ausgabe ich dann weiterverwende.
+Oder ich nutze die Methode, mit der ich die Hilfsaufgabe gelöst habe, für mein
+ursprüngliches Problem.
+Zum Beispiel, wenn ich das Migrieren eines Dienstes oder eine spezielle
+Router-Konfiguration erst in einem Testnetz ausprobiere und dokumentiere, bevor
+ich meine dabei gewonnenen Kenntnisse in das Produktivsystem übertrage.
+
+Das Lösen einer Hilfsaufgabe hat den **Nachteil**, das ich damit Zeit und Kraft
+von der Lösung meines ursprünglichen Problems abziehe.
+Trägt die Hilfsaufgabe am Ende nicht zur Lösung des Problems bei, so ist
+diese Zeit und Energie verloren.
+Darum ist es wichtig, Hilfsaufgaben sorgfältig auszuwählen.
+Leider gibt es keine unfehlbare Methode eine passende Hilfsaufgabe auszuwählen,
+so wie es keine unfehlbare Methode gibt, jedes Problem zu lösen.
+Darum bleibt mir nur, mich darin zu üben.
+Probleme zu lösen, wie geeignete Hilfsaufgaben zu finden.
