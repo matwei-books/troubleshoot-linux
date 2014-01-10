@@ -3,4 +3,25 @@
 {#sec-gar-kein-netz}
 Habe ich an einem Rechner überhaupt keine Netzverbindung, oder kann ich ein
 ganzes Netzsegment nicht erreichen, spreche ich von einem Totalausfall.
+Ich unterscheide somit zwei Arten von Totalausfall im Netz, je nachdem, von wo
+ich diesen betrachte.
+Untersuche ich es von einem Rechner, der überhaupt keine Netzverbindung hat,
+dann sehe ich das Problem von innen, weil der Rechner eigentlich in
+einem Netzsegment angeschlossen sein sollte.
+Ist ein ganzes Netzsegment nicht mehr erreichbar, dann betrachte ich das
+Problem von außen, da ich mich in einem anderen Segment befinde und
+meinerseits andere Rechner erreichen kann, nur dieses Netzsegment nicht.
 
+Bei der Betrachtung von innen, überprüfe ich die Schichten des OSI-Modells von
+unten nach oben, das heißt ich kontrolliere zuerst, ob überhaupt eine
+Kabelverbindung zu einem Switch, Hub oder anderen Rechner besteht und arbeite
+mich dann langsam nach oben, bis ich Kontakt zu mindestens einem Rechner
+bekomme und kontrolliere schließlich die IP-Konfiguration für das lokale Netz.
+Bin ich damit durch, habe ich auf jeden Fall keinen Totalausfall mehr.
+
+Bei der Betrachtung von außen muss ich die Topologie des Netzwerks kennen.
+Dann kann ich den Weg zum nicht erreichbaren Segment überprüfen und muss
+schließlich auf dem letzten erreichbaren Gateway zum betreffenden Netzsegment
+die physikalische Verbindung und die Routen überprüfen.
+Dabei muss ich immer die Routen zu beiden Netzen, sowohl dem Zielnetz als auch
+dem Netz von dem aus ich prüfe, im Auge behalten.
