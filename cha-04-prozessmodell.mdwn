@@ -28,6 +28,26 @@ Wenn jemand sagt, Programm xyz startet, ist damit gemeint, ein Prozess führt
 Programm xyz aus.
 Bildlich kann man einen Prozess mit einem Lebewesen vergleichen und ein
 Programm mit seiner DNA.
+Auch wenn das Programm im wesentlichen vorgibt, wozu ein Prozess in der Lage
+ist, so bestimmt es doch nicht in allen Einzelheiten, was er tut.
+Das Programm bestimmt, ob ein ein Prozess als Mailserver, Shell oder was weiß
+ich arbeitet, so wie die DNA bestimmt, ob ein Lebewesen Fisch, Katze oder Baum
+wird.
+Wie gut oder schlecht ein Programm seine Aufgabe erfüllt, hängt zu einem Teil
+vom Programm und darin enthaltenen Fehlern ab, genau wie bei der DNA eines
+konkreten Lebewesens.
+Zu einem weiteren Teil hängt es von der Prozessumgebung ab, so wie ein
+Lebewesen von seinen Lebensumständen.
+Der dritte Teil, der das Verhalten eines Prozesses bestimmt, sind die Daten
+die er verarbeitet, die ich mit den Interaktionen eines Lebewesens vergleichen
+möchte.
+Ein Prozess kann so lange "leben", bis er seine Aufgabe erfüllt hat oder
+vorzeitig durch ein Signal wie *SIGTERM* oder *SIGKILL* beendet werden, so wie
+ein Lebewesen durch Krankheit oder Unfall vorzeitig sterben kann.
+An dieser Stelle breche ich den Vergleich ab, da er nur das Verhältnis von
+Prozess zu Programm illustrieren soll.
+Wenn es bis jetzt nicht deutlich geworden ist, kann ich es mit mehr Worten
+auch nicht deutlicher machen.
 
 Der Lebenszyklus eines Prozesses mit Ausnahme des allerersten, vom Kernel
 gestarteten Prozesses beginnt immer mit dem `fork()` Systemaufruf.
