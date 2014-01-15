@@ -1,5 +1,5 @@
 
-## OSI-Modell
+## OSI-Modell {#sec-osi-modell}
 
 Ein wichtiges Modell für die Betrachtung von Netzwerkverbindungen ist das
 *Open Systems Interconnection Model*.

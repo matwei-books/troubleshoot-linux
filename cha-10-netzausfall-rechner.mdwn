@@ -1,0 +1,140 @@
+
+## Netzwerkausfall an einem Rechner
+
+Komme ich zu einem Rechner, der überhaupt keine Netzverbindung hat, dann
+beginne ich in der untersten Netzwerkschicht, der physikalischen oder
+Bitübertragungsschicht im [OSI-Modell](#sec-osi-modell) und arbeite mich von
+da langsam nach oben über die Verbindungsschicht zur Netzwerkschicht.
+
+A> Bei gerade erst wiederhergestellten Systemen kontrolliere ich als erstes die
+A> Zuordnung der Schnittstellennamen mit `ifconfig` oder `ip a s`.
+A>
+A> Dazu muss ich etwas ausholen.
+A> Da Linux auf nahezu beliebiger Hardware laufen kann und diese zwischendurch
+A> auch einmal verändert werden kann, in dem zum Beispiel ein neuer Controller
+A> eingebaut wird, gibt es keine zuverlässige Möglichkeit,
+A> Netzwerkschnittstellen a priori eindeutig zu benennen.
+A> Traditionell heißen Ethernetschnittstellen *eth0*, *eth1*, ...
+A> Sobald mehrere Schnittstellen eingebaut sind, ist es nicht mehr trivial zu
+A> bestimmen, welche physische Schnittstelle *eth0* ist.
+A> Die Nummerierung kann sich von einer Kernel-Version zur anderen ändern, was
+A> glücklicherweise eher selten vor kommt.
+A> Oder sie ändert sich, weil ein zusätzlicher Controller eingebaut wurde.
+A> 
+A> Aus diesem Grund wird bei Debian zum Beispiel via *udev* beim Systemstart für
+A> jede bisher unbekannte Ethernet-Karte eine Regel in
+A> */etc/udev/rules.d/70-persistent-net.rules* generiert, die den nächsten
+A> freien Namen mit der MAC-Adresse der Karte verknüpft.
+A> Damit bleibt die Zuordnung immer gleich, unabhängig ob ich Ethernetkarten
+A> hinzufüge oder ausbaue.
+A> 
+A> Wenn ich nun einen Klon dieses Systems in einen Rechner mit anderen
+A> MAC-Adressen der Ethernetkarten einbaue, dann stimmen auf einmal alle
+A> Schnittstellennamen nicht mehr.
+A> Statt *eth0*, *eth1*, *eth2* finde ich dann *eth3*, *eth4*, *eth5* im System
+A> vor.
+A> Dann stimmt natürlich die Schnittstellenkonfiguration in
+A> */etc/network/interfaces* nicht mehr.
+A> 
+A> Na gut, mag man einwenden, aber wann kommt so etwas denn vor?
+A> Genau dann, wenn ein System virtualisiert wird, oder wenn ein bereits
+A> virtualisiertes System geklont wird, oder wenn ein System, welches von
+A> Flashspeicher betrieben wird, in eine andere Hardware kopiert wird.
+A> 
+A> Die Abhilfe ist einfach.
+A> Ich entferne alle Einträge aus */etc/udev/rules.d/70-persistent-net.rules* und
+A> starte das System neu.
+
+Nachdem ich mich von der korrekten Nummerierung der Netzwerkschnittstellen
+überzeugt und diese nötigenfalls wieder hergestellt habe, schaue ich nach, ob
+das System eine physische Verbindung zum Hub, Switch oder Rechner am anderen
+Ende des Kabels hat.
+
+Dafür brauche ich keinen neuen Befehl aufrufen, das sagt mir ebenfalls `ip`:
+
+    $ ip a s
+    ...
+    2: eth0: <NO-CARRIER,BROADCAST,MULTICAST,UP> ...
+        link/ether 00:1f:d0:97:c4:55 brd ff:ff:ff:ff:ff:ff
+    3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> ...
+        link/ether 00:00:e8:df:92:b0 brd ff:ff:ff:ff:ff:ff
+        ...
+
+Die Angabe `NO-CARRIER` in spitzen Klammern zeigt mir hier, dass *eth0* keine
+Verbindung hat.
+Hier muss ich die Verkabelung prüfen.
+
+A> ### Kabel prüfen
+A> 
+A> Beim Überprüfen der Verkabelung gehe ich auch wieder nach dem allgemeinen
+A> Entscheidungsbaum vor.
+A> Ich suche zuerst nach irgendeiner funktionierenden Verbindung und prüfe
+A> dann sukzessive alle Komponenten, um zu sehen, dass sie prinzipiell
+A> funktionieren.
+A> Das heißt, ich probiere andere Switch-Ports oder einen bisher funktionierenden
+A> Rechner am fraglichen Switch-Port.
+A> Kabel von defekten Leitungen setze ich in funktionierende Verbindungen ein und
+A> umgekehrt.
+A> Bei den Kabeln bewege ich diese möglichst über die gesamte Länge und an den
+A> Steckern, um Kabelbrüche und dergleichen zu entdecken.
+
+Bevor ich zur nächsten Ebene im [OSI-Modell](#sec-osi-modell) übergehe, stelle
+ich sicher, dass ich durch Überprüfung der Kabelverbindung und gegebenenfalls
+Austausch defekter Komponenten eine funktionsfähige physische Verbindung
+hergestellt habe.
+
+Meldet der Treiber (und `ip`) eine Kabelverbindung, will ich als nächstes
+sehen, dass auch Daten darüber kommen.
+Mit dem Befehl `netstat -i` sehe ich, ob Daten über die
+Ethernetschnittstelle empfangen oder gesendet wurden:
+
+    $ netstat -i
+    Kernel-Schnittstellentabelle
+    Iface  MTU Met RX-OK RX-ERR RX-DRP RX-OVR TX-OK TX-ERR TX-DRP TX-OVR Flg
+    eth0  1500 0       0      0      0 0          0      0      0      0 BMU
+    eth1  1500 0   44921      0      0 0      28889      0      0      0 BMRU
+    ...
+
+Hier sehe ich, dass an eth1 Daten ankamen und gesendet wurden.
+Allerdings weiß ich noch nicht, ob die beiden Schnittstellen jeweils am
+richtigen Netz angeschlossen sind.
+Mit `ip a s` lasse ich mir die Adressen anzeigen und vergleiche diese mit der
+erwarteten Konfiguration.
+Stimmt diese überein, dann versuche ich mit *Ping* einen Rechner in jedem
+angeschlossenen Netz zu erreichen.
+Bekomme ich keine Antwort können die Karten noch im falschen Netz
+angeschlossen sein.
+Das überprüfe ich mit `tcpdump -n -i $if`, das mir den Verkehr am betreffenden
+Interface anzeigt.
+Dabei schaue ich nach Broadcasts und ARP-Anfragen, die mir sagen, in welchem
+Netzsegment das betreffende Interface angeschlossen ist.
+Nötigenfalls tausche ich die Kabel, bis alle Schnittstellen im richtigen
+Netzsegment angeschlossen sind.
+
+A> Oft kommt es vor, dass ich bei einem Ping-Test im korrekten Segment keine
+A> Antwort bekomme.
+A> Manchmal ist das betreffende System gerade wirklich nicht erreichbar, immer
+A> häufige stelle ich fest, dass ein Rechner auf Grund seiner
+A> Default-Firewall-Einstellungen nicht auf PING antwortet.
+A> In diesem Fall sagt mir ein Blick in den ARP-Cache, ob ich unter der
+A> betreffenden IP-Adresse einen Rechner erreichen kann.
+A> 
+A>     # arp -an
+A>     ? (192.168.1.4) auf <unvollständig> auf eth1
+A>     ? (192.168.1.5) auf 00:01:6c:6f:c5:d6 [ether] auf eth1
+A>     ...
+A> 
+A> In diesem Beispiel ist der Rechner mit IP-Adresse 192.168.1.4 nicht zu
+A> erreichen, während der Rechner mit IP-Adresse 192.168.1.5 im Netz erreichbar
+A> ist.
+A> Bekomme ich keine PING-Antwort von beiden, so kann ich beim letzteren auf
+A> störende Paketfilter schließen.
+
+Sobald ich irgendeinen Rechner im gleichen Netzsegment erreichen kann, habe
+ich es nicht merh mit einem Netzausfall des Rechners zu tun.
+
+Als nächstes schaue ich dann nach, ob ein Gateway definiert ist, ob ich
+dieses erreichen kann und schließlich, ob ich irgend einen Rechner hinter dem
+Gateway erreiche.
+Aber das gehört schon zu einem anderen Themenkreis und wird an anderer Stelle
+beschrieben.

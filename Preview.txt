@@ -58,6 +58,7 @@ cha-09.mdwn
 cha-09-osi-modell.mdwn
 cha-09-zustaende-tcp.mdwn
 cha-10.mdwn
+cha-10-netzausfall-rechner.mdwn
 cha-11.mdwn
 cha-12.mdwn
 cha-13.mdwn
