@@ -64,6 +64,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-08-vmstat.mdwn \
                $(DROPBOXDIR)/cha-09.mdwn \
                $(DROPBOXDIR)/cha-09-osi-modell.mdwn \
+               $(DROPBOXDIR)/cha-09-ipv4-netzmasken.mdwn \
                $(DROPBOXDIR)/cha-09-zustaende-tcp.mdwn \
                $(DROPBOXDIR)/cha-10.mdwn \
                $(DROPBOXDIR)/cha-10-netzausfall-rechner.mdwn \
@@ -148,6 +149,7 @@ SOURCES = $(BOOK) \
           cha-lokal-werkzeuge.mdwn \
           cha-09.mdwn \
           cha-09-osi-modell.mdwn \
+          cha-09-ipv4-netzmasken.mdwn \
           cha-09-zustaende-tcp.mdwn \
           cha-10.mdwn \
           cha-10-netzausfall-rechner.mdwn \
@@ -229,6 +231,7 @@ CHAPTERS = \
     cha-08-vmstat.mdwn \
     cha-09.mdwn \
     cha-09-osi-modell.mdwn \
+    cha-09-ipv4-netzmasken.mdwn \
     cha-09-zustaende-tcp.mdwn \
     cha-10.mdwn \
     cha-10-netzausfall-rechner.mdwn \

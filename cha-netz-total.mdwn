@@ -102,66 +102,6 @@ davon, dass die konfigurierte Konfiguration auch aktiv ist. Insbesondere
 
 *   Kann ich das Gateway erreichen? (`ping $gateway`)
 
-A> ## IPv4-Netzmasken
-A> An dieser Stelle will ich ein paar Worte zu IPv4-Netzmasken verlieren. Zu
-A> einer Zeit, in der IPv6 langsam an Fahrt gewinnt, mutet das vielleicht etwas
-A> anachronistisch an. Leider werden diese noch fast überall eingesetzt und
-A> sind insbesondere bei der Fehlersuche in IPv4-Netzen Grundvoraussetzung. Es
-A> lohnt sich daher für den Netzwerk Troubleshooter nach wie vor, diese zu
-A> memorieren, falls er nicht in der Lage ist, sie in annehmbarer Zeit im Kopf
-A> herzuleiten.
-A> 
-A> Prinzipiell gibt es zwei Schreibweisen:
-A> 
-A> *   in Bitnotation: /0 .. /32
-A> 
-A> *   in Vierer-Notation: 0.0.0.0 .. 255.255.255.255
-A> 
-A> Beide Schreibweisen lassen sich in einander umrechnen. Beide müssen
-A> beherrscht werden, da einige Programme nur die eine oder die andere
-A> verwenden können.
-A>
-A> Bei der Umrechnung helfen uns die ehemaligen Netzwerkklassen mit ihrer
-A> Größenunterteilung in 8-Bit-Grenzen.
-A> In der folgenden Tabelle habe ich die drei Klassen A, B, C um die Notation
-A> für das gesamte IPv4-Netz auf der einen Seite und für einen einzelnen Host
-A> auf der anderen Seite ergänzt:
-A>
-A> |               | Bit | Vierergruppen   | Anzahl Hosts   |
-A> |---------------|-----|-----------------|----------------|
-A> | gesamtes Netz | /0  | 0.0.0.0         | > 4 Milliarden |
-A> | Class A Size  | /8  | 255.0.0.0       | > 16 Millionen |
-A> | Class B Size  | /16 | 255.255.0.0     | > 65 Tausend   |
-A> | Class C Size  | /24 | 255.255.255.0   | 254            |
-A> | Host          | /32 | 255.255.255.255 | 1              |
-A>
-A> Interessanter sind die Subnetz- oder CIDR-Masken. Für diese gehe ich von der
-A> Netzmaske der nächstgrößeren Klasse aus und füge die entsprechende Anzahl
-A> Bits (1..7) hinzu. In Viererschreibweise ändert sich die Position, die bei
-A> der klassenbasierten Adresse die erste 0 hat.
-A>
-A> | Bits | VS  | Binär | Netzadressen            |
-A> |------|-----|-------|-------------------------|
-A> | /+1  | 128 | 80    | 0, 128                  |
-A> | /+2  | 192 | C0    | 0, 64, 128, 192         |
-A> | /+3  | 224 | E0    | 0, 32, 64, 96, 128, ... |
-A> | /+4  | 240 | F0    | 0, 16, 32, 48, 64, ...  |
-A> | /+5  | 248 | F8    | 0, 8, 16, 24, 32, ...   |
-A> | /+6  | 252 | FC    | 0, 4, 8, 12, 16, ...    |
-A> | /+7  | 254 | FE    | 0, 2, 4, 6, 8, ...      |
-A>
-A> Die Netzadresse gibt an, an welcher Adresse das betreffende Netz beginnt.
-A> Diese Adresse kann nicht für Hosts vergeben werden. In der Tabelle habe ich
-A> nur maximal die ersten vier aufgeführt. Die weiteren ergeben sich, indem man
-A> die erste oder zweite zu allen Netzadressen der nächsthöheren Zeile addiert.
-A> Die zugehörige Broadcast-Adresse ist die Adresse des nächsten Netzwerkes mit
-A> gleicher Bitmaske, vermindert um 1.
-A>
-A> Nehmen wir als Beispiel einen Host mit der IPv4-Adresse
-A> `10.21.32.43/29`. Die Netzmaske ist `/24+5`, in Vierernotation
-A> `255.255.255.248`. Die Netzadresse ist `10.21.32.40`, die
-A> Broadcastadresse ist `10.21.32.47`.
-
 Anschließend versuche ich mit ping einen Rechner in einem anderen
 Netzsegment zu erreichen, der zum Beispiel von anderen Stationen
 aus diesem Segment erreicht werden kann. Kann ich trotz korrekter
