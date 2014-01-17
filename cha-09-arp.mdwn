@@ -1,0 +1,41 @@
+
+## ARP - Address Resolution Protocol
+
+Für die Zuordnung von Adressen der Netzzugangsschicht (OSI-Schichten 1 und 2)
+zu denen der Internetschicht (OSI-Schicht 3) dient bei IPv4 das ARP-Protokoll.
+Es ist in RFC 826 beschrieben und aktualisiert in RFC 5527 sowie RFC 5494
+ergänzt worden.
+Für IPv6 wird dafür das Neighbor Discovery Protocol verwendet, das RFC 4861
+beschreibt.
+
+Ein Rechner, der via Ethernet eine Verbindung zu einem anderen mit einer
+bestimmten IP-Adresse in einem direkt angeschlossenen Segment aufbauen will,
+sendet eine ARP-Anfrage mit seiner Ethernet- und IP-Adresse als Quelle und der
+IP-Adresse des Partners als Ziel an die Ethernet-Broadcast-Adresse
+(`ff:ff:ff:ff:ff:ff`).
+Erhält der Ziel-Rechner diese ARP-Anfrage, antwortet er direkt an den
+anfragenden Rechner.
+Daraufhin aktualsiert der Anfragende seinen ARP-Cache.
+Zusätzlich ist es sinnvoll, wenn der Angefragte seinerseits den Cache mit den
+Daten der Anfrage aktualisiert.
+Das ist für das Protokoll jedoch nicht erforderlich.
+
+ARP funktioniert grundsätzlich nur im direkt angeschlossenen Netzsegment und
+nicht über Router.
+Es ist jedoch möglich, dass ein Router stellvertretend für die IP-Adressen,
+zu denen er Routen kennt, ARP-Anfragen beantwortet.
+Das nennt man Proxy-ARP.
+
+Schließlich gibt es noch Gratuitous ARP, bei dem der Sender seine Adressen
+sowohl bei Quelle als auch beim Ziel einträgt.
+Diese sollten normalerweise nicht beantwortet werden.
+Daher ist eine Antwort auf Gratuitous ARP ein Indiz für eine
+Fehlkonfiguration.
+Außerdem werden Gratuitous ARP manchmal beim Booten eines Rechners versendet
+und in HA-Konfigurationen, wenn eine IP-Adresse auf eine andere MAC-Adresse
+umgeschaltet werden soll, sowie bei Mobile-IP-Lösungen.
+
+Schließlich wird ARP bei Zero Configuration Networking, speziell bei *Dynamic
+Configuration of IPv4 Link-Local Addresses* (RFC 3927) verwendet, um dynamisch
+eine IP-Adresse zu bestimmen, die nur für das lokale Segment gültig ist.
+Für diesen Zweck ist der Adressbereich 169.254.0.0/16 reservert.
