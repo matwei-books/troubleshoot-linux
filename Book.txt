@@ -41,6 +41,7 @@ cha-07-cpu.mdwn
 cha-07-ram.mdwn
 cha-07-io.mdwn
 cha-08.mdwn
+cha-08-acct.mdwn
 cha-08-busybox.mdwn
 cha-08-fuser.mdwn
 cha-08-gdb.mdwn
