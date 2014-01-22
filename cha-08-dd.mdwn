@@ -4,13 +4,13 @@
 Ein eher unscheinbares, aber sehr nützliches Werkzeug ist `dd`.
 Bei der Fehlersuche verwende ich es um
 
-*   Daten und Dateien von einem anderen Rechner zu kopieren,
+*   Daten und Dateien von einem anderen Rechner zu sichern,
 
 *   Backups von Partitionstabellen zu machen, und
 
 *   defekte Festplattensektoren zu "reparieren".
 
-### Daten und Dateien von einem anderen Rechner kopieren
+#### Dateien von einem anderen Rechner sichern
 
 Um Dateien zwischen zwei Rechnern hin und her zu kopieren, verwende ich am
 liebsten `scp` oder `rsync`.
@@ -22,6 +22,7 @@ Bei kleinen Linux-Routern, die von einer read-only eingehängten Flash-Disk
 betrieben werden, sichere ich die Flash-Disk mit folgendem Befehl (auf einem
 anderen Rechner):
 
+{line-numbers=off,lang="text"}
     $ ssh root@r-xyz dd if=/dev/sda | dd of=r-xyz.image
 
 Mit SSH starte ich auf dem Router einen Prozess mit `dd`, der den Inhalt von
@@ -30,9 +31,9 @@ Standardausgabe dieses Prozesses leite ich via SSH und Pipe an einen lokalen
 Prozess mit `dd`, der von Standardeingabe liest und in die Datei *r-xyz.image*
 schreibt.
 
-### Partitionstabellen sichern und wiederherstellen
+#### Partitionstabellen sichern und wiederherstellen
 
-Partitionstabellen sichere ich vor allem, wenn ich mehrere Betriebssysteme
+Partitionstabellen sichere ich, wenn ich mehrere Betriebssysteme
 auf einer Festplatte installieren will und damit rechnen muß, dass das
 Linux-System unbootbar wird, wenn ich ein anderes System installiere.
 Aber auch, wenn ich die Partitionen manipuliere, weil sich beispielsweise die
@@ -40,27 +41,30 @@ Größe eines Festplattenimages geändert hat.
 Ebenso ist die Sicherung vor der Installation eines Bootloaders in der
 Partitionstabelle angezeigt.
 
+{line-numbers=off,lang="text"}
     # dd if=/dev/sda of=sda.image bs=512 count=1
 
-Dieser Befehl sichert mir die Partionstabelle.
+Mit diesem Befehl sichere ich die Partionstabelle.
 
+{line-numbers=off,lang="text"}
     # dd if=sda.image of=/dev/sda
 
 Dieser Befehl stellt sie wieder her.
-Natürlich muss ich die Image-Datei zwischendurch an einem sicheren und
+Natürlich muss ich die Image-Datei an einem sicheren und
 erreichbaren Ort lagern.
 
-### Reparieren von Festplatensektoren
+#### Reparieren von Festplattensektoren
 
 Der dritte Anwendungsfall ist das "Reparieren" von defekten
 Festplattensektoren.
 
-Moderne Festplatten haben etwas ungenutzten Plattenplatz, mit denen sie
-defekte Sektoren ersetzen.
+Moderne Festplatten haben ungenutzten Plattenplatz, mit denen sie
+defekte Sektoren ersetzen können.
 Allerdings nur, wenn auf den betreffenden Block geschrieben wird.
 
-    # dd if=/dev/null of=/dev/sda1 bs=BLOCKSIZE seek=OFFSET count=1 \
-         oflag=direct,dsync
+{line-numbers=off,lang="text"}
+    # dd if=/dev/null of=/dev/sda1 bs=BLOCKSIZE \
+         seek=OFFSET count=1 oflag=direct,dsync
 
 Mit diesem Befehl beschreibe ich gezielt einen Sektor der Festplatte.
 Dabei ist `BLOCKSIZE` die Größe eines Sektors der Festplatte und `OFFSET` die
@@ -70,5 +74,10 @@ Wenn die Plattenelektronik beim Schreiben bemerkt, dass der ursprüngliche
 Block defekt ist, ersetzt sie diesen durch einen Reserveblock und die
 Festplatte ist "repariert".
 
-Wie ich herausbekomme, welchen Sektor ich beschreiben muss, ist ***FIXME***
-beschrieben.
+Wie ich herausbekomme, welchen Sektor ich beschreiben muss, ist im
+[Bad Block Howto][badblockhowto] beschrieben und in einem
+[Artikel auf Pro-Linux.de][prolinuxbadblocks].
+
+[badblockhowto]: http://smartmontools.sourceforge.net/BadBlockHowTo.txt 
+
+[prolinuxbadblocks]: http://www.pro-linux.de/-01028c
