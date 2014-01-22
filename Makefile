@@ -84,7 +84,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
 	       $(DROPBOXDIR)/code/strace-invocator.sh \
                $(DROPBOXDIR)/images/eb-allgemein-drakon.png \
                $(DROPBOXDIR)/images/eb-allgemein.png \
-               $(DROPBOXDIR)/images/eb-allgemein-yed.png \
+               $(DROPBOXDIR)/images/eb-allgemein-3-yed.png \
                $(DROPBOXDIR)/images/eb-netz-totalausfall-rechner.png \
                $(DROPBOXDIR)/images/tcp-handshake-fail.png \
                $(DROPBOXDIR)/images/tcp-handshake.png \
@@ -173,7 +173,7 @@ SOURCES = $(BOOK) \
 	  code/strace-invocator.sh \
           images/eb-allgemein-drakon.png \
           images/eb-allgemein.png \
-          images/eb-allgemein-yed.png \
+          images/eb-allgemein-3-yed.png \
           images/eb-netz-totalausfall-rechner.png \
           images/tcp-handshake-fail.png \
           images/tcp-handshake.png \

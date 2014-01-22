@@ -8,33 +8,14 @@ Dabei helfen mir Entscheidungsbäume.
 Programmierern ist so etwas als Programmablaufplan bekannt.
 Mein grundlegender Entscheidungsbaum bei der Fehlersuche sieht immer so aus:
 
-![Allgemeiner Entscheidungsbaum](images/eb-allgemein-yed.png)
+![Allgemeiner Entscheidungsbaum](images/eb-allgemein-3-yed.png)
 
 Grundsätzlich werde ich nur tätig, wenn eine der Fragen mit nein beantwortet
 wird und habe damit fast alle Probleme abgedeckt.
 
-Die erste Frage, ob der Fehler reproduzierbar zu beobachten ist, erscheint
-vielleicht trivial, entscheidet aber, ob ich den Fehler überhaupt
-strukturiert eingrenzen oder nur eine Vermutung anstellen kann.
-Probleme, bei denen ich eine Anfrage via E-Mail bekomme und den Fehler bei mir
-nicht reproduzieren kann oder mich ein Kunde mit Netzproblemen anruft und
-ich nicht auf sein Netz zugreifen kann, sind damit nicht gemeint.
-In diesen Fällen kann ich, auch wenn ich selbst nicht direkt auf das Problem
-schauen kann, trotzdem anhand des Entscheidungsbaumes zurückfragen.
-Was ich mit dieser Frage ausschließen will, sind intermittierende Probleme.
-Probleme, die auftauchen aber sich der Analyse entziehen.
-Die scheinbar aus dem Nichts kommen und weg sind, sobald ich mich ihnen zuwende.
-Natürlich kann ich die meisten dieser Probleme auch strukturiert bearbeiten.
-Aber erst muss ich sie dingfest machen und gezielt reproduzieren können.
-Nur dann kann ich sicher sein, dass eine vielleicht zufällig gefundene oder
-erratene Abhilfe auch wirklich wirksam ist.
-In diesen Fällen bleibt mir nichts übrig als soviel Daten wie möglich zum
-Auftreten dieser Fehler zu sammeln und dann mit Heuristiken weiter zu arbeiten.
-
-Habe ich ein intermittierendes Problem ausgeschlossen, ist meine nächste
-Frage, ob überhaupt noch etwas funktioniert oder es sich um einen
-Totalausfall handelt.
-Auch diese Frage erscheint vielleicht trivial, aber das ist letztendlich der
+Meine erste Frage geht danach, ob überhaupt noch etwas funktioniert oder ob
+es sich um einen Totalausfall handelt.
+Diese Frage erscheint vielleicht trivial, aber das ist letztendlich der
 Zweck eines Entscheidungsbaumes: das die richtigen Fragen im richtigen Moment
 gestellt werden.
 Manchmal berichtet ein Anwender, dass eine Funktion eines Programmes nicht
@@ -42,7 +23,7 @@ funktioniert und irgendwann stellt sich heraus, dass der ganze Rechner
 eingefroren ist und zwar noch den letzten Bildschirm zeigt, aber weder auf
 Tastatur, Maus noch Netzwerkzugriffe reagiert.
 Ein anderes Mal kommt die Meldung, dass das Internet nicht geht (Totalausfall)
-und auf die Bitte ein oder zwei andere Websites zu besuchen, sich herausstellt,
+und auf die Bitte ein oder zwei andere Websites zu besuchen, stellt sich heraus,
 dass doch nur die Startseite des Browsers betroffen ist.
 Darum versuche ich mit den ersten Fragen herauszufinden, ob es sich um einen
 Totalausfall handelt, der anders behandelt werden muß als ein Teilausfall.
@@ -80,19 +61,32 @@ Anderenfalls begründe ich, warum es sich meiner Meinung nach um kein
 Performanceproblem handelt.
 Dabei kann mir eine Baseline helfen.
 
-Alles in allem habe ich mit den vier Fragen dieses Entscheidungsbaumes eine
+Alles in allem habe ich mit den drei Fragen dieses Entscheidungsbaumes eine
 Richtschnur, die mir hilft, ein Problem herunterzubrechen und mich dem
 wichtigsten Bereich zu widmen, bevor ich mich in den Details verliere.
 
 Dabei muss ich den Entscheidungsbaum nicht zwangsläufig von oben nach unten
 verwenden.
-Wenn mir ein Netzwerk-Performanceproblem gemeldet wird, ist es sinnvoll,
-wenn ich mich zunächst davon überzeuge, dass alle Dienste die für das Problem
-relevant sind, auch funktionieren.
+Wenn mir ein Netzwerk-Performanceproblem gemeldet wird, überzeuge ich mich
+zunächst davon, dass alle für das Problem relevanten Dienste auch funktionieren.
 Ich gehe in diesem Fall von unten - dem gemeldeten Performanceproblem -
 einen Schritt nach oben um sicher zu sein, dass meine folgenden Überlegungen
 auf einer gesicherten Basis stehen. Zum Beispiel kann ein ausgefallener
 DNS-Server durch Redundanz zwar kompensiert werden, aber trotzdem zu
 Verzögerungen durch Timeouts führen, die dann als Performanceprobleme
 wahrgenommen werden können.
+
+Außer den drei Hauptfragen gibt es eine vierte Frage, die ich ständig
+im Hinterkopf behalten muss.
+Das ist die Frage nach intermittierenden Fehlern und nach der
+Reproduzierbarkeit des Problems beziehungsweise meiner Beobachtungen.
+Habe ich es mit intermittierenden Fehlern zu tun, kann ich nicht mit
+Sicherheit sagen, ob das Problem wirklich gelöst ist.
+Nicht einmal, ob meine bisherigen Überlegungen überhaupt zutreffen.
+Stattdessen hatte ich es vielleicht gerade mit einem komplikationsfreien
+Zeitpunkt zu tun und kurz danach kommt das Problem wieder.
+Bei intermittierenden Problemen bleibt mir nur, Daten zu sammeln und über
+Korrelation eine Idee zu bekommen, was das Problem auslösen könnte.
+Jede Idee, die mir dazu einfällt, muss ich dahingehend prüfen, ob sie
+das Problem stabil vorhersagbar macht oder nicht.
 
