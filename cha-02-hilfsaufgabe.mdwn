@@ -8,9 +8,9 @@ Pólya in [[Polya2010](#bib-polya2010)]
 Natürlich sollte die Hilfsaufgabe einfacher zu lösen sein, als die
 ursprüngliche Aufgabe.
 
-Das Ziel ist das ursprüngliche Problem, die Hilfsaufgabe ist nur ein
+Das Ziel ist das ursprüngliche Problem, die Hilfsaufgabe ist ein
 Mittel zum Zweck.
-Das ist wichtig, wenn man mich fragt, warum ich auf einmal etwas anderes
+Das ist wichtig, wenn man mich fragt, warum ich etwas anderes
 mache, als ein momentan wichtiges oder dringendes Problem zu bearbeiten.
 Die Hilfsaufgabe, auch wenn sie nichts mit dem eigentlichen Problem zu tun hat,
 ist ein Baustein zur Lösung.
@@ -27,13 +27,13 @@ Nicht zuletzt füge ich mit einer gelösten Hilfsaufgabe meinem Werkzeugkasten
 neue Mittel hinzu, die mir bei zukünftigen Problemen helfen können.
 
 Eine Hilfsaufgabe kann mir auf verschiedene Weise helfen.
-Ich kann das Resultat der Hilfsaufgabe für die Lösung des ursprünglichen
+Ich kann das Resultat für die Lösung des ursprünglichen
 Problems einsetzen, zum Beispiel indem ich ein Skript oder Programm schreibe,
-dessen Ausgabe ich dann weiterverwende.
+dessen Ausgabe ich weiterverwende.
 Oder ich nutze die Methode, mit der ich die Hilfsaufgabe gelöst habe, für mein
 ursprüngliches Problem.
 Zum Beispiel, wenn ich das Migrieren eines Dienstes oder eine spezielle
-Router-Konfiguration erst in einem Testnetz ausprobiere und dokumentiere, bevor
+Router-Konfiguration in einem Testnetz ausprobiere und dokumentiere, bevor
 ich meine dabei gewonnenen Kenntnisse in das Produktivsystem übertrage.
 
 Das Lösen einer Hilfsaufgabe hat den **Nachteil**, das ich damit Zeit und Kraft
