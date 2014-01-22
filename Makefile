@@ -50,6 +50,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-07-ram.mdwn \
                $(DROPBOXDIR)/cha-07-io.mdwn \
                $(DROPBOXDIR)/cha-08.mdwn \
+               $(DROPBOXDIR)/cha-08-acct.mdwn \
                $(DROPBOXDIR)/cha-08-busybox.mdwn \
                $(DROPBOXDIR)/cha-08-dd.mdwn \
                $(DROPBOXDIR)/cha-08-fuser.mdwn \
@@ -136,6 +137,7 @@ SOURCES = $(BOOK) \
           cha-07-ram.mdwn \
           cha-07-io.mdwn \
           cha-08.mdwn \
+          cha-08-acct.mdwn \
           cha-08-busybox.mdwn \
           cha-08-dd.mdwn \
           cha-08-fuser.mdwn \
@@ -221,6 +223,7 @@ CHAPTERS = \
     cha-07-ram.mdwn \
     cha-07-io.mdwn \
     cha-08.mdwn \
+    cha-08-acct.mdwn \
     cha-08-busybox.mdwn \
     cha-08-dd.mdwn \
     cha-08-fuser.mdwn \
