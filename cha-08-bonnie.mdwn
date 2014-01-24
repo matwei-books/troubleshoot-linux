@@ -25,21 +25,21 @@ Das Programm gibt für jeden Test, den es durchführt, zwei Kennzahlen
 aus: die geschaffte Arbeit (je mehr, um so besser) und die dafür benötigte
 CPU-Zeit (je weniger, umso besser).
 
-Die Tests teilen sich grob in zwei Abschnitte, die ich auch überspringen kann.
+Die Tests teilen sich grob in zwei Abschnitte, die ich überspringen kann.
 In einem Abschnitt testet bonnie++ den I/O-Durchsatz mit großen Dateien,
-wie er ähnlich auch bei Datenbankanwendungen vorkommt.
+wie er ähnlich bei Datenbankanwendungen vorkommt.
 Im anderen Abschnitt geht es um das Erzeugen, Lesen und Löschen vieler
 kleiner Dateien, wie es auf Proxy-, Mail- und News-Servern vorkommt.
 
 In den meisten Fällen bin ich daran interessiert, das I/O-Verhalten bei
-einzelnen Dateisystemen zu beobachten.
+einzelnen Dateizugriffen zu beobachten.
 Bei bestimmten Problemen möchte ich jedoch den Einfluss von gleichzeitigen
 Dateizugriffen bewerten.
 Zu diesem Zweck kann ich mehrere bonnie++ Prozesse synchron starten.
 
 Die Ausgabe von bonnie++ kommt, wie schon beim Vorgängerprogramm bonnie als
-achtzigspaltiger Text.
-Zusätzlich gibt bonnie++ die Werte auch noch als kommaseparierte Werte (CSV)
+Text mit 80 Spalten.
+Zusätzlich gibt bonnie++ die Werte noch als kommaseparierte Werte (CSV)
 aus, die einfacher weiterverarbeitet werden und mehr als 80 Zeichen pro Zeile
 einnehmen können.
 Für diese CSV-Daten gibt es zwei Programme (`bon_csv2html`, `bon_csv2txt`),
@@ -69,7 +69,7 @@ beschrieben.
   Details stehen in den Handbuchseiten.
 
 *-x number*
-: Anzahl der Testläufe.
+: Die Anzahl der Testläufe.
   Damit ist es möglich, mehrere Tests ununterbrochen nacheinander zu machen,
   die Ergebnisse kommen kontinuierlich als CSV-Daten.
 
@@ -85,7 +85,7 @@ beschrieben.
   Ansonsten gibt es die Testgröße für zeichenweisen I/O-Test vor (default 20M).
 
 *-b*
-: Keine Pufferung der Schreiboperationen, das heisst bonnie++ ruft
+: Keine Pufferung der Schreiboperationen, das heißt bonnie++ ruft
   `fsync()` nach jedem Schreiben auf.
 
 *-q*
@@ -133,7 +133,7 @@ Bonnie++ kann mitunter recht lange laufen, vor allem wenn es mit Option
 
 Mit SIGINT kann ich die Ausführung abbrechen, bonnie++ räumt dann wieder
 auf, das heißt, es entfernt die temporären Dateien und Verzeichnisse.
-Das kann auch etwas dauern.
+Das kann etwas dauern.
 Durch wiederholtes Senden von SIGINT bricht es das Aufräumen ab.
 
 SIGHUP wird ignoriert, das heißt, wenn bonnie++ im Hintergrund läuft, bricht es
