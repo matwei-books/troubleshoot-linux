@@ -32,6 +32,10 @@ Und zwar in beide Richtungen, zum ausgefallenen Netzsegment und zurück zu
 Segment, von dem aus ich den Fehler suche.
 Mitunter kommen meine Datenpakete im ausgefallenen Netzsegment an, aber die
 Antwort kommt nicht an, da die Rückroute fehlt.
+In diesem Fall kann ich mich meist auch nicht direkt am Gateway mit der
+fehlenden Rückroute anmelden.
+Die Anmeldung von Gateway zu Gateway funktioniert aber oft noch, so dass ich
+darüber die Konfiguration und die Routen kontrollieren kann.
 
 Je nachdem, ob ich auf dem Gateway ein Problem mit der physischen
 Netzverbindung zum nächsten Hop habe, oder ob eine der benötigten Routen
