@@ -56,6 +56,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-08-dd.mdwn \
                $(DROPBOXDIR)/cha-08-fuser.mdwn \
                $(DROPBOXDIR)/cha-08-gdb.mdwn \
+               $(DROPBOXDIR)/cha-08-hdparm.mdwn \
                $(DROPBOXDIR)/cha-08-lsof.mdwn \
                $(DROPBOXDIR)/cha-08-ltrace.mdwn \
                $(DROPBOXDIR)/cha-08-netstat.mdwn \
@@ -145,6 +146,7 @@ SOURCES = $(BOOK) \
           cha-08-dd.mdwn \
           cha-08-fuser.mdwn \
           cha-08-gdb.mdwn \
+          cha-08-hdparm.mdwn \
           cha-08-lsof.mdwn \
           cha-08-ltrace.mdwn \
           cha-08-netstat.mdwn \
@@ -233,6 +235,7 @@ CHAPTERS = \
     cha-08-dd.mdwn \
     cha-08-fuser.mdwn \
     cha-08-gdb.mdwn \
+    cha-08-hdparm.mdwn \
     cha-08-lsof.mdwn \
     cha-08-ltrace.mdwn \
     cha-08-netstat.mdwn \

@@ -47,6 +47,7 @@ cha-08-busybox.mdwn
 cha-08-dd.mdwn
 cha-08-fuser.mdwn
 cha-08-gdb.mdwn
+cha-08-hdparm.mdwn
 cha-08-lsof.mdwn
 cha-08-ltrace.mdwn
 cha-08-netstat.mdwn
