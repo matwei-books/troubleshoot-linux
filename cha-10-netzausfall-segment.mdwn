@@ -3,51 +3,57 @@
 
 Neben dem totalen Ausfall der Netzverbindung eines Rechners betrachte ich die
 Nichterreichbarkeit eines oder mehrerer Netzsegmente als Totalausfall.
-Während ich bei ersterem eher auf die Kenntnis der Hardware und der untersten
+Während ich bei ersterem auf die Kenntnis der Hardware und der unteren
 [OSI-Schichten](#sec-osi-modell) setze, um den Fehler einzugrenzen,
-benötige ich hier vor allem detaillierte Kenntnisse der Netzwerktopologie.
+benötige ich hier detaillierte Kenntnisse der Netzwerktopologie.
 
 Mein erster Blick gilt den Routen.
 Mit `netstat -rn`, `ip route show` oder `route -n` kann ich mir diese
 anzeigen lassen.
-Da insbesondere in Netzen mit sehr vielen Routen die Ausgabe sehr
-unübersichtlich ist und die Routen meist nach anderen Kriterien sortiert sind
-als nach der schnellen Auffindbarkeit eines Segments, lautet die komplette
+Da in Netzen mit sehr vielen Routen die Ausgabe sehr
+unübersichtlich ist und die Routen nach anderen Kriterien sortiert sind
+als nach der schnellen Auffindbarkeit eines Netzes, lautet die komplette
 Befehlszeile bei mir meist:
 
+{line-numbers=off,lang="text"}
     $ netstat -rn | sort | less
 
-Finde ich die Route zum ausgefallenen Netzsegment, kann ich als nächstes mit
-`traceroute` überprüfen, wie weit ich auf dem Weg dorthin komme.
+Finde ich die Route zum ausgefallenen Netzsegment, überprüfe ich als
+nächstes mit `traceroute`, wie weit ich auf dem Weg dorthin komme.
 
-Fehlt die Route, nehme ich mir die Topologiedaten zu Hand und suche nach dem
+Fehlt die Route, schaue ich in die Topologiedaten und suche nach dem
 letzten erreichbaren Netzsegment vor dem ausgefallenen.
 Dann muss ich mich, von diesem Segment aus, Schritt für Schritt vorarbeiten.
-Dazu muss ich mich auf den Gateways anmelden und schauen, ob das jeweils
+Dazu melde ich mich auf den Gateways an und schaue, ob das jeweils
 nächste Gateway auf dem Weg erreichbar ist.
 
-Neben den Netzwerk-Schnittstellen kontrolliere ich auf den Gateways immer auch
+Neben den Netzwerk-Schnittstellen kontrolliere ich auf den Gateways auch
 die Routen.
 Und zwar in beide Richtungen, zum ausgefallenen Netzsegment und zurück zu
-Segment, von dem aus ich den Fehler suche.
+dem Segment, von dem aus ich den Fehler suche.
 Mitunter kommen meine Datenpakete im ausgefallenen Netzsegment an, aber die
-Antwort kommt nicht an, da die Rückroute fehlt.
-In diesem Fall kann ich mich meist auch nicht direkt am Gateway mit der
+Antwort nicht, da die Rückroute fehlt.
+In diesem Fall kann ich mich auch nicht direkt am Gateway mit der
 fehlenden Rückroute anmelden.
 Die Anmeldung von Gateway zu Gateway funktioniert aber oft noch, so dass ich
 darüber die Konfiguration und die Routen kontrollieren kann.
+
+Da bei ausgefallenem Routingprotokoll oft noch die Anmeldung von einem
+Gateway zum nächsten möglich ist, ist es sinnvoll, wenn ich auf den
+Gateways immer auch das Client-Programm, `ssh` oder `telnet` zur Verfügung
+habe, um mich am nächsten Gateway anmelden zu können.
 
 Je nachdem, ob ich auf dem Gateway ein Problem mit der physischen
 Netzverbindung zum nächsten Hop habe, oder ob eine der benötigten Routen
 fehlt, behandle ich den Fall weiter.
 
-Bei Problemen mit der physischen Netzverbindung unter suche ich das Problem
-bei einem Linux-basierten Router weiter, wie im vorigen Abschnitt beschrieben.
+Bei Problemen mit der physischen Netzverbindung untersuche ich das Problem
+bei einem Linux-basierten Router, wie im vorigen Abschnitt beschrieben.
 
 Bei fehlenden Routen muss ich nach den Routing-Protokollen schauen.
 
 In dringenden Notfällen kann ich mir mit einer statischen Route kurzfristig
-weiterhelfen, aber das sollte die absolute Ausnahme sein.
+weiterhelfen, aber das sollte die Ausnahme sein.
 Wenn im Netz ein Routingprotokoll verwendet wird, so ist es besser, die Routen
 darüber zu verbreiten, weil damit Änderungen im Netz automatisch an alle
 Gateways bekanntgegeben werden.
@@ -61,29 +67,33 @@ Es gibt mehrere Möglichkeiten, eine statische Route auf einem Linux-System
 einzutragen.
 Der direkte Weg von Kommandozeile aus geht über
 
+{line-numbers=off,lang="text"}
     # route add -net $destination gw $gateway
 
 oder
 
+{line-numbers=off,lang="text"}
     # ip route add $destination via $gateway
 
-Damit diese statische Route den nächsten Systemstart überlebt, trägt man den
+Damit diese statische Route den nächsten Systemstart überlebt, trage ich den
 Befehl bei auf Debian basierenden Systemen in */etc/network/interfaces* ein.
-Sinnvollerweise bei dem Interface, über das man Verbindung zum Gateway hat:
+Sinnvollerweise bei dem Interface, über das die Verbindung zum Gateway geht:
 
+{line-numbers=off,lang="text"}
     iface eth0 inet static
         ...
         up ip route ...
 
-Bei Systemen, die auf Fedora oder Redhat basieren, trägt man die Route unter
+Bei Systemen, die auf Fedora oder Redhat basieren, trage ich die Route unter
 */etc/sysconfig/* in die passende Datei ein.
 
 Die andere Möglichkeit, eine statische Route einzutragen geht über das
 Programm *quagga*.
-Dieses ist auf Gateway vermutlich sowieso installiert.
+Dieses ist auf einem Gateway vermutlich sowieso installiert.
 
-Hier meldet man sich am *zebra* Dämon an und trägt die statische Route ein:
+Hier melde ich mich am *zebra* Dämon an und trage die statische Route ein:
 
+{line-numbers=off,lang="text"}
     $ telnet localhost 2601
     zebra> enable
     zebra# conf t
@@ -92,5 +102,5 @@ Hier meldet man sich am *zebra* Dämon an und trägt die statische Route ein:
     zebra# write file
     zebra# quit
 
-Mit dem Befehl `write file` wird am Ende die Konfiguration permanent
-gespeichert, so dass sie den nächsten Neustart überlebt.
+Mit dem Befehl `write file` speichere ich die Konfiguration permanent,
+so dass sie den nächsten Neustart überlebt.
