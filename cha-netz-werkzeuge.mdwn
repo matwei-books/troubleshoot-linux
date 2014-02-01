@@ -1,39 +1,3 @@
-# Werkzeuge zur Netzwerkfehlersuche {#cha-netz-werkzeuge}
-
-Verschiedene Werkzeuge eignen sich zur Fehlersuche im Netz. Hier stelle ich
-diejenigen vor, die ich in den nächsten Kapiteln einsetzen will.
-
-## arp {#sec-netz-werkzeuge-arp}
-
-Das Programm arp dient der Anzeige und Manipulation des ARP-Caches des
-Kernels und wird bei Problemen in direkt angeschlossenen Netzwerksegmenten
-eingesetzt.
-
-ARP, das (Ethernet) Address Resolution Protocol, dient der Zuordnung von
-Internetadressen zu Ethernet-Adressen. Es wurde in RFC826 beschrieben und in
-RFC5227 und RFC5494 aktualisiert.
-
-Der prinzipielle Aufruf ist:
-
-    # arp [Optionen] [Rechnername]
-
-Bei Aufruf ohne Optionen zeigt arp die MAC-Adressen an, die Rechnername
-zugeordnet sind. Fehlt Rechnername, werden alle bekannten Adresszuordnungen
-angezeigt. Rechnername kann dabei ein Hostname sein, ein FQDN oder eine
-IP-Adresse.
-
-Die für die Fehlersuche wichtigsten Optionen sind:
-
--n
-: damit unterlässt das Programm die Namensauflösung bei der Anzeige
-
--d Rechnername
-: entfernt alle Einträge für Rechnername
-
--s Rechnername Hardwareadresse
-: setzt den Eintrag für Rechnername auf Hardwareadresse
-
-Für weitergehende Informationen verweise ich wieder auf die Handbuchseite.
 
 ## bridge-utils {#sec-netz-werkzeuge-bridge-utils}
 

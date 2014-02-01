@@ -1,0 +1,41 @@
+
+## arp {#sec-netz-werkzeuge-arp}
+
+Das Programm `arp` dient der Anzeige und Manipulation des ARP-Caches des
+Kernels und wird bei Problemen in direkt angeschlossenen Netzwerksegmenten
+eingesetzt.
+Ich verwende es
+
+*   um die Zuordnung von IP-Adressen zu Ethernet-Adressen zu verifizieren
+
+*   um zu sehen, ob ein Rechner eine bestimmte IP-Adresse verwendet, auch wenn
+    ich keine Antwort auf TCP-, UDP- oder ICMP-Verbindungsversuche (Ping)
+    bekomme.
+
+*   seltener, um eine bestimmte Zuordnung zwischen IP-Adresse und
+    Ethernet-Adresse fest vorzugeben.
+
+Der prinzipielle Aufruf ist:
+
+    # arp [Optionen] [Rechnername]
+
+Bei Aufruf ohne Optionen zeigt `arp` die MAC-Adressen an, die *Rechnername*
+zugeordnet sind. Fehlt *Rechnername*, werden alle bekannten Adresszuordnungen
+angezeigt. *Rechnername* kann ein Hostname sein, ein FQDN oder eine
+IP-Adresse.
+
+Die für die Fehlersuche wichtigsten Optionen sind:
+
+-n
+: damit unterlässt das Programm die Namensauflösung bei der Anzeige
+
+-d Rechnername
+: entfernt alle Einträge für Rechnername
+
+-s Rechnername Hardwareadresse
+: setzt den Eintrag für Rechnername auf Hardwareadresse
+
+Für weitergehende Informationen verweise ich auf die Handbuchseite.
+Nähere Informationen zum ARP-Protokoll sind im
+[Grundlagenkapitel für Netze](#sec-grundlagen-arp) zu finden.
+

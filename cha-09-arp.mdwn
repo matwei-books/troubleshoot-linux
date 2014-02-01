@@ -1,5 +1,5 @@
 
-## ARP - Address Resolution Protocol
+## ARP - Address Resolution Protocol {#sec-grundlagen-arp}
 
 Für die Zuordnung von Adressen der Netzzugangsschicht (OSI-Schichten 1 und 2)
 zu denen der Internetschicht (OSI-Schicht 3) dient bei IPv4 das ARP-Protokoll.
