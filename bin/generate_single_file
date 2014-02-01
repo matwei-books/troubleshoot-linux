@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+require "httpclient"
+require "json"
+
+slug = ARGV[0]
+filename = ARGV[1]
+api_key = ENV["LEANPUB_API_KEY"]
+
+content = File.read(filename)
+headers = { "Content-Type" => "application/json; charset=utf-8"}
+
+url = "https://leanpub.com/#{slug}/preview/single.json?api_key=#{api_key}"
+HTTPClient.new.post(url, :body => {:content => content}.to_json, :header => headers)
