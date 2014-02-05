@@ -66,6 +66,7 @@ cha-10.mdwn
 cha-10-netzausfall-rechner.mdwn
 cha-10-netzausfall-segment.mdwn
 cha-11.mdwn
+cha-11-ausfall-essentiell.mdwn
 cha-12.mdwn
 cha-13.mdwn
 cha-13-arp.mdwn

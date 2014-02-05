@@ -1,0 +1,12 @@
+
+## Ausfall essientieller Dienste im Netz
+
+Der Ausfall essentielleer Dienste im Netz erscheint, oberflächlich betrachtet,
+manchmal wie ein Totalausfall.
+Da er jedoch oft nur auf einen Dienst auf einem oder wenigen Servern
+beschränkt ist, behandle ich ihn bei der Fehlersuche als Teilausfall im Netz.
+Wichtig ist für mich, diesen Ausfall eines oder weniger Dienste zu
+identifizieren und vom Totalausfall zu unterscheiden.
+Natürlich kann dieser Teilausfall im Netz mitunter auf einen Totalausfall
+eines Rechners oder der Netzverbindung des Rechners, auf dem der Dienst läuft,
+zurückgeführt werden,
