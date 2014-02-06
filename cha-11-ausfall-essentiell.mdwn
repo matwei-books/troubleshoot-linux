@@ -1,7 +1,7 @@
 
 ## Ausfall essientieller Dienste im Netz
 
-Der Ausfall essentielleer Dienste im Netz erscheint, oberflächlich betrachtet,
+Der Ausfall essentieller Dienste im Netz erscheint, oberflächlich betrachtet,
 manchmal wie ein Totalausfall.
 Da er jedoch oft nur auf einen Dienst auf einem oder wenigen Servern
 beschränkt ist, behandle ich ihn bei der Fehlersuche als Teilausfall im Netz.
@@ -10,3 +10,99 @@ identifizieren und vom Totalausfall zu unterscheiden.
 Natürlich kann dieser Teilausfall im Netz mitunter auf einen Totalausfall
 eines Rechners oder der Netzverbindung des Rechners, auf dem der Dienst läuft,
 zurückgeführt werden,
+
+Bereits vor dem Ausfall sollte ich mir Gedanken gemacht haben, wie ich die
+Auswirkungen dieses Ausfalls lindere und wie ich vorgehe, um den Ausfall zu
+beheben.
+
+Bei DHCP, einem der ersten Netzdienste, der zum Einsatz kommt, hilft nur
+Redundanz, die Auswirkungen eines Ausfalls zu beschränken.
+Server sollten, wenn sie nicht gerade selbst als Cluster betrieben werden,
+nicht via DHCP konfiguriert werden.
+Falls die Arbeitsstationen sowieso immer die gleiche Adresse bekommen
+sollen, sind längere Lease-Zeiten von Vorteil, weil dadurch die
+Client-Konfiguration länger gültig ist und ich etwas mehr Zeit habe, den
+Dienst wieder zum Laufen zu bringen, bevor alle Clients ohne Konfiguration da
+stehen.
+
+Bei DNS hilft ebenfalls Redundanz, diese ist im Protokoll bereits vorgesehen.
+In kleineren Sattelitennetzen kann ich vielleicht den Nameserver auf dem
+Gateway nutzen und für wichtige interne Dienste Einträge in der Hosts-Datei
+vorsehen.
+Dann kann ich davon ausgehen, dass beim Ausfall des DNS auch der
+Internetzugang betroffen ist und mir der DNS sowieso nichts genutzt hätte.
+Durch die zusätzlichen Einträge in der Datei */etc/hosts* kann ich zumindest
+intern weiter arbeiten.
+
+Bei NTP hilft ebenfalls Redundanz.
+Bei Ausfall eines Server kann dann temporär ein anderer dessen IP-Adresse
+übernehmen, wenn ich Clientrechner habe, die nur eine Adresse für den
+Zeitserver verwenden können.
+
+Unabdinglich ist, dass ich die essentiellen Dienste überwache und diese
+Überwachungslösung so robust aufgesetzt ist, dass sie auch dann noch
+funktioniert, wenn die Dienste ausgefallen sind.
+
+Genauso wichtig ist eine vollständige und aktuelle Dokumentation des Netzes,
+seiner Topologie und der Dienste.
+Natürlich muss die Dokumentation im Fehlerfall zugänglich sein.
+Bezüglich der Aktualität der Dokumentation ist meine Erfahrung, dass diese auf
+lange Sicht nur dann gewährleistet ist, wenn es nur eine Stelle gibt, an der
+Konfiguration und Dokumentation geändert werden und wenn mindestens eine von
+beiden automatisch generiert wird.
+
+### Wie erkenne ich den Ausfall eines essentiellen Dienstes?
+
+Diese Frage ist insofern wichtig, als sich dieser Ausfall für den Kunden oft
+als Totalausfall des Netzes darstellt, bei der Fehlersuche aber als
+Teilausfall im Netz behandelt wird.
+Insbesondere, wenn ich noch keine Hinweise vom Monitoring habe, muss ich auch
+ohne dieses den Totalausfall vom Ausfall essentieller Dienste unterscheiden
+können.
+Die Aussagen des Kunden führen mich hier möglicherweise in die Irre, wenn ich
+nicht durch genaue Kenntnis der Netztopologie und der Konfiguration der
+betroffenen Rechner zu den richtigen Schlüssen komme.
+
+Leider gibt es auch keinen generellen Weg, der in jedem Fall zur Lösung des
+Problems führt, da jedes Netz seine Eigenheiten hat und manche Dienste nutzt,
+andere nicht.
+
+Meldet mir ein Kunde einen Totalausfall des Netzes, so frage ich zunächst
+danach, ob nur sein Rechner betroffen ist, oder alle Rechner in einem
+bestimmten Bereich.
+Sind mehrere Rechner betroffen, muss ich entscheiden, ob es sich um ein
+Netzproblem handelt, oder ob ein essentieller Dienst ausgefallen ist.
+
+Dazu schaue ich mir als erstes die IP-Konfiguration des betroffenen Rechners
+an.
+Ist diese korrekt, bezogen auf das Netzsegment, in dem sich der Rechner
+befindet, kann ich davon ausgehen, dass der DHCP-Dienst nicht der Auslöser des
+Problems ist.
+Dann versuche ich, verschiedene Rechner an verschiedenen Stellen im Netz mit
+PING zu erreichen.
+Dabei muss ich immer im Hinterkopf haben, dass manche Rechner auf PING nicht
+antworten, weil das durch Firewall-Regeln unterbunden ist.
+Vielleicht auch, weil der Angefragte auf Grund von Routingproblemen die
+Antworten nicht zurück schicken kann.
+Dadurch, dass ich versuche, verschiedene Rechner zu erreichen, kann ich einige
+dieser Möglichkeiten ausschließen.
+
+Funktioniert die Verbindungsaufnahme mittels IP-Adresse, versuche ich als
+nächstes das gleiche mit Namen statt IP-Adressen, um mich zu vergewissern,
+dass das DNS funktioniert.
+
+Wenn auch dieses funktioniert, prüfe ich als nächstes das Verhalten der
+Anwendungsprogramme.
+Da es davon sehr viele gibt, die die unterschiedlichsten Anforderungen an das
+Netz stellen, gehe ich hier nicht auf Details ein.
+
+Stelle ich bei meinen Untersuchungen fest, dass ein essentieller Dienst
+ausgefallen ist, versuche ich Kontakt zu dem betreffenden Rechner aufzunehmen
+und behandle dann das Problem weiter wie ein Problem auf einem lokalen
+Rechner.
+
+Nachfolgend habe ich noch ein paar Hinweise, falls ich Ausfälle bestimmter
+Netzwerksdienste vermute.
+
+### DHCP
+
