@@ -1,5 +1,5 @@
 
-## Ausfall essientieller Dienste im Netz
+## Ausfall essentieller Dienste im Netz
 
 Der Ausfall essentieller Dienste im Netz erscheint, oberflächlich betrachtet,
 manchmal wie ein Totalausfall.
@@ -27,7 +27,7 @@ stehen.
 
 Bei DNS hilft ebenfalls Redundanz, diese ist im Protokoll bereits vorgesehen.
 In kleineren Sattelitennetzen kann ich vielleicht den Nameserver auf dem
-Gateway nutzen und für wichtige interne Dienste Einträge in der Hosts-Datei
+Gateway nutzen und für wichtige interne Dienste Einträge in der *hosts* Datei
 vorsehen.
 Dann kann ich davon ausgehen, dass beim Ausfall des DNS auch der
 Internetzugang betroffen ist und mir der DNS sowieso nichts genutzt hätte.
@@ -102,7 +102,87 @@ und behandle dann das Problem weiter wie ein Problem auf einem lokalen
 Rechner.
 
 Nachfolgend habe ich noch ein paar Hinweise, falls ich Ausfälle bestimmter
-Netzwerksdienste vermute.
+Netzdienste vermute.
 
 ### DHCP
 
+Einen Ausfall eines DHCP-Servers erkenne ich daran, dass die Rechner im
+betroffenen Netzsegment keine gültige Netzkonfiguration bekommen.
+Mitunter können die Rechner noch einige Dienste, zum Beispiel Drucker,
+erreichen, wenn sie via Zero Configuration Networking eine Adresse im Netz
+169.254.0.0/16 angenommen haben.
+Zum Überprüfen ob ein DHCP-Server überhaupt läuft, kann ich zum Beispiel das
+entsprechende Plugin für Nagios verwenden.
+Ansonsten schaue ich direkt auf dem Rechner mit dem DHCP-Server in den
+Protokollen nach.
+
+Falls sich der DHCP-Server in einem anderen Netzsegment befindet wie der
+betroffene Rechner, muss ich mir unter Umständen auch das DHCP-Relay auf dem
+Gateway beim Client-Rechner ansehen.
+
+### DNS
+
+Bei einem Ausfall des DNS funktioniert die Auflösung der Namen zu IP-Adressen
+nicht mehr und scheinbar "funktioniert gar nichts".
+Tests mit IP-Adressen zeigen allerdings, dass das Netz als solches
+funktioniert.
+Natürlich ist es möglich, dass einzelne Namen noch aufgelöst werden.
+Diese finde ich dann oft in der Datei */etc/hosts*.
+
+Bei einem vermuteten Ausfall des DNS überprüfe ich zwei Dinge am betroffenen
+Rechner: welche Nameserver sind konfiguriert und antworten diese auf gezielte
+DNS-Anfragen.
+Bei gezielten DNS-Anfragen verlasse ich mich nicht auf die Resolver-Bibliothek
+des Betriebssystems, sondern gebe direkt an, von welchem Nameserver ich eine
+Antwort möchte.
+Das kann ich mit den Programmen `host`, `nslookup`, `dig` oder mit `busybox
+nslookup` machen.
+
+Stelle ich fest, dass ein falscher Nameserver konfiguriert ist, muss ich die
+Konfiguration korrigieren.
+Kommt diese vom DHCP-Server, dann muss ich mir dessen Konfiguration ansehen.
+
+Bekomme ich von keinem Nameserver eine Antwort, überprüfe ich die Nameserver
+von anderen Rechnern aus und mit anderen Anfragen.
+Sind die Nameserver an sich in Ordnung, suche ich nach Firewall-Regeln, die
+das DNS behindern.
+
+### NTP
+
+Zeitfehler sind sehr subtil, da die Uhrzeit der Rechner meist nur allmählich
+auseinander driftet.
+Bestimmte Dienste, wie zum Beispiel *Kerberos* für die Authentisierung,
+tolerieren nur geringe Zeitabweichungen und funktionieren dann scheinbar ohne
+ersichtlichen Anlass nicht mehr.
+
+Bei zentraler Protokollierung sind Zeitfehler bei einzelnen Rechnern an den
+Zeitstempeln der Einträge erkennbar.
+
+Mit dem Programm `ntpq` kann ich einen NTP-Dämon befragen. Meist sind diese
+jedoch so konfiguriert, dass sie nur von bestimmten Rechnern oder nur von
+*localhost* abgefragt werden können.
+
+Auf dem betroffenen Client-Rechner kontrolliere ich, welcher Zeitserver
+konfiguriert ist.
+Stimmt der konfigurierte Zeitserver nicht, korrigiere ich die Konfiguration
+oder schaue mir den DHCP-Server an, falls dieser auch den zuständigen
+NTP-Server einstellt.
+
+### Webserver für Proxy-Autokonfiguration
+
+Insbesondere in Netzen, in denen HTTP-Proxy-Server eingesetzt werden, möchte
+man diese gern automatisch konfigurieren, sobald eine gewisse Anzahl von
+Clients in Betrieb ist.
+Dafür ist ein Webserver nötig, der eine Datei mit einer bestimmten
+JavaScript-Funktion ausliefert.
+Die URL dieser Datei wird entweder via DHCP erfragt, über bestimmte Namen
+im DNS ermittelt oder fest eingetragen.
+
+Damit das funktioniert, muss zunächst einmal der Webserver die richtige Datei
+mit dem korrekten MIME-Typ ausliefern.
+Sodann sollte die URL, die bei DHCP mit Option 252 ausgeliefert wird, genau zu
+dieser Datei führen.
+
+Schließlich sollte der Webserver mit der Konfigurationsdatei in den
+DNS-Domains der Client-Rechner mit dem Hostnamen *wpad* erreichbar sein, damit
+ihn auch die Clients, die nicht mit DHCP arbeiten finden.
