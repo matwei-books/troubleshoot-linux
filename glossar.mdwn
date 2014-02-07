@@ -1,0 +1,39 @@
+{backmatter}
+
+# Glossar
+
+Korrelation
+: Eine Korrelation beschreibt eine Beziehung zwischen zwei Merkmalen,
+  Ereignissen oder Zuständen.
+  Ob die Beziehung kausal ist und falls ja, wie, geht aus der Korrelation
+  nicht hervor.
+
+{#glossar-log}
+Log, Logdatei, Logfile
+: Traditionell werden die Systemprotokolle auf LINUX-/UNIX-Systemen als
+  Textdateien mit zeilenweisen Einträgen geführt.
+  Diese Zeilen enthalten neben dem eigentlichen Text Datum und Uhrzeit,
+  den Namen oder die Adresse des Rechners und den Prozess nebst PID, der
+  die Lognachricht erzeugt hat.
+  Damit nicht alle Programme dieselbe Datei zum Schreiben öffnen müssen, gibt
+  es auf den Systemen einen [Syslog](#glossar-syslog)-Dienst, dem die
+  Lognachrichten über Bibliotheksfunktionen übergeben werden.
+  Dabei können die Lognachrichten eine Priorität und einen Bereich bekommen,
+  nach denen sie eventuell auf verschiedene Dateien verteilt werden.
+
+{#glossar-syslog}
+Syslog
+: Der Syslog-Dienst auf einem Rechner nimmt am UNIX-Socket */dev/log*
+  [Lognachrichten](#glossar-log) entgegen und schreibt sie entsprechend seiner
+  Konfiguration und der angegebenen Priorität und dem Bereich in Dateien im
+  Verzeichnis */var/log/*.
+  Einige Syslog-Dämonen schreiben die Lognachrichten stattdessen in
+  Datenbanken oder in Ringpuffer im Hauptspeicher.
+  Letztere sind vor allem für Systeme mit geringen Ressourcen interessant,
+  verlieren aber ältere Nachrichten, wenn der Ringpuffer voll ist und neue
+  Nachrichten kommen.
+  Zusätzlich besteht die Möglichkeit, das der Syslog-Dämon über UDP-Port 514
+  Lognachrichten an andere Rechner sendet oder von anderen Rechnern
+  entgegennimmt.
+  Moderne Syslog-Programme verwenden auch gesicherte Protokolle zur
+  Übertragung der Lognachrichten.

@@ -79,6 +79,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-13.mdwn \
                $(DROPBOXDIR)/cha-13-arp.mdwn \
                $(DROPBOXDIR)/cha-13-iproute.mdwn \
+               $(DROPBOXDIR)/glossar.mdwn \
                $(DROPBOXDIR)/literatur.mdwn \
                $(DROPBOXDIR)/part1.mdwn \
                $(DROPBOXDIR)/part2.mdwn \
@@ -176,6 +177,7 @@ SOURCES = $(BOOK) \
           cha-13-arp.mdwn \
           cha-13-iproute.mdwn \
           cha-netz-werkzeuge.mdwn \
+          glossar.mdwn \
           literatur.mdwn \
           part1.mdwn \
           part2.mdwn \
@@ -262,6 +264,7 @@ CHAPTERS = \
     cha-13.mdwn \
     cha-13-arp.mdwn \
     cha-13-iproute.mdwn \
+    glossar.mdwn \
     literatur.mdwn \
     kolophon.mdwn \
 #
