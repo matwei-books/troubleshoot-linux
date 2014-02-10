@@ -4,7 +4,7 @@
 Bei der Aufnahme eines Problems entscheide ich oft schon, wie ich damit
 umgehen werde.
 Um ein Problem zu lösen, muss ich es zuallererst verstehen.
-Dabei hilft mir der allgemeine Entscheidungsbaum, an der
+Dabei hilft mir der Entscheidungsbaum, an der
 richtigen Stelle die richtigen Fragen zu stellen:
 
 *   Besteht das Problem genau jetzt, unter bestimmten Bedingungen oder nur
@@ -24,13 +24,13 @@ Die nachfolgenden muss ich meist allein beantworten.
 
 *   Und wie kriege ich das alles heraus?
 
-Wenn ich ein Problem selbst feststelle, kann ich diese Fragen meist in meinem
+Wenn ich ein Problem selbst feststelle, kann ich diese Fragen in meinem
 Rhythmus beantworten, mit der nötigen Sorgfalt.
 
 Problematisch kann es werden, wenn andere ihr Problem an mich herantragen.
 Sei es ein Kunde, der mich anruft, weil ich gerade Telefondienst habe.
-Sei es ein Kollege, der mal eben sein Problem herüber trägt oder der Chef, der
-irgendetwas schnell erledigt haben will.
+Sei es ein Kollege, der mal eben sein Problem herüber trägt, oder der Chef,
+der irgendetwas schnell erledigt haben will.
 Diese Arten von Problemaufnahmen haben eins gemeinsam: da ist jemand, der
 seine ganz eigene Vorstellung von der Wichtigkeit, Dringlichkeit und mitunter
 auch von der Lösung des Problems hat.
@@ -41,7 +41,7 @@ schicken lasse oder wenn ich nicht mehr klar denken kann, durch den
 im Gespräch aufgebauten Druck.
 
 Hier helfen mir vier Kraftprinzipien, die ich aus der Kampfkunst
-kenne und für Problemlösungen einsetze um den Kopf frei zu bekommen.
+kenne und für Problemlösungen einsetze, um den Kopf frei zu bekommen.
 Diese lauten:
 
 *  Mach dich frei von deiner eigenen Kraft.
@@ -77,12 +77,12 @@ dass es wichtig und dringend ist.
 
 Natürlich weiß ich noch, was ich am Vorabend gemacht habe, aber das tut
 nichts zur Sache, ich will erst herauskriegen, was nicht funktioniert.
-Ich mache mich also frei von meinen Gedanken an den vorigen Tag,
+Ich mache mich frei von meinen Gedanken an den vorigen Tag,
 konzentriere mich auf das Problem von heute und antworte in neutralem Ton:
 
 > "Das ist aber schade."
 
-Je nach dem, wer gerade da ist, kommt dann oft als Erwiderung:
+Je nach dem, wer gerade da ist, höre ich dann oft:
 
 > "Das wusste ich, das er das jetzt sagt."
 
@@ -90,35 +90,28 @@ Ich habe mich von den Gedanken meines Kollegen und von dem Druck, den er
 bewusst oder unbewusst aufbauen wollte, befreit und ihm den Wind aus den
 Segeln genommen.
 
-Es gibt natürlich auch andere Wege, den aufgebauten Druck abzuleiten.
+Es gibt auch andere Wege, den aufgebauten Druck abzuleiten.
 Zum Beispiel, in dem ich sage, dass ich mich gleich darum kümmere, wenn
 ich an meinem Platz bin.
-Das ist in den meisten Fällen auch der beste Weg, wenn derjenige
+Das ist in vielen Fällen auch der beste Weg, wenn derjenige
 nicht in der Lage ist, sich selbst zu helfen.
 Aber in diesem Fall handelte es sich um einen Administrator, der nicht
-einmal die einfachsten Fragen gestellt hatte, um das Problem einzugrenzen
-oder festzustellen.
-Dann einfach zu sagen, ich kümmere mich drum, hätte solches Verhalten nur
+einmal die einfachsten Fragen gestellt hatte, um das Problem einzugrenzen.
+Dann einfach zu sagen, *ich kümmere mich drum*, hätte solches Verhalten nur
 zementiert, mit dem Effekt, dass selbst simpelste Sachen unreflektiert an
 Level 2 Support weitergereicht werden.
 
 Nachdem ich den Druck abgebaut hatte, konnte ich mich daran machen,
-die Gedanken, also das, was mein Kollege über das Problem wusste, zu nutzen.
+die Gedanken meines Kollegen, also das, was er über das Problem wusste,
+zu nutzen.
 Anhand des Entscheidungsbaumes fragte ich als nächstes, ob alle Webserver
-nicht erreichbar sind, oder nur externe, oder gar nur bestimmte und
+nicht erreichbar sind oder nur externe oder gar nur bestimmte, und
 was sie alles ausprobiert hätten.
-
-An diesem Tag musste ich keine eigenen Gedanken mehr hinzufügen, weil noch
-während der ersten Fragen klar wurde, dass nur einzelne Webserver im
-Internet betroffen waren und das Problem nicht durch uns gelöst werden
-konnte.
-Der Kollege am Telefondienst wäre in diesem Fall gut beraten gewesen,
-selbst fundiert zurückzufragen.
 
 A> Bei uns ist es üblich, dass reihum alle Mitarbeiter ein paar Stunden
 A> Telefonsupport machen und damit die Probleme der Kunden direkt mitbekommen.
 A> Das halte ich für eine gute Idee, weil es den Horizont erweitert für die
-A> Probleme der anderen Kollegen.
+A> Probleme der Kollegen.
 A> Außerdem ist es ein Qualitätstest für die Dokumentation der
 A> "Routineaufgaben", die für den nächsten Kollegen ganz und gar keine
 A> Routine sind.
@@ -134,6 +127,13 @@ A> werden, dann verzögert sie nur die Hilfe für die Kunden und stapelt die
 A> Arbeit für die, die sie erledigen.
 A> Das mag kurzzeitig angehen, wenn der aufnehmende Kollege überhaupt keine
 A> Ahnung von der Materie hat.
-A> Dann ist es sinnvoll, den Mitarbeiter für die Hotline zu schulen
+A> Langfristig ist es sinnvoll, den Mitarbeiter für die Hotline zu schulen
 A> und gegebenenfalls die Dokumentation der Routineaufgaben zu überarbeiten.
+
+An diesem Tag musste ich keine eigenen Gedanken mehr hinzufügen, weil noch
+während der ersten Fragen klar wurde, dass nur einzelne Webserver im
+Internet betroffen waren und das Problem nicht durch uns gelöst werden
+konnte.
+Der Kollege am Telefondienst wäre in diesem Fall gut beraten gewesen,
+selbst fundiert zurückzufragen.
 
