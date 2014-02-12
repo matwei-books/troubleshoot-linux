@@ -84,6 +84,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/part1.mdwn \
                $(DROPBOXDIR)/part2.mdwn \
                $(DROPBOXDIR)/part3.mdwn \
+               $(DROPBOXDIR)/anhang.mdwn \
                $(DROPBOXDIR)/kolophon.mdwn \
                $(DROPBOXDIR)/revision.mdwn \
 	       $(DROPBOXDIR)/code/http-injector.pl \
@@ -182,6 +183,7 @@ SOURCES = $(BOOK) \
           part1.mdwn \
           part2.mdwn \
           part3.mdwn \
+          anhang.mdwn \
 	  code/http-injector.pl \
 	  code/read-syslog.pl \
 	  code/strace-invocator.sh \
