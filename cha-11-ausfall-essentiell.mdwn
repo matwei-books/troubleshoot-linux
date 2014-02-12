@@ -2,76 +2,81 @@
 ## Ausfall essentieller Dienste im Netz
 
 Der Ausfall essentieller Dienste im Netz erscheint, oberflächlich betrachtet,
-manchmal wie ein Totalausfall.
+wie ein Totalausfall.
 Da er jedoch oft nur auf einen Dienst auf einem oder wenigen Servern
 beschränkt ist, behandle ich ihn bei der Fehlersuche als Teilausfall im Netz.
 Wichtig ist für mich, diesen Ausfall eines oder weniger Dienste zu
 identifizieren und vom Totalausfall zu unterscheiden.
-Natürlich kann dieser Teilausfall im Netz mitunter auf einen Totalausfall
+Es kann vorkommen, dass dieser Teilausfall im Netz auf einen Totalausfall
 eines Rechners oder der Netzverbindung des Rechners, auf dem der Dienst läuft,
-zurückgeführt werden,
+zurückführt,
 
 Bereits vor dem Ausfall sollte ich mir Gedanken gemacht haben, wie ich die
 Auswirkungen dieses Ausfalls lindere und wie ich vorgehe, um den Ausfall zu
 beheben.
 
-Bei DHCP, einem der ersten Netzdienste, der zum Einsatz kommt, hilft nur
-Redundanz, die Auswirkungen eines Ausfalls zu beschränken.
-Server sollten, wenn sie nicht gerade selbst als Cluster betrieben werden,
+Bei DHCP, einem der ersten Netzdienste, mit dem ein Rechner in Kontakt kommt,
+hilft nur Redundanz, die Auswirkungen eines Ausfalls zu lindern.
+Server sollten, wenn sie nicht gerade im Cluster betrieben werden,
 nicht via DHCP konfiguriert werden.
-Falls die Arbeitsstationen sowieso immer die gleiche Adresse bekommen
-sollen, sind längere Lease-Zeiten von Vorteil, weil dadurch die
+Falls die Arbeitsstationen immer die gleiche Adresse bekommen,
+sind längere Lease-Zeiten von Vorteil, weil dadurch die
 Client-Konfiguration länger gültig ist und ich etwas mehr Zeit habe, den
 Dienst wieder zum Laufen zu bringen, bevor alle Clients ohne Konfiguration da
 stehen.
 
-Bei DNS hilft ebenfalls Redundanz, diese ist im Protokoll bereits vorgesehen.
-In kleineren Sattelitennetzen kann ich vielleicht den Nameserver auf dem
+Bei DNS hilft ebenfalls Redundanz, diese ist im Dienst bereits vorgesehen.
+In kleineren Satelliten-Netzen kann ich den Nameserver auf dem
 Gateway nutzen und für wichtige interne Dienste Einträge in der *hosts* Datei
 vorsehen.
-Dann kann ich davon ausgehen, dass beim Ausfall des DNS auch der
+Dann kann ich davon ausgehen, dass beim Ausfall des DNS oft auch der
 Internetzugang betroffen ist und mir der DNS sowieso nichts genutzt hätte.
-Durch die zusätzlichen Einträge in der Datei */etc/hosts* kann ich zumindest
+Durch die zusätzlichen Einträge in der Datei */etc/hosts* kann ich
 intern weiter arbeiten.
 
-Bei NTP hilft ebenfalls Redundanz.
-Bei Ausfall eines Server kann dann temporär ein anderer dessen IP-Adresse
+Auch bei NTP hilft Redundanz.
+Bei Ausfall eines Server kann temporär ein anderer dessen IP-Adresse
 übernehmen, wenn ich Clientrechner habe, die nur eine Adresse für den
 Zeitserver verwenden können.
 
-Unabdinglich ist, dass ich die essentiellen Dienste überwache und diese
-Überwachungslösung so robust aufgesetzt ist, dass sie auch dann noch
+Unabdinglich ist, dass ich die essentiellen Dienste überwache und dieses
+Überwachungssystem so robust aufsetze, dass es auch dann noch
 funktioniert, wenn die Dienste ausgefallen sind.
 
 Genauso wichtig ist eine vollständige und aktuelle Dokumentation des Netzes,
 seiner Topologie und der Dienste.
-Natürlich muss die Dokumentation im Fehlerfall zugänglich sein.
-Bezüglich der Aktualität der Dokumentation ist meine Erfahrung, dass diese auf
-lange Sicht nur dann gewährleistet ist, wenn es nur eine Stelle gibt, an der
-Konfiguration und Dokumentation geändert werden und wenn mindestens eine von
-beiden automatisch generiert wird.
+Nach meiner Erfahrung kann die Dokumentation auf lange Sicht nur dann aktuell
+bleiben, wenn es nur eine Stelle gibt, an der ich die Konfiguration und
+Dokumentation gleichzeitig ändere und wenn mindestens eine der beiden
+automatisch generiert wird.
+
+**Natürlich muss die Dokumentation im Fehlerfall zugänglich sein.**
+Halte ich diese ausschließlich elektronisch vor, ist eine
+Kopie auf USB-Stick und/oder auf dem Notfall-Laptop manchmal die letzte
+Rettung.
 
 ### Wie erkenne ich den Ausfall eines essentiellen Dienstes?
 
 Diese Frage ist insofern wichtig, als sich dieser Ausfall für den Kunden oft
 als Totalausfall des Netzes darstellt, bei der Fehlersuche aber als
 Teilausfall im Netz behandelt wird.
-Insbesondere, wenn ich noch keine Hinweise vom Monitoring habe, muss ich auch
+Insbesondere, wenn ich noch keine Hinweise vom Monitoring habe, muss ich
 ohne dieses den Totalausfall vom Ausfall essentieller Dienste unterscheiden
 können.
 Die Aussagen des Kunden führen mich hier möglicherweise in die Irre, wenn ich
 nicht durch genaue Kenntnis der Netztopologie und der Konfiguration der
 betroffenen Rechner zu den richtigen Schlüssen komme.
 
-Leider gibt es auch keinen generellen Weg, der in jedem Fall zur Lösung des
-Problems führt, da jedes Netz seine Eigenheiten hat und manche Dienste nutzt,
+Leider gibt es keinen generellen Weg, der in jedem Fall zur Lösung des
+Problems führt, da jedes Netz seine Eigenheiten hat und einige Dienste nutzt,
 andere nicht.
 
 Meldet mir ein Kunde einen Totalausfall des Netzes, so frage ich zunächst
-danach, ob nur sein Rechner betroffen ist, oder alle Rechner in einem
+danach, ob das Problem nur seinen Rechner betrifft, oder alle Rechner in einem
 bestimmten Bereich.
-Sind mehrere Rechner betroffen, muss ich entscheiden, ob es sich um ein
-Netzproblem handelt, oder ob ein essentieller Dienst ausgefallen ist.
+Betrifft es mehrere Rechner, muss ich entscheiden, ob es sich um ein
+Problem der unteren Schichten des Netzes handelt, oder ob ein essentieller
+Dienst ausgefallen ist.
 
 Dazu schaue ich mir als erstes die IP-Konfiguration des betroffenen Rechners
 an.
@@ -80,29 +85,28 @@ befindet, kann ich davon ausgehen, dass der DHCP-Dienst nicht der Auslöser des
 Problems ist.
 Dann versuche ich, verschiedene Rechner an verschiedenen Stellen im Netz mit
 PING zu erreichen.
-Dabei muss ich immer im Hinterkopf haben, dass manche Rechner auf PING nicht
-antworten, weil das durch Firewall-Regeln unterbunden ist.
+Dabei muss ich immer im Hinterkopf haben, dass manche Rechner nicht auf PING
+antworten, weil Firewall-Regeln das unterbinden.
 Vielleicht auch, weil der Angefragte auf Grund von Routingproblemen die
-Antworten nicht zurück schicken kann.
-Dadurch, dass ich versuche, verschiedene Rechner zu erreichen, kann ich einige
-dieser Möglichkeiten ausschließen.
+Antworten nicht zurückschicken kann.
+Dadurch, dass ich versuche, verschiedene Rechner von verschieden Stellen aus
+zu erreichen, kann ich einige dieser Möglichkeiten ausschließen.
 
-Funktioniert die Verbindungsaufnahme mittels IP-Adresse, versuche ich als
+Funktioniert die Verbindung mittels IP-Adresse, versuche ich als
 nächstes das gleiche mit Namen statt IP-Adressen, um mich zu vergewissern,
-dass das DNS funktioniert.
+dass DNS funktioniert.
 
 Wenn auch dieses funktioniert, prüfe ich als nächstes das Verhalten der
 Anwendungsprogramme.
-Da es davon sehr viele gibt, die die unterschiedlichsten Anforderungen an das
-Netz stellen, gehe ich hier nicht auf Details ein.
+Da es davon sehr viele gibt, mit den unterschiedlichsten Anforderungen an das
+Netz, gehe ich hier nicht auf Details ein.
 
 Stelle ich bei meinen Untersuchungen fest, dass ein essentieller Dienst
 ausgefallen ist, versuche ich Kontakt zu dem betreffenden Rechner aufzunehmen
-und behandle dann das Problem weiter wie ein Problem auf einem lokalen
+und behandle das Problem weiter wie ein Problem auf einem lokalen
 Rechner.
 
-Nachfolgend habe ich noch ein paar Hinweise, falls ich Ausfälle bestimmter
-Netzdienste vermute.
+Es folgen ein paar Hinweise, falls ich Ausfälle bestimmter Netzdienste vermute.
 
 ### DHCP
 
@@ -119,24 +123,32 @@ Protokollen nach.
 Falls sich der DHCP-Server in einem anderen Netzsegment befindet wie der
 betroffene Rechner, muss ich mir unter Umständen auch das DHCP-Relay auf dem
 Gateway beim Client-Rechner ansehen.
+Mitunter blockieren auch Firewall-Regeln diesen Dienst.
 
 ### DNS
 
 Bei einem Ausfall des DNS funktioniert die Auflösung der Namen zu IP-Adressen
-nicht mehr und scheinbar "funktioniert gar nichts".
+nicht mehr und scheinbar "funktioniert gar nichts mehr" für den Kunden.
 Tests mit IP-Adressen zeigen allerdings, dass das Netz als solches
 funktioniert.
 Natürlich ist es möglich, dass einzelne Namen noch aufgelöst werden.
 Diese finde ich dann oft in der Datei */etc/hosts*.
 
 Bei einem vermuteten Ausfall des DNS überprüfe ich zwei Dinge am betroffenen
-Rechner: welche Nameserver sind konfiguriert und antworten diese auf gezielte
-DNS-Anfragen.
+Rechner: *welche Nameserver sind konfiguriert* und *antworten diese auf gezielte
+DNS-Anfragen*?
 Bei gezielten DNS-Anfragen verlasse ich mich nicht auf die Resolver-Bibliothek
 des Betriebssystems, sondern gebe direkt an, von welchem Nameserver ich eine
 Antwort möchte.
 Das kann ich mit den Programmen `host`, `nslookup`, `dig` oder mit `busybox
-nslookup` machen.
+nslookup` machen, die folgenden Befehle befragen jeweils den Nameserver unter
+IP 192.168.1.254 nach *www.example.com*:
+
+{line-numbers=off,lang="text"}
+    $ host www.example.com 192.168.1.254
+    $ nslookup www.example.com 192.168.1.254
+    $ dig www.example.com @192.168.1.254
+    $ busybox nslookup www.example.com 192.168.1.254
 
 Stelle ich fest, dass ein falscher Nameserver konfiguriert ist, muss ich die
 Konfiguration korrigieren.
@@ -152,26 +164,27 @@ das DNS behindern.
 Zeitfehler sind sehr subtil, da die Uhrzeit der Rechner meist nur allmählich
 auseinander driftet.
 Bestimmte Dienste, wie zum Beispiel *Kerberos* für die Authentisierung,
-tolerieren nur geringe Zeitabweichungen und funktionieren dann scheinbar ohne
-ersichtlichen Anlass nicht mehr.
+tolerieren nur geringe Abweichungen der Systemzeit und funktionieren dann
+scheinbar ohne ersichtlichen Anlass nicht mehr.
 
-Bei zentraler Protokollierung sind Zeitfehler bei einzelnen Rechnern an den
-Zeitstempeln der Einträge erkennbar.
+Bei zentraler Protokollierung kann ich Zeitfehler bei einzelnen Rechnern an den
+Zeitstempeln der Einträge erkennen.
 
 Mit dem Programm `ntpq` kann ich einen NTP-Dämon befragen. Meist sind diese
 jedoch so konfiguriert, dass sie nur von bestimmten Rechnern oder nur von
 *localhost* abgefragt werden können.
+Das bedeutet, ich muß mich an diesem Rechner anmelden.
 
 Auf dem betroffenen Client-Rechner kontrolliere ich, welcher Zeitserver
 konfiguriert ist.
 Stimmt der konfigurierte Zeitserver nicht, korrigiere ich die Konfiguration
-oder schaue mir den DHCP-Server an, falls dieser auch den zuständigen
-NTP-Server einstellt.
+oder schaue mir die Konfiguration des DHCP-Servers an, falls dieser den
+zuständigen NTP-Server mitteilt.
 
 ### Webserver für Proxy-Autokonfiguration
 
 Insbesondere in Netzen, in denen HTTP-Proxy-Server eingesetzt werden, möchte
-man diese gern automatisch konfigurieren, sobald eine gewisse Anzahl von
+ich diese automatisch konfigurieren, sobald eine gewisse Anzahl von
 Clients in Betrieb ist.
 Dafür ist ein Webserver nötig, der eine Datei mit einer bestimmten
 JavaScript-Funktion ausliefert.
@@ -185,4 +198,5 @@ dieser Datei führen.
 
 Schließlich sollte der Webserver mit der Konfigurationsdatei in den
 DNS-Domains der Client-Rechner mit dem Hostnamen *wpad* erreichbar sein, damit
-ihn auch die Clients, die nicht mit DHCP arbeiten finden.
+ihn auch die Clients finden, die mit DNS statt DHCP arbeiten.
+
