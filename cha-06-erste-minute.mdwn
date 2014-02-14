@@ -1,5 +1,5 @@
 
-## Die ersten Minuten auf dem Server
+## Die ersten Minuten auf dem Server {#sec-local-erste-minute}
 
 Zusätzlich habe ich die Gewohnheit entwickelt, bestimmte Informationen immer
 abzufragen, wenn ich mich an einem Server anmelde.

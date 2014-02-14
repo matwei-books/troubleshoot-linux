@@ -1,0 +1,71 @@
+
+## Ausfall einzelner Dienste
+
+Ohne Monitoring bemerke ich den Ausfall eines Dienstes oft erst dann, wenn
+jemand ihn benutzen will.
+Das kann dann sehr lange nach dem Ausfall sein, so dass mir die Korrelation
+von Ereignissen keine große Hilfe bei der Suche nach der Ursache ist.
+Ein Grund mehr, möglichst alle Dienste automatisch in geeigneten Zeitabständen
+zu überprüfen.
+Wird der Ausfall ohne Monitoring schließlich bemerkt, ist die Problemlösung
+meist dringend, denn schließlich will jemand diesen Dienst jetzt benutzen.
+
+Genug der Vorrede, wie gehe ich vor, wenn ich einen ausgefallenen
+Netzwerkdienst wieder in Gang bringen will?
+Dazu muss ich zwei Fragen beantworten:
+
+1.  Bekomme ich Kontakt zu dem Dienst?
+
+2.  Antwortet der Dienst, wie erwartet?
+
+Für die erste Frage benötige ich, falls ich keinen Kontakt bekomme, genaue
+Kenntnis der Netztopologie und der Protokolle, insbesondere der verwendeten
+TCP- oder UDP-Ports.
+Ich versuche zunächst Kontakt zu den vom Protokoll verwendeten Ports zu
+bekommen, funktioniert das nicht, dann zu anderen Ports (22/tcp ist auf den
+meisten Linux-Rechnern zu erreichen) oder via PING.
+Im Fehlerfall versuche ich den Kontakt von verschiedenen Stellen im Netz aus,
+um den Einfluss von Firewalls oder Routingproblemen auszuschließen.
+Ist der betreffende Rechner überhaupt nicht zu erreichen, behandle ich das
+Programm, wie unter Totalausfall des Netzwerks an einem Rechner, und zwar an
+dem Rechner, auf dem der Dienst laufen soll.
+Kann ich zwar den Rechner erreichen, aber nicht die Ports, die der
+ausgefallene Dienst benutzt, melde ich mich am Rechner an und behandle das
+Problem, wie in Teil 2 beschrieben, als partiellen lokalen Ausfall.
+
+Wenn ich Kontakt zu dem Dienst bekomme, hängt mein weiteres Vorgehen von dem
+Dienst und den verwendeten Protokollen ab.
+Erlaubt das Clientprogramm erweiterte Möglichkeiten zum Debugging, nutze ich
+diese.
+Bei sogenannten Plain-Text-Protokollen, wie HTTP, SMTP und ähnlichen, kann ich
+mit `telnet` oder `nc` den Server direkt ansprechen und die Antwort auswerten.
+Die Protokolle sind oft in RFCs beschrieben, die ich bei der IETF finden kann,
+wie zum Beispiel [RFC 5321](http://tools.ietf.org/html/rfc5321) für SMTP.
+Für die verschlüsselten Pendants dieser Protokolle kann ich mit OpenSSL eine
+Verbindung aufbauen:
+
+{line-numbers=off,lang="text"}
+    $ openssl s_client -connect www.example.com:443
+
+Für binär kodierte Protokolle, wie DNS, LDAP oder NTP, greife ich auf
+geeignete Client-Programme zurück.
+Oft kann ich für Tests auch Monitor-Plugins von Nagios verwenden.
+In hartnäckigen Fällen hilft mir auch ein Perl-Skript, wenn ich ein ganz
+spezielles Problem untersuchen will.
+Auf CPAN finde ich meist ein passendes Modul für das verwendete Protokoll.
+Bei diesen Tests kann ich mit `tcpdump` oder `wireshark` den Datenverkehr
+beobachten.
+
+Zusätzlich zu den Verbindungstests melde ich mich am Server, auf dem der
+Dienst läuft, an und beobachte die Lognachrichten des Dienstes.
+Dabei beachte ich auch die gesamte Umgebung auf dem Server, wie im Abschnitt
+über die [ersten Minuten auf dem Server](#sec-local-erste-minute).
+
+Bei intermittierenden Problemen beachte ich zusätzlich noch den Gesamtverkehr
+im Netzwerk, wenn ich dazu verlässliche Zahlen habe.
+Außerdem hilft manchmal, das Timing des Protokolls genauer anzusehen.
+
+Schließlich beziehe ich den Hersteller-Support ein, wenn ich solchen für
+den betreffenden Dienst zur Verfügung habe.
+Dabei hilft mir, wenn ich meine bisherigen Analysen für Nachfragen seitens der
+Supportmitarbeiter gut geordnet zur Verfügung habe.
