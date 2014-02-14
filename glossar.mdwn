@@ -9,22 +9,22 @@ Korrelation
 
 {#glossar-log}
 Log, Logdatei, Logfile
-: Traditionell werden die Systemprotokolle auf LINUX-/UNIX-Systemen als
+: Traditionell werden die Systemnachrichten auf Linux-Systemen als
   Textdateien mit zeilenweisen Einträgen geführt.
-  Diese Zeilen enthalten neben dem eigentlichen Text Datum und Uhrzeit,
-  den Namen oder die Adresse des Rechners und den Prozess nebst PID, der
-  die Lognachricht erzeugt hat.
+  Diese Zeilen enthalten neben der Nachricht das Datum und die Uhrzeit,
+  den Namen oder die Adresse des Rechners und den Namen und die PID des
+  Prozesses, der die Lognachricht erzeugte.
   Damit nicht alle Programme dieselbe Datei zum Schreiben öffnen müssen, gibt
-  es auf den Systemen einen [Syslog](#glossar-syslog)-Dienst, dem die
-  Lognachrichten über Bibliotheksfunktionen übergeben werden.
-  Dabei können die Lognachrichten eine Priorität und einen Bereich bekommen,
-  nach denen sie eventuell auf verschiedene Dateien verteilt werden.
+  es auf den Systemen einen [Syslog](#glossar-syslog)-Dienst, dem sie die
+  Lognachrichten mittels Bibliotheksfunktionen übergeben.
+  Dabei kann den Nachrichten eine Priorität und ein Bereich zugewiesen
+  werden.
 
 {#glossar-syslog}
 Syslog
 : Der Syslog-Dienst auf einem Rechner nimmt am UNIX-Socket */dev/log*
-  [Lognachrichten](#glossar-log) entgegen und schreibt sie entsprechend seiner
-  Konfiguration und der angegebenen Priorität und dem Bereich in Dateien im
+  [Lognachrichten](#glossar-log) entgegen und schreibt sie entsprechend
+  seiner Konfiguration, der Priorität und dem Bereich in Dateien im
   Verzeichnis */var/log/*.
   Einige Syslog-Dämonen schreiben die Lognachrichten stattdessen in
   Datenbanken oder in Ringpuffer im Hauptspeicher.
@@ -34,5 +34,4 @@ Syslog
   Zusätzlich besteht die Möglichkeit, das der Syslog-Dämon über UDP-Port 514
   Lognachrichten an andere Rechner sendet oder von anderen Rechnern
   entgegennimmt.
-  Moderne Syslog-Programme verwenden auch gesicherte Protokolle zur
-  Übertragung der Lognachrichten.
+
