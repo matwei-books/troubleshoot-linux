@@ -1,7 +1,7 @@
 # Makefile for leanpub / dropbox
 
 BOOK = Book.txt
-PREVIEW = Preview.txt
+PREVIEW = Subset.txt
 SAMPLE = Sample.txt
 
 DROPBOXDIR = manuscript
