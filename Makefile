@@ -79,6 +79,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-12.mdwn \
                $(DROPBOXDIR)/cha-13.mdwn \
                $(DROPBOXDIR)/cha-13-arp.mdwn \
+               $(DROPBOXDIR)/cha-13-ifconfig.mdwn \
                $(DROPBOXDIR)/cha-13-iproute.mdwn \
                $(DROPBOXDIR)/cha-13-netstat.mdwn \
                $(DROPBOXDIR)/glossar.mdwn \
@@ -179,6 +180,7 @@ SOURCES = $(BOOK) \
           cha-netz-perform.mdwn \
           cha-13.mdwn \
           cha-13-arp.mdwn \
+          cha-13-ifconfig.mdwn \
           cha-13-iproute.mdwn \
           cha-13-netstat.mdwn \
           cha-netz-werkzeuge.mdwn \
@@ -270,6 +272,7 @@ CHAPTERS = \
     cha-12.mdwn \
     cha-13.mdwn \
     cha-13-arp.mdwn \
+    cha-13-ifconfig.mdwn \
     cha-13-iproute.mdwn \
     cha-13-netstat.mdwn \
     glossar.mdwn \
