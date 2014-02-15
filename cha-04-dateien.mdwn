@@ -1,5 +1,5 @@
 
-## Dateien und Verzeichnisse
+## Dateien und Verzeichnisse {#sec-linux-grundlagen-dateien}
 
 Ein grundlegendes Konzept, dass man verinnerlicht haben muss, um weitere
 Eigenheiten von Linux und UNIX zu verstehen, ist die Datei.

@@ -1,5 +1,5 @@
 
-## Schnittstellen von Programmen
+## Schnittstellen von Programmen {#sec-unix-programmschnittstellen}
 
 Bei der Fehlersuche auf Linux-Servern bewege ich mich fast die gesamte Zeit
 auf der Kommandozeile und rufe die verschiedensten Programme auf.

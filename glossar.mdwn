@@ -1,11 +1,32 @@
 
 # Glossar
 
+Dateibaum
+: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+
+Dateisystem
+: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+
+Datenbank
+: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+
+Gerätedatei
+: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+
+Inode
+: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+
+Kommandozeile
+: [siehe Kapitel 4](#sec-unix-programmschnittstellen)
+
 Korrelation
 : Eine Korrelation beschreibt eine Beziehung zwischen zwei Merkmalen,
   Ereignissen oder Zuständen.
   Ob die Beziehung kausal ist und falls ja, wie, geht aus der Korrelation
   nicht hervor.
+
+Link
+: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
 
 {#glossar-log}
 Log, Logdatei, Logfile
@@ -19,6 +40,21 @@ Log, Logdatei, Logfile
   Lognachrichten mittels Bibliotheksfunktionen übergeben.
   Dabei kann den Nachrichten eine Priorität und ein Bereich zugewiesen
   werden.
+
+Programm
+: [siehe Kapitel 4](#sec-unix-prozessmodell)
+
+Prozess
+: [siehe Kapitel 4](#sec-unix-prozessmodell)
+
+reguläre Datei
+: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+
+Signal
+: [siehe Kapitel 4](#sec-unix-prozessmodell)
+
+Standardausgabe, -eingabe, fehlerausgabe
+: [siehe Kapitel 4](#sec-unix-programmschnittstellen)
 
 {#glossar-syslog}
 Syslog
@@ -34,4 +70,10 @@ Syslog
   Zusätzlich besteht die Möglichkeit, das der Syslog-Dämon über UDP-Port 514
   Lognachrichten an andere Rechner sendet oder von anderen Rechnern
   entgegennimmt.
+
+Umgebungsvariablen
+: [siehe Kapitel 4](#sec-unix-programmschnittstellen)
+
+Verzeichnis
+: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
 
