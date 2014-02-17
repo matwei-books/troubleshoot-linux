@@ -2,13 +2,26 @@
 # Glossar
 
 Dateibaum
-: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+: [siehe Dateisystem](#glossar-dateisystem)
 
+{#glossar-dateisystem}
 Dateisystem
 : [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
 
 Datenbank
-: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+: Eine Datenbank ist ein System zur elektronischen Datenverwaltung.
+  Dabei unterscheidet man die Software, auch Datenbankmanagementsystem (DBMS),
+  von der Datenbank im engeren Sinne, den Daten.
+  Die Daten in einem Datenbanksystem bestehen aus den Nutzerdaten und den
+  Verwaltungsdaten, die auch Metadaten genannt werden.
+  Es gibt verschiedene Datenbankmodelle wie zum Beispiel hierarchische
+  Datenbankmodelle, die in Dateisystem verwendet werden, netzwerkartige
+  Modelle, die man beim DNS finden kann, oder dokumentenorientierte Modelle,
+  wie Mailboxen.
+  Neben diesen gibt es noch andere Modelle, wie zum Beispiel relationale oder
+  objektorientierte, mit denen man es im Rahmen der
+  Fehlersuche seltener zu tun bekommt.
+  Außerdem können Mischformen auftreten.
 
 Gerätedatei
 : [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
