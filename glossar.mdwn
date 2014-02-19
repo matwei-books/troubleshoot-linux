@@ -26,8 +26,20 @@ Datenbank
 Gerätedatei
 : [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
 
+{#glossar-inode}
 Inode
-: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+: Ein Inode (von engl. *index node*) ist ein Eintrag in einem
+  [Dateisystem](#glossar-dateisystem), der die Verwaltungsinformationen
+  (Metadaten) für die zugehörige Datei enthält.
+  Unter anderem sind im Inode vermerkt: der Dateityp, die Zugriffsrechte,
+  der Eigentümer, die Größe der Datei, Verweise auf die Datenblöcke sowie
+  ein Referenzzähler (link counter), der die Anzahl der Verweise auf die Datei
+  enthält.
+  Als Verweise auf eine Datei gelten Verzeichniseinträge im Dateisystem, die
+  auf den Inode verweisen und offene Dateideskriptoren von laufenden
+  Prozessen.
+  In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
+  von Dateien und Verzeichnissen detaillierter ein.
 
 Kommandozeile
 : [siehe Kapitel 4](#sec-unix-programmschnittstellen)
@@ -61,7 +73,16 @@ Prozess
 : [siehe Kapitel 4](#sec-unix-prozessmodell)
 
 reguläre Datei
-: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+: Eine reguläre Datei enthält permanente Daten, die als Bitfolge in einem
+  [Dateisystem](#glossar-dateisystem) auf einem geeigneten Datenträger
+  gespeichert werden.
+  Die Verwaltungsinformationen für die Datei werden in einem
+  [Inode](#glossar-inode) abgelegt.
+  Ein und dieselbe reguläre Datei kann mehrere Namen haben, die als Link auf
+  den zugehörigen Inode in den [Verzeichnissen](#glossar-verzeichnis) des
+  Dateisystems geführt werden.
+  In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
+  von Dateien und Verzeichnissen detaillierter ein.
 
 Signal
 : [siehe Kapitel 4](#sec-unix-prozessmodell)
@@ -87,6 +108,7 @@ Syslog
 Umgebungsvariablen
 : [siehe Kapitel 4](#sec-unix-programmschnittstellen)
 
+{#glossar-verzeichnis}
 Verzeichnis
 : [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
 
