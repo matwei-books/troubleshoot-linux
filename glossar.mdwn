@@ -10,18 +10,16 @@ Dateisystem
 
 Datenbank
 : Eine Datenbank ist ein System zur elektronischen Datenverwaltung.
-  Dabei unterscheidet man die Software, auch Datenbankmanagementsystem (DBMS),
-  von der Datenbank im engeren Sinne, den Daten.
+  Dabei unterscheidet man die Software, auch Datenbankmanagementsystem (DBMS)
+  genannt, von der Datenbank im engeren Sinne, den Daten.
   Die Daten in einem Datenbanksystem bestehen aus den Nutzerdaten und den
-  Verwaltungsdaten, die auch Metadaten genannt werden.
+  Verwaltungsdaten, die man Metadaten nennt.
   Es gibt verschiedene Datenbankmodelle wie zum Beispiel hierarchische
-  Datenbankmodelle, die in Dateisystem verwendet werden, netzwerkartige
-  Modelle, die man beim DNS finden kann, oder dokumentenorientierte Modelle,
+  Modelle, die in Dateisystemen verwendet werden, netzwerkartige
+  Modelle, die wir beim DNS finden, oder dokumentenorientierte Modelle,
   wie Mailboxen.
-  Neben diesen gibt es noch andere Modelle, wie zum Beispiel relationale oder
-  objektorientierte, mit denen man es im Rahmen der
-  Fehlersuche seltener zu tun bekommt.
-  Außerdem können Mischformen auftreten.
+  Neben den genannten gibt es noch andere, im Rahmen dieses Buches weniger
+  relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
 Gerätedatei
 : [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
@@ -31,15 +29,8 @@ Inode
 : Ein Inode (von engl. *index node*) ist ein Eintrag in einem
   [Dateisystem](#glossar-dateisystem), der die Verwaltungsinformationen
   (Metadaten) für die zugehörige Datei enthält.
-  Unter anderem sind im Inode vermerkt: der Dateityp, die Zugriffsrechte,
-  der Eigentümer, die Größe der Datei, Verweise auf die Datenblöcke sowie
-  ein Referenzzähler (link counter), der die Anzahl der Verweise auf die Datei
-  enthält.
-  Als Verweise auf eine Datei gelten Verzeichniseinträge im Dateisystem, die
-  auf den Inode verweisen und offene Dateideskriptoren von laufenden
-  Prozessen.
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
-  von Dateien und Verzeichnissen detaillierter ein.
+  von Dateien, Inodes und Verzeichnissen detaillierter ein.
 
 Kommandozeile
 : [siehe Kapitel 4](#sec-unix-programmschnittstellen)
@@ -74,7 +65,7 @@ Prozess
 
 reguläre Datei
 : Eine reguläre Datei enthält permanente Daten, die als Bitfolge in einem
-  [Dateisystem](#glossar-dateisystem) auf einem geeigneten Datenträger
+  [Dateisystem](#glossar-dateisystem) auf einem Datenträger
   gespeichert werden.
   Die Verwaltungsinformationen für die Datei werden in einem
   [Inode](#glossar-inode) abgelegt.
