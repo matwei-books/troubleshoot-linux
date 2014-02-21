@@ -22,7 +22,16 @@ Datenbank
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
 Gerätedatei
-: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+: Über Gerätedateien erlaubt der Kernel normalen Anwenderprogrammen den
+  Zugriff auf die Hardware des Systems.
+  Dabei können die Gerätedateien wie
+  [reguläre Dateien](#glossar-regulaere-datei) verwendet werden.
+  Man unterscheidet blockorientierte und zeichenorientierte Gerätedateien.
+  Ursprünglich wurden Gerätedateien mit dem Programm `mknod` angelegt.
+  Später übernahm *devfs* das dynamische Erzeugen von Gerätedateien.
+  In modernen Linuxsystemen werden Gerätedateien mit *udev* verwaltet.
+  In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf die
+  Zusammenhänge von Dateien und Dateisystemen ein.
 
 {#glossar-inode}
 Inode
@@ -63,6 +72,7 @@ Programm
 Prozess
 : [siehe Kapitel 4](#sec-unix-prozessmodell)
 
+{#glossar-regulaere-datei}
 reguläre Datei
 : Eine reguläre Datei enthält permanente Daten, die als Bitfolge in einem
   [Dateisystem](#glossar-dateisystem) auf einem Datenträger

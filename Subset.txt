@@ -74,6 +74,7 @@ cha-13-arp.mdwn
 cha-13-ifconfig.mdwn
 cha-13-iproute.mdwn
 cha-13-netstat.mdwn
+cha-13-ping.mdwn
 anhang.mdwn
 glossar.mdwn
 literatur.mdwn

@@ -47,6 +47,23 @@ unterteilt, die den Typ des Gerätes bestimmen, und Nebennummern (minor number),
 die gleichartige Geräte untereinander differenzieren.
 Gerätedateien kann ich mit dem Befehl `mknod` anlegen.
 
+A> Es gibt eine Reihe virtueller Gerätedateien, die bestimmten Zwecken dienen:
+A> 
+A> /dev/null
+A> : verwirft alle Eingaben und gibt nichts aus.
+A> 
+A> /dev/zero
+A> : erzeugt einen Zeichenstrom aus Nullzeichen (`\0`)
+A> 
+A> /dev/random
+A> : gibt echte Zufallszahlen oder wenigstens kryptographisch starke
+A>  Pseudozufallszahlen aus.
+A>  Sollte nicht genügend Entropie angesammelt sein, wird der Lesezugriff
+A>  blockiert.
+A>
+A> /dev/urandom
+A> : gibt Pseudozufallszahlen aus, ohne zu blockieren.
+
 Die nächste Art von Dateien sind FIFOs oder Named Pipes.
 Diese sind Endpunkte für die Interprozesskommunikation (IPC).
 Wenn ein Prozess etwas in eine FIFO schreibt, kann ein anderer das lesen.

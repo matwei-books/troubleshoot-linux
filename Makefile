@@ -82,6 +82,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-13-ifconfig.mdwn \
                $(DROPBOXDIR)/cha-13-iproute.mdwn \
                $(DROPBOXDIR)/cha-13-netstat.mdwn \
+               $(DROPBOXDIR)/cha-13-ping.mdwn \
                $(DROPBOXDIR)/glossar.mdwn \
                $(DROPBOXDIR)/literatur.mdwn \
                $(DROPBOXDIR)/part1.mdwn \
@@ -183,6 +184,7 @@ SOURCES = $(BOOK) \
           cha-13-ifconfig.mdwn \
           cha-13-iproute.mdwn \
           cha-13-netstat.mdwn \
+          cha-13-ping.mdwn \
           cha-netz-werkzeuge.mdwn \
           glossar.mdwn \
           literatur.mdwn \
@@ -275,6 +277,7 @@ CHAPTERS = \
     cha-13-ifconfig.mdwn \
     cha-13-iproute.mdwn \
     cha-13-netstat.mdwn \
+    cha-13-ping.mdwn \
     glossar.mdwn \
     literatur.mdwn \
     kolophon.mdwn \
