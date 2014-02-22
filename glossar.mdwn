@@ -6,7 +6,19 @@ Dateibaum
 
 {#glossar-dateisystem}
 Dateisystem
-: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+: Ein Dateisystem beschreibt die Organisation der Datenablage auf einem
+  Datenträger.
+  Der Hauptzweck für den Benutzer ist die Zuordnung eines Dateinamens innerhalb
+  des Dateisystems zu den entsprechenden Datenblöcken und Metadaten.
+  Abhängig von der Art des Datenträgers und dem Einsatzzweck des Dateisystems
+  kommen verschiedene Arten von Dateisystemen zum Einsatz.
+  Mit dem Befehl `mount` wird ein Dateisystem im Dateibaum des Rechners
+  eingehängt, das erste Dateisystem wird als Root-Dateisystem an der Stelle
+  */* eingehängt.
+  Alle anderen Dateisysteme können nur bei einem vorhandenen Verzeichnis im
+  Dateibaum eingehängt werden.
+  In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf den
+  Zusammenhang von Dateisystemen und Dateien ein.
 
 Datenbank
 : Eine Datenbank ist ein System zur elektronischen Datenverwaltung.
@@ -51,6 +63,15 @@ Korrelation
   nicht hervor.
 
 Link
+: Ein Link ist ein Verweis auf einen [Inode](#glossar-inode) in einem
+  Dateisystem.
+  Die meisten Links sind Einträge in [Dateisystemen](#glossar-dateisystem),
+  die einen Namen in einem Verzeichnis mit einem Inode verknüpfen.
+  Diese werden auch Hardlinks genannt.
+  Neben diesen gibt es symbolische Links, auch Softlink genannt, die nicht auf
+  einen Inode verweisen, sondern auf einen anderen Dateinamen.
+  Um auf die betreffende Datei zuzugreifen, muss der Kernel den verlinkten
+  Dateinamen suchen und dem damit verbundenen Link folgen.
 : [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
 
 {#glossar-log}
@@ -111,5 +132,14 @@ Umgebungsvariablen
 
 {#glossar-verzeichnis}
 Verzeichnis
-: [siehe Kapitel 4](#sec-linux-grundlagen-dateien)
+: Ein Verzeichnis ist eine spezielle Art von Dateien in einem
+  [Dateisystem](#glossar-dateisystem), die nur Dateinamen, gepaart mit der
+  Referenz auf die zugehörigen [Inodes](#glossar-inode) enthalten.
+  In jedem Verzeichnis gibt es zwei Standardeinträge: "." verweist auf das
+  Verzeichnis selbst und ".." verweist auf das übergeordnete Verzeichnis, in
+  welchem der Name des aktuellen Verzeichnisses geführt wird. Lediglich im
+  Wurzelverzeichnis eines Dateisystems verweist ".." genau wie "." auf das
+  Verzeichnis selbst.
+  [Kapitel 4](#sec-linux-grundlagen-dateien) dieses Buches geht näher auf das
+  Verhältnis von Dateien und Verzeichnissen in Dateisystemen ein.
 

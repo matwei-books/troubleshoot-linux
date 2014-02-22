@@ -85,12 +85,26 @@ oft unterschiedlichen Dateisystemen zusammen.
 Neben den Dateisystemen, die auf Blockgeräten, wie Festplatten, angelegt
 werden, gibt es verschiedene Spezial-Dateisysteme, wie *proc*, *sysfs*,
 *tmpfs*.
+
 In den Dateisystemen finde ich eine weitere spezielle Art von Dateien, die
 Verzeichnisse.
 Diese werden zwar genauso wie reguläre Dateien im Dateisystem gespeichert,
 jedoch kann ich nicht beliebige Daten hineinschreiben.
 Verzeichnisse enthalten strukturierte Einträge, die jeweils den Namen einer
 Datei und einen Verweis auf die Verwaltungseinheit, den Inode, umfassen.
+In jedem Verzeichnis gibt es zwei Standardeinträge: "." verweist auf den Inode
+des Verzeichnisses selbst und ".." verweist auf den Inode des übergeordneten
+Verzeichnis, in dem der Name dieses Verzeichnisses steht.
+Lediglich im Wurzelverzeichnis eines Dateisystems verweist ".." auf den Inode
+des Verzeichnisses selbst.
+Da der Eintrag ".." immer auf das übergeordnete Verzeichnis verweisen muss,
+ist es nicht möglich, mehrere namentliche Verweise auf ein Verzeichnis
+anzulegen.
+Dadurch ist es möglich, anhand der Linkzahl im Inode eines Verzeichnisses zu
+sagen, wie viele Unterverzeichnisse diese enthält, denn jedes Unterverzeichnis
+fügt mit seinem Eintrag ".." einen weiteren Link hinzu.
+Verzeichnisse ohne Unterverzeichnis haben eine Linkzahl von 2.
+Der Befehl `ls -l` zeigt in der zweiten Spalte die Linkzahl an.
 
 Der Inode beschreibt den Typ und die Eigenschaften der Datei und notiert den
 Platz, den die Datei auf dem Medium einnimmt.
