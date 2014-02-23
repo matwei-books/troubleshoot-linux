@@ -83,11 +83,29 @@ Log, Logdatei, Logfile
   Dabei kann den Nachrichten eine Priorität und ein Bereich zugewiesen
   werden.
 
+{#glossar-programm}
 Programm
-: [siehe Kapitel 4](#sec-unix-prozessmodell)
+: Ein Programm ist eine Folge von Anweisungen, die den Regeln einer
+  Programmiersprache genügen und es einem Computer ermöglichen,
+  eine bestimmte Aufgabe zu bewältigen.
+  Dabei unterscheidet man Programme im Maschinencode, die nach dem Laden
+  in den Arbeitsspeicher direkt vom Prozessor des Computers abgearbeitet
+  werden können, von Programmen in "höheren" Programmiersprachen, die vor der
+  Abarbeitung durch den Prozessor erst in Maschinencode übersetzt werden oder
+  durch spezielle Programme interpretiert werden.
+  In [Kapitel 4](#sec-unix-prozessmodell) gehe ich näher auf den Zusammenhang
+  von Programmen und Prozessen ein.
 
+{#glossar-prozess}
 Prozess
-: [siehe Kapitel 4](#sec-unix-prozessmodell)
+: Im Betriebssystem ist ein Prozess ein Vorgang der Informationsverarbeitung.
+  Dieser benötigt Rechenzeit an mindestens einem Prozessor, ein Programm,
+  dessen Anweisungen er ausführt, Speicherplatz für temporäre Daten und einen
+  Kontext, der unter anderem auf die verarbeiteten Daten verweist.
+  Der Prozess wird durch das Programm gesteuert und durch den Kontext und die
+  verarbeiteten Daten beeinflusst.
+  [Kapitel 4](#sec-unix-prozessmodell) geht näher auf das UNIX-Prozessmodell
+  ein.
 
 {#glossar-regulaere-datei}
 reguläre Datei
@@ -103,7 +121,13 @@ reguläre Datei
   von Dateien und Verzeichnissen detaillierter ein.
 
 Signal
-: [siehe Kapitel 4](#sec-unix-prozessmodell)
+: Ein Signal ist eine primitive Form der Kommunikation zwischen Prozessen.
+  Um ein Signal zu senden, wird der *kill()* Systemaufruf beziehungsweise in
+  der Kommandozeile der *kill* Befehl verwendet.
+  Der sendende Prozess benötigt bestimmte Rechte, um einem anderen Prozess ein
+  Signal zu senden.
+  Im Rahmen des UNIX-Prozessmodells gehe ich in
+  [Kapitel 4](#sec-unix-prozessmodell) näher auf Signale ein.
 
 Standardausgabe, -eingabe, fehlerausgabe
 : [siehe Kapitel 4](#sec-unix-programmschnittstellen)
