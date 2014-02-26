@@ -50,8 +50,16 @@ Inode
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
   von Dateien, Inodes und Verzeichnissen detaillierter ein.
 
+{#glossar-kommandozeile}
 Kommandozeile
-: [siehe Kapitel 4](#sec-unix-programmschnittstellen)
+: Jedes UNIX-Programm erhält beim Aufruf eine Reihe von positionsabhängigen
+  Parametern.
+  Diese werden als Zeichenreihen übergeben, welche jeweils durch das Zeichen
+  `\0` abgeschlossen werden.
+  Beim Aufruf eines Programms aus einer Shell kann die Kommandozeile aus einer
+  oder mehreren Textzeilen zusammengebaut werden.
+  In [Kapitel 4](#sec-unix-programmschnittstellen) gehe ich im Rahmen der
+  Programmschnittstellen auf die Kommandozeile ein.
 
 Korrelation
 : Eine Korrelation beschreibt eine Beziehung zwischen zwei Merkmalen,
@@ -130,7 +138,21 @@ Signal
   [Kapitel 4](#sec-unix-prozessmodell) näher auf Signale ein.
 
 Standardausgabe, -eingabe, fehlerausgabe
-: [siehe Kapitel 4](#sec-unix-programmschnittstellen)
+: Diese drei Standard-Datenströme im Betriebssystem UNIX werden auch *STDIN*,
+  *STDOUT* und *STDERR* genannt.
+  Beim Start von Programmen werden diesen Datenströmen die Dateideskriptoren
+  0, 1 und 2 zugeordnet.
+  An einem Textterminal ist STDIN meist mit der Tastatur verbunden und STDOUT
+  und STDERR mit dem Display.
+
+  Programme , die als Filter in einer Pipe verkettet werden, lesen ihre
+  Eingabe von STDIN und schreiben die verarbeiteten Daten nach STDOUT und
+  Fehlermeldungen nach STDERR.
+  In den gängigen Shells können diese Datenströme durch Eingabeumleitung
+  (`<`), Ausgabeumleitung (`>`) oder Verknüpfung (`|`) mit Dateien oder
+  Programmen verbunden werden.
+  In [Kapitel 4](#sec-unix-programmschnittstellen) gehe ich bei den
+  Programmschnittstellen näher auf die Datenströme ein.
 
 {#glossar-syslog}
 Syslog
@@ -148,7 +170,13 @@ Syslog
   entgegennimmt.
 
 Umgebungsvariablen
-: [siehe Kapitel 4](#sec-unix-programmschnittstellen)
+: Neben den Variablen, die ein Programm beim Aufruf in der
+  [Kommandozeile](#glossar-kommandozeile) übergeben bekommt, erhält es weitere
+  Variablen in der Aufrufumgebung.
+  Im Unterschied zur Kommandozeile, deren Variablen über ihre Position
+  verwendet werden, werden Umgebungsvariablen über ihren Namen identifiziert.
+  [Kapitel 4](#sec-unix-programmschnittstellen) geht im Rahmen der
+  Programmschnittstellen auf Umgebungsvariablen ein.
 
 {#glossar-verzeichnis}
 Verzeichnis
