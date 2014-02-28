@@ -4,7 +4,7 @@ Manchmal scheint alles in Ordnung zu sein und trotzdem sind die Kunden nicht
 zufrieden. Performance ist ein heikles Thema, weil jeder seine eigene
 Vorstellung davon hat, was ausreichende Performance ist.
 
-Probleme mit der Performance des Netzwekres sind ein heikles Thema.
+Probleme mit der Performance des Netzwerkes sind ein heikles Thema.
 So heikel, dass manche ihr Heil in immer "dickeren" Leitungen mit immer mehr
 Bandbreite suchen, um sich nicht näher mit dem eigentlichen Problem
 beschäftigen zu müssen.
@@ -29,7 +29,7 @@ Darum ist die Fehlersuche bei Performanceproblemen fast immer mit dem Sammeln
 von Daten verbunden.
 
 Wenn ich ein Performaceproblem untersuche, beginne ich zunächst die
-Charakteristiken ddes Problems so genau wie möglich zu bestimmen.
+Charakteristiken des Problems so genau wie möglich zu bestimmen.
 
 Dann versuche ich das Problem grob zu klassifizieren:
 
@@ -47,6 +47,6 @@ So gehen bei datagrammorientierten Protokollen wie UDP Daten einfach verloren,
 während bei datenflussorientierten Protokollen wie TCP Zeit verloren geht,
 währen das Protokoll die Daten nochmals sendet.
 
-Bei der Klassifizierung hilft mir, bereits bei der Problemaufnahme nach
+Bei der Klassifizierung hilft mir, bereits bei der Aufnahme des Problems nach
 Anzeichen für mögliche Ursachen Ausschau zu halten.
 

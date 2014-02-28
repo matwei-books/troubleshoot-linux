@@ -77,6 +77,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-11-ausfall-essentiell.mdwn \
                $(DROPBOXDIR)/cha-11-ausfall-dienst.mdwn \
                $(DROPBOXDIR)/cha-12.mdwn \
+               $(DROPBOXDIR)/cha-12-ursachen.mdwn \
                $(DROPBOXDIR)/cha-13.mdwn \
                $(DROPBOXDIR)/cha-13-arp.mdwn \
                $(DROPBOXDIR)/cha-13-ifconfig.mdwn \
@@ -178,6 +179,7 @@ SOURCES = $(BOOK) \
           cha-11-ausfall-dienst.mdwn \
           cha-netz-teil.mdwn \
           cha-12.mdwn \
+          cha-12-ursachen.mdwn \
           cha-netz-perform.mdwn \
           cha-13.mdwn \
           cha-13-arp.mdwn \
@@ -272,6 +274,7 @@ CHAPTERS = \
     cha-11-ausfall-essentiell.mdwn \
     cha-11-ausfall-dienst.mdwn \
     cha-12.mdwn \
+    cha-12-ursachen.mdwn \
     cha-13.mdwn \
     cha-13-arp.mdwn \
     cha-13-ifconfig.mdwn \
