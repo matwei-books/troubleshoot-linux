@@ -127,3 +127,10 @@ Das ist aber ein Thema für die Netzwerksplanung und nicht für die
 Fehlerbeseitigung.
 
 Kurzfristig hilft vielleicht eine Priorisierung des Datenverkehrs.
+
+### Überlast des Servers
+
+Manchmal erweist sich das Netzperformanceproblem auch einfach als
+Performanceproblem des Servers oder Client-Rechners.
+Wenn sich aus allen beobachteten Netzwerkparametern kein Hinweis ergibt,
+sollte ich auch dieses als mögliche Ursache nicht aus den Augen verlieren.
