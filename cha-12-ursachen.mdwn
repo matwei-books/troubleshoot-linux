@@ -93,10 +93,10 @@ Sendegeschwindigkeit so, dass die zu Verfügung stehende Bandbreite möglichst
 optimal genutzt wird.
 Nur funktioniert genau diese Regelung bei Bufferbloat nicht mehr auf Grund der
 durch den Puffer eingeführten zusätzlichen Latenz.
-Da TCP die Sendegeschwindigkeit erst bei Paketverlusten herunterregelt,
+Da TCP die Sendegeschwindigkeit erst bei Paketverlusten herunter regelt,
 diese aber erst auftreten, wenn der Puffer voll ist, ist es bereits zu spät.
 
-Natürlich trett das Problem mit Bufferbloat nur an den Stellen auf, wo Daten
+Natürlich tritt das Problem mit Bufferbloat nur an den Stellen auf, wo Daten
 an einem Gateway nicht so schnell abfließen können, wie sie ankommen.
 Das heisst an Gateways mit unterschiedlichen Schnittstellengeschwindigkeiten
 oder, wenn an eine Schnittstelle Daten gesendet werden, die an mehreren
@@ -106,7 +106,7 @@ Kenne ich das Netz, dann weiss ich, wo die neuralgischen Punkte sind und
 schaue mir dort die Schnittstellenauslastung an.
 Dabei hilft mir ein Monitoring der Datenübertragungsraten an den
 Schnittstellen.
-Ein konkreter Hinweis auf Bufferbloat ist eine start erhöhte Latenz zusammen
+Ein konkreter Hinweis auf Bufferbloat ist eine stark erhöhte Latenz zusammen
 mit einer unter Vollast betriebenen Leitung.
 
 ### Unnötiger Datenverkehr
