@@ -2,8 +2,14 @@
 # Glossar
 
 BIOS
+: Das BIOS, von *Basic Input/Output System* ist die
+  [Firmware](#glossar-firmware) der PCs, die auf den IBM-PC zurückgehen.
 
 Bootstrapping
+: Von der englischen Redewendung *"pull oneself up by one’s bootstraps"*
+  abgeleitet, bezeichnet man mit Bootstrapping einen Prozess, bei dem aus
+  einem einfachen System heraus ein komplizierteres aktiviert wird, wie zum
+  Beispiel beim Start des Betriebssystems.
 
 Dateibaum
 : [siehe Dateisystem](#glossar-dateisystem)
@@ -33,9 +39,17 @@ Datenbank
   Neben den genannten gibt es noch andere, im Rahmen dieses Buches weniger
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
-Direct Rendering Manager
+Direct Rendering Manager, DRM
+: Der Direct Rendering Manager ist ein Linux-Kernelmodul, das Zugriff auf den
+  Speicher der Grafik-Karte gewährt.
+  Damit ist es möglich, diesen auch ohne X-Server in Programmen zu verwenden.
 
+{#glossar-firmware}
 Firmware
+: Unter Firmware versteht man Software, die in elektronischen Geräten fest
+  eingebettet ist und, wenn überhaupt, dann oft nur mit speziellen
+  Vorkehrungen änderbar ist.
+  Bei Computern lädt die Firmware das Betriebssystem.
 
 {#glossar-geraetedatei}
 Gerätedatei
@@ -51,6 +65,11 @@ Gerätedatei
   Zusammenhänge von Dateien und Dateisystemen ein.
 
 Initramfs
+: Das Initramfs ist ein komprimiertes Archiv, das für den Systemstart
+  benötigte Dateien enthält.
+  Es kann vom Kernel beim Systemstart als Stammverzeichnis eingehängt werden.
+  Anschließend wird ein im Initramfs vorhandenes Programm *init* gestartet,
+  welches den Systemstart vorbereitet und als letztes */sbin/init* startet.
 
 {#glossar-inode}
 Inode
