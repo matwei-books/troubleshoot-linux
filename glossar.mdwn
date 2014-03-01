@@ -1,6 +1,10 @@
 
 # Glossar
 
+BIOS
+
+Bootstrapping
+
 Dateibaum
 : [siehe Dateisystem](#glossar-dateisystem)
 
@@ -29,6 +33,10 @@ Datenbank
   Neben den genannten gibt es noch andere, im Rahmen dieses Buches weniger
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
+Direct Rendering Manager
+
+Firmware
+
 {#glossar-geraetedatei}
 Gerätedatei
 : Über Gerätedateien erlaubt der Kernel normalen Anwenderprogrammen den
@@ -42,6 +50,8 @@ Gerätedatei
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf die
   Zusammenhänge von Dateien und Dateisystemen ein.
 
+Initramfs
+
 {#glossar-inode}
 Inode
 : Ein Inode (von engl. *index node*) ist ein Eintrag in einem
@@ -49,6 +59,12 @@ Inode
   (Metadaten) für die zugehörige Datei enthält.
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
   von Dateien, Inodes und Verzeichnissen detaillierter ein.
+
+Kernel
+
+Kernel-Oops
+
+Kernel-Panik
 
 {#glossar-kommandozeile}
 Kommandozeile
@@ -78,6 +94,8 @@ Link
   Für weitere Informationen zu Dateien, Verzeichnissen und Links
   [siehe Kapitel 4](#sec-linux-grundlagen-dateien).
 
+Live-System
+
 {#glossar-log}
 Log, Logdatei, Logfile
 : Traditionell werden die Systemnachrichten auf Linux-Systemen als
@@ -90,6 +108,18 @@ Log, Logdatei, Logfile
   Lognachrichten mittels Bibliotheksfunktionen übergeben.
   Dabei kann den Nachrichten eine Priorität und ein Bereich zugewiesen
   werden.
+
+Magic SysRequest
+
+Master Boot Record, MBR
+
+NFS
+
+Paging
+
+Partitionstabelle
+
+Peripherie
 
 {#glossar-programm}
 Programm
@@ -115,6 +145,8 @@ Prozess
   [Kapitel 4](#sec-unix-prozessmodell) geht näher auf das UNIX-Prozessmodell
   ein.
 
+PXE
+
 {#glossar-regulaere-datei}
 reguläre Datei
 : Eine reguläre Datei enthält permanente Daten, die als Bitfolge in einem
@@ -127,6 +159,10 @@ reguläre Datei
   Dateisystems geführt werden.
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
   von Dateien und Verzeichnissen detaillierter ein.
+
+Rescue-System
+
+Shell
 
 Signal
 : Ein Signal ist eine primitive Form der Kommunikation zwischen Prozessen.
@@ -154,6 +190,8 @@ Standardausgabe, -eingabe, fehlerausgabe
   In [Kapitel 4](#sec-unix-programmschnittstellen) gehe ich bei den
   Programmschnittstellen näher auf die Datenströme ein.
 
+Swap, Swapping
+
 {#glossar-syslog}
 Syslog
 : Der Syslog-Dienst auf einem Rechner nimmt am UNIX-Socket */dev/log*
@@ -168,6 +206,10 @@ Syslog
   Zusätzlich besteht die Möglichkeit, das der Syslog-Dämon über UDP-Port 514
   Lognachrichten an andere Rechner sendet oder von anderen Rechnern
   entgegennimmt.
+
+TFTP
+
+Thrashing
 
 Umgebungsvariablen
 : Neben den Variablen, die ein Programm beim Aufruf in der
@@ -186,3 +228,6 @@ Verzeichnis
   [Kapitel 4](#sec-linux-grundlagen-dateien) dieses Buches geht näher auf das
   Verhältnis von Dateien und Verzeichnissen in Dateisystemen ein.
 
+VGA
+
+Virtualisierung
