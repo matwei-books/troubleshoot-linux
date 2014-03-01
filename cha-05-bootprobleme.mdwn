@@ -186,7 +186,7 @@ Nach Ausgabe einiger Zeilen bleibt der Kernel mit der Meldung
 
 Das kann an einer fehlerhaften Kernkomponente, wie Prozessor, Speicher oder
 Chipsatz auf dem Mainboard liegen.
-Insbesondere, wenn der Kernel gleich nach dem Anlaufen ohne Panik abbricht.
+Insbesondere, wenn der Kernel gleich nach dem Anlaufen mit Panik abbricht.
 In diesem Fall muss ich mit den Kernelparametern experimentieren.
 Eventuell hilft eine Internet-Suche nach der
 gleichen Hardware in Zusammenhang mit Problemen bei Linux.
@@ -428,5 +428,5 @@ behelfen (Umbruch ist von mir eingefügt):
 
 Da `file` bei der direkten Abfrage der Gerätedateien nur deren Typ angeben
 würde, kopiere ich den ersten Block des Dateisystems in eine Datei und lasse
-diese dann von `file` analysieren.
+diese von `file` analysieren.
 
