@@ -89,6 +89,21 @@ ISBN 978-0-596-00186-5
 Dieses Buch stellt etliche Werkzeuge für die Fehlersuche vor und zeigt wie man
 mit relativ einfachen Werkzeugen komplexe Fragen beantworten kann.
 
+##### Taleb2012 {#bib-taleb2012}
+
+Taleb, Nassim Nicholas;
+Antifragile, Things that Gain from Disorder
+Penguin, London, 2012;
+ISBN 978-0-141-03822-3
+
+In diesem Buch geht es nicht um Fehlersuche, sondern um Systeme, die durch
+Störungen stärker werden.
+Es ist nicht für den Anfänger, der so schnell wie möglich einen Fehler
+beseitigen will, obwohl auch dieser davon profitieren könnte.
+Vielmehr geht es darum unter welchen Umständen Systeme von kleinen Störungen
+profitieren können und wie man den Zufall zu einem Verbündeten statt zu einem
+Gegner machen kann.
+
 ##### Weidner2012 {#bib-weidner2012}
 Weidner, Mathias; Linux kopflos mit PC Engines ALIX;
 Lulu Press, Raleigh, 2012;  
@@ -97,7 +112,8 @@ ISBN 978-1-4717-2849-5
 Ein Buch über kleine lüfterlose Rechner, auf denen man mit Linux verschiedene
 Projekte realisieren kann.
 Das Buch geht unter anderem auf verschiedene Probleme unter dem Aspekt
-begrenzter Ressourcen ein.
+begrenzter Ressourcen ein und beschreibt einige Protokolle und Mechanismen
+ausführlicher.
 
 ## Artikel in Zeitschriften, Proceedings, ...
 
