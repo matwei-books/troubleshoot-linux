@@ -74,7 +74,7 @@ In Shell-Skripts kann ich auf diese Variablen, genau wie auf lokale
 Variablen über den Namen mit vorangestelltem `$` zugreifen.
 
 Das Setzen der Umgebungsvariablen für ein aufgerufenes Programm ist abhängig
-von der verwendeten Shell. Bei der Bourne-Shell und den davon abgeleiteten
+von der verwendeten Shell. Bei der POSIX-Shell und den damit kompatiblen
 geschieht das durch einfache Zuweisung `variable="wert"`. Die
 Anführungszeichen um den Wert sind nur notwendig, wenn dieser Leerzeichen
 enthält. Für die Übergabe an aufgerufene Programme gibt es zwei Möglichkeiten:
@@ -99,7 +99,7 @@ Da die Kommunikation nur in einer Richtung geht, gibt es keine Möglichkeit,
 für ein aufgerufenes Programm, die Umgebungsvariablen des aufrufenden
 Programmes zu ändern. Bei der Shell greift man dafür  auf einen
 Trick zurück, indem die Shell die Ausgabe des aufgerufenen Programms
-interpretiert und dieses die Variablenzuweisung in die Standardausgabe
+interpretiert und dieses die Zuweisung an Variablen in die Standardausgabe
 schreibt.
 
 {line-numbers=off,lang="text"}
@@ -139,7 +139,7 @@ Programm die Standardausgabe (STDOUT) des vorigen Programms als
 Standardeingabe (STDIN) bekommt.
 
 Im folgenden Beispiel liest das Programm `tail` fortlaufend aus einer Logdatei
-und übergibt seine Ausgabe dem Program `grep` als Eingabe, welches alle
+und übergibt seine Ausgabe dem Programm `grep` als Eingabe, welches alle
 Zeilen ignoriert bis auf diejenigen, die das Wort *CRON* enthalten:
 
 {line-numbers=off,lang="text"}
@@ -168,8 +168,8 @@ ich mit *CTRL-D* die Dateiendeinformation für den lesenden Prozess erzeugen.
 
 ### Dateien
 
-Die N-Schnitsstelle entspricht dem Inode, der eine Datei in einem Dateisystem
-beschreibt. Diese Schnittstelle enthält Metainformation über die betreffende
+Die N-Schnittstelle entspricht dem Inode, der eine Datei in einem Dateisystem
+beschreibt. Diese Schnittstelle enthält Metainformationen über die betreffende
 Datei, aber nicht die Daten selbst.
 
 Bei Gerätedateien ist es möglich, darüber Einstellungen an den
