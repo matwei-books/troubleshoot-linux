@@ -220,7 +220,7 @@ A> In dem Fall sind diese Verzeichnisse selbst sehr groß, und genau danach
 A> suche ich:
 A> 
 {line-numbers=off,lang="text"}
-A>     # find $mountpoint -xdev -type d -size +100k
+A>     # find $mountpoint -xdev -type d -size +300k
 A> 
 A> Ich suche unterhalb des Einhängepunkts des betroffenen Dateisystems
 A> (`$mountpoint`) ausschließlich in diesem Dateisystem (`-xdev`) nach
