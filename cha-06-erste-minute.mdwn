@@ -188,6 +188,54 @@ geschaffen, bis der Plattenplatz erneut aufgebraucht ist.
 Aus diesem Grund ist es sinnvoll, den Plattenplatz automatisch, zum Beispiel
 von Nagios, überwachen zu lassen.
 
+A> Auch wenn dieser Abschnitt vielleicht den Eindruck erweckt, dass ich
+A> viele Probleme
+A> gleich nach dem Anmelden am Server diagnostizieren kann, passiert es mir
+A> immer wieder, dass ich wie blind an einem Problem festhänge, weil ich
+A> solche Kleinigkeiten, wie die Kontrolle der Inodes mit `df -i` vergessen
+A> habe.
+A> In einem konkreten Fall hatte CFEngine das Verzeichnis
+A> */var/cfengine/output* mit kleinen Dateien für Statusmeldungen zugemüllt.
+A> Normalerweise generiert CFEngine ungefähr aller 5 Minuten eine
+A> Statusmeldung.
+A> Bei knapp 300 Statusmeldungen am Tag hatte ich das Problem fast zwei
+A> Jahre lang nicht bemerkt, bis alle freien Inodes aufgebraucht waren.
+A> Da es kein Mail- oder News-Server war, kam mir nicht in den Sinn, nach den
+A> Inodes zu schauen und es war eben nicht zur Routine geworden, sowohl
+A> nach dem Plattenplatz als auch nach den Inodes zu sehen.
+A> Das hat mich einige unnötige Zeit bei der Fehlersuche gekostet.
+A> 
+A> Nachdem ich schließlich auf die aufgebrauchten Inodes gekommen war, war das
+A> nächste Problem, die Dateien zu finden.
+A> Einzeln in alle Verzeichnisse zu schauen, hat keinen Zweck.
+A> Mit `find` kann ich das automatisieren.
+A> Aber mit welchen Optionen?
+A> 
+A> Dazu muss ich wissen, wonach ich suche.
+A> Wenn die Inodes aufgebraucht sind, gehe ich davon aus, dass viele Tausend
+A> Dateien in relativ wenigen Verzeichnissen existieren.
+A> Also muss es Verzeichnisse geben, die sehr viele Dateien oder
+A> Unterverzeichnisse enthalten.
+A> In dem Fall sind diese Verzeichnisse selbst sehr groß, und genau danach
+A> suche ich:
+A> 
+{line-numbers=off,lang="text"}
+A>     # find $mountpoint -xdev -type d -size +100k
+A> 
+A> Ich suche unterhalb des Einhängepunkts des betroffenen Dateisystems
+A> (`$mountpoint`) ausschließlich in diesem Dateisystem (`-xdev`) nach
+A> Verzeichnissen (`-type d`) deren Größe einen bestimmten Wert überschreitet
+A> (`-size +300k`).
+A> Bei der Größe muss ich wahrscheinlich etwas experimentieren, wenn ich
+A> zuviel oder zuwenig Ergebnisse bekomme.
+A> 
+A> Auf genau diese Art bin ich bei dem konkreten Problem auf
+A> */var/cfengine/output/* und darüber auf CFEngine als Verursacher gekommen.
+A> Der betreffende Rechner hatte eine Testkonfiguration und sich selbst als
+A> Policy-Server eingestellt.
+A> Nach Konfiguration des richtigen Policy-Servers erledigte sich das Problem
+A> in kurzer Zeit von selbst.
+
 ### pstree, ps - laufende Prozesse
 
 Der letzte Befehl, `pstree`, zeigt mir, ob die notwendigen Prozesse laufen und
