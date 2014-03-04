@@ -39,6 +39,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-05-vm.mdwn \
                $(DROPBOXDIR)/cha-05-initramfs.mdwn \
                $(DROPBOXDIR)/cha-05-magic-sysrequest.mdwn \
+               $(DROPBOXDIR)/cha-05-kernel-panic.mdwn \
                $(DROPBOXDIR)/cha-06.mdwn \
                $(DROPBOXDIR)/cha-06-erste-minute.mdwn \
                $(DROPBOXDIR)/cha-06-dienste.mdwn \
@@ -140,6 +141,7 @@ SOURCES = $(BOOK) \
           cha-05-vm.mdwn \
           cha-05-initramfs.mdwn \
           cha-05-magic-sysrequest.mdwn \
+          cha-05-kernel-panic.mdwn \
           cha-06.mdwn \
           cha-06-erste-minute.mdwn \
           cha-06-dienste.mdwn \
@@ -240,6 +242,7 @@ CHAPTERS = \
     cha-05-vm.mdwn \
     cha-05-initramfs.mdwn \
     cha-05-magic-sysrequest.mdwn \
+    cha-05-kernel-panic.mdwn \
     cha-06.mdwn \
     cha-06-erste-minute.mdwn \
     cha-06-dienste.mdwn \
