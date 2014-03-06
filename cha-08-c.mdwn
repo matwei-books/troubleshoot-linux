@@ -1,0 +1,63 @@
+
+## C (Programmiersprache)
+
+Ein Werkzeug, dass ich als Systemadministrator eher selten direkt einsetze ist
+die Programmiersprache C.
+Gut, zugegeben, ich nutze mein Verständnis dieser Programmiersprache, wenn ich
+die Ausgabe von strace auswerte.
+Aber das hätte ich auch ohne dieses Wissen hinbekommen.
+
+Ich nutze es, wenn ich einem Fehler in einem C-Programm nachspüre und keine
+Gelegenheit habe, mit dem Autor des Programms in Kontakt zu treten.
+Oder, wenn ich ein Werkzeug benötige, das Informationen direkt vom Kernel
+abgreift oder mit ihm interagiert.
+Dann ist C das Mittel der Wahl, weil es auch die Sprache ist, die im Kernel
+selbst verwendet wird, so dass ich die gleichen Datenstrukturen wie der Kernel
+in meinem Programm verwenden kann.
+
+Natürlich kann ich mir damit auch gewaltig in den Fuß schießen, deshalb setze
+ich es so defensiv wie möglich ein, wenn ich in meiner bevorzugten
+Skriptsprache keine Entsprechung für die benötigte Systemfunktion habe.
+Oder, wenn ich ein Beispielprogramm finde, wie das folgende, das in etwa das
+macht, was ich will, und nur noch etwas modifiziert werden muss, wie das
+folgende Beispiel, das die Systemfunktion *fanotify* zur Überwachung von
+Dateizugriffen nutzt und auf den Artikel [Diedrich2012](#bib-diedrich2012)
+zurückgeht.
+
+Dieses Minimalprogramm überwacht die Zugriffe auf die Dateien in einem
+Verzeichnis und gibt die PID und den Dateideskriptor des Prozesses aus, der
+auf die Datei zugreift.
+Mit `lsof` kann ich dann näheres über den Prozess erfahren.
+
+{lang="c"}
+<<[fnotify.c](code/fnotify.c)
+
+Mit `gcc -o fnotify fnotify.c` übersetze ich das Programm.
+
+Die Systemaufrufe benötigen die POSIX Capability *CAP_SYS_ADMIN*, die ich ihm
+wie in Kapitel 6 erläutert, gebe.
+Anschließend kann ich das Programm aufrufen und zum Test in einer anderen
+Konsole eine Datei in diesem Verzeichnis öffnen.
+
+{line-numbers=off,lang="text"}
+    $ sudo setcap cap_sys_admin=ep fnotify
+    $ ./fnotify .
+    PID: 5021, FD: 4, M: 0x20
+
+Mit `lsof` schaue ich nach, welches Programm welche Datei geöffnet hat:
+
+{line-numbers=off,lang="text"}
+    $ lsof -p5021
+    lsof -p5021
+    COMMAND...  FD   TYPE...NAME
+    less   ... txt    REG.../bin/less
+    ...
+    less   ...   4r   REG.../home/.../code/fnotify.c
+
+Fanotify bietet noch weitergehende Möglichkeiten.
+So kann ich den Prozess beispielsweise blockieren und den Zugriff erlauben
+oder verbieten.
+Oder ich modifiziere die Datei vor dem ersten Zugriff.
+Eine ausführliche Behandlung dieser Systemschnittstelle würde den Rahmen
+dieses Buches sprengen, aber es ist in manchen Fällen gut, zu wissen, dass
+sich noch etwas machen lässt.

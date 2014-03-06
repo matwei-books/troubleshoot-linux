@@ -54,6 +54,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-08-acct.mdwn \
                $(DROPBOXDIR)/cha-08-bonnie.mdwn \
                $(DROPBOXDIR)/cha-08-busybox.mdwn \
+               $(DROPBOXDIR)/cha-08-c.mdwn \
                $(DROPBOXDIR)/cha-08-dd.mdwn \
                $(DROPBOXDIR)/cha-08-fuser.mdwn \
                $(DROPBOXDIR)/cha-08-gdb.mdwn \
@@ -95,6 +96,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/anhang.mdwn \
                $(DROPBOXDIR)/kolophon.mdwn \
                $(DROPBOXDIR)/revision.mdwn \
+	       $(DROPBOXDIR)/code/fnotify.c \
 	       $(DROPBOXDIR)/code/http-injector.pl \
 	       $(DROPBOXDIR)/code/read-syslog.pl \
 	       $(DROPBOXDIR)/code/strace-invocator.sh \
@@ -156,6 +158,7 @@ SOURCES = $(BOOK) \
           cha-08-acct.mdwn \
           cha-08-bonnie.mdwn \
           cha-08-busybox.mdwn \
+          cha-08-c.mdwn \
           cha-08-dd.mdwn \
           cha-08-fuser.mdwn \
           cha-08-gdb.mdwn \
@@ -200,6 +203,7 @@ SOURCES = $(BOOK) \
           part2.mdwn \
           part3.mdwn \
           anhang.mdwn \
+	  code/fnotify.c \
 	  code/http-injector.pl \
 	  code/read-syslog.pl \
 	  code/strace-invocator.sh \
@@ -257,6 +261,7 @@ CHAPTERS = \
     cha-08-acct.mdwn \
     cha-08-bonnie.mdwn \
     cha-08-busybox.mdwn \
+    cha-08-c.mdwn \
     cha-08-dd.mdwn \
     cha-08-fuser.mdwn \
     cha-08-gdb.mdwn \

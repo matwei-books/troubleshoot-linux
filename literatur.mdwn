@@ -131,6 +131,11 @@ Bonwick, Jeff; The slab allocator: an object-caching kernel memory
 allocator; Proceedings of the USENIX Summer 1994 Technical Conference on
 USENIX Summer 1994 Technical Conference - Volume 1, S. 6
 
+##### Diedrich2012 {#bib-diedrich2012}
+Diedrich, Dr. Oliver; Zugriffschutz - Dateiüberwachung mit Fanotify;
+c't Magazin für Computertechnik 2012 Heft 9, S. 174ff;
+ISSN 0724-8679
+
 ##### Koenig2012 {#bib-koenig2012}
 König, Harald; strace für Linux-Versteher; UpTimes - Mitgliederzeitschrift
 der German Unix User Group; Ausgabe 2012/1, S. 61ff
