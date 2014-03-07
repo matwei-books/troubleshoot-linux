@@ -80,10 +80,24 @@ Inode
   von Dateien, Inodes und Verzeichnissen detaillierter ein.
 
 Kernel
+: Der Kernel (deutsch: Betriebssystemkern) ist der zentrale Bestandteil eines
+  Betriebssystems.
+  Er ist zuständig für die Verwaltung der Ressourcen, wie Hauptspeicher, Ein-
+  und Ausgabegeräte, CPU-Zeit.
+  Er bildet die unterste Schicht des Betriebssystem und hat meist direkten
+  Zugriff auf die Hardware.
 
 Kernel-Oops
+: Ein Oops ist eine Abweichung vom korrekten Verhalten des Linux-Kernels, die
+  eine Lognachricht erzeugt.
+  Wenn der Kernel ein Problem entdeckt, schreibt er eine Oops-Nachricht und
+  beendet die am Problem beteiligten Prozesse.
 
-Kernel-Panik
+Kernel Panic
+: Eine Kernel Panic ist eine Fehlermeldung des Kernels bei einem gravierendem
+  Problem, auf Grund dessen keine Möglichkeit besteht, das System kontrolliert
+  weiter zu betreiben.
+  Bei einer Kernel Panic wird das System angehalten.
 
 {#glossar-kommandozeile}
 Kommandozeile
@@ -114,6 +128,11 @@ Link
   [siehe Kapitel 4](#sec-linux-grundlagen-dateien).
 
 Live-System
+: Mit diesem Begriff bezeichnet man ein Betriebssystem, das ohne Installation
+  und ohne Beeinflussung des Inhalts einer eingebauten Festplatte gestartet
+  werden kann.
+  Üblicherweise wird ein Live-System auf einer CD-ROM oder einem USB-Stick
+  installiert und über die Firmware von dort gestartet.
 
 {#glossar-log}
 Log, Logdatei, Logfile
@@ -129,16 +148,44 @@ Log, Logdatei, Logfile
   werden.
 
 Magic SysRequest
+: Als Magic SysRequest bezeichnet man eine Reihe von Tastenkombinationen mit
+  der Taste `Druck/S-Abf`, über die sich verschiedene Funktionen des Kernels
+  aufrufen lassen, solange dieser noch nicht abgestürzt ist.
+  In [Kapitel 5](#sec-lokal-total-magic-sysrq) gehe ich auf eine Möglichkeit
+  ein, mit Hilfe des Magic SysRequest ein hängendes System sicher neu zu
+  starten.
 
 Master Boot Record, MBR
+: Der MBR ist der erste Sektor eines Speichermediums, welches sich in
+  Partitionen aufteilen läßt, wie zum Beispiel eine Festplatte.
+  Dieser enthält eine Tabelle, die die Aufteilung des Mediums beschreibt und
+  optional für Computer mit BIOS einen Bootloader, der den Betriebssystemstart
+  einleiten kann.
 
-NFS
+Network File System, NFS
+: Das NFS, ursprünglich von Sun Microsystems entwickelt, ist ein Protokoll zur
+  Übertragung von Dateien über das Netzwerk.
+  Im Gegensatz zu anderen Protokollen zur Dateiübertragung wie FTP oder HTTP
+  können Benutzer auf die Dateien so zugreifen, als ob sie auf dem lokalen PC
+  gespeichert wären.
 
 Paging
+: Mit Paging bezeichnet man die Speicherverwaltung per Seitenadressierung im
+  Betriebssystem.
+  Dieser Mechanismus wird auch zur virtuellen Speicherverwaltung verwendet, so
+  dass der logische Adressraum größer sein kann als der physisch im Rechner
+  vorhandene Speicher.
+  Sobald ein Prozess auf eine nicht im physischen Speicher befindliche
+  Speicherseite zugreift, wird die entsprechende Speicherseite vom
+  Betriebssystem nachgeladen.
 
 Partitionstabelle
+: Eine Tabelle im MBR, die die Aufteilung des Speichermediums in einzelne
+  Partitionen beschreibt.
 
 Peripherie
+: Dieser Begriff bezeichnet Geräte, die an einen Computer angeschlossen werden
+  können oder sind, aber nicht zur Zentraleinheit gehören.
 
 {#glossar-programm}
 Programm
@@ -164,7 +211,10 @@ Prozess
   [Kapitel 4](#sec-unix-prozessmodell) geht näher auf das UNIX-Prozessmodell
   ein.
 
-PXE
+PXE, Preboot Execution Environment
+: PXE ist eine Erweiterung zum Starten von Rechnern über Rechnernetze.
+  Diese nutzt die Protokolle DHCP zum Übertragen von Bootinformationen und
+  TFTP zum Übertragen von Dateien, wie zum Beispiel Betriebssystemimages.
 
 {#glossar-regulaere-datei}
 reguläre Datei
@@ -180,8 +230,16 @@ reguläre Datei
   von Dateien und Verzeichnissen detaillierter ein.
 
 Rescue-System
+: Ein Rescue-System ist ein [Live-System](#glossar-live-system), dass
+  zur Wiederherstellung von beschädigten Betriebssystemen geeignet ist.
 
 Shell
+: Die Shell ist ein interaktives Programm, über das der Benutzer mit dem
+  Computer kommuniziert und spezielle Programme startet.
+  In den meisten Fällen versteht man unter einer Shell das Programm, dass
+  nach dem Anmelden an einer Text-Konsole oder via SSH gestartet wird und
+  eine Kommandozeile zur Bedienung präsentiert.
+  Im erweiterten Sinn sind auch grafische Benutzeroberflächen Shells.
 
 Signal
 : Ein Signal ist eine primitive Form der Kommunikation zwischen Prozessen.
@@ -227,8 +285,16 @@ Syslog
   entgegennimmt.
 
 TFTP
+: Das **Trivial File Transfer Protocol** ist ein sehr einfaches
+  Dateiübertragungsprotokoll.
+  Es unterstützt nur das Lesen und Schreiben von Dateien.
 
 Thrashing
+: Damit bezeichnet man den Zustand, wenn ein Betriebssystem beim
+  [Paging](#glossar-paging) die meiste Zeit mit dem Nachladen und Auslagern
+  von Speicherseiten beschäftigt ist.
+  Der Prozessor verbringt die meiste Zeit im Wartezustand und die verfügbare
+  Rechenleistung ist deutlich herabgesetzt.
 
 Umgebungsvariablen
 : Neben den Variablen, die ein Programm beim Aufruf in der
@@ -248,5 +314,12 @@ Verzeichnis
   Verhältnis von Dateien und Verzeichnissen in Dateisystemen ein.
 
 VGA
+: **Video Graphics Array** ist ein Computergrafik-Standard, der
+  bestimmte Kombinationen von Bildauflösung und Farbanzahl sowie
+  Bildwiederholfrequenz definiert.
 
 Virtualisierung
+: Virtualisierung bezeichnet die Erzeugung von virtuellen, das heißt nicht
+  physikalischen Dingen wie einer emulierten Hardware, Datenspeichers oder
+  Netzwerkanschlusses.
+
