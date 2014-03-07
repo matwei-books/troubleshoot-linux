@@ -1,19 +1,18 @@
 
 ## Kernel-Panik
 
-Unter einer Kernel-Panik verstehe ich eine Meldung des Betriebssystemkerns
-nachdem ein Fehler auftrat, auf Grund dessen sich das Betriebssystem in einem
-undefinierten Zustand befindet und nicht mehr kontrolliert weiter betrieben
-werden kann.
+Eine Kernel-Panik ist eine Meldung des Kernels nachdem ein Fehler auftrat,
+auf Grund dessen sich das Betriebssystem in einem undefinierten Zustand
+befindet und nicht mehr kontrolliert weiter betrieben werden kann.
 Diese Meldung erscheint auf der Konsole zusammen mit weiteren Informationen,
-die für Leien eher unverständlich sind, jedoch dem Experten manchmal einen
+die für Laien meist unverständlich sind, jedoch dem Experten manchmal einen
 Hinweis auf die Ursache geben können.
-Anschließend wird Linux angehalten.
+Anschließend wird das Betriebssystem angehalten.
 
 ### Konsolenausgaben protokollieren
 
 Um diese Informationen für spätere Auswertungen festzuhalten, kann ich
-beispielsweise eine serielle Schnittstelle als Konsole verwenden und deren
+eine serielle Schnittstelle als Konsole verwenden und deren
 Ausgaben auf einem anderen Rechner protokollieren.
 Bei virtuellen Maschinen zum Beispiel auf dem Hostsystem.
 Dazu muss ich dem Kernel beim Systemstart mitteilen, dass ich - zusätzlich zur
@@ -23,25 +22,26 @@ Das geht mit folgender Option in der Kernel-Kommandozeile des Bootloaders:
 {line-numbers=off,lang="text"}
     console=ttyS0,38400
 
-Damit behandelt der Kernel die erste serielle Schnittstelle aus Konsole und
+Damit behandelt der Kernel die erste serielle Schnittstelle als Konsole und
 stellt eine Schnittstellengeschwindigkeit von 38400 Baud ein.
-Die Konsolenausgabe kann ich dann in einer Datei protokollieren und bei Bedarf
+Die Konsolenausgabe kann ich in einer Datei protokollieren und bei Bedarf
 auswerten.
 
 ### Crash-Dumps
 
-Falls die Konsolenmeldungen nicht ausreichen, das dahinter liegende Problem zu
-bestimmen, besteht bei neueren Kerneln die Möglichkeit, im Fall einer
+Falls die Konsolenmeldungen nicht ausreichen, um das dahinter liegende Problem
+zu bestimmen, habe ich bei neueren Kerneln die Möglichkeit, im Fall einer
 Kernel-Panik mit kdump einen Dump des Kernelspeichers auf ein geeignetes
-Medium zu schreiben.
+Medium schreiben zu lassen.
 Kdump verwendet den *kexec* Systemaufruf, um einen Dump-Capture-Kernel zu
-starten in dem ein Speicherabzug des alten Kernels geschrieben werden kann.
+starten in dem ein Speicherabzug des alten Kernels gesichert werden kann.
 
 Das Speicherabbild des alten Kernels bleibt während des Reboots erhalten und
 ist für den neuen Kernel zugänglich.
-Wenn der neue Kernel gestartet ist, kann das Speicherabbild zu späteren
+Wenn der neue Kernel gestartet ist, kann das Speicherabbild für die spätere
 Analyse mit Bordmitteln (cp, scp, ftp) gesichert werden.
 Details finden sich in der Datei *kdump/kdump.txt* in der
 Kernel-Dokumentation.
 
-Zur Analyse sollte allerdings wieder der Standard-Kernel gestartet werden.
+Zur Analyse selbst sollte wieder der Standard-Kernel gestartet werden.
+
