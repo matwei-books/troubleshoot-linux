@@ -1,0 +1,40 @@
+
+## fio - flexible I/O tester
+
+Manche Fehler treten nur unter Last zutage.
+Damit ich dann nicht auf die Systembenutzer angewiesen bin, deren Last meist
+stochastisch und nicht vorhersagbar ist, benötige ich dann ein Werkzeug, das
+mir eine geeignete Last erzeugen kann.
+
+Genauso ist es beim Performance-Tuning.
+Ob meine Maßnahmen erfolgreich sind, sehe ich erst, wenn das System unter Last
+arbeitet.
+
+Früher habe ich dann schnell ein kleines Programm gebastelt, das ungefähr die
+geforderte Last erzeugt und dieses anschließend meist entsorgt.
+
+Mit `fio` brauche ich kein Programm mehr zu schreiben, sondern nur noch eine
+passende Beschreibung für die gewünschte Last.
+Und das kann fast jede erdenkliche Last sein.
+Das Programm `fio` kann in einem Job synchron oder asynchron schreiben, per
+mmap() eingebundene Dateien bewegen, Netzlast simulieren oder einfach nur
+CPU-Zeit verbrennen.
+Und es kann mehrere Jobs gleichzeitig ausführen, so dass ich mir die
+gewünschte Last sehr genau zusammenstellen kann.
+
+Während `fio` läuft, zeigt es den Status der Jobs an, am Ende Statistiken
+dazu.
+
+Die Jobs, die `fio` abarbeitet, werden in Job-Dateien beschrieben, deren
+Format den *Ini*-Dateien entspricht, mit Sektionen, die durch ihren Namen in
+eckigen Klammern eingeleitet werden und Kommentaren, die mit `;` oder `#`
+am Zeilenanfang eingeleitet werden.
+
+Meist rufe ich `fio` nur mit dem Namen der Job-Datei als einzigem Argument auf.
+Habe ich nur einen einzigen Job, könnte ich dessen Parameter auch gleich auf
+der Kommandozeile angeben.
+
+Details zum Einsatz von `fio` finde ich in der Handbuchseite, der Datei
+*HOWTO* und den Beispiel-Job-Dateien im Verzeichnis *examples/* bei der
+Paketdokumentation.
+
