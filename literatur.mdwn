@@ -131,10 +131,20 @@ Bonwick, Jeff; The slab allocator: an object-caching kernel memory
 allocator; Proceedings of the USENIX Summer 1994 Technical Conference on
 USENIX Summer 1994 Technical Conference - Volume 1, S. 6
 
-##### Diedrich2012 {#bib-diedrich2012}
+##### ctDiedrich2012 {#bib-ct-diedrich2012}
 Diedrich, Dr. Oliver; Zugriffschutz - Dateiüberwachung mit Fanotify;
 c't Magazin für Computertechnik 2012 Heft 9, S. 174ff;
 ISSN 0724-8679
+
+##### ctHM2013 {#bib-ct-hm2013}
+Hillier, Gernot, Mauerer, Dr. Wolfgang; Linux durchleuchtet - Perf als
+Universalschnittstelle für Performance-Analysen unter Linux;
+c't Magazin für Computertechnik 2013, Heft 3, S. 166ff;
+ISSN 0724-8679
+
+Dieser Artikel geht auf die Möglichkeiten der Performance-Analyse mit Hilfe
+der Performance-Counter der CPU ein und stellt das Programm `perf` vor, dass
+eine einheitliche Schnittstelle dafür unter Linux bereitstellt.
 
 ##### Koenig2012 {#bib-koenig2012}
 König, Harald; strace für Linux-Versteher; UpTimes - Mitgliederzeitschrift
@@ -153,6 +163,14 @@ In diesem Papier zeigen die Autoren, wie man komplexe heterogene Systeme
 analysieren kann, wenn man mit einfachen Methoden nicht weiter kommt.
 
 ## Online-Quellen
+
+##### Perf Wiki {#bib-www-perfwiki}
+Perf Wiki;
+<https://perf.wiki.kernel.org/>
+Aufgerufen: 2014-03-12
+
+In diesem Wiki finden sich Informationen zum Performancezählersubsystem von
+Linux.
 
 ##### POSIX.1-2008 {#bib-posix1-2008}
 IEEE and The Open Group; The Open Group Technical Standard Base

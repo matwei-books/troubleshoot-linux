@@ -64,3 +64,19 @@ kann die verschiedenen Teilaufgaben auf verschiedene Maschinen verteilen, zum
 Beispiel eine Maschine für die Verschlüsselung, eine für die Anwendung und
 eine für die Datenbank. Und natürlich kann ich beide Formen gleichzeitig
 verwenden und je nach Bedarf mischen.
+
+### Performance Monitoring Unit der CPU
+
+Seit Jahren gibt es in den verschiedenen Prozessoren Performance-Counter,
+spezielle Zähler in der Performance Monitoring Unit (PMU) der CPU.
+Diese ermitteln Leistungsdaten, die zur Analyse der Laufeigenschaften von
+Programmen eingesetzt werden können.
+
+Da diese Mechanismen von CPU zu CPU unterschiedlich sind, gab es lange keine
+einheitliche Schnittstelle unter Linux, um diese Daten zu nutzen.
+
+Mit `perf` gibt es nun jedoch ein Werkzeug, das eine einheitliche
+Schnittstelle für den Zugang zu diesen Daten bietet. In dem Artikel
+[[ctHM2013](#bib-ct-hm2013)] geben die Autoren einen Einblick in die
+Funktionsweise der Performance-Counter und die Anwendung von `perf`.
+

@@ -54,6 +54,7 @@ cha-08-hdparm.mdwn
 cha-08-lsof.mdwn
 cha-08-ltrace.mdwn
 cha-08-netstat.mdwn
+cha-08-perf.mdwn
 cha-08-perl.mdwn
 cha-08-shell.mdwn
 cha-08-strace.mdwn
