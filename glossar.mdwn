@@ -44,6 +44,8 @@ Direct Rendering Manager, DRM
   Speicher der Grafik-Karte gewährt.
   Damit ist es möglich, diesen auch ohne X-Server in Programmen zu verwenden.
 
+Discretionary Access Control
+
 {#glossar-firmware}
 Firmware
 : Unter Firmware versteht man Software, die in elektronischen Geräten fest
@@ -155,12 +157,16 @@ Magic SysRequest
   ein, mit Hilfe des Magic SysRequest ein hängendes System sicher neu zu
   starten.
 
+Mandatory Access Control
+
 Master Boot Record, MBR
 : Der MBR ist der erste Sektor eines Speichermediums, welches sich in
   Partitionen aufteilen läßt, wie zum Beispiel eine Festplatte.
   Dieser enthält eine Tabelle, die die Aufteilung des Mediums beschreibt und
   optional für Computer mit BIOS einen Bootloader, der den Betriebssystemstart
   einleiten kann.
+
+Mountpoint
 
 Network File System, NFS
 : Das NFS, ursprünglich von Sun Microsystems entwickelt, ist ein Protokoll zur
@@ -283,6 +289,8 @@ Syslog
   Zusätzlich besteht die Möglichkeit, das der Syslog-Dämon über UDP-Port 514
   Lognachrichten an andere Rechner sendet oder von anderen Rechnern
   entgegennimmt.
+
+Tail Merging
 
 TFTP
 : Das **Trivial File Transfer Protocol** ist ein sehr einfaches
