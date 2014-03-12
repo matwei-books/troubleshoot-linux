@@ -177,8 +177,8 @@ Bei Mailservern mit Postfächern im Maildir-Format oder bei Newsservern kann
 das jedoch vorkommen.
 
 Platzprobleme auf den Laufwerken können sich auf verschiedene Art bemerkbar
-machen, noch bevor ich sie mir beim Besuch des Rechners entdecke.
-Das Problem ist, dass sie von aussen meist nicht als solche erkennbar sind,
+machen, noch bevor ich sie beim Besuch des Rechners entdecke.
+Das Problem ist, dass sie von außen meist nicht als solche erkennbar sind,
 weil lediglich ein oder mehrere Dienste den Betrieb einstellen.
 Insbesondere, wenn diese durch große Protokolldateien verursacht werden, kann
 es passieren, dass scheinbar genügend Platz ist, wenn ich mich anmelde und
