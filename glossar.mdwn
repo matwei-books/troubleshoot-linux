@@ -44,7 +44,19 @@ Direct Rendering Manager, DRM
   Speicher der Grafik-Karte gewährt.
   Damit ist es möglich, diesen auch ohne X-Server in Programmen zu verwenden.
 
-Discretionary Access Control
+{#glossar-dac}
+Discretionary Access Control, DAC
+: Bei der Discretionary Access Control (deutsch: Benutzerbestimmbare
+  Zugriffskontrolle) wird die Entscheidung, ob auf eine Ressource zugegriffen
+  werden darf, allein auf der Basis der Identität des Benutzers getroffen.
+  Dieser steht die [Mandatory Access Control](#glossar-mac) gegenüber, die den
+  Zugang auf Grund allgemeiner Regeln und zusätzlicher Informationen über den
+  Benutzer trifft.
+  In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
+  verschiedene Optionen der Zugangskontrolle bei Linux ein.
+
+Einhängepunkt
+: siehe [Mount Point](#glossar-mount-point).
 
 {#glossar-firmware}
 Firmware
@@ -157,7 +169,16 @@ Magic SysRequest
   ein, mit Hilfe des Magic SysRequest ein hängendes System sicher neu zu
   starten.
 
-Mandatory Access Control
+{#glossar-mac}
+Mandatory Access Control, MAC
+: Wenn in einem System die Regeln für die Zugangsrechte zentral und zwingend
+  vorgegeben werden, spricht man von Mandatory Access Control (deutsch:
+  zwingend erforderliche Zugangskontrolle). Dem gegen über steht die
+  benutzerbestimmbare Zugangskontrolle ([DAC](#glossar-dac)), die dem Nutzer
+  selbst das Festlegen der Zugangsregeln zu Dateien und Verzeichnissen
+  erlaubt.
+  In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
+  verschiedene Optionen der Zugangskontrolle bei Linux ein.
 
 Master Boot Record, MBR
 : Der MBR ist der erste Sektor eines Speichermediums, welches sich in
@@ -166,7 +187,16 @@ Master Boot Record, MBR
   optional für Computer mit BIOS einen Bootloader, der den Betriebssystemstart
   einleiten kann.
 
-Mountpoint
+{#glossar-mount-point}
+Mount-Point
+: Alle für Benutzer zugänglichen Dateisysteme sind bei UNIX und Linux in einem
+  Dateibaum zusammengefasst.
+  Der Mount-Point (deutsch: Einhängepunkt) ist die Stelle im Dateibaum, an der
+  ein Dateisystem den Nutzern zur Verfügung gestellt wird.
+  Der erste Mount-Point ist */*.
+  Ein Dateisystem kann nur bei einem Verzeichnis eingehängt werden, enthält
+  dieses Verzeichnis Einträge, werden diese vom eingehängten Dateisystem
+  verdeckt.
 
 Network File System, NFS
 : Das NFS, ursprünglich von Sun Microsystems entwickelt, ist ein Protokoll zur
@@ -274,6 +304,12 @@ Standardausgabe, -eingabe, fehlerausgabe
   Programmschnittstellen näher auf die Datenströme ein.
 
 Swap, Swapping
+: Wenn ein bestimmter Speicherbereich eines Prozesses längere Zeit nicht
+  benutzt wurde, kann er auf Festplatte ausgelagert werden, um Speicherplatz
+  für andere Prozesse zu gewinnen.
+  Wird der Speicher später wieder benötigt, wird er von der Platte  in den RAM
+  geladen.
+  Diesen Vorgang nennt man Swapping.
 
 {#glossar-syslog}
 Syslog
@@ -290,7 +326,17 @@ Syslog
   Lognachrichten an andere Rechner sendet oder von anderen Rechnern
   entgegennimmt.
 
-Tail Merging
+Tail-Merging, Tail-Packing
+: Traditionell waren die kleinsten Einheiten in Dateisystemen Blöcke mit einer
+  Größe, die ein Vielfaches von 512 ist.
+  Da die Größe einer Datei nicht immer ein ganzes Vielfaches von 512 ist, war
+  der letzte Block in einer Datei oft nicht vollständig belegt.
+  Wenn ein Dateisystem viele kleine Dateien enthält oder die Blockgröße
+  größer als 512 ist, kann der Anteil des nicht genutzten Speicherplatzes
+  ziemlich groß werden.
+  Aus diesem Grund werden bei manchen Dateisystemen die letzten Bytes
+  verschiedener Dateien in gemeinsamen Blöcken gespeichert.
+  Das nennt man Tail-Merging oder Tail-Packing.
 
 TFTP
 : Das **Trivial File Transfer Protocol** ist ein sehr einfaches
