@@ -1,0 +1,5 @@
+#!/bin/sh
+
+inkscape -z -e tcp-handshake-fail.png -w 920 -b "#ffffff" tcp-handshake-fail.svg
+inkscape -z -e tcp-handshake.png      -w 920 -b "#ffffff" tcp-handshake.svg
+inkscape -z -e tcp-shutdown.png       -w 920 -b "#ffffff" tcp-shutdown.svg

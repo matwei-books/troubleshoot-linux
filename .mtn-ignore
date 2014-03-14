@@ -16,4 +16,5 @@
 \.toc$
 ^TODO.otl$
 ^troubleshoot-linux-server-and-networks-[0-9]{8}\.tar\.gz$
+^umlet/.*\.(png|svg)$
 ^yed/.*\.png$
