@@ -1,7 +1,7 @@
 
 ## fuser {#sec-lokal-werkzeuge-fuser}
 
-Das Programm `fuser` setzte ich ein, wenn ich Informationen darüber
+Das Programm `fuser` setze ich ein, wenn ich Informationen darüber
 haben will, welche Prozesse bestimmte Dateien oder Netzwerksockets geöffnet
 haben, um sie dann mit anderen Programmen näher zu untersuchen.
 Zwar kann ich die ermittelten Prozesse gleich von `fuser` beenden lassen,
