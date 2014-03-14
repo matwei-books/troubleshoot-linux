@@ -106,7 +106,7 @@ ACK</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>210</x>
+      <x>200</x>
       <y>90</y>
       <w>100</w>
       <h>30</h>
