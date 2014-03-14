@@ -5,20 +5,20 @@ Seit Jahren gibt es in den verschiedenen Prozessoren Performance-Counter,
 spezielle Zähler, die performance- und verhaltensrelevante Daten ermitteln,
 mit denen die Laufzeiteigenschaften von Programmen analysiert werden können.
 
-Da die Mechanismen von CPU zu CPU unterschiedlich sind, gab es lange keine
+Da die Mechanismen von CPU zu CPU unterschiedlich sind, gab es lange Zeit keine
 einheitliche Schnittstelle unter Linux, um diese Daten zu nutzen.
 
 Mit `perf` gibt es nun jedoch ein Werkzeug, das eine einheitliche
 Schnittstelle für den Zugang zu diesen Daten bietet.
-Dieses Werkzeug besteht aus zwei eng gekoppelten Teilen: dem Kernelcode für
+Dieses Werkzeug besteht aus zwei Teilen: dem Kernelcode für
 den Zugriff auf die Daten und dem Programm zur Auswertung.
 
-Da beide so eng gekoppelt sind, werden die Quellen des Programms `perf`
+Da beide Teile eng gekoppelt sind, werden die Quellen des Programms `perf`
 zusammen mit dem Kernelcode geführt.
-Baut man seinen Kernel selbst, braucht man lediglich im Unterverzeichnis
+Baue ich meinen Kernel selbst, brauche ich lediglich im Unterverzeichnis
 *tools/perf/* `make` aufrufen, um das für diesen Kernel passende Programm zu
 erhalten.
-In den verschiedenen Distributionen findet man `perf` in eigenen Paketen, die
+In den verschiedenen Distributionen finde ich `perf` in eigenen Paketen, die
 von der Kernelversion abhängig sind, bei Debian oder Ubuntu beispielsweise in
 *linux-tools*.
 
@@ -27,37 +27,39 @@ auf bestimmte Messereignisse programmiert werden können.
 Bei Erreichen eines Maximalwertes wird ein Interrupt ausgelöst, der zum Aufruf
 eines Handlers führt, welcher den aktuellen Wert des Befehlszählers in einem
 Ringpuffer speichert.
-Im Analyseprogramm wird der Ringpuffer ausgewertet und der Bezug vom
-Befehlszählerinhalt zu den CPU-Befehlen an dieser Stelle hergestellt.
+Das Analyseprogramm wertet den Ringpuffer aus und stellt den Bezug vom
+Befehlszählerinhalt zu den CPU-Befehlen an dieser Stelle her.
 
-Durch dieses Verfahren ergibt sich ein geringer Overhead bei der Beobachtung
-der Programme und diese können auch innerhalb von einzelnen Funktionen
-beobachtet werden.
+Dadurch ergibt sich ein geringer Overhead bei der Beobachtung der Programme
+und diese können auch innerhalb von Funktionen beobachtet werden.
 Allerdings kann es vorkommen, dass der ermittelte Befehlszählerwert auf Grund
 von Verzögerungen bis zum Aufruf des Handlers nicht ganz exakt ist.
-Diesen Umstand sollte man bei der Analyse nicht aus den Augen lassen.
+Diesen Umstand darf ich bei der Analyse nicht aus den Augen lassen.
 
-Neben Hardwarezählern stellt `perf` auch viele Softwarezähler aus dem Kernel
+Neben Hardwarezählern stellt `perf` auch Softwarezähler aus dem Kernel
 für die Auswertung zur Verfügung.
 Die Messungen können global oder eingeschränkt auf eine Task oder eine
 *cgroup* vorgenommen werden.
 
 ### Aufruf des Programmes
 
-Das Programm `perf` kann auf eine der folgenden fünf Arten verwendet werden:
+Ich kann das Programm `perf` auf eine der folgenden fünf Arten verwenden:
 
 {line-numbers=off,lang="text"}
     $ perf stat [optionen] programm
 
-Bei diesem Aufruf startet `perf` das Programm `programm`, sammelt verschiedene
-Performancedaten und gibt nach Beendigung des Programms aus.
+Bei diesem Aufruf startet `perf` das Programm `programm`, sammelt
+Performancedaten und gibt diese nach Beendigung des Programms aus.
 
 {line-numbers=off,lang="text"}
     # perf top [optionen]
 
-Dieser Aufruf benötigt erweiterte Rechte. Man kann das Programm als *root*
-aufrufen, oder über */proc/sys/kernel/perf_event_paranoid* die Einstellungen
-für `perf` lockern.
+So gibt das Programm laufend aktualisierte Daten aus, ähnlich dem Programm
+`top` für Prozesse.
+
+Dieser Aufruf benötigt erweiterte Rechte.
+Ich kann das Programm als *root* aufrufen, oder über
+*/proc/sys/kernel/perf_event_paranoid* die Einstellungen für `perf` lockern.
 
 {line-numbers=off,lang="text"}
     $ perf record [optionen] programm
