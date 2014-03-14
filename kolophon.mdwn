@@ -9,3 +9,9 @@ die PDF-, EPUB- and MOBI-Versionen erzeugt.
 Der Entscheidungsbaum im ersten Kapitel habe ich mit
 [yEd](http://www.yworks.com/de/products_yed_about.html) gezeichnet und für die
 Bucherstellung im PNG-Format exportiert.
+
+Die TCP-Sequence-Diagramme im neunten Kapitel habe ich mit
+[UMLet](http://www.umlet.com/) gezeichnet, in das SVG-Format exportiert und
+anschließend mit [Inkscape](http://www.inkscape.org/) in das PNG-Format für
+das Buch umgewandelt.
+
