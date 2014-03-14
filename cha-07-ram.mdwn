@@ -1,11 +1,10 @@
 
 ## Engpass RAM
 
-Mit den Programmen `free`, `vmstat` oder interaktiv mit `top` habe ich bereits
-herausbekommen, dass der Hauptspeicher momentan der Flaschenhals des Systems
-ist.
-Nun muss ich herausfinden, was konkret den gesamten Hauptspeicher aufbraucht
-und was ich dagegen unternehmen kann.
+Wenn ich mit den Programmen `free`, `vmstat` oder interaktiv mit `top`
+herausbekommen habe, dass der Hauptspeicher momentan der Flaschenhals des
+Systems ist, muss ich nun herausfinden, was konkret den gesamten Hauptspeicher
+aufbraucht und was ich dagegen unternehmen kann.
 
 Um ein Programm in einem Prozess abzuarbeiten, kopiert der Kernel es zuvor
 aus dem Dateisystem in den RAM. Dabei werden nur die Teile, die gerade

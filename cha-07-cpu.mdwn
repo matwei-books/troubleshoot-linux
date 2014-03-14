@@ -67,16 +67,18 @@ verwenden und je nach Bedarf mischen.
 
 ### Performance Monitoring Unit der CPU
 
-Seit Jahren gibt es in den verschiedenen Prozessoren Performance-Counter,
+Seit Jahren gibt es in den Prozessoren Performance-Counter,
 spezielle Zähler in der Performance Monitoring Unit (PMU) der CPU.
-Diese ermitteln Leistungsdaten, die zur Analyse der Laufeigenschaften von
-Programmen eingesetzt werden können.
+Diese ermitteln Leistungsdaten, die ich zur Analyse der Laufeigenschaften von
+Programmen einsetzen kann.
 
-Da diese Mechanismen von CPU zu CPU unterschiedlich sind, gab es lange keine
+Da die Mechanismen von CPU zu CPU unterschiedlich sind, gab es lange keine
 einheitliche Schnittstelle unter Linux, um diese Daten zu nutzen.
 
 Mit `perf` gibt es nun jedoch ein Werkzeug, das eine einheitliche
 Schnittstelle für den Zugang zu diesen Daten bietet. In dem Artikel
 [[ctHM2013](#bib-ct-hm2013)] geben die Autoren einen Einblick in die
 Funktionsweise der Performance-Counter und die Anwendung von `perf`.
+Weitere Hinweise und ein Tutorial kann ich im
+[Perf Wiki](https://perf.wiki.kernel.org/) finden.
 
