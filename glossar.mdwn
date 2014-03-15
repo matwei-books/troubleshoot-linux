@@ -11,6 +11,19 @@ Bootstrapping
   einem einfachen System heraus ein komplizierteres aktiviert wird, wie zum
   Beispiel beim Start des Betriebssystems.
 
+CPU, Central Processing Unit
+
+{#glossar-dac}
+DAC, Discretionary Access Control
+: Bei der Discretionary Access Control (deutsch: Benutzerbestimmbare
+  Zugriffskontrolle) wird die Entscheidung, ob auf eine Ressource zugegriffen
+  werden darf, allein auf der Basis der Identität des Benutzers getroffen.
+  Dieser steht die [Mandatory Access Control](#glossar-mac) gegenüber, die den
+  Zugang auf Grund allgemeiner Regeln und zusätzlicher Informationen über den
+  Benutzer trifft.
+  In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
+  verschiedene Optionen der Zugangskontrolle bei Linux ein.
+
 Dateibaum
 : [siehe Dateisystem](#glossar-dateisystem)
 
@@ -39,21 +52,12 @@ Datenbank
   Neben den genannten gibt es noch andere, im Rahmen dieses Buches weniger
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
-Direct Rendering Manager, DRM
+DMA, Direct Memory Access
+
+DRM, Direct Rendering Manager
 : Der Direct Rendering Manager ist ein Linux-Kernelmodul, das Zugriff auf den
   Speicher der Grafik-Karte gewährt.
   Damit ist es möglich, diesen auch ohne X-Server in Programmen zu verwenden.
-
-{#glossar-dac}
-Discretionary Access Control, DAC
-: Bei der Discretionary Access Control (deutsch: Benutzerbestimmbare
-  Zugriffskontrolle) wird die Entscheidung, ob auf eine Ressource zugegriffen
-  werden darf, allein auf der Basis der Identität des Benutzers getroffen.
-  Dieser steht die [Mandatory Access Control](#glossar-mac) gegenüber, die den
-  Zugang auf Grund allgemeiner Regeln und zusätzlicher Informationen über den
-  Benutzer trifft.
-  In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
-  verschiedene Optionen der Zugangskontrolle bei Linux ein.
 
 Einhängepunkt
 : siehe [Mount Point](#glossar-mount-point).
@@ -77,6 +81,8 @@ Gerätedatei
   In modernen Linuxsystemen werden Gerätedateien mit *udev* verwaltet.
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf die
   Zusammenhänge von Dateien und Dateisystemen ein.
+
+IDE, Integrated Device Electronics
 
 Initramfs
 : Das Initramfs ist ein komprimiertes Archiv, das für den Systemstart
@@ -205,6 +211,8 @@ Network File System, NFS
   können Benutzer auf die Dateien so zugreifen, als ob sie auf dem lokalen PC
   gespeichert wären.
 
+Overlay-Dateisystem
+
 Paging
 : Mit Paging bezeichnet man die Speicherverwaltung per Seitenadressierung im
   Betriebssystem.
@@ -214,6 +222,8 @@ Paging
   Sobald ein Prozess auf eine nicht im physischen Speicher befindliche
   Speicherseite zugreift, wird die entsprechende Speicherseite vom
   Betriebssystem nachgeladen.
+
+PMU, Performance Monitoring Unit
 
 Partitionstabelle
 : Eine Tabelle im MBR, die die Aufteilung des Speichermediums in einzelne
@@ -252,6 +262,8 @@ PXE, Preboot Execution Environment
   Diese nutzt die Protokolle DHCP zum Übertragen von Bootinformationen und
   TFTP zum Übertragen von Dateien, wie zum Beispiel Betriebssystemimages.
 
+RAID, Redundand Array of Independent Disks
+
 {#glossar-regulaere-datei}
 reguläre Datei
 : Eine reguläre Datei enthält permanente Daten, die als Bitfolge in einem
@@ -268,6 +280,12 @@ reguläre Datei
 Rescue-System
 : Ein Rescue-System ist ein [Live-System](#glossar-live-system), dass
   zur Wiederherstellung von beschädigten Betriebssystemen geeignet ist.
+
+SAS, Serial Attached SCSI
+
+SATA, Serial-ATA, Serial Advanced Technology Attachment
+
+SCSI, Small Computer System Interface
 
 Shell
 : Die Shell ist ein interaktives Programm, über das der Benutzer mit dem
