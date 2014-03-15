@@ -22,7 +22,7 @@ Zum Beispiel, wenn ich in meiner bevorzugten
 Skriptsprache keine Entsprechung für die benötigte Systemfunktion habe.
 Oder, wenn ich ein Programm finde, das in etwa das macht, was ich will,
 und nur noch etwas modifiziert werden muss, wie das folgende Beispiel,
-das auf [[Diedrich2012](#bib-diedrich2012)] zurückgeht.
+das auf [[ctDiedrich2012](#bib-ct-diedrich2012)] zurückgeht.
 
 Dieses Minimalprogramm überwacht Zugriffe auf die Dateien in einem
 Verzeichnis mit der Systemfunktion *fanotify* und gibt die PID des Prozesses
