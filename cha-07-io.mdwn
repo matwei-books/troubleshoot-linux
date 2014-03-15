@@ -50,6 +50,7 @@ SATA, SAS, die ich bei fertigen Systemen und konkreten Festplatten nicht mehr
 ändern kann.
 Allerdings habe ich die Möglichkeit, durch Änderung einiger Parameter die
 Übertragung der Daten zu beschleunigen.
+Diese Parameter kann ich mit dem Programm `hdparm` einstellen.
 
 Halten wir fest, dass ich die Geschwindigkeit der Dateizugriffe
 beeinflussen kann durch:
@@ -100,7 +101,7 @@ Der Befehl
 {line-numbers=off,lang="text"}
     $ iostat -p -xk
 
-zeigt mir auf welchen Partitionen geschrieben beziehungsweise gelesen wird.
+zeigt mir auf, welchen Partitionen geschrieben beziehungsweise gelesen wird.
 Mit `fuser` und `lsof` kann ich die Dateien und Verzeichnisse ermitteln und
 diese vielleicht auf eine andere Platte verschieben, um die Last gleichmäßiger
 zu verteilen.
