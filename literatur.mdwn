@@ -57,12 +57,28 @@ man sich immer wieder selbst an der Nase herumführt.
 ##### Loukides1996 {#bib-loukides1996}
 
 Loukides, Mike Kosta;
-System Performance Tuning; O'Reilly, Sebastopol, 1996;  
+System Performance Tuning;
+O'Reilly, Sebastopol, 1996;  
 ISBN 0-937175-60-9
 
 Obwohl schon etwas älter, führt dieses Buch doch grundlegend in das Gebiet des
 Performance-Tuning von UNIX-Systemen ein. 2002 gab es eine zweite Auflage mit
 Gian-Paolo D. Musumeci als Koautor.
+
+##### Malhotra2002 {#bib-malhotra2002}
+
+Malhotra, Ravi;
+IP Routing
+O'Reilly, Sebastopol, 2002
+ISBN: 0-596-00275-0
+
+Dieses Buch führt in die Grundlagen und Feinheiten des IP Routing ein, wie es
+in Cisco-Routern implementiert ist. Da es sich nicht auf die Konfiguration
+beschränkt, sondern auch die Mechanismen und die gesendeten Datagramme
+erläutert, ist es für mich insbesondere zur Analyse von Routingprotokollen
+eine große Hilfe. Mit der Routingsoftware Quagga kann ich auch die
+Konfigurationsbeispiele unter Linux nachvollziehen, da sich deren
+Benutzerschnittstelle stark an IOS von Cisco orientiert.
 
 ##### Polya2010 {#bib-polya2010}
 

@@ -135,3 +135,79 @@ Damit sieht die Ausgabe dann so aus:
 Alternativ hätte ich die Änderungen auch in eine Datenbank schreiben können,
 die ich dann interaktiv abfragen könnte.
 
+Sagt mir mein Routing-Monitor, dass ein festgestellter Verbindungsabbruch mit
+einer Routingänderung einhergeht, muss ich mich näher mit den eingesetzten
+Routingprotokollen beschäftigen.
+
+Ein sehr guter Einstieg in das Thema ist [[Malhotra2002](#bib-malhotra2002)].
+Zum einen, weil er auf die bei uns eingesetzten Protokolle detailliert eingeht
+und zum anderen, weil ich die für Cisco IOS geschriebenen
+Konfigurationsbeispiele mit Quagga sehr gut nachvollziehen kann.
+
+Da wir mit unseren Netzen kein AS betreiben, kommen wir mit den Protokollen
+RIP-2 und OSPF sowie einigen statischen Routen aus.
+
+### RIP-2
+
+Das ist ein sehr einfaches und robustes Protokoll, das gegenüber seinem
+Vorgänger RIP vor allem mit der Fähigkeit zu CIDR überlegen ist.
+RIP und RIP-2 nutzen den Distance-Vektor-Algorithmus zur Berechnung der
+Routen.
+Außerdem kann es die Next-Hop-Address zu einer Route angeben, wodurch ich mit
+RIP-2 einen Übergang zu anderen Routing-Protokollen schaffen kann.
+Weiterhin ist es möglich, Authentisierungsdaten zu senden, um die Quelle eines
+RIP-2-Datagramms zu verifizieren.
+
+Die Authentisierungsdaten schützen meine Router davor, fehlerhafte Routen von
+zufällig im Netz eingesteckten fremden Routern zu übernehmen.
+Gleichzeitig verhindern sie den Austausch der Routen zwischen meinen Routern,
+falls ich die Authentisierungsinformationen falsch eingetragen habe.
+
+Bei Problemen melde ich mich via `telnet` am RIP-Dämon an:
+
+    $ telnet localhost ripd
+
+Dann kann ich den Zustand des RIP-Protokolls analysieren.
+Zum Monitoring kann ich, wie beim `zebra` Dämon, verschiedene Debugbefehle
+nutzen.
+Insbesondere schaue ich nach, welche Nachbarn der Router kennt, wann er die
+letzten Informationen von diesen bekommen hat und welcher Nachbar welche Route
+anbietet.
+
+### OSPF
+
+OSPF ist ein hierarchisches Protokoll.
+Ich teile das Netz in einzelne Areas (Gebiete) auf, die über eine Zentrale
+(Area 0) miteinander verbunden sind.
+Die Router in den Areas müssen lediglich die Routen innerhalb der Area und die
+Grenzrouter zu anderen Areas oder externen Netzen kennen.
+Das Protokoll verwendet den Link-State-Algorithmus für die Berechnung der
+Router, das heißt, jeder Router kennt den Zustand aller Interfaces aller
+anderen Router seiner Area und berechnet selbst für sich den kürzesten Pfad
+für eine gegebene Route.
+OSPF konvergiert meist schneller bei Routingänderungen zum neuen Zustand des
+Netzes.
+Dafür ist die Berechnung der neuen Route CPU-intensiv.
+
+### Gemischter Einsatz von statischen und dynamischen Routen
+
+Wenn man in einem Netz sowohl statische als auch dynamische Routen einsetzt,
+ist besondere Vorsicht geboten.
+Zunächst einmal muss die Einspeisung der statischen Route in das dynamische
+Protokoll sorgfältig geprüft werden.
+Genauso wichtig ist die korrekte und vor allem wiederauffindbare Dokumentation
+dieser Besonderheit.
+
+In einem konkreten Fall hatte ich eine statische Route an einem Border Router
+in das OSPF eingespeist.
+Später wurde der Next-Hop, über den die Route ging ebenfalls in die OSPF-Area
+aufgenommen.
+Der alte Router speiste weiterhin seine (für ihn korrekte) statische Route in
+die OSPF-Area.
+Der neu aufgenommene Router erhielt nun die korrekte Route via RIP-2, das
+niedriger priorisiert war und die (für ihn falsche) Route aus dem OSPF vom
+alten Border-Router.
+Im Ergebnis sandte er die Datenpakete in die falsche Richtung und ich
+benötigte einige Zeit und Muße, bis ich durch Vergleich der
+OSPF-Routing-Databases der verschiedenen Router darauf kam und die statische
+Router als Verursacher ausmachte.
