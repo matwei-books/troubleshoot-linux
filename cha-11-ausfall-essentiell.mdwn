@@ -183,20 +183,119 @@ zuständigen NTP-Server mitteilt.
 
 ### Webserver für Proxy-Autokonfiguration
 
-Insbesondere in Netzen, in denen HTTP-Proxy-Server eingesetzt werden, möchte
-ich diese automatisch konfigurieren, sobald eine gewisse Anzahl von
-Clients in Betrieb ist.
-Dafür ist ein Webserver nötig, der eine Datei mit einer bestimmten
-JavaScript-Funktion ausliefert.
-Die URL dieser Datei wird entweder via DHCP erfragt, über bestimmte Namen
-im DNS ermittelt oder fest eingetragen.
+Die automatische Konfiguration der Proxy-Server für Webbrowser kann ein Segen
+sein oder ein Fluch.
+Ein Segen, wenn sie funktioniert und man verschiedene Dienste im Netz hat, für
+die Proxy-Server notwendig sind.
+Ein Fluch, wenn es nicht funktioniert.
 
-Damit das funktioniert, muss zunächst einmal der Webserver die richtige Datei
-mit dem korrekten MIME-Typ ausliefern.
-Sodann sollte die URL, die bei DHCP mit Option 252 ausgeliefert wird, genau zu
-dieser Datei führen.
+Prinzipiell gibt es mehrere Möglichkeiten, die Proxy-Server im Webbrowser
+einzustellen:
 
-Schließlich sollte der Webserver mit der Konfigurationsdatei in den
-DNS-Domains der Client-Rechner mit dem Hostnamen *wpad* erreichbar sein, damit
-ihn auch die Clients finden, die mit DNS statt DHCP arbeiten.
+*   Von Hand. Das skaliert nicht mehr ab einer bestimmten Anzahl Nutzern oder
+    verschiedenen Proxy-Servern.
+
+*   Mit einer URL für eine PAC-Datei. Das skaliert nicht mit der Anzahl der
+    Nutzer..
+
+*   Vollautomatisch mit dem WPAD-Protokoll. Das will ich haben, wenn es
+    funktioniert.
+
+#### PAC-Datei
+
+Die Datei für Proxy Auto Configuration (PAC) ist eine Textdatei, die die
+JavaScript-Funktion `FindProxyForURL(url, host)` definiert.
+In den Argumenten `url` und `host` liefert der Browser die URL und den
+Hostnamen dieser URL für die Datei, die er herunterladen möchte.
+Als Rückgabe erwartet er einen String, der ihm den Proxy nennt oder mit
+"DIRECT" anweist, die Datei direkt abzuholen.
+Diese Funktion könnte zum Beispiel so aussehen:
+
+{line-numbers=off,lang="text"}
+    function FindProxyForURL(url,host) {
+        return "PROXY proxy.example.com:3128; DIRECT";
+    }
+
+Die Datei muss auf einem Webserver liegen und von diesem mit dem MIME-Typ
+`application/x-ns-proxy-autoconfig` ausgeliefert werden.
+Gängige Namen sind *proxy.pac* oder *wpad.dat*.
+Letzterer wird bei der Bestimmung der URL dieser Datei via DNS im
+WPAD-Protokoll verwendet.
+
+Habe ich einen Webserver der diese Datei ausliefert, kann ich deren Funktion
+durch direkte Konfiguration der URL bei den Proxy-Einstellungen des Browsers
+überprüfen.
+
+#### WPAD-Protokoll
+
+Eine Datei zu haben, in der ich zentral festlegen kann, wie die Webbrowser den
+richtigen Proxy-Server finden, ist erst die halbe Miete.
+Ich muss auch dafür sorgen, dass die Browser diese Datei finden.
+
+Die zunächst am einfachsten erscheinende Lösung ist, den URL dieser Datei im
+Browser fest einzutragen.
+Der Vorteil ist, dass ich keine weitere Infrastruktur dafür vorhalten muss.
+Nachteile sind zum einen, dass ich den URL bei jedem Browser eintragen muss
+und zum anderen, dass ich den URL nicht nachträglich ändern kann, ohne
+wiederum zu jedem Browser zu gehen und sie vor Ort anzupassen.
+Oder kurz: das skaliert nicht.
+
+Zum Glück haben sich andere bereits Gedanken über das Problem gemacht und mit
+dem WPAD-Protokoll einen Weg geschaffen, mit dem nahezu jeder Webbrowser
+automatisch seinen Proxy finden kann.
+
+Dazu greift das WPAD-Protokoll auf verschiedene Methoden zurück, je nach
+Browser und Betriebssystem, auf dem der Browser läuft.
+Die gängigsten Methoden sind DHCP für Rechner, die auch ihre IP-Adresse via
+DHCP erhalten haben, und bestimmte DNS-Einträge, die den Hostnamen der URL für
+die PAC-Datei auf eine konkrete IP-Adresse abbilden.
+
+##### Bestimmen des URL mit DHCP
+
+In der Option 252 (*auto-proxy-config*) kann der DHCP-Server einem Client die
+URL der PAC-Datei in einem String mitteilen.
+
+Diese Methode funktioniert nur auf Rechnern, die DHCP-Client sind, da die
+Browser selbst keine DHCP-Anfragen versenden.
+Um diese Option zu verifizieren, schaue ich auf dem Client in der Datei
+*/var/lib/dhcp/dhclient.leases* nach.
+Je nach verwendeter DHCP-Client-Software finde ich die Datei eventuell an
+anderer Stelle.
+
+Mit dieser Methode kann ich verschiedenen Clients verschiedene URL
+übermitteln.
+
+##### Bestimmen des URL mit DNS
+
+Diese Methode ist auch für Rechner mit statisch vergebener IP-Adresse
+geeignet, weil der Webbrowser über die Resolver-Bibliothek problemlos
+DNS-Anfragen stellen kann, während es problematisch ist, den DHCP-Client-Dämon
+zu gezielten Anfragen nach bestimmten Optionen zu bewegen.
+
+Der Webbrowser versucht nach dieser Methode die PAC-Datei von einem URL zu
+laden, bei dem der Hostname *wpad* gefolgt von bestimmten Domain-Suffixen
+lautet und die Datei unter dem Namen  *wpad.dat* im Wurzelverzeichnis des
+Servers zu finden ist.
+
+Die Domain-Suffixe werden zunächst aus dem Domain-Suffix der FQDN des eigenen
+Rechners gebildet und dann sukzessive von links verkürzt.
+Das heißt, auf dem Rechner *pc.branch.example.com* versucht der Webbrowser
+nacheinander, bis er Erfolg hat, die folgenden URLs:
+
+*   *http://wpad.branch.example.com/wpad.dat*
+
+*   *http://wpad.example.com/wpad.dat*
+
+*   *http://wpad.com/wpad.dat*
+
+*   *http://wpad/wpad.dat*
+
+Das bringt die Gefahr mit sich, dass der Browser aus der Domain *wpad.com*
+fremdgesteuert werden kann, wenn ich nicht dafür sorge, dass in meiner
+Second-Level-Zone ein *A* oder *CNAME* Eintrag existiert, der auf einen
+Webserver mit ebendieser Datei verweist.
+
+Zum Überprüfen kann ich die entsprechenden DNS-Anfragen von Hand eingeben und
+mit *wget* oder *curl* versuchen die Datei ohne Verwendung eines Proxy-Servers
+zu laden.
 
