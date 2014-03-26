@@ -181,13 +181,7 @@ Stimmt der konfigurierte Zeitserver nicht, korrigiere ich die Konfiguration
 oder schaue mir die Konfiguration des DHCP-Servers an, falls dieser den
 zuständigen NTP-Server mitteilt.
 
-### Webserver für Proxy-Autokonfiguration
-
-Die automatische Konfiguration der Proxy-Server für Webbrowser kann ein Segen
-sein oder ein Fluch.
-Ein Segen, wenn sie funktioniert und man verschiedene Dienste im Netz hat, für
-die Proxy-Server notwendig sind.
-Ein Fluch, wenn es nicht funktioniert.
+### Proxy-Autokonfiguration
 
 Prinzipiell gibt es mehrere Möglichkeiten, die Proxy-Server im Webbrowser
 einzustellen:
@@ -196,7 +190,7 @@ einzustellen:
     verschiedenen Proxy-Servern.
 
 *   Mit einer URL für eine PAC-Datei. Das skaliert nicht mit der Anzahl der
-    Nutzer..
+    Nutzer.
 
 *   Vollautomatisch mit dem WPAD-Protokoll. Das will ich haben, wenn es
     funktioniert.
@@ -205,10 +199,10 @@ einzustellen:
 
 Die Datei für Proxy Auto Configuration (PAC) ist eine Textdatei, die die
 JavaScript-Funktion `FindProxyForURL(url, host)` definiert.
-In den Argumenten `url` und `host` liefert der Browser die URL und den
-Hostnamen dieser URL für die Datei, die er herunterladen möchte.
-Als Rückgabe erwartet er einen String, der ihm den Proxy nennt oder mit
-"DIRECT" anweist, die Datei direkt abzuholen.
+In den Argumenten `url` und `host` liefert der Browser den URL und den
+Hostnamen für die Datei, die er herunterladen möchte.
+Als Rückgabe erwartet er einen String, der ihm den Proxy nennt oder
+"DIRECT", um die Datei direkt abzuholen.
 Diese Funktion könnte zum Beispiel so aussehen:
 
 {line-numbers=off,lang="text"}
@@ -219,7 +213,7 @@ Diese Funktion könnte zum Beispiel so aussehen:
 Die Datei muss auf einem Webserver liegen und von diesem mit dem MIME-Typ
 `application/x-ns-proxy-autoconfig` ausgeliefert werden.
 Gängige Namen sind *proxy.pac* oder *wpad.dat*.
-Letzterer wird bei der Bestimmung der URL dieser Datei via DNS im
+Letzterer wird bei der Bestimmung des URL dieser Datei via DNS im
 WPAD-Protokoll verwendet.
 
 Habe ich einen Webserver der diese Datei ausliefert, kann ich deren Funktion
@@ -263,23 +257,24 @@ Je nach verwendeter DHCP-Client-Software finde ich die Datei eventuell an
 anderer Stelle.
 
 Mit dieser Methode kann ich verschiedenen Clients verschiedene URL
-übermitteln.
+übermitteln, indem ich den DHCP-Server verschiedene Strings an unterschiedliche
+Clients senden lasse.
 
 ##### Bestimmen des URL mit DNS
 
 Diese Methode ist auch für Rechner mit statisch vergebener IP-Adresse
 geeignet, weil der Webbrowser über die Resolver-Bibliothek problemlos
-DNS-Anfragen stellen kann, während es problematisch ist, den DHCP-Client-Dämon
+DNS-Anfragen stellen kann, während es schwierig ist, den DHCP-Client-Dämon
 zu gezielten Anfragen nach bestimmten Optionen zu bewegen.
 
 Der Webbrowser versucht nach dieser Methode die PAC-Datei von einem URL zu
-laden, bei dem der Hostname *wpad* gefolgt von bestimmten Domain-Suffixen
-lautet und die Datei unter dem Namen  *wpad.dat* im Wurzelverzeichnis des
-Servers zu finden ist.
+laden, bei dem die Datei unter dem Namen  *wpad.dat* im Wurzelverzeichnis des
+Servers zu finden ist und der Hostname *wpad* lautet gefolgt von bestimmten
+Domain-Endungen.
 
-Die Domain-Suffixe werden zunächst aus dem Domain-Suffix der FQDN des eigenen
+Diese Endungen werden zunächst aus dem Domain-Suffix des FQDN des eigenen
 Rechners gebildet und dann sukzessive von links verkürzt.
-Das heißt, auf dem Rechner *pc.branch.example.com* versucht der Webbrowser
+Das heißt, der Webbroswer versucht auf dem Rechner *pc.branch.example.com*
 nacheinander, bis er Erfolg hat, die folgenden URLs:
 
 *   *http://wpad.branch.example.com/wpad.dat*
