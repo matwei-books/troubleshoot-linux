@@ -1,7 +1,16 @@
 
-## Korrelation {#sec-heuristik-korrelation}
+## Statistische Verfahren, Korrelation {#sec-heuristik-korrelation}
 
-Mit einer Korrelation kann ich eine Beziehung zwischen zwei oder mehreren
+Statistische Verfahren liefern keine Belege für Ursache-Wirkung-Beziehungen.
+Sie können mir nur helfen, Ansatzpunkte für Hypothesen zu finden, die ich
+mit gezielten Tests bestätigen oder widerlegen kann.
+Dabei muss ich mir vorher im klaren sein, ob ein bestimmter Test darauf
+angelegt ist, eine Hypothese zu widerlegen und damit von der weiteren
+Betrachtung auszuschließen oder die Hypothese zu bestätigen, so dass ich davon
+meine weiteren Handlungen leiten lassen kann.
+
+Ein statistisches Verfahren ist die Korrelation.
+Mit dieser kann ich eine Beziehung zwischen zwei oder mehreren
 Merkmalen, Ereignissen oder Zuständen beschreiben.
 Dabei muss ich immer beachten, dass diese Beziehung kausal sein kann aber
 nicht muss.
