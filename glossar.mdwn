@@ -11,7 +11,15 @@ Bootstrapping
   einem einfachen System heraus ein komplizierteres aktiviert wird, wie zum
   Beispiel beim Start des Betriebssystems.
 
-CPU, Central Processing Unit
+CPU
+: Die *Central Processing Unit*, ist der Baustein des Computers, der die
+  Maschinenbefehle der Programme abarbeitet und die restliche Elektronik
+  steuert.
+  Der Begriff ist nicht eindeutig abgrenzbar, weil einerseits in manchem
+  Kontext die ganze Platine mit dem Prozessorbaustein und eventuell
+  Hauptspeicher als CPU bezeichnet wird und andererseits manche
+  Prozessorbausteine selbst mehrere unabhängige CPU enthalten, die
+  gleichzeitig verschiedene Programme abarbeiten können.
 
 {#glossar-dac}
 DAC, Discretionary Access Control
@@ -53,6 +61,14 @@ Datenbank
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
 DMA, Direct Memory Access
+: Beim Speicherdirektzugriff greifen externe Geräte wie zum Beispiel
+  Festplatten- oder USB-Controller ohne den Umweg über die CPU auf den
+  Speicher zu.
+  Das entlastet die CPU, so dass diese mehr Rechenzeit für andere Aufgaben zu
+  Verfügung hat.
+  Dafür kann der Hauptspeicher ohne Einfluss des Betriebssystems verändert
+  werden, was im schlimmsten Fall zum Absturz oder zur Kompromittierung des
+  Systems führen kann.
 
 DRM, Direct Rendering Manager
 : Der Direct Rendering Manager ist ein Linux-Kernelmodul, das Zugriff auf den
@@ -82,7 +98,9 @@ Gerätedatei
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf die
   Zusammenhänge von Dateien und Dateisystemen ein.
 
-IDE, Integrated Device Electronics
+IDE, Integrated Drive Electronics
+: Das ist eine ältere Festplattenschnittstelle, bei der die Steuerelektronik
+  im Festplattengehäuse integriert ist.
 
 Initramfs
 : Das Initramfs ist ein komprimiertes Archiv, das für den Systemstart
@@ -212,6 +230,16 @@ Network File System, NFS
   gespeichert wären.
 
 Overlay-Dateisystem
+: Von Overlay-Dateisystemen spricht man, wenn mehrere Dateisysteme am selben
+  Einhängepunkt im Dateibaum montiert werden. Meist wird ein nur-lesend
+  eingehängtes Dateisystem mit einem weiteren Dateisystem kombiniert, welches
+  die Schreibzugriffe auf einem anderen Datenträger oder im RAM speichert.
+  Bei Lesezugriffen kommen die Daten zunächst aus dem nur-lesend eingehängten
+  Dateisystem. Bei einem Schreibzugriff werden die Daten auf den Datenträger
+  des zweiten Dateisystems geschrieben und bei nachfolgenden Lesezugriffen von
+  dort gelesen.
+  Overlay-Dateisysteme werden zum Beispiel bei Livesystemen eingesetzt, die
+  von CD-ROM starten und alle Dateiänderungen in den RAM schreiben.
 
 Paging
 : Mit Paging bezeichnet man die Speicherverwaltung per Seitenadressierung im
@@ -224,6 +252,10 @@ Paging
   Betriebssystem nachgeladen.
 
 PMU, Performance Monitoring Unit
+: Die PMU ist ein Bestandteil moderner CPUs, der in verschiedenen Zählern
+  Performancewerte während der Arbeit der CPU sammelt und Ereignisse
+  (Interrupts) beim Erreichen von bestimmten Zuständen oder Zählerständen
+  auslösen kann.
 
 Partitionstabelle
 : Eine Tabelle im MBR, die die Aufteilung des Speichermediums in einzelne
@@ -262,7 +294,11 @@ PXE, Preboot Execution Environment
   Diese nutzt die Protokolle DHCP zum Übertragen von Bootinformationen und
   TFTP zum Übertragen von Dateien, wie zum Beispiel Betriebssystemimages.
 
-RAID, Redundand Array of Independent Disks
+RAID
+: Ein *Redundand Array of Independent Disks* ist eine Kombination von mehreren
+  Festplatten zu einem logischen Laufwerk um eine bessere Datenverfügbarkeit
+  bei Ausfall einzelner Platten und/oder einen größeren Datendurchsatz zu
+  erreichen.
 
 {#glossar-regulaere-datei}
 reguläre Datei
@@ -281,11 +317,20 @@ Rescue-System
 : Ein Rescue-System ist ein [Live-System](#glossar-live-system), dass
   zur Wiederherstellung von beschädigten Betriebssystemen geeignet ist.
 
-SAS, Serial Attached SCSI
+SAS
+: *Serial Attached SCSI* ist ein Nachfolger der parallelen SCSI-Schnittstelle.
+  Dieses umgeht das Problem von parallelen Schnittstellen, dass die
+  Signallaufzeiten der einzelnen Adern nicht zu stark differieren dürfen,
+  dadurch, dass eine Leitung mit serieller Schnittstelle verwendet wird.
 
-SATA, Serial-ATA, Serial Advanced Technology Attachment
+SATA
+: *Serial-ATA* oder auch *Serial Advanced Technology Attachment* wurde aus dem
+  älteren ATA-Standard entwickelt, um höhere Datenraten zu erreichen und die
+  Kabelführung zu vereinfachen.
 
-SCSI, Small Computer System Interface
+SCSI
+: Das *Small Computer System Interface* ist eine parallele Schnittstelle für
+  die Verbindung von Peripheriegeräten und Computer-Bus.
 
 Shell
 : Die Shell ist ein interaktives Programm, über das der Benutzer mit dem
