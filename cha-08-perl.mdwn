@@ -1,5 +1,5 @@
 
-## perl {#sec-lokal-werkzeuge-perl}
+## Perl {#sec-lokal-werkzeuge-perl}
 
 Zwischen den Spezialwerkzeugen für die Fehlersuche und der Shell als
 Kommandozentrale benötige ich hin und wieder ein Werkzeug, mit dem sich auch
@@ -62,3 +62,39 @@ Wenn ich mehrere Protokollzeilen miteinander in Beziehung setzen will,
 verwende ich eine globale Datenstruktur und gebe das Ergebnis entweder am
 Ende, nach der `while (<>)` Schleife oder zwischendurch in der Funktion
 `process_line()` aus.
+
+A> Ein Problem bei Programm-Skripts kann der Zeilenumbruch bereiten, wenn man
+A> ein Skript ohne besondere Vorkehrungen von Windows nach UNIX kopiert.
+A> 
+A> Traditionell gibt es drei verschiedene Standards, den Zeilenumbruch bei
+A> ASCII-Dateien zu kodieren:
+A> 
+A> *   UNIX, Linux, Mac OS X und weitere verwenden das Zeichen `0x0a`
+A>     (*"\n"*)
+A> *   MS DOS, Windows und einige andere verwenden die Zeichenfolge `0x0d 0x0a`
+A>     (*"\r\n"*)
+A> *   Mac OS bis Version 9 und einige andere Systeme verwenden das Zeichen
+A>     `0x0d` (*"\r"*).
+A> 
+A> Da der Text selbst sich scheinbar nicht unterscheidet und viele Programme,
+A> wie zum Beispiel `less` die Zeilen normal anzeigen, auch wenn der
+A> Zeilenumbruch nicht zum System passt, merkt man mitunter erst, wenn man das
+A> Skript ausführen will, dass es die falschen Zeilenumbrüche verwendet:
+A> 
+{line-numbers=off,lang="text"}
+A>     $ bash: ./test.pl: /usr/bin/perl^M: bad interpreter:\
+A>      No such file or directory
+A>     $ od -c test.pl|head -2
+A>     0000  #  !  /  u  s  r  /  b  i  n  /  p  e  r  l \r
+A>     0020 \n  #     v  i  m  :     s  e  t     t  s  =  4
+A> 
+A> In diesem Fall muss ich den Zeilenumbruch der Skript-Datei ändern.
+A> Das kann ich mit dem Programm `dos2unix` erledigen, oder mit dem folgenden
+A> Perl-Einzeiler:
+A> 
+{line-numbers=off,lang="text"}
+A>     $ perl -pi.bak -e 's/\r\n$/\n/g' test.pl
+A> 
+A> Damit kopiert Perl die Original-Datei mit der Endung *.bak* und ersetzt das
+A> Skript durch eine Version mit passenden Zeilenumbrüchen für Linux/Unix.
+
