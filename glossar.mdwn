@@ -1,6 +1,11 @@
 
 # Glossar
 
+ARP
+: Das *Address Resolution Protocol* ermittelt die zu einer IP-Adresse
+  gehörende Adresse der Netzzugangsschicht, in den meisten Fällen Ethernet.
+  Das Protokoll wird in RFC 826 beschrieben.
+
 BIOS
 : Das BIOS, von *Basic Input/Output System* ist die
   [Firmware](#glossar-firmware) der PCs, die auf den IBM-PC zurückgehen.
@@ -98,9 +103,29 @@ Gerätedatei
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf die
   Zusammenhänge von Dateien und Dateisystemen ein.
 
+HTTP
+: Das *Hypertext Transfer Protocol* dient zum Übertragen von Daten im
+  Netzwerk.
+  Es wird für die Übertragung von Webseiten und Bildern im Webbrowser
+  verwendet und zunehmend auch für die Kommunikation von Serverdiensten
+  untereinander.
+  Das Protokoll wird in RFC 1945 (Version 1.0) und RFC 2616 (Version 1.1)
+  beschrieben.
+
+ICMP
+: Das *Internet Control Message Protocol* dient dem Austausch von Steuer und
+  Fehlernachrichten über das Internet Protokoll.
+  Es wird in RFC 792 beschrieben.
+
 IDE, Integrated Drive Electronics
 : Das ist eine ältere Festplattenschnittstelle, bei der die Steuerelektronik
   im Festplattengehäuse integriert ist.
+
+IGMP
+: Das *Internet Group Management Protocol* dient zur Organisation von
+  Multicast Gruppen im Rahmen des Internet Protokolls.
+  Die verschiedenen Versionen werden in den RFCs 1112, 2236 und 3376
+  beschrieben.
 
 Initramfs
 : Das Initramfs ist ein komprimiertes Archiv, das für den Systemstart
@@ -116,6 +141,12 @@ Inode
   (Metadaten) für die zugehörige Datei enthält.
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
   von Dateien, Inodes und Verzeichnissen detaillierter ein.
+
+IP, IPv4, IPv6
+: Das *Internet Protocol* stellt die Grundlage des Internets dar.
+  Es implementiert die Vermittlungsschicht des OSI-Modells beziehungsweise die
+  Internetschicht des TCP/IP-Modells.
+  Version 4 (IPv4) wird in RFC 791 beschrieben, Version 6 (IPv6) in RFC 2640.
 
 Kernel
 : Der Kernel (deutsch: Betriebssystemkern) ist der zentrale Bestandteil eines
@@ -228,6 +259,8 @@ Network File System, NFS
   Im Gegensatz zu anderen Protokollen zur Dateiübertragung wie FTP oder HTTP
   können Benutzer auf die Dateien so zugreifen, als ob sie auf dem lokalen PC
   gespeichert wären.
+
+OSI
 
 Overlay-Dateisystem
 : Von Overlay-Dateisystemen spricht man, wenn mehrere Dateisysteme am selben
@@ -349,6 +382,8 @@ Signal
   Im Rahmen des UNIX-Prozessmodells gehe ich in
   [Kapitel 4](#sec-unix-prozessmodell) näher auf Signale ein.
 
+SMTP
+
 Standardausgabe, -eingabe, fehlerausgabe
 : Diese drei Standard-Datenströme im Betriebssystem UNIX werden auch *STDIN*,
   *STDOUT* und *STDERR* genannt.
@@ -401,6 +436,8 @@ Tail-Merging, Tail-Packing
   verschiedener Dateien in gemeinsamen Blöcken gespeichert.
   Das nennt man Tail-Merging oder Tail-Packing.
 
+TCP
+
 TFTP
 : Das **Trivial File Transfer Protocol** ist ein sehr einfaches
   Dateiübertragungsprotokoll.
@@ -412,6 +449,8 @@ Thrashing
   von Speicherseiten beschäftigt ist.
   Der Prozessor verbringt die meiste Zeit im Wartezustand und die verfügbare
   Rechenleistung ist deutlich herabgesetzt.
+
+UDP
 
 Umgebungsvariablen
 : Neben den Variablen, die ein Programm beim Aufruf in der
