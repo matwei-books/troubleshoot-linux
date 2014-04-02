@@ -1,5 +1,5 @@
 
-## Zustände einer TCP-Verbindung
+## Zustände einer TCP-Verbindung {#sec-tcp-grundlagen}
 
 Ich betrachte hier die Zustände einer TCP-Verbindung, weil TCP vermutlich das
 am häufigsten im Netz vorkommende Protokoll ist.
