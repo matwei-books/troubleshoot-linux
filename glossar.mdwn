@@ -275,6 +275,10 @@ OSI-Modell
   als Entwurfsgrundlage für Kommunikationsprotokolle entwickelt wurde.
   In [Kapitel 9](#sec-osi-modell) gehe ich näher auf dieses Modell ein.
 
+OSPF
+: *Open Shortest Path First* ist ein dynamisches Routingprotokoll, das in RFC
+  2328 beschrieben ist.
+
 Overlay-Dateisystem
 : Von Overlay-Dateisystemen spricht man, wenn mehrere Dateisysteme am selben
   Einhängepunkt im Dateibaum montiert werden. Meist wird ein nur-lesend
@@ -362,6 +366,11 @@ reguläre Datei
 Rescue-System
 : Ein Rescue-System ist ein [Live-System](#glossar-live-system), dass
   zur Wiederherstellung von beschädigten Betriebssystemen geeignet ist.
+
+RIP
+: Das *Routing Information Protocol* ist ein dynamisches Routingprotokoll.
+  Heute wird meist Version 2 dieses Protokolls eingesetzt, die in RFC 2453
+  beschrieben ist.
 
 SAS
 : *Serial Attached SCSI* ist ein Nachfolger der parallelen SCSI-Schnittstelle.
