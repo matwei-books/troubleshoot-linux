@@ -16,6 +16,11 @@ Bootstrapping
   einem einfachen System heraus ein komplizierteres aktiviert wird, wie zum
   Beispiel beim Start des Betriebssystems.
 
+Broadcast
+: Eine Broadcast-Nachricht ist eine Nachricht, die an alle Teilnehmer des
+  Netzes gesendet wird.
+  Siehe auch *Unicast* und *Multicast*.
+
 CPU
 : Die *Central Processing Unit*, ist der Baustein des Computers, der die
   Maschinenbefehle der Programme abarbeitet und die restliche Elektronik
@@ -253,6 +258,11 @@ Mount-Point
   dieses Verzeichnis Einträge, werden diese vom eingehängten Dateisystem
   verdeckt.
 
+Multicast
+: Eine Multicast-Nachricht wird an eine Gruppe von Teilnehmern in einem Netz
+  gesendet.
+  Siehe auch *Unicast* und *Broadcast*.
+
 Network File System, NFS
 : Das NFS, ursprünglich von Sun Microsystems entwickelt, ist ein Protokoll zur
   Übertragung von Dateien über das Netzwerk.
@@ -260,7 +270,10 @@ Network File System, NFS
   können Benutzer auf die Dateien so zugreifen, als ob sie auf dem lokalen PC
   gespeichert wären.
 
-OSI
+OSI-Modell
+: Das *Open Systems Interconnection Model* ist ein Schichtenmodell, welches
+  als Entwurfsgrundlage für Kommunikationsprotokolle entwickelt wurde.
+  In [Kapitel 9](#sec-osi-modell) gehe ich näher auf dieses Modell ein.
 
 Overlay-Dateisystem
 : Von Overlay-Dateisystemen spricht man, wenn mehrere Dateisysteme am selben
@@ -383,6 +396,9 @@ Signal
   [Kapitel 4](#sec-unix-prozessmodell) näher auf Signale ein.
 
 SMTP
+: Das *Simple Mail Transfer Protocol* dient dem Versenden und Weiterleiten
+  von E-Mail in Computernetzen.
+  Das Protokoll ist textbasiert und in RFC 5321 beschrieben.
 
 Standardausgabe, -eingabe, fehlerausgabe
 : Diese drei Standard-Datenströme im Betriebssystem UNIX werden auch *STDIN*,
@@ -437,6 +453,10 @@ Tail-Merging, Tail-Packing
   Das nennt man Tail-Merging oder Tail-Packing.
 
 TCP
+: Das *Transmission Control Protocol* ist ein paketvermitteltes, zuverlässiges
+  und verbindungsorientiertes Protokoll zur Datenübertragung.
+  In [Kapitel 9](#sec-tcp-grundlagen) gehe ich auf einige Eigenschaften dieses
+  Protokolls ein.
 
 TFTP
 : Das **Trivial File Transfer Protocol** ist ein sehr einfaches
@@ -451,6 +471,10 @@ Thrashing
   Rechenleistung ist deutlich herabgesetzt.
 
 UDP
+: Das *Universal Datagram Protocol* ist ein minimales verbindungsloses
+  Protokoll zur Datenübertragung.
+  Es gibt keine Gewähr, dass die Daten überhaupt, oder in der Reihenfolge
+  ankommen, in der sie gesendet werden.
 
 Umgebungsvariablen
 : Neben den Variablen, die ein Programm beim Aufruf in der
@@ -460,6 +484,10 @@ Umgebungsvariablen
   verwendet werden, werden Umgebungsvariablen über ihren Namen identifiziert.
   [Kapitel 4](#sec-unix-programmschnittstellen) geht im Rahmen der
   Programmschnittstellen auf Umgebungsvariablen ein.
+
+Unicast
+: Eine Unicast-Nachricht geht vom Sender zu genau einem Empfänger.
+  Vergleiche hierzu *Multicast* und *Broadcast*.
 
 {#glossar-verzeichnis}
 Verzeichnis
