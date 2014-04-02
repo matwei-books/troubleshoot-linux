@@ -74,6 +74,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-09-arp.mdwn \
                $(DROPBOXDIR)/cha-09-ipv4-netzmasken.mdwn \
                $(DROPBOXDIR)/cha-09-zustaende-tcp.mdwn \
+               $(DROPBOXDIR)/cha-09-routing-algorithm.mdwn \
                $(DROPBOXDIR)/cha-10.mdwn \
                $(DROPBOXDIR)/cha-10-netzausfall-rechner.mdwn \
                $(DROPBOXDIR)/cha-10-netzausfall-segment.mdwn \
@@ -182,6 +183,7 @@ SOURCES = $(BOOK) \
           cha-09-arp.mdwn \
           cha-09-ipv4-netzmasken.mdwn \
           cha-09-zustaende-tcp.mdwn \
+          cha-09-routing-algorithm.mdwn \
           cha-10.mdwn \
           cha-10-netzausfall-rechner.mdwn \
           cha-10-netzausfall-segment.mdwn \
@@ -287,6 +289,7 @@ CHAPTERS = \
     cha-09-arp.mdwn \
     cha-09-ipv4-netzmasken.mdwn \
     cha-09-zustaende-tcp.mdwn \
+    cha-09-routing-algorithm.mdwn \
     cha-10.mdwn \
     cha-10-netzausfall-rechner.mdwn \
     cha-10-netzausfall-segment.mdwn \
