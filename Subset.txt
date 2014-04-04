@@ -84,6 +84,7 @@ cha-13-ifconfig.mdwn
 cha-13-iproute.mdwn
 cha-13-netstat.mdwn
 cha-13-ping.mdwn
+cha-13-quagga.mdwn
 anhang.mdwn
 glossar.mdwn
 literatur.mdwn

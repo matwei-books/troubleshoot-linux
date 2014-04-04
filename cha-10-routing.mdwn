@@ -165,6 +165,7 @@ falls ich die Authentisierungsinformationen falsch eingetragen habe.
 
 Bei Problemen melde ich mich via `telnet` am RIP-Dämon an:
 
+{line-numbers=off,lang="text"}
     $ telnet localhost ripd
 
 Dann kann ich den Zustand des RIP-Protokolls analysieren.
@@ -188,6 +189,55 @@ für eine gegebene Route.
 OSPF konvergiert meist schneller bei Routingänderungen zum neuen Zustand des
 Netzes.
 Dafür ist die Berechnung der neuen Route CPU-intensiv.
+
+#### Fehlersuche bei OSPF
+
+Um das OSPF-Protokoll, genaugenommen seinen Zustand zu analysieren, melde ich
+mich am *ospfd* von *quagga* an und arbeite überwiegend mit den über `show ip
+ospf` erreichbaren Befehlen.
+
+Mit `show ip ospf interface` sehe ich, welche Interfaces aktiv sind, am
+OSPF-Protokoll teilnehmen und welche Nachbarn sie kennen.
+
+Um mehr über die Nachbarn zu erfahren, verwende ich die über `show ip ospf
+neighbor` erreichbaren Befehle.
+
+Da OSPF sehr prozessorlastig ist, muss ich eventuell nachsehen, ob ein Router
+vielleicht überlastet ist.
+Dabei helfen mir die folgenden Faustregeln, um die zu erwartende Last grob
+einzuschätzen:
+
+*   ABR machen mehr als interne Router
+*   DR/BDR machen mehr als andere Router
+*   Router in Stub Areas und NSSA machen am wenigsten.
+
+Gegebenenfalls setze ich an den entsprechenden Stellen leistungsstärkere
+Router ein oder sorge dafür, dass ein schwächerer Router nicht DR/BDR wird.
+
+Mit dem Befehl `show ip ospf` bekomme ich auch heraus, wie oft der
+OSPF-Algorithmus ausgeführt wurde:
+
+{line-numbers=off,lang="text"}
+    ospfd> sh ip ospf
+     ...
+     SPF algorithm last executed 12h37m18s ago
+     ...
+     Area ID: 0.0.0.0 (Backbone)
+       ...
+       SPF algorithm executed 4039 times
+
+Wenn die letzte Zahl sehr hoch ist, und vielleicht noch wächst, während ich
+angemeldet bin, deutet das auf ein flatterndes Interface hin.
+
+In diesem Fall kann ich mit den über `debug ospf` erreichbaren Befehlen nach
+dem betreffenden Router fahnden und dann das Problem dort untersuchen.
+Einfacher ist die Ursache vielleicht zu finden, wenn ich sowieso alle
+Routingänderungen protokolliere und anhand dieser Protokolle auf die Ursache
+schließe.
+
+Suche ich hingegen nach einer relativ stabilen aber falschen Route, dann kann
+ich die LS-Datenbank mit den über `show ip ospf database` erreichbaren
+Befehlen untersuchen.
 
 ### Gemischter Einsatz von statischen und dynamischen Routen
 
