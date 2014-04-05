@@ -80,6 +80,7 @@ cha-12-messen.mdwn
 cha-12-massnahmen.mdwn
 cha-13.mdwn
 cha-13-arp.mdwn
+cha-13-bridge-utils.mdwn
 cha-13-ifconfig.mdwn
 cha-13-iproute.mdwn
 cha-13-netstat.mdwn
