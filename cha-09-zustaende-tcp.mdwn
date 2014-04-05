@@ -159,3 +159,5 @@ Zusätzlich zum letzten regulären Paket bestätigt der Empfänger in den DUP-AC
 die außer der Reihe angekommenen Datenpakete in zusätzlichen
 TCP-Headerfeldern, so dass diese nicht noch einmal gesendet werden müssen.
 
+In [ctZivadinovic2012](#bib-ct-zivadinovic2012) erläutert der Autor die
+Funktionsweise der TCP-Flusskontrolle ausführlich und sehr anschaulich.

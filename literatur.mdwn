@@ -152,6 +152,16 @@ Diedrich, Dr. Oliver; Zugriffschutz - Dateiüberwachung mit Fanotify;
 c't Magazin für Computertechnik 2012 Heft 9, S. 174ff;
 ISSN 0724-8679
 
+##### ctZivadinovic2012 {#bib-ct-zivadinovic2012}
+Dušan Zivadinović; Blindflug mit Full Speed - Wie die TCP/IP-Flusskontrolle
+funktioniert;
+c't Magazin für Computertechnik 2012 Heft 10, S. 188ff;
+ISSN 0724-8679
+
+Der Autor erläutert in diesem Artikel leicht verständlich, wie die in TCP
+enthaltene Flusskontrolle dazu beiträgt, die Bandbreite einer Verbindung
+möglichst optimal auszunutzen.
+
 ##### ctHM2013 {#bib-ct-hm2013}
 Hillier, Gernot, Mauerer, Dr. Wolfgang; Linux durchleuchtet - Perf als
 Universalschnittstelle für Performance-Analysen unter Linux;
