@@ -46,6 +46,13 @@ Server eine Verbindung abweist, sieht das wie folgt aus:
 
 Der Client sendet wie eben ein SYN-Paket.
 Von Serverseite aus folgt unmittelbar ein RST-Paket und schon ist es vorbei.
+Alternativ kann der Server auch ein ICMP-Paket vom Typ 3 (*Destination
+unreachable*) mit Code 3 (*Port unreachable*) senden, das ist jedoch eher für
+das Protokoll UDP üblich.
+
+Ist stattdessen der Serverport durch Paketfilter-Regeln gesperrt, kommt vom
+Server gar nichts und der Client wiederholt sein SYN-Paket noch einige Male,
+bevor er aufgibt.
 
 ### Verbindungsabbau
 
@@ -57,7 +64,7 @@ ich die beteiligten Parteien hier A und B:
 ![TCP Verbindungsabbau](images/tcp-shutdown.png)
 
 A schließt auf seiner Seite einseitig die TCP-Verbindung indem er ein
-FIN-Paket sendet und geht in den Zustand *FIN_WAIT1*.
+FIN-Paket sendet, anschließend geht er in den Zustand *FIN_WAIT1*.
 B bestätigt das FIN-Paket normal mit ACK und geht in den Zustand *CLOSE_WAIT*.
 Jetzt könnte B noch Daten über die halbgeschlossene Verbindung senden, A
 sendet keine Daten mehr, nur noch ACK.
@@ -80,12 +87,40 @@ Zum anderen will der Sender die Datenrate so steuern, dass die Daten so
 schnell wie möglich, aber mit möglichst geringen Verlusten durch Überlastung
 der Leitung übertragen werden.
 
-Für das erste Problem gibt es im TCP-Header das Feld *Receive Window*.
-In dieses trägt der Empfänger die momentan freie Empfangspuffergröße ein.
+Für das erste Problem gibt es im TCP-Header das Feld RWIN (*Receive Window*).
+In dieses trägt der Empfänger den momentan freien Platz im Empfangspuffer ein.
 Ein *Receive Window* von 0 bringt die Datenübertragung zum Erliegen und deutet
 darauf hin, dass der Empfänger die Daten nicht schnell genug verarbeiten kann.
 Das kann ein Hinweis sein, bei Performanceproblemen die Situation auf dem
 empfangenden Rechner in Augenschein zu nehmen.
+
+Neben der Anzahl der beim Empfänger eintreffenden Datenpakete begrenzt das
+*Receive Window* auch die maximal erreichbare Bandbreite, abhängig von der RTT
+zwischen Sender und Empfänger.
+Die RTT beträgt im LAN typischerweise weniger als eine Millisekunde, innerhalb
+Deutschlands etwa fünfzig Millisekunden und interkontinental mehr als hundert
+Millisekunden.
+Der Sender sendet maximal soviel Daten, wie im *Receive Window* vorgegeben,
+ohne Bestätigung durch ACK-Pakete an den Empfänger.
+Bei einer RTT von 1 Millisekunde und einem *Receive Window* von 50000 kann der
+Sender maximal 50000 Byte pro Millisekunde senden, also etwa 50 MByte pro
+Sekunde.
+Bei einer RTT von 100 Millisekunden und ansonsten gleichen Parametern kann der
+Sender nur noch maximal 50000 Byte in 100 Millisekunden senden, das heißt nur
+noch 500 KByte pro Sekunde.
+Darum ist es bei Breitbandverbindungen mit hoher RTT eventuell hilfreich, das
+*Receive Window* des Empfängers zu erhöhen, wenn die maximal mögliche
+Bandbreite nicht erreicht wird.
+
+Da TCP bereits 1981 entwickelt wurde, ist das Parameterfeld für das *Receive
+Window* nur 16 Bit groß, der Maximalwert liegt also bei 65535.
+Aus diesem Grund gibt es in modernen TCP-Stacks die Möglichkeit des *Windows
+Scaling*.
+Dabei wird beim Verbindungsaufbau ein Multiplikator für das RWIN-Feld
+ausgehandelt, der für beide Seiten verbindlich ist.
+Dieser Multiplikator ist eine Potenz von zwei und kann von {$$}2^{0}{/$$} bis
+{$$}2^{14}{/$$} reichen,
+beim Aushandeln der Verbindung wird nur der Exponent übertragen.
 
 Für die Flusssteuerung zur Vermeidung von Überlast gibt es verschiedene
 Algorithmen, die gemeinsam verwendet werden können.
