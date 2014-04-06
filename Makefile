@@ -96,6 +96,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-13-ping.mdwn \
                $(DROPBOXDIR)/cha-13-quagga.mdwn \
                $(DROPBOXDIR)/cha-13-route.mdwn \
+               $(DROPBOXDIR)/cha-13-tcpdump.mdwn \
                $(DROPBOXDIR)/cha-13-traceroute.mdwn \
                $(DROPBOXDIR)/glossar.mdwn \
                $(DROPBOXDIR)/literatur.mdwn \
@@ -213,6 +214,7 @@ SOURCES = $(BOOK) \
           cha-13-ping.mdwn \
           cha-13-quagga.mdwn \
           cha-13-route.mdwn \
+          cha-13-tcpdump.mdwn \
           cha-13-traceroute.mdwn \
           cha-netz-werkzeuge.mdwn \
           glossar.mdwn \
@@ -321,6 +323,7 @@ CHAPTERS = \
     cha-13-ping.mdwn \
     cha-13-quagga.mdwn \
     cha-13-route.mdwn \
+    cha-13-tcpdump.mdwn \
     cha-13-traceroute.mdwn \
     glossar.mdwn \
     literatur.mdwn \
