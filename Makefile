@@ -92,11 +92,15 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-13-ethtool.mdwn \
                $(DROPBOXDIR)/cha-13-ifconfig.mdwn \
                $(DROPBOXDIR)/cha-13-iproute.mdwn \
+               $(DROPBOXDIR)/cha-13-libtrace.mdwn \
+               $(DROPBOXDIR)/cha-13-netcat.mdwn \
                $(DROPBOXDIR)/cha-13-netstat.mdwn \
+               $(DROPBOXDIR)/cha-13-openssl.mdwn \
                $(DROPBOXDIR)/cha-13-ping.mdwn \
                $(DROPBOXDIR)/cha-13-quagga.mdwn \
                $(DROPBOXDIR)/cha-13-route.mdwn \
                $(DROPBOXDIR)/cha-13-tcpdump.mdwn \
+               $(DROPBOXDIR)/cha-13-telnet.mdwn \
                $(DROPBOXDIR)/cha-13-traceroute.mdwn \
                $(DROPBOXDIR)/cha-13-wireshark.mdwn \
                $(DROPBOXDIR)/glossar.mdwn \
@@ -211,11 +215,15 @@ SOURCES = $(BOOK) \
           cha-13-ethtool.mdwn \
           cha-13-ifconfig.mdwn \
           cha-13-iproute.mdwn \
+          cha-13-libtrace.mdwn \
+          cha-13-netcat.mdwn \
           cha-13-netstat.mdwn \
+          cha-13-openssl.mdwn \
           cha-13-ping.mdwn \
           cha-13-quagga.mdwn \
           cha-13-route.mdwn \
           cha-13-tcpdump.mdwn \
+          cha-13-telnet.mdwn \
           cha-13-traceroute.mdwn \
           cha-13-wireshark.mdwn \
           cha-netz-werkzeuge.mdwn \
@@ -321,11 +329,15 @@ CHAPTERS = \
     cha-13-ethtool.mdwn \
     cha-13-ifconfig.mdwn \
     cha-13-iproute.mdwn \
+    cha-13-libtrace.mdwn \
+    cha-13-netcat.mdwn \
     cha-13-netstat.mdwn \
+    cha-13-openssl.mdwn \
     cha-13-ping.mdwn \
     cha-13-quagga.mdwn \
     cha-13-route.mdwn \
     cha-13-tcpdump.mdwn \
+    cha-13-telnet.mdwn \
     cha-13-traceroute.mdwn \
     cha-13-wireshark.mdwn \
     glossar.mdwn \
