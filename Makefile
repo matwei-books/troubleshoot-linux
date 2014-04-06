@@ -98,6 +98,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-13-route.mdwn \
                $(DROPBOXDIR)/cha-13-tcpdump.mdwn \
                $(DROPBOXDIR)/cha-13-traceroute.mdwn \
+               $(DROPBOXDIR)/cha-13-wireshark.mdwn \
                $(DROPBOXDIR)/glossar.mdwn \
                $(DROPBOXDIR)/literatur.mdwn \
                $(DROPBOXDIR)/part1.mdwn \
@@ -216,6 +217,7 @@ SOURCES = $(BOOK) \
           cha-13-route.mdwn \
           cha-13-tcpdump.mdwn \
           cha-13-traceroute.mdwn \
+          cha-13-wireshark.mdwn \
           cha-netz-werkzeuge.mdwn \
           glossar.mdwn \
           literatur.mdwn \
@@ -325,6 +327,7 @@ CHAPTERS = \
     cha-13-route.mdwn \
     cha-13-tcpdump.mdwn \
     cha-13-traceroute.mdwn \
+    cha-13-wireshark.mdwn \
     glossar.mdwn \
     literatur.mdwn \
     kolophon.mdwn \
