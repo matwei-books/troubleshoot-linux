@@ -1,14 +1,4 @@
 
-## route {#secr-netz-werkzeuge-route}
-
-Das Programm `route` ist für die Anzeige und Manipulation von
-Routingeinträgen zuständig.
-  
-Da die gleiche Funktionialität mit dem Befehl `ip route` und
-entsprechenden Optionen erreicht werden kann, gehe ich hier nicht näher auf
-das `route` ein. Falls das Paket iproute2 auf einen Rechner nicht
-installiert ist, verweise ich auf die Handbuchseite.
-
 ## ethtool, mii-diag, mii-tools {#sec-netz-werkzeuge-ethtool}
 
 Mit den Programmen ethtool, mii-diag beziehungsweise mii-tool kann ich die
