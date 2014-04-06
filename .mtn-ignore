@@ -10,7 +10,7 @@
 ^preview$
 ^proofr$
 ^recherche$
-^revision\.mdwn$
+^revision\.md$
 ^\.revision\.mdwn$
 ^tmp-proofr$
 \.toc$
