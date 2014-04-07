@@ -5,6 +5,10 @@ Nachdem ich im vorigen Abschnitt auf mögliche Ursachen für Performanceprobleme
 im Netz eingegangen bin, will ich nun etwas detaillierter auf die
 Möglichkeiten eingehen, Netzparameter zu bestimmen.
 
+Ich bestimme diese Parameter, wenn möglich, vor dem produktiven Einsatz von
+Netzwerkverbindungen, als Baseline für spätere Vergleichsmessungen wenn ich
+Fehler vermute.
+
 ### Bandbreite
 
 Auch hier verweise ich wieder auf [[Sloan2001](#bib-sloan2001)].
@@ -79,10 +83,33 @@ Um den Einfluss möglicher Puffer aufzudecken, kann ich zusätzlich auf
 Teilstrecken des Pfades eine Last legen und dabei die Veränderungen der RTT
 beobachten.
 
-Um eine Last auf einen Übertragungspfad zu legen, kann ich ebenfalls das
-Programm `ping` verwenden.
-Mit der Option `-f`, die Rootprivilegien benötigt, sendet das Programm die
-ICMP-Pakete so schnell wie möglich.
+#### Lasttest mit Ping
+
+Mit dem Befehl
+
+    # ping -f rechnername
+
+sendet Ping Datenpakete so schnell es geht zum Zielrechner.
+Dazu benötige ich Superuserrechte.
+
+Diesen Aufruf verwende ich, um auf einem Segment Netzwerklast zu erzeugen.
+Zusätzlich zur normalen Statistik (min/avg/max/mdev) zeigt Ping am Ende zwei
+Werte: IPG und EWMA.
+
+IPG (Inter Packet Gap) ist die Zeit zwischen dem Senden zweier Datenpakete.
+Für Ethernet ist die Minimalzeit auf die Zeit festgelegt, in der 96 Bit
+übertragen werden. Das sind 9,6 µs für 10 MBit/s Ethernet und 9,6 ns für 10
+GBit/s. Diese Zeit wird automatisch vom Ethernetadapter an jedes Datenpaket
+angehängt. Das angezeigte IPG kann ich als Maß verwenden, um abzuschätzen,
+wie effizient die Kombination Betriebssystem, Netzwerkkarte, Netzwerk Daten
+senden kann.
+
+EWMA steht für Exponential Weighted Moving Average. Bei diesem Durchschnitt
+werden die letzten  RTT-Zeiten höher gewichtet als ältere. Im Normalfall
+sollte dieser gleich dem Mittelwert für RTT sein. Weicht er signifikant ab,
+deutet das auf einen Trend hin. Dafür benötigt man aber einen länger
+laufenden Ping und da EWMA am Ende ausgegeben wird, wird der Trend erst am
+Ende dieser Messung offenbar.
 
 ### Durchsatz
 
