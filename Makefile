@@ -191,7 +191,6 @@ SOURCES = $(BOOK) \
           cha-08-sysstat.md \
           cha-08-strace.md \
           cha-08-vmstat.md \
-          cha-lokal-werkzeuge.md \
           cha-09.md \
           cha-09-osi-modell.md \
           cha-09-arp.md \
@@ -202,16 +201,13 @@ SOURCES = $(BOOK) \
           cha-10-netzausfall-rechner.md \
           cha-10-netzausfall-segment.md \
           cha-10-routing.md \
-          cha-netz-total.md \
           cha-11.md \
           cha-11-ausfall-essentiell.md \
           cha-11-ausfall-dienst.md \
-          cha-netz-teil.md \
           cha-12.md \
           cha-12-ursachen.md \
           cha-12-messen.md \
           cha-12-massnahmen.md \
-          cha-netz-perform.md \
           cha-13.md \
           cha-13-arp.md \
           cha-13-bridge-utils.md \
