@@ -4,7 +4,7 @@
 > "Die Kunden beschweren sich über Verbindungsabbrüche, kannst Du bitte mal
 > die Leitung prüfen."
 >
-> So doer so ähnlich höre ich es ab und zu von den Kollegen, ich sehe mir die
+> So oder so ähnlich höre ich es ab und zu von den Kollegen, ich sehe mir die
 > Leitung an und kann nichts auffälliges entdecken.
 
 Da wir ein relativ komplexes Netz betreiben, mit mehreren Dutzend einzelnen
