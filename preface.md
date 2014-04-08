@@ -147,6 +147,17 @@ Aus diesem Grund habe ich einige Übungen im Buch eingestreut.
 Bei diesen Übungen kommt es nicht immer auf das konkrete Ergebnis an, sondern
 dass man diese in einer freien Minute ausführt und beobachtet, was passiert.
 
+### Zur Schreibweise
+
+Für Programmbeispiele und Eingaben auf der Kommandozeile verwende ich eine
+`dicktengleiche Schrift`, diese nehme ich auch im Fließtext, wenn ich Optionen
+oder Befehle wortgetreu verwende.
+Bei Kommandozeilen stehen Begriffe, die mit `$` eingeleitet werden, wie zum
+Beispiel `$gateway`, für variable Angaben, die je nach Kontext ersetzt werden
+müssen.
+
+Ansonsten verwende ich einen *kursiven Font* für Hervorhebungen.
+
 X> Übungen sind mit diesem Symbol gekennzeichnet.
 
 ## Danksagung
