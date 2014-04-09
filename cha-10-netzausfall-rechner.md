@@ -4,7 +4,7 @@
 Komme ich zu einem Rechner, der überhaupt keine Netzverbindung hat, dann
 beginne ich in der untersten Schicht, der physikalischen oder
 Bitübertragungsschicht, im [OSI-Modell](#sec-osi-modell) und arbeite mich von
-da langsam nach oben über die Verbindungsschicht zur Netzwerkschicht.
+da langsam nach oben über die Sicherungsschicht zur Vermittlungsschicht.
 
 Bei neu gestarteten Systemen kontrolliere ich als erstes die
 Zuordnung der Schnittstellennamen mit `ifconfig` oder `ip a s`.

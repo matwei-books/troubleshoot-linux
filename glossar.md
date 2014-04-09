@@ -10,6 +10,13 @@ BIOS
 : Das BIOS, von *Basic Input/Output System* ist die
   [Firmware](#glossar-firmware) der PCs, die auf den IBM-PC zurückgehen.
 
+Bitübertragungsschicht (OSI-Modell)
+: Die Bitübertragungsschicht ist die unterste Schicht des OSI-Modells für
+  Netzwerkprotokolle.
+  Sie stellt Hilfsmittel zur Verfügung, um Bits über physische Verbindungen
+  zu übertragen. Das können zum Beispiel elektrische oder optische Signale,
+  elektromagnetische Wellen oder Schall sein.
+
 Bootstrapping
 : Von der englischen Redewendung *"pull oneself up by one’s bootstraps"*
   abgeleitet, bezeichnet man mit Bootstrapping einen Prozess, bei dem aus
@@ -20,6 +27,15 @@ Broadcast
 : Eine Broadcast-Nachricht ist eine Nachricht, die an alle Teilnehmer des
   Netzes gesendet wird.
   Siehe auch *Unicast* und *Multicast*.
+
+CIDR
+: *Classless Inter Domain Routing* (CIDR) beschreibt ein Verfahren, um bei
+  IPv4 den IP-Adressraum effizienter auszunutzen.
+  Mit CIDR entfällt die feste Zuordnung einer IPv4-Adresse zu einer
+  Netzklasse, aus welcher die Präfixlänge hervorging.
+  Durch die zusätzliche Angabe einer Netzmaske wird jetzt die IP-Adresse in
+  den Netzwerk- und Hostteil aufgeteilt.
+  Weitere Informationen zu CIDR finden sich in den RFCs 1518, 1519 und 4632.
 
 CPU
 : Die *Central Processing Unit*, ist der Baustein des Computers, der die
@@ -94,6 +110,13 @@ Firmware
   eingebettet ist und, wenn überhaupt, dann oft nur mit speziellen
   Vorkehrungen änderbar ist.
   Bei Computern lädt die Firmware das Betriebssystem.
+
+Gateway
+: Ein Gateway verbindet Rechnernetze, die auf unterschiedlichen
+  Netzwerkprotokollen basieren können.
+  Zum Beispiel kann ein Gateway E-Mail in SMS oder umgekehrt umwandeln.
+  Der Begriff Gateway wird teilweise auch dann verwendet, wenn keine Protokolle
+  umgewandelt, sondern nur Teilnetze miteinander verbunden werden.
 
 {#glossar-geraetedatei}
 Gerätedatei
@@ -270,6 +293,17 @@ Network File System, NFS
   können Benutzer auf die Dateien so zugreifen, als ob sie auf dem lokalen PC
   gespeichert wären.
 
+Netzsegment
+: Der Begriff wird auf den verschiedenen OSI-Ebenen für unterschiedliche
+  Abgrenzungen verwendet:
+  *   auf Schicht 1 bezeichnet er das gemeinsame physische Medium, zum
+      Beispiel das Koaxialkabel einer 10Base2-Verbindung, alle per Hub
+      verbundenen Rechner einer 10BaseT-Verbindung oder zwei per TP-Kabel
+      verbundene Rechner.
+  *   auf Schicht 2 bezeichnet er die Netze an beiden Ports einer Bridge oder
+      allen gemeinsamen Ports eines Switches
+  *   auf Schicht 3 bezeichnet er ein Subnetz oder Netzbereich
+
 OSI-Modell
 : Das *Open Systems Interconnection Model* ist ein Schichtenmodell, welches
   als Entwurfsgrundlage für Kommunikationsprotokolle entwickelt wurde.
@@ -367,10 +401,14 @@ Rescue-System
 : Ein Rescue-System ist ein [Live-System](#glossar-live-system), dass
   zur Wiederherstellung von beschädigten Betriebssystemen geeignet ist.
 
-RIP
+RIP, RIP2
 : Das *Routing Information Protocol* ist ein dynamisches Routingprotokoll.
   Heute wird meist Version 2 dieses Protokolls eingesetzt, die in RFC 2453
   beschrieben ist.
+
+Router
+: Ein Router verbindet mehrere Teilnetze miteinander und trifft Entscheidungen
+  über die Weiterleitung von Datenpaketen anhand ihrer Zieladresse.
 
 SAS
 : *Serial Attached SCSI* ist ein Nachfolger der parallelen SCSI-Schnittstelle.
@@ -394,6 +432,12 @@ Shell
   nach dem Anmelden an einer Text-Konsole oder via SSH gestartet wird und
   eine Kommandozeile zur Bedienung präsentiert.
   Im erweiterten Sinn sind auch grafische Benutzeroberflächen Shells.
+
+Sicherungsschicht (OSI-Modell)
+: Die Sicherungsschicht ist die zweite Schicht des OSI-Modells für
+  Netzwerkprotokolle.
+  Sie regelt den Zugriff auf das Übertragungsmedium und sorgt für eine
+  zuverlässige Datenübertragung über das Medium.
 
 Signal
 : Ein Signal ist eine primitive Form der Kommunikation zwischen Prozessen.
@@ -497,6 +541,15 @@ Umgebungsvariablen
 Unicast
 : Eine Unicast-Nachricht geht vom Sender zu genau einem Empfänger.
   Vergleiche hierzu *Multicast* und *Broadcast*.
+
+Vermittlungsschicht (OSI-Modell)
+: Die Vermittlungsschicht ist die dritte Schicht im OSI-Modell für
+  Netzwerkprotokolle.
+  Sie sorgt bei paketorientierten Diensten für die Weiterleitung von
+  Datenpaketen und bei leitungsorientierten Diensten für das Schalten von
+  Verbindungen.
+  In beiden Fällen geht die Datenübertragung über das gesamte Netz und
+  schließt die Wegesuche ein.
 
 {#glossar-verzeichnis}
 Verzeichnis
