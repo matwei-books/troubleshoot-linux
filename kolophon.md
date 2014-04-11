@@ -15,3 +15,5 @@ Die TCP-Sequence-Diagramme im neunten Kapitel habe ich mit
 anschließend mit [Inkscape](http://www.inkscape.org/) in das PNG-Format für
 das Buch umgewandelt.
 
+Der Router-Graph im neunten Kapitel ist mit dem Programm `dot` von der
+[GraphViz](http://www.graphviz.org/) Software erzeugt.
