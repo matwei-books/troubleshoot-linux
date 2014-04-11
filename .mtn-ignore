@@ -1,6 +1,8 @@
 \.bbl$
 \.blg$
 ^drakon$
+^graphviz/.*\.png$
+^graphviz/.*\.svg$
 \.leanpub.conf$
 \.log$
 ^manuscript$

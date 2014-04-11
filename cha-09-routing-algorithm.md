@@ -25,6 +25,10 @@ Routerkonstellation.
 
 ![Router-Graph](images/router-graph.png)
 
+Die Knoten des Graphen stehen für die beteiligten Router, die Zahlen an den
+Kanten geben die Metrik für die Verbindung zwischen den beiden verbundenen
+Routern wieder.
+
 ### Distanzvektor-Algorithmus
 
 Dieser Algorithmus zur Bestimmung der optimalen Route wird bei
@@ -71,6 +75,7 @@ Nachdem R3 seine Routen gesendet hat ändern sich die folgenden Einträge:
 
 | Router | Ziel | Weg    | Metrik |
 |--------|------|--------|--------|
+| R1     | R2   | R3     | 3      |
 | R1     | R4   | R3     | 4      |
 | R2     | R1   | R3     | 3      |
 
@@ -86,6 +91,14 @@ Route aber eine Metrik
 
 Danach sind die Routen und Metriken stabil, bis eine Änderung auftritt.
 
+Am Router R1 sieht die Routingtabelle im stabilen Zustand wie folgt aus:
+
+| Router | Ziel | Weg    | Metrik |
+|--------|------|--------|--------|
+| R1     | R2   | R3     | 3      |
+| R1     | R3   | direkt | 2      |
+| R1     | R4   | R3     | 4      |
+
 An diesem relativ einfachen Beispiel ist zu sehen, dass dieser Algorithmus
 manchmal mehrere Zyklen braucht, bis die Routingeinträge zu einem stabilen
 Zustand finden.
@@ -95,7 +108,7 @@ X> Routingänderungen durch bis zum Erreichen eines neuen stabilen Zustands.
 
 ### Link-State-Algorithmus
 
-OSPF ist ein Protokoll, dass einen Link-State-Algorithmus verwendet.
+Das Protokoll OSPF verwendet den Link-State-Algorithmus.
 
 Dieser Algorithmus arbeitet in zwei Schritten: zunächst erstellt jeder Router
 anhand der Zustandsinformationen der Verbindungen seiner Nachbarn eine
@@ -115,11 +128,11 @@ Dijkstra-Algorithmus den optimalen Pfad zu allen bekannten Netzen.
 1.  Solange es noch Einträge in der Tabelle *Q* gibt, wählt der
     Routing-Prozess den Eintrag mit der geringsten Distanz aus.
 
-    1.  Der ausgewählte Knoten wird aus der Tabelle *Q* entfernt und inTabelle
+    a.  Der ausgewählte Knoten wird aus der Tabelle *Q* entfernt und inTabelle
 	*R* eingetragen.
 	Für diesen Knoten ist die kürzeste Distanz bereits bestimmt.
 
-    2.  Für alle direkten Nachbarn des ausgewählten Knoten wird die Distanz
+    b.  Für alle direkten Nachbarn des ausgewählten Knoten wird die Distanz
 	bestimmt. Ist die Distanz geringer als in der Tabelle *Q*, wird die
 	Distanz in der Tabelle *Q* durch die neu bestimmte ersetzt und der
 	ausgewählte Knoten als Vorgänger eingetragen.
@@ -135,9 +148,9 @@ folgt:
 | Knoten | Vorgänger | Distanz   |
 |--------|-----------|-----------|
 | R1     | unbekannt | 0         |
-| R2     | unbekannt | unentlich |
-| R3     | unbekannt | unentlich |
-| R4     | unbekannt | unentlich |
+| R2     | unbekannt | unendlich |
+| R3     | unbekannt | unendlich |
+| R4     | unbekannt | unendlich |
 
 Wir entfernen R1 aus Tabelle *Q*, bestimmen die Distanz für alle noch in *Q*
 enthaltenen direkten Nachbarn von R1.
@@ -146,7 +159,7 @@ enthaltenen direkten Nachbarn von R1.
 |--------|-----------|-----------|
 | R2     | R1        | 4         |
 | R3     | R1        | 2         |
-| R4     | unbekannt | unentlich |
+| R4     | unbekannt | unendlich |
 
 Wir entfernen R3 und bestimmen wieder die Distanz für die verbleibenden
 Nachbarn.
@@ -176,17 +189,20 @@ Diese Tabelle enthält die Pfade zu allen Zielen im Netz. Damit daraus eine für
 den Kernel brauchbare Routing-Tabelle wird, müssen wir die Pfade noch auf den
 jeweiligen Next-Hop abbilden:
 
-| Ziel | Next-Hop |
-|------|----------|
-| R1   | selbst   |
-| R2   | R3       |
-| R3   | direkt   |
-| R4   | R3       |
+| Ziel | Next-Hop | Distanz |
+|------|----------|---------|
+| R1   | selbst   | 0       |
+| R2   | R3       | 3       |
+| R3   | direkt   | 2       |
+| R4   | R3       | 4       |
 
 Es ist leicht zu sehen, dass bei diesem Algorithmus relativ wenige
 Informationen über das Netz gesendet werden müssen. Dafür ist der
 Rechenaufwand bei jedem einzelnen Knoten höher als beim
 Distanzvektor-Algorithmus.
+
+Dafür konvergiert dieser Algorithmus schneller, da sämtliche Routen sofort
+berechnet werden können, sobald der vollständige Graph bekannt ist.
 
 X> Bestimme die Routing-Tabelle für die anderen Router mit dem
 X> Dijkstra-Algorithmus.

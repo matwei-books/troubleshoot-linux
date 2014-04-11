@@ -1,0 +1,19 @@
+# Graph für Illustration von Routing-Algorithmen
+
+graph {
+    rankdir = LR;
+    r1;
+    r1 [label="R1"];
+    r1 -- r2 [label="4"];
+    r1 -- r3 [label="2"];
+    r2 [label="R2"];
+    r2 -- r3 [label="1"];
+    r2 -- r4 [label="1"];
+    r3 [label="R3"];
+    r3 -- r4 [label="3"];
+    r4 [label="R4"];
+
+    subgraph {
+	rank = same; r2; r3;
+    }
+}
