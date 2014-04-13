@@ -86,6 +86,8 @@ Datenbank
   Neben den genannten gibt es noch andere, im Rahmen dieses Buches weniger
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
+DHCP
+
 DMA, Direct Memory Access
 : Beim Speicherdirektzugriff greifen externe Geräte wie zum Beispiel
   Festplatten- oder USB-Controller ohne den Umweg über die CPU auf den
@@ -95,6 +97,8 @@ DMA, Direct Memory Access
   Dafür kann der Hauptspeicher ohne Einfluss des Betriebssystems verändert
   werden, was im schlimmsten Fall zum Absturz oder zur Kompromittierung des
   Systems führen kann.
+
+DNS
 
 DRM, Direct Rendering Manager
 : Der Direct Rendering Manager ist ein Linux-Kernelmodul, das Zugriff auf den
@@ -176,6 +180,8 @@ IP, IPv4, IPv6
   Internetschicht des TCP/IP-Modells.
   Version 4 (IPv4) wird in RFC 791 beschrieben, Version 6 (IPv6) in RFC 2640.
 
+Kerberos
+
 Kernel
 : Der Kernel (deutsch: Betriebssystemkern) ist der zentrale Bestandteil eines
   Betriebssystems.
@@ -212,6 +218,8 @@ Korrelation
   Ereignissen oder Zuständen.
   Ob die Beziehung kausal ist und falls ja, wie, geht aus der Korrelation
   nicht hervor.
+
+LDAP
 
 Link
 : Ein Link ist ein Verweis auf einen [Inode](#glossar-inode) in einem
@@ -286,13 +294,6 @@ Multicast
   gesendet.
   Siehe auch *Unicast* und *Broadcast*.
 
-Network File System, NFS
-: Das NFS, ursprünglich von Sun Microsystems entwickelt, ist ein Protokoll zur
-  Übertragung von Dateien über das Netzwerk.
-  Im Gegensatz zu anderen Protokollen zur Dateiübertragung wie FTP oder HTTP
-  können Benutzer auf die Dateien so zugreifen, als ob sie auf dem lokalen PC
-  gespeichert wären.
-
 Netzsegment
 : Der Begriff wird auf den verschiedenen OSI-Ebenen für unterschiedliche
   Abgrenzungen verwendet:
@@ -303,6 +304,15 @@ Netzsegment
   *   auf Schicht 2 bezeichnet er die Netze an beiden Ports einer Bridge oder
       allen gemeinsamen Ports eines Switches
   *   auf Schicht 3 bezeichnet er ein Subnetz oder Netzbereich
+
+NFS
+: Das *Network File System*, ursprünglich von Sun Microsystems entwickelt,
+  ist ein Protokoll zur Übertragung von Dateien über das Netzwerk.
+  Im Gegensatz zu anderen Protokollen zur Dateiübertragung wie FTP oder HTTP
+  können Benutzer auf die Dateien so zugreifen, als ob sie auf dem lokalen PC
+  gespeichert wären.
+
+NTP
 
 OSI-Modell
 : Das *Open Systems Interconnection Model* ist ein Schichtenmodell, welches
@@ -325,6 +335,8 @@ Overlay-Dateisystem
   Overlay-Dateisysteme werden zum Beispiel bei Livesystemen eingesetzt, die
   von CD-ROM starten und alle Dateiänderungen in den RAM schreiben.
 
+PAC
+
 Paging
 : Mit Paging bezeichnet man die Speicherverwaltung per Seitenadressierung im
   Betriebssystem.
@@ -335,11 +347,11 @@ Paging
   Speicherseite zugreift, wird die entsprechende Speicherseite vom
   Betriebssystem nachgeladen.
 
-PMU, Performance Monitoring Unit
-: Die PMU ist ein Bestandteil moderner CPUs, der in verschiedenen Zählern
-  Performancewerte während der Arbeit der CPU sammelt und Ereignisse
-  (Interrupts) beim Erreichen von bestimmten Zuständen oder Zählerständen
-  auslösen kann.
+PMU
+: Die *Performance Monitoring Unit* ist ein Bestandteil moderner CPUs, der in
+  verschiedenen Zählern Performancewerte während der Arbeit der CPU sammelt
+  und Ereignisse (Interrupts) beim Erreichen von bestimmten Zuständen oder
+  Zählerständen auslösen kann.
 
 Partitionstabelle
 : Eine Tabelle im MBR, die die Aufteilung des Speichermediums in einzelne
@@ -568,4 +580,6 @@ Virtualisierung
 : Virtualisierung bezeichnet die Erzeugung von virtuellen, das heißt nicht
   physikalischen Dingen wie einer emulierten Hardware, Datenspeichers oder
   Netzwerkanschlusses.
+
+WPAD
 
