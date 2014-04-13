@@ -2,7 +2,7 @@
 #
 
 SLUG=troubleshoot-linux-server-and-networks
-TXTLST=Book.txt
+TXTLST=Subset.txt
 
 TODAY=$(date '+%Y%m%d')
 TMPBAS="tmp-proofr"
