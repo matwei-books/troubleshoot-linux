@@ -134,9 +134,5 @@ einem POP3-Server nachsehen, ob eine bestimmte E-Mail angekommen ist.
 Um festzustellen, welche Ports an einem Rechner erreichbar sind, kann ich
 netcat wie folgt aufrufen:
 
-    $ nc -z -v smtp.example.net 22-25
-    Connection to smtp.example.net 22 port [tcp/ssh] succeeded!
-    nc: connect to smtp.example.net port 23 (tcp) failed: Connection refused
-    nc: connect to smtp.example.net port 24 (tcp) failed: Connection refused
-    Connection to smtp.example.net 25 port [tcp/smtp] succeeded!
+![Portscan mit netcat](images/ss13-netcat-1.png)
 
