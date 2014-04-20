@@ -2,20 +2,22 @@
 ## openssl s_client {#sec-netz-werkzeuge-openssl}
 
 Openssl s_client ist das dritte Werkzeug, welches ich zu Verbindungstests
-verwende. Dabei handelt es sich um einen generischen SSL/TLS Client, mit dem
-ich verschlüsselte Protokolle wie HTTPS, SSMTP, und so weiter und die
+verwende.
+Dabei handelt es sich um einen generischen SSL/TLS Client, mit dem ich
+verschlüsselte Protokolle wie HTTPS oder SSMTP und die
 entsprechenden Server testen kann.
 
 ### Aufruf
 
 Der Grundlegende Aufruf sieht wie folgt aus:
 
+{line-numbers=off,lang="text"}
     $ openssl s_client -connect host:port [ options ]
   
 ### Optionen
 
 Die folgenden Optionen verwende ich hin und wieder, weitere gibt es wie
-fast immer in den Handbuchseiten.
+fast immer in den Handbuchseiten zu finden.
 
 -connect host:port
 : Baut eine SSL- oder TLS-Verbindung zu dem angegebenen Server und Port auf.
@@ -25,46 +27,81 @@ fast immer in den Handbuchseiten.
   einige Protokolle gefordert, um.
 
 -quiet
-: Unterdrückt die Ausgabe der Zertifikatinformationen.
+: Unterdrückt die Ausgabe der Zertifikat-Informationen.
 
 starttls proto
-: sendet die Protokollspezifischen Befehle um eine
-  Verbindung auf TLS umzuschalten. Für `proto` sind momentan nur die
-  folgenden Protokolle erlaubt: `smtp`, `pop3`, `imap`, `ftp`.
+: sendet die protokollspezifischen Befehle um eine
+  Verbindung auf TLS umzuschalten.
+  Momentan werden die folgenden Protokolle unterstützt:
+  `smtp`, `pop3`, `imap`, `ftp`.
 
 Bei Problemen mit der Aushandlung des SSL-Protokolls kann man mit den
 Optionen `-bugs`, `-ssl2`, `-ssl3`, `-tls`, `-no_ssl2`, ... experimentieren.
 Details finden sich in der Handbuchseite.
 
-### Beispiel
+### HTTPS-Anfrage
 
 Das folgende Beispiel zeigt eine HTTP-Abfrage mit openssl:
 
-    $ openssl s_client -connect encrypted.example.net:443 -quiet
-    depth=0 CN = encrypted.example.net
+![HTTP-Abfrage mit OpenSSL](images/ss13-openssl-1.png)
+
+### SMTP-SASL-Test
+
+Um die Authentisierung bei SMTP mit SASL zu testen, muss ich mir zunächst den
+String für die Credentials berechnen.
+Das PLAIN-SASL-Verfahren ist in RFC4616 beschrieben.
+Bei diesem sendet der Client ein String mit folgendem Aufbau an den Server.
+
+{line-numbers=off,lang="text"}
+    authzid \0 authcid \0 passwd
+
+Dabei ist
+
+authzid
+: die Authorization Id, die Identität, deren Rechte ich nutzen möchte.
+
+authcid
+: die Authentication Id, die Identität, als die ich mich anmelde.
+
+passwd
+: das Passwort
+
+Der Server überprüft die Gültigkeit von *authcid* und *passwd* und dann, ob
+der Client damit die Rechte der *authzid* ausüben kann.
+
+Da SMTP ein Plaintext-Protokoll ist, wird der String vor dem Senden mit Base64
+codiert.
+Mit Hilfe von Perl kann ich mir diesen String berechnen lassen:
+
+{line-numbers=off,lang="text"}
+    $ perl -MMIME::Base64 \
+      -e 'print encode_base64("john\0john\0passwd")';
+    am9obgBqb2huAHBhc3N3ZA==
+
+Dann baue ich eine verschlüsselte Verbindung mit STARTTLS zum
+Mailserver auf und melde mich an:
+
+{line-numbers=off,lang="text"}
+    $ openssl s_client -connect smtp.example.net:25\
+      -starttls smtp -quiet
+    depth=0 CN = smtp.example.net
     verify error:num=18:self signed certificate
     verify return:1
-    depth=0 CN = encrypted.example.net
+    depth=0 CN = smtp.example.net
     verify return:1
-    GET / HTTP/1.0
-    Host: encrypted.example.net
-    
-    HTTP/1.1 200 OK
-    Date: Fri, 05 Apr 2013 09:39:20 GMT
-    Server: Apache
-    Vary: Accept-Encoding
-    Content-Length: 709
-    Connection: close
-    Content-Type: text/html;charset=UTF-8
-    
-    <!DOCTYPE HTML PUBLIC ``-//W3C//DTD HTML 3.2 Final//EN''>
-    <html>
-    <head>
-    <title>Index of /</title>
-    </head>
-    <body>
-    <h1>Index of /</h1>
-    ...
-    <address>Apache Server at encrypted.example.net Port 443</address>
-    </body></html>
+    250 DSN
+    EHLO client.example.net
+    250-smtp.example.net
+    250-PIPELINING
+    250-SIZE 10240000
+    250-VRFY
+    250-ETRN
+    250-AUTH PLAIN LOGIN
+    250-ENHANCEDSTATUSCODES
+    250-8BITMIME
+    250 DSN
+    AUTH PLAIN am9obgBqb2huAHBhc3N3ZA==
+    235 2.7.0 Authentication successful
+    QUIT
+    221 2.0.0 Bye
 

@@ -125,6 +125,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/images/router-graph.png \
                $(DROPBOXDIR)/images/ss13-libtrace-1.png \
                $(DROPBOXDIR)/images/ss13-netcat-1.png \
+               $(DROPBOXDIR)/images/ss13-openssl-1.png \
                $(DROPBOXDIR)/images/tcp-handshake-fail.png \
                $(DROPBOXDIR)/images/tcp-handshake.png \
                $(DROPBOXDIR)/images/tcp-shutdown.png \
@@ -248,6 +249,7 @@ SOURCES = $(BOOK) \
           images/router-graph.png \
           images/ss13-libtrace-1.png \
           images/ss13-netcat-1.png \
+          images/ss13-openssl-1.png \
           images/tcp-handshake-fail.png \
           images/tcp-handshake.png \
           images/tcp-shutdown.png \
