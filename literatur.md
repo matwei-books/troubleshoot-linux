@@ -172,6 +172,25 @@ Dieser Artikel geht auf die Möglichkeiten der Performance-Analyse mit Hilfe
 der Performance-Counter der CPU ein und stellt das Programm `perf` vor, dass
 eine einheitliche Schnittstelle dafür unter Linux bereitstellt.
 
+##### ctTZ2013a {#bib-ct-tz2013a}
+Michael Tremer, Dušan Zivadinović; Kürzungsmaßnahme - Internet-Tuning:
+Puffercontrolle mit CoDel;
+c't Magazin für Computertechnik 2013, Heft 13, S. 184ff;
+ISSN 0724-8679
+
+In diesem Artikel erläutern die Autoren die Wirkungsweise des CoDel-Verfahrens
+zum Router-Queue-Management bei Bufferbloat.
+
+##### ctTZ2013b {#bib-ct-tz2013b}
+Michael Tremer, Dušan Zivadinović; Paketbeschleuniger - Internet-Tuning mit
+IPFire und CoDel;
+c't Magazin für Computertechnik 2013, Heft 13, S. 188f;
+ISSN 0724-8679
+
+Dieser Praxis-Artikel zeigt, wie man mit der Firewall-Appliance IPFire erste
+Erfahrungen mit dem CoDel-Verfahren zum Router-Queue-Management bei
+Bufferbloat machen kann.
+
 ##### Koenig2012 {#bib-koenig2012}
 König, Harald; strace für Linux-Versteher; UpTimes - Mitgliederzeitschrift
 der German Unix User Group; Ausgabe 2012/1, S. 61ff

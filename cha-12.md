@@ -1,4 +1,4 @@
-# Netzwerkperfomance {#cha-netz-performance}
+# Netzwerkperformance {#cha-netz-performance}
 
 Manchmal scheint alles in Ordnung zu sein und trotzdem sind die Kunden nicht
 zufrieden. Performance ist ein heikles Thema, weil jeder seine eigene
