@@ -23,6 +23,15 @@ Bootstrapping
   einem einfachen System heraus ein komplizierteres aktiviert wird, wie zum
   Beispiel beim Start des Betriebssystems.
 
+BPF
+: *Der Berkeley Packet Filter* bietet auf UNIX-ähnlichen Systemen eine
+  Software-Schnittstelle zu Netzwerkgeräten und erlaubt darüber Datagramme der
+  Sicherungsschicht (link layer) zu empfangen und zu senden.
+  Das Programm `tcpdump` nutzt beispielsweise BPF für den Zugriff auf die
+  Datagramme der Netzschnittstellen. Seine Handbuchseite enthält eine
+  umfangreiche Beschreibung der Filterausdrücke, mit denen die
+  interessierenden Datagramme ausgewählt werden können.
+
 Broadcast
 : Eine Broadcast-Nachricht ist eine Nachricht, die an alle Teilnehmer des
   Netzes gesendet wird.
