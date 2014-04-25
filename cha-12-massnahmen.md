@@ -40,32 +40,33 @@ Anwender.
 Bei Bufferbloat an einem Übergang zu einer Leitung mit niedriger Bandbreite
 habe ich nicht viele Möglichkeiten.
 
-Das zur Zeit beste Verfahren beim Umgang mit Bufferbloat ist ein
+Das zur Zeit wohl beste Verfahren beim Umgang mit Bufferbloat ist das
 Queue-Management mit dem CoDel-Verfahren.
-Bei diesem Verfahren werden ankommende Datenpakete mit einem Zeitstempel
-versehen.
+Dabei bekommen ankommende Datenpakete einen Zeitstempel.
 Sobald ein Paket zu lange in einer Queue verbleibt, werden nachfolgende Pakete
 verworfen, noch bevor die Queue überfüllt ist.
-Die TCP-Flusskontrolle der betroffenen Verbindungen kann damit schneller
+Die TCP-Flusskontrolle der betroffenen Verbindungen kann dadurch schneller
 reagieren und drosselt die Transfer-Rate.
 
 Diese Lösung funktioniert recht gut und hat den Vorteil, dass außer dem
 Queue-Management am Router nichts geändert werden muss.
 Ein weiterer wesentlicher Vorteil ist, dass der Administrator keine Parameter
-bestimmen oder einstellen muss, wodurch eine weitere mögliche Fehlerquelle
-entfällt.
+bestimmen oder einstellen muss, wodurch eine mögliche Fehlerquelle entfällt.
+
 In [[ctTZ2013a](#bib-ct-tz2013a)] erläutern die Autoren das
-CoDel-Queue-Management verständlich und in [[ctTZ2013b](#bib-ct-tz2013b)]
-zeigen sie, wie man mit der Firewall-Appliance IPFire erste eigene Erfahrungen
-sammeln kann.
+Queue-Management mit CoDel für den Laien verständlich und in
+[[ctTZ2013b](#bib-ct-tz2013b)] zeigen sie, wie man mit der Firewall-Appliance
+IPFire erste eigene Erfahrungen damit sammeln kann.
 
 CoDel ist im Linux-Kernel ab Version 3.5 enthalten.
-Bei einem älteren Kernel, der kein CoDel unterstützt, bleibt mir nur, mit QoS
+
+Bei einem älteren Kernel, der CoDel nicht unterstützt, bleibt mir nur, mit QoS
 und Priorisierung genügend Bandbreite für wichtige Anwendungen zu reservieren.
 Dazu muss ich die Datenströme genau analysieren und mir klar sein über die
 Anforderungen.
 Hier ist viel Fingerspitzengefühl gefragt.
+
 In einem konkreten Fall blieb für den E-Mail-Verkehr so wenig Bandbreite, dass
-einzelne sehr große E-Mail mehrere Stunden für die Übertragung benötigten.
-Dazu musste ich dann auch die Timer an den Mailservern entsprechend anpassen.
+einzelne, sehr große E-Mail mehrere Stunden für die Übertragung benötigten.
+Dementsprechend musste ich die Timer an den Mailservern anpassen.
 
