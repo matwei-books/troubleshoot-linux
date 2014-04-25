@@ -124,16 +124,3 @@ brctl setgcint $brname $time
   Aller *$time* Sekunden kontrolliert die Bridge die Forwarding-Tabelle nach
   veralteten MAC-Adressen.
 
-Das Spanning Tree Protocol kann ich mit den folgenden Befehlen bearbeiten:
-
-brctl stp $brname $status
-: schaltet STP an Bridge *$brname* ein, wenn ich für *$status* `on`
-  oder `yes` angebe.
-
-brctl showstp $brname
-: zeigt detaillierte Angaben zu STP an Bridge *$brname*.
-
-Für weitere Befehle zur Manipulation von STP verweise ich auf die
-Handbuchseite. Vor deren Einsatz empfiehlt es sich, sich mit dem Spanning
-Tree Protocol vertraut zu machen.
-
