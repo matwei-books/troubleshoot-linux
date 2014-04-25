@@ -7,7 +7,7 @@ Bitübertragungsschicht, im [OSI-Modell](#sec-osi-modell) und arbeite mich von
 da langsam nach oben über die Sicherungsschicht zur Vermittlungsschicht.
 
 Bei neu gestarteten Systemen kontrolliere ich als erstes die
-Zuordnung der Schnittstellennamen mit `ifconfig` oder `ip a s`.
+Zuordnung der Schnittstellennamen mit `ifconfig` oder `ip addr show`.
 
 Es gibt keine zuverlässige Möglichkeit,
 Netzschnittstellen von vornherein eindeutig zu benennen.
@@ -49,7 +49,7 @@ Rechner am anderen Ende des Kabels verbunden ist.
 Dafür brauche ich keinen neuen Befehl aufrufen, das sagt mir ebenfalls `ip`:
 
 {line-numbers=off,lang="text"}
-    $ ip a s
+    $ ip addr show
     ...
     2: eth0: <NO-CARRIER,BROADCAST,MULTICAST,UP> ...
         link/ether 00:1f:d0:97:c4:55 brd ff:ff:ff:ff:ff:ff
@@ -96,8 +96,8 @@ Ethernet-Schnittstelle empfangen oder gesendet wurden:
 Hier sehe ich, dass an eth1 Daten ankamen und gesendet wurden.
 Allerdings weiß ich noch nicht, ob die Schnittstellen jeweils am
 richtigen Netz angeschlossen sind.
-Mit `ip a s` lasse ich mir die Adressen anzeigen und vergleiche diese mit der
-erwarteten Konfiguration.
+Mit `ip addr show` lasse ich mir die Adressen anzeigen und vergleiche diese
+mit der erwarteten Konfiguration.
 Stimmt diese überein, dann versuche ich mit *Ping* einen Rechner in jedem
 angeschlossenen Netz zu erreichen.
 Bekomme ich keine Antwort können die Karten noch im falschen Netz
