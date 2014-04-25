@@ -56,6 +56,15 @@ CPU
   Prozessorbausteine selbst mehrere unabhängige CPU enthalten, die
   gleichzeitig verschiedene Programme abarbeiten können.
 
+Crypto-PAn
+: *Cryptography-based  Prefix-preserving Anonymization* ist ein Verfahren, um
+  die IP-Adressen in Netzwerk-Mitschnitten zu anonymisieren.
+  Dabei werden die IP-Adressen einzeln umgesetzt, Netzwerk-Präfixe bleiben
+  erhalten.
+  Das Verfahren nutzt kryptographische Pseudo-Zufallszahlen, die mit einem
+  Schlüssel initialisiert werden, und erlaubt dadurch die Umsetzungen
+  konsistent über verschiedene Mitschnitte zu halten.
+
 {#glossar-dac}
 DAC, Discretionary Access Control
 : Bei der Discretionary Access Control (deutsch: Benutzerbestimmbare
