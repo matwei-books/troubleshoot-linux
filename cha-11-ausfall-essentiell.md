@@ -195,7 +195,7 @@ einzustellen:
 *   Vollautomatisch mit dem WPAD-Protokoll. Das will ich haben, wenn es
     funktioniert.
 
-#### PAC-Datei
+#### PAC-Datei {#sec-proxy-auto-config}
 
 Die Datei für Proxy Auto Configuration (PAC) ist eine Textdatei, die die
 JavaScript-Funktion `FindProxyForURL(url, host)` definiert.

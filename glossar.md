@@ -105,6 +105,11 @@ Datenbank
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
 DHCP
+: Das *Dynamic Host Configuration Protocol* ermöglicht die Zuweisung der
+  Netzwerkkonfiguration an Clients durch einen Server.
+  Neben den IP-Adressen und Routern können noch weitere Informationen, wie
+  DNS-Server, Zeitserver oder Informationen zu HTTP-Proxy-Servern übergeben
+  werden.
 
 DMA, Direct Memory Access
 : Beim Speicherdirektzugriff greifen externe Geräte wie zum Beispiel
@@ -117,6 +122,9 @@ DMA, Direct Memory Access
   Systems führen kann.
 
 DNS
+: Das *Domain Name System* ist ein verteiltes hierarchisches Datenbanksystem,
+  das primär der Zuordnung von Rechnernamen zu IP-Adressen dient.
+  Es ist in den RFCs 1034 und 1035 beschrieben.
 
 DRM, Direct Rendering Manager
 : Der Direct Rendering Manager ist ein Linux-Kernelmodul, das Zugriff auf den
@@ -199,6 +207,12 @@ IP, IPv4, IPv6
   Version 4 (IPv4) wird in RFC 791 beschrieben, Version 6 (IPv6) in RFC 2640.
 
 Kerberos
+: Kerberos ist ein verteilter Authentisierungsdienst für Computernetze.
+  Die aktuelle Version 5 ist in RFC 4120 beschrieben.
+  Das Protokoll benötigt einen Zeitabgleich der beteiligten Computer, zum
+  Beispiel durch NTP.
+  Microsoft verwendet das Kerberos-Protokoll als Bestandteil von Active
+  Directory zur Authentifizierung.
 
 Kernel
 : Der Kernel (deutsch: Betriebssystemkern) ist der zentrale Bestandteil eines
@@ -238,6 +252,10 @@ Korrelation
   nicht hervor.
 
 LDAP
+: Das *Lightweight Directory Access Protocol* erlaubt die Abfrage und die
+  Modifikation von Informationen eines Verzeichnisdienstes über ein
+  IP-Netzwerk.
+  Die aktuelle Version ist in den RFCs 4510 und 4511 beschrieben.
 
 Link
 : Ein Link ist ein Verweis auf einen [Inode](#glossar-inode) in einem
@@ -331,6 +349,9 @@ NFS
   gespeichert wären.
 
 NTP
+: Das *Network Time Protocol* dient zur Synchronisierung von Uhren in
+  Computersystemen über das Netz.
+  Die aktuelle Version 4 ist in RFC 5905 beschrieben.
 
 OSI-Modell
 : Das *Open Systems Interconnection Model* ist ein Schichtenmodell, welches
@@ -353,7 +374,11 @@ Overlay-Dateisystem
   Overlay-Dateisysteme werden zum Beispiel bei Livesystemen eingesetzt, die
   von CD-ROM starten und alle Dateiänderungen in den RAM schreiben.
 
-PAC
+PAC-Datei
+: Mit Hilfe einer *Proxy-Auto-Config-Datei* kann ein Webbrowser
+  automatisch den passenden Proxyserver für eine gewünschte URL ermitteln.
+  In [Kapitel 11](#sec-proxy-auto-config) gehe ich näher auf die
+  Funktionsweise automatischen Proxy-Konfiguration ein.
 
 Paging
 : Mit Paging bezeichnet man die Speicherverwaltung per Seitenadressierung im
@@ -600,4 +625,9 @@ Virtualisierung
   Netzwerkanschlusses.
 
 WPAD
+: Mit dem *Web Proxy Autodiscovery Protocol* können Web-Clients (Browser) zu
+  verwendende Proxy-Server automatisch finden, wenn die PAC-Datei unter einer
+  definierten URL zu erreichen ist.
+  In [Kapitel 11](#sec-proxy-auto-config) gehe ich näher auf die
+  Funktionsweise automatischen Proxy-Konfiguration ein.
 
