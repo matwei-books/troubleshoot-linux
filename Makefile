@@ -129,6 +129,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/images/tcp-handshake-fail.png \
                $(DROPBOXDIR)/images/tcp-handshake.png \
                $(DROPBOXDIR)/images/tcp-shutdown.png \
+               $(DROPBOXDIR)/images/title_page.png \
                $(DROPBOXDIR)/images/top-sorted-by-mem.png \
 #
 

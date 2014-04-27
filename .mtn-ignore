@@ -3,6 +3,7 @@
 ^drakon$
 ^graphviz/.*\.png$
 ^graphviz/.*\.svg$
+^img-orig/.*\.png$
 \.leanpub.conf$
 \.log$
 ^manuscript$
@@ -13,7 +14,7 @@
 ^proofr$
 ^recherche$
 ^revision\.md$
-^\.revision\.mdwn$
+^\.revision\.md$
 ^tmp-proofr$
 \.toc$
 ^TODO.otl$
