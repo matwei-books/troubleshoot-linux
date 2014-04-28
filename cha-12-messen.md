@@ -87,10 +87,13 @@ beobachten.
 
 Mit dem Befehl
 
+{line-numbers=off,lang="text"}
     # ping -f rechnername
 
-sendet Ping Datenpakete so schnell es geht zum Zielrechner.
+sendet Ping Datenpakete, so schnell es geht, zum Zielrechner.
 Dazu benötige ich Superuserrechte.
+Diesen Aufruf kann ich mit der Option `-l $preload` kombinieren, so dass Ping
+so viele Datenpakete sendet, ohne auf Antwort zu warten.
 
 Diesen Aufruf verwende ich, um auf einem Segment Netzwerklast zu erzeugen.
 Zusätzlich zur normalen Statistik (min/avg/max/mdev) zeigt Ping am Ende zwei

@@ -45,7 +45,7 @@ Auch die Art des verwendeten Protokolls kann Hinweise auf mögliche Probleme
 geben.
 So gehen bei datagrammorientierten Protokollen wie UDP Daten einfach verloren,
 während bei datenflussorientierten Protokollen wie TCP Zeit verloren geht,
-währen das Protokoll die Daten nochmals sendet.
+während das Protokoll die Daten nochmals sendet.
 
 Bei der Klassifizierung hilft mir, bereits bei der Aufnahme des Problems nach
 Anzeichen für mögliche Ursachen Ausschau zu halten.

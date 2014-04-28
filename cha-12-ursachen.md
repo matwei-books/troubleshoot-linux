@@ -30,7 +30,7 @@ zurückführen:
     möglich ist.
 
 *   Eine schlechte Leitung: es ist nicht möglich, die volle Bandbreite zu
-    nutzen, die überr einen Leitungsabschnitt zur Verfügung stehen sollte.
+    nutzen, die über einen Leitungsabschnitt zur Verfügung stehen sollte.
 
 *   Ein überlastetes Gateway: dieses benötigt zu viel Zeit, um Daten zwischen
     den Interfaces zu bewegen.
@@ -69,7 +69,7 @@ Beispiel durch Überlast erhöht.
 ### Bufferbloat
 
 Ein Problem, dass in der Fachliteratur als Bufferbloat bezeichnet wird, ist
-die künstliche Erhöhung der Latzen durch Puffer in den Gateways.
+die künstliche Erhöhung der Latenz durch Puffer in den Gateways.
 Diese kommt zustande, wenn bei einem Gateway mehr Daten ankommen, als gesendet
 werden können.
 Im Laufe der Zeit wurden Gateways mit immer mehr Puffer ausgestattet, damit
