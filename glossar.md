@@ -6,6 +6,8 @@ ARP
   gehörende Adresse der Netzzugangsschicht, in den meisten Fällen Ethernet.
   Das Protokoll wird in RFC 826 beschrieben.
 
+Bandbreite
+
 BIOS
 : Das BIOS, von *Basic Input/Output System* ist die
   [Firmware](#glossar-firmware) der PCs, die auf den IBM-PC zurückgehen.
@@ -36,6 +38,8 @@ Broadcast
 : Eine Broadcast-Nachricht ist eine Nachricht, die an alle Teilnehmer des
   Netzes gesendet wird.
   Siehe auch *Unicast* und *Multicast*.
+
+Bufferbloat
 
 CIDR
 : *Classless Inter Domain Routing* (CIDR) beschreibt ein Verfahren, um bei
@@ -134,6 +138,8 @@ DRM, Direct Rendering Manager
 Einhängepunkt
 : siehe [Mount Point](#glossar-mount-point).
 
+EWMA
+
 {#glossar-firmware}
 Firmware
 : Unter Firmware versteht man Software, die in elektronischen Geräten fest
@@ -206,6 +212,8 @@ IP, IPv4, IPv6
   Internetschicht des TCP/IP-Modells.
   Version 4 (IPv4) wird in RFC 791 beschrieben, Version 6 (IPv6) in RFC 2640.
 
+IPG
+
 Kerberos
 : Kerberos ist ein verteilter Authentisierungsdienst für Computernetze.
   Die aktuelle Version 5 ist in RFC 4120 beschrieben.
@@ -250,6 +258,8 @@ Korrelation
   Ereignissen oder Zuständen.
   Ob die Beziehung kausal ist und falls ja, wie, geht aus der Korrelation
   nicht hervor.
+
+Latenz
 
 LDAP
 : Das *Lightweight Directory Access Protocol* erlaubt die Abfrage und die
@@ -329,6 +339,8 @@ Multicast
 : Eine Multicast-Nachricht wird an eine Gruppe von Teilnehmern in einem Netz
   gesendet.
   Siehe auch *Unicast* und *Broadcast*.
+
+Netflow
 
 Netzsegment
 : Der Begriff wird auf den verschiedenen OSI-Ebenen für unterschiedliche
@@ -433,6 +445,8 @@ PXE, Preboot Execution Environment
   Diese nutzt die Protokolle DHCP zum Übertragen von Bootinformationen und
   TFTP zum Übertragen von Dateien, wie zum Beispiel Betriebssystemimages.
 
+QoS
+
 RAID
 : Ein *Redundand Array of Independent Disks* ist eine Kombination von mehreren
   Festplatten zu einem logischen Laufwerk um eine bessere Datenverfügbarkeit
@@ -464,6 +478,8 @@ RIP, RIP2
 Router
 : Ein Router verbindet mehrere Teilnetze miteinander und trifft Entscheidungen
   über die Weiterleitung von Datenpaketen anhand ihrer Zieladresse.
+
+RTT
 
 SAS
 : *Serial Attached SCSI* ist ein Nachfolger der parallelen SCSI-Schnittstelle.
@@ -507,6 +523,8 @@ SMTP
 : Das *Simple Mail Transfer Protocol* dient dem Versenden und Weiterleiten
   von E-Mail in Computernetzen.
   Das Protokoll ist textbasiert und in RFC 5321 beschrieben.
+
+SNMP
 
 Standardausgabe, -eingabe, fehlerausgabe
 : Diese drei Standard-Datenströme im Betriebssystem UNIX werden auch *STDIN*,
@@ -577,6 +595,8 @@ Thrashing
   von Speicherseiten beschäftigt ist.
   Der Prozessor verbringt die meiste Zeit im Wartezustand und die verfügbare
   Rechenleistung ist deutlich herabgesetzt.
+
+Traffic-Shaping
 
 UDP
 : Das *Universal Datagram Protocol* ist ein minimales verbindungsloses
