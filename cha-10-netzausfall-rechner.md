@@ -1,7 +1,7 @@
 
 ## Netzausfall an einem Rechner
 
-Komme ich zu einem Rechner, der überhaupt keine Netzverbindung hat, dann
+Komme ich zu einem Rechner, der überhaupt keine Verbindung zum Netz hat, dann
 beginne ich in der untersten Schicht, der physikalischen oder
 Bitübertragungsschicht, im [OSI-Modell](#sec-osi-modell) und arbeite mich von
 da langsam nach oben über die Sicherungsschicht zur Vermittlungsschicht.

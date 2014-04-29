@@ -5,8 +5,8 @@ Einem Totalausfall recht nahe kommt der Zustand, wenn ein oder mehrere
 Prozesse so viele Ressourcen belegen, dass andere Prozesse kaum noch zum Zuge
 kommen.
 
-Erkennbar ist das zum Beispiel daran, dass Netzverbindungen scheinbar noch
-funktionieren, der Rechner auf Ping antwortet, die Dienste des Rechners
+Erkennbar ist das zum Beispiel daran, dass Verbindungen über das Netz scheinbar
+noch funktionieren, der Rechner auf Ping antwortet, die Dienste des Rechners
 eventuell noch neue Verbindungen annehmen aber keine Antworten senden.
 An der Konsole kann ich beim Login noch Benutzername und Kennwort eingeben.
 Aber die Prüfung des Kennworts dauert so lange, dass sie durch Timeout

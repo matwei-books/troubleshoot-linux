@@ -8,7 +8,7 @@ beschränkt ist, behandle ich ihn bei der Fehlersuche als Teilausfall im Netz.
 Wichtig ist für mich, diesen Ausfall eines oder weniger Dienste zu
 identifizieren und vom Totalausfall zu unterscheiden.
 Es kann vorkommen, dass dieser Teilausfall im Netz auf einen Totalausfall
-eines Rechners oder der Netzverbindung des Rechners, auf dem der Dienst läuft,
+des Rechners, auf dem der Dienst läuft, oder seiner Anbindung an das Netz
 zurückführt,
 
 Bereits vor dem Ausfall sollte ich mir Gedanken gemacht haben, wie ich die

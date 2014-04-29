@@ -1,8 +1,8 @@
 
 ## Totalausfall Netzsegment
 
-Neben dem totalen Ausfall der Netzverbindung eines Rechners betrachte ich die
-Nichterreichbarkeit eines oder mehrerer Netzsegmente als Totalausfall.
+Neben dem totalen Ausfall der Anbindung eines Rechners an das Netz betrachte
+ich die Nichterreichbarkeit eines oder mehrerer Netzsegmente als Totalausfall.
 Während ich bei ersterem auf die Kenntnis der Hardware und der unteren
 [OSI-Schichten](#sec-osi-modell) setze, um den Fehler einzugrenzen,
 benötige ich hier detaillierte Kenntnisse der Netzwerktopologie.
@@ -43,11 +43,11 @@ Gateway zum nächsten möglich ist, ist es sinnvoll, wenn ich auf den
 Gateways immer auch das Client-Programm, `ssh` oder `telnet` zur Verfügung
 habe, um mich am nächsten Gateway anmelden zu können.
 
-Je nachdem, ob ich auf dem Gateway ein Problem mit der physischen
-Netzverbindung zum nächsten Hop habe, oder ob eine der benötigten Routen
+Je nachdem, ob ich auf dem Gateway ein Problem mit der physischen Verbindung
+zum nächsten Hop habe, oder ob eine der benötigten Routen
 fehlt, behandle ich den Fall weiter.
 
-Bei Problemen mit der physischen Netzverbindung untersuche ich das Problem
+Bei Problemen mit der physischen Verbindung untersuche ich das Problem
 bei einem Linux-basierten Router, wie im vorigen Abschnitt beschrieben.
 
 Bei fehlenden Routen muss ich nach den Routing-Protokollen schauen.
