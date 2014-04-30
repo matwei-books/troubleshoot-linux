@@ -64,6 +64,18 @@ und sie bei ihren ersten Schritten begleiten.
 Gestandene Administratoren werden vielleicht die eine oder andere Anregung
 entnehmen können.
 
+Ich habe in diesem Buch meine Erfahrungen aus über 20 Jahren Fehlersuche bei
+Linux und UNIX-Systemen und in IP-Netzwerken strukturiert zusammengefasst.
+
+Diese Erfahrungen konzentrieren sich auf die beiden Bereiche Linux-Server und
+IPv4.
+Zwar setze ich privat Linux auch auf dem Desktop ein, jedoch habe ich damit
+nicht genügend Probleme gehabt, dass es sich gelohnt hätte, einen eigenen
+Abschnitt in diesem Buch dafür zu reservieren.
+Das gleiche gilt für IPv6 und WLAN, die ich ebenfalls privat einsetze, aber
+noch nicht im beruflichen Umfeld, so dass meine Erfahrungen damit noch nicht
+ausreichen für eine fundierte und strukturierte Darstellung.
+
 ## Wie ist das Buch aufgebaut
 
 Dieses Buch ist besteht aus drei Hauptteilen.
@@ -162,3 +174,5 @@ X> Übungen sind mit diesem Symbol gekennzeichnet.
 
 ## Danksagung
 
+Mein Dank gebührt Stefan Naumann und Knut Schmädt, die sich die Mühe gemacht
+haben, frühe Versionen dieses Buches zu lesen und mir Feedback dazu gaben.
