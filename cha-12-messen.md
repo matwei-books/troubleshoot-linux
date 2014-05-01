@@ -9,10 +9,10 @@ Ich bestimme diese Parameter, wenn möglich, vor dem produktiven Einsatz von
 Netzwerkverbindungen, als Baseline für spätere Vergleichsmessungen wenn ich
 Fehler vermute.
 
-### Bandbreite
+### Datenübertragungsrate
 
 Auch hier verweise ich wieder auf [[Sloan2001](#bib-sloan2001)].
-Dort ist beschrieben, wie ich nur mit `ping` als Werkzeug die Bandbreite jedes
+Dort ist beschrieben, wie ich nur mit `ping` als Werkzeug die Datenübertragungsrate jedes
 einzelnen Netzsegmentes zwischen Sender und Empfänger bestimmen kann.
 Da ich bei Netzen außerhalb meines Einflussbereiches nicht immer damit rechnen
 kann, auf PING eine Antwort zu bekommen, muss ich dann zu anderen Mitteln
@@ -42,7 +42,7 @@ Das Verfahren funktioniert folgendermaßen:
 
     Diese Zeit teile ich durch 2, weil mich nur die einfache Zeit für die
     Übertragung interessiert.
-    Die Anzahl der Bytes (1000) multipliziere ich mit 8, da die Bandbreite
+    Die Anzahl der Bytes (1000) multipliziere ich mit 8, da die Datenübertragungsrate
     üblicherweise in bps (bits per second) angegeben wird.
 
     Damit komme ich zu folgender Gleichung:
@@ -61,7 +61,7 @@ Das Verfahren funktioniert folgendermaßen:
 
 Falls ich mehrere Datenpakete mit der gleichen Größe gesendet habe, verwende
 ich für die Berechnung nicht den Durchschnitt sondern die kleinste RTT, weil
-diese der wahren, nicht mit anderen Übertragungen geteilten Bandbreite am
+diese der wahren, nicht mit anderen Übertragungen geteilten Datenübertragungsrate am
 nächsten kommt.
 Es versteht sich auch von selbst, dass ich mir für die Messung einen Zeitpunkt
 heraussuche, zu dem möglichst wenig andere Datenverkehr die Messung
@@ -124,7 +124,7 @@ wobei ich die Charakteristika der beiden Protokolle ausnutzen kann.
 Dabei kann ich den Durchsatz entweder in jeweils einer Richtung oder
 gleichzeitig in beiden Richtungen messen.
 Dabei muss ich jedoch immer im Hinterkopf behalten, dass manche Ethernetkarten
-beziehungsweise die Treiber dafür nicht die volle mögliche Bandbreite liefern
+beziehungsweise die Treiber dafür nicht die volle mögliche Datenübertragungsrate liefern
 können.
 
 Habe ich signifikante Unterschiede im Durchsatz bei den verschiedenen
@@ -155,7 +155,7 @@ diese das Netzwerk nicht übermäßig.
 
 Noch aussagekräftiger sind die Daten von Netflow.
 Damit kann ich nicht nur Lastspitzen erkennen, sondern auch, welcher Verkehr
-die meiste Bandbreite benötigte oder die meisten Datenpakete.
+die meiste Datenübertragungsrate benötigte oder die meisten Datenpakete.
 
 Für Netflow benötige ich Sensoren auf den Routern und eine geeignete
 Monitoring-Software, wie zum Beispiel NfSen.

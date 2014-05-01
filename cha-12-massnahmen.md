@@ -16,7 +16,7 @@ immer gut dokumentiert wird und dass die Administratoren entsprechend
 geschult werden.
 Dabei ist QoS nicht nur auf Traffic-Shaping beschränkt.
 Einige Dienste, wie zum Beispiel Squid-Proxy-Server enthalten Möglichkeiten
-zur gezielten Beschränkung der Bandbreiten.
+zur gezielten Beschränkung der Datenübertragungsraten.
 
 Eine gute Idee ist in vielen Fällen, den Traffic zu reduzieren.
 Kurzfristig könnte ich einige Dienste abschalten oder deren Traffic niedriger
@@ -37,7 +37,7 @@ Anwender.
 
 ### Bufferbloat
 
-Bei Bufferbloat an einem Übergang zu einer Leitung mit niedriger Bandbreite
+Bei Bufferbloat an einem Übergang zu einer Leitung mit niedriger Datenübertragungsrate
 habe ich nicht viele Möglichkeiten.
 
 Das zur Zeit wohl beste Verfahren beim Umgang mit Bufferbloat ist das
@@ -61,12 +61,12 @@ IPFire erste eigene Erfahrungen damit sammeln kann.
 CoDel ist im Linux-Kernel ab Version 3.5 enthalten.
 
 Bei einem älteren Kernel, der CoDel nicht unterstützt, bleibt mir nur, mit QoS
-und Priorisierung genügend Bandbreite für wichtige Anwendungen zu reservieren.
+und Priorisierung genügend Datenübertragungsrate für wichtige Anwendungen zu reservieren.
 Dazu muss ich die Datenströme genau analysieren und mir klar sein über die
 Anforderungen.
 Hier ist viel Fingerspitzengefühl gefragt.
 
-In einem konkreten Fall blieb für den E-Mail-Verkehr so wenig Bandbreite, dass
+In einem konkreten Fall blieb für den E-Mail-Verkehr so wenig Datenübertragungsrate, dass
 einzelne, sehr große E-Mail mehrere Stunden für die Übertragung benötigten.
 Dementsprechend musste ich die Timer an den Mailservern anpassen.
 

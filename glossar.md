@@ -6,8 +6,6 @@ ARP
   gehörende Adresse der Netzzugangsschicht, in den meisten Fällen Ethernet.
   Das Protokoll wird in RFC 826 beschrieben.
 
-Bandbreite
-
 BIOS
 : Das BIOS, von *Basic Input/Output System* ist die
   [Firmware](#glossar-firmware) der PCs, die auf den IBM-PC zurückgehen.
@@ -107,6 +105,8 @@ Datenbank
   wie Mailboxen.
   Neben den genannten gibt es noch andere, im Rahmen dieses Buches weniger
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
+
+Datenübertragungsrate
 
 DHCP
 : Das *Dynamic Host Configuration Protocol* ermöglicht die Zuweisung der

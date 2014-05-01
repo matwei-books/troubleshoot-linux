@@ -159,7 +159,7 @@ c't Magazin für Computertechnik 2012 Heft 10, S. 188ff;
 ISSN 0724-8679
 
 Der Autor erläutert in diesem Artikel leicht verständlich, wie die in TCP
-enthaltene Flusskontrolle dazu beiträgt, die Bandbreite einer Verbindung
+enthaltene Flusskontrolle dazu beiträgt, die Datenübertragungsrate einer Verbindung
 möglichst optimal auszunutzen.
 
 ##### ctHM2013 {#bib-ct-hm2013}

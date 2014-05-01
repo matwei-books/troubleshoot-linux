@@ -310,5 +310,5 @@ Mit den folgenden Optionen kann ich die Ausgabe beeinflussen:
 : zeigt die Bytes und Pakete der Datenflüsse als Anteil vom Gesamtdatenverkehr
 
 --bits-per-second
-: zeigt die Bandbreite als Bits pro Sekunde an
+: zeigt die Datenübertragungsrate als Bits pro Sekunde an
 

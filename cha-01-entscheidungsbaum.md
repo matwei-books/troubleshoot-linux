@@ -51,7 +51,7 @@ Gibt es SLA, können diese vielleicht bei der Beantwortung der Frage helfen.
 Bei nicht interaktiven Aufgaben, wie Datensicherungen oder Batchjobs kann ich
 die Gesamtlaufzeit betrachten und an Hand dieser entscheiden, ob es schnell
 genug ist, oder nicht.
-Bei Dateiübertragungen kann ich an Hand von Bandbreite, Netzauslastung und
+Bei Dateiübertragungen kann ich an Hand von Datenübertragungsrate, Netzauslastung und
 Übertragungsdauer überschlagen, ob es Performanceprobleme gibt oder nicht.
 Bei interaktiven Programmen oder Netzwerkdiensten zählt meist nur die
 Antwortzeit des Systems, die im Bereich von Sekundenbruchteilen liegen sollte.

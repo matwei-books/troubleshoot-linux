@@ -95,7 +95,7 @@ Das kann ein Hinweis sein, bei Performanceproblemen die Situation auf dem
 empfangenden Rechner in Augenschein zu nehmen.
 
 Neben der Anzahl der beim Empfänger eintreffenden Datenpakete begrenzt das
-*Receive Window* auch die maximal erreichbare Bandbreite, abhängig von der RTT
+*Receive Window* auch die maximal erreichbare Datenübertragungsrate, abhängig von der RTT
 zwischen Sender und Empfänger.
 Die RTT beträgt im LAN typischerweise weniger als eine Millisekunde, innerhalb
 Deutschlands etwa fünfzig Millisekunden und interkontinental mehr als hundert
@@ -110,7 +110,7 @@ Sender nur noch maximal 50000 Byte in 100 Millisekunden senden, das heißt nur
 noch 500 KByte pro Sekunde.
 Darum ist es bei Breitbandverbindungen mit hoher RTT eventuell hilfreich, das
 *Receive Window* des Empfängers zu erhöhen, wenn die maximal mögliche
-Bandbreite nicht erreicht wird.
+Datenübertragungsrate nicht erreicht wird.
 
 Da TCP bereits 1981 entwickelt wurde, ist das Parameterfeld für das *Receive
 Window* nur 16 Bit groß, der Maximalwert liegt also bei 65535.

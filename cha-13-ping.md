@@ -8,7 +8,8 @@ Netzwerk-Troubleshooting ist Ping. Mit diesem Programm kann ich:
 
 *   sehen, wie lange ein Paketaustausch dauert,
 
-*   analysieren, welche Bandbreite die Verbindung zu einem Rechner hat,
+*   analysieren, welche Datenübertragungsrate die Verbindung zu einem Rechner
+    hat,
 
 *   die Performance meines Rechners und Netzwerkes einschätzen,
 
@@ -94,8 +95,8 @@ Ein weiteres Anwendungsgebiet sind Performancemessungen im Netzwerk. Am
 einfachsten geht die Bestimmung der Paketlaufzeit zu einem entfernten
 Rechner und zurück, denn diese gibt Ping selbst aus. Bin ich an der reinen
 Laufzeit interessiert, muss ich mir einen Zeitpunkt suchen, zu dem sehr
-wenig im Netz los ist. Aber auch die Bandbreite kann ich mit Ping bestimmen
-sowie Netzwerklast für Lastmessungen erzeugen.
+wenig im Netz los ist. Aber auch die Datenübertragungsrate kann ich mit Ping
+bestimmen, sowie Netzwerklast für Lastmessungen erzeugen.
 
 ### Probleme mit Ping
 
@@ -116,9 +117,10 @@ verfälscht.
 Diesem Problem kann ich begegnen, indem ich grundsätzlich mehrere Ping-Pakete
 sende und die erste Zeit ignoriere.
 
-Bei der Bestimmung der Bandbreite eines Links verwende ich ohnehin die
-niedrigste Zeit, da ist dieses Problem bereits berücksichtigt. Ich muss
-lediglich daran denken, immer mehrere gleichartige Ping-Pakete zu senden.
+Bei der Bestimmung der Datenübertragungsrate eines Links verwende ich ohnehin
+die niedrigste Zeit, da ist dieses Problem bereits berücksichtigt.
+Ich muss lediglich daran denken, immer mehrere gleichartige Ping-Pakete zu
+senden.
 
 Ein weiteres mögliches Problem ist, dass das korrekte Funktionieren des
 Netzwerkes von Faktoren abhängen kann, die Ping nicht beeinflussen. So kann

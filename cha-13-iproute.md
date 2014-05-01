@@ -187,7 +187,7 @@ pfifo_fast
 red
 : (Random Early Detection) simuliert eine überlastete Leitung,
   indem zufällig Datenpakete verworfen werden, wenn sich der Durchsatz der
-  konfigurierten Bandbreite nähert.
+  konfigurierten Datenübertragungsrate nähert.
 
 sfq
 : (Stochastic Fairness Queueing) sortiert die wartenden
@@ -195,7 +195,7 @@ sfq
 
 tbf
 : (Token Bucket Filter) ist geeignet, um den Traffic zu einer
-  präzise konfigurierten Bandbreite zu verlangsamen.
+  präzise konfigurierten Datenübertragungsrate zu verlangsamen.
 
 Klassenlose QDISC müssen an der Wurzel installiert werden:
 
@@ -212,13 +212,14 @@ cbq
   Durchsatz begrenzen.
 
 htb
-: (Hierarchy Token Buffer) ermöglicht garantierte Bandbreiten für
+: (Hierarchy Token Buffer) ermöglicht garantierte Datenübertragungsraten für
   Klassen und erlaubt die Ausgabe von oberen Grenzen für das Teilen von
-  Bandbreite zwischen Klassen. Es enthält begrenzende Elemente auf Basis
-  von TBF und kann Klassen priorisieren.
+  Datenübertragungsrate zwischen Klassen.
+  Es enthält begrenzende Elemente auf Basis von TBF und kann Klassen
+  priorisieren.
 
 prio
-: wird für Priorisierung ohne Begrenzung der Bandbreite verwendet.
+: wird für Priorisierung ohne Begrenzung der Datenübertragungsrate verwendet.
 
 #### Theorie
 

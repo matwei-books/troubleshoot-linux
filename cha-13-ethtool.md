@@ -35,6 +35,6 @@ Richtung auftrat.
 Mit den *mii-tools* konnten wir eine Fehlanpassung der Ethernetkarte mit dem
 Medienwandler diagnostizieren.
 Nachdem wir die Schnittstelle auf Full-Duplex eingestellt hatten, blieb die
-verfügbare Bandbreite auch bei Volllast in beiden Richtungen im erwarteten
+verfügbare Datenübertragungsrate auch bei Volllast in beiden Richtungen im erwarteten
 Rahmen.
 

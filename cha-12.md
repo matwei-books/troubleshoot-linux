@@ -6,7 +6,7 @@ Vorstellung davon hat, was ausreichende Performance ist.
 
 Probleme mit der Performance des Netzwerkes sind ein heikles Thema.
 So heikel, dass manche ihr Heil in immer "dickeren" Leitungen mit immer mehr
-Bandbreite suchen, um sich nicht näher mit dem eigentlichen Problem
+Datenübertragungsrate suchen, um sich nicht näher mit dem eigentlichen Problem
 beschäftigen zu müssen.
 
 Was die Sache so schwierig macht, ist, dass ein Performance Problem sehr viele
@@ -17,8 +17,8 @@ realer Performance.
 Ein Kunde ruft an, weil "sein E-Mail-Programm nicht funktioniert".
 Er schreibt die E-Mail, drückt auf Senden und dann friert das Programm ein.
 Bei näherer Betrachtung stellt sich heraus, dass da ein Anhang von mehreren MB
-an der E-Mail hängt und der Upload nur ein paar hundert kBit/s Bandbreite hat.
-Ein kurzes Nachrechnen von verfügbarer Bandbreite und zu sendenden Daten
+an der E-Mail hängt und der Upload nur ein paar hundert kBit/s Datenübertragungsrate hat.
+Ein kurzes Nachrechnen von verfügbarer Datenübertragungsrate und zu sendenden Daten
 ergibt eine Dauer von mehreren Minuten bei alleiniger Nutzung der Leitung.
 
 Aber auch reale Performanceprobleme können vielfältige Ursachen haben, die es

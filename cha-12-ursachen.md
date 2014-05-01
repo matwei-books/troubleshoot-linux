@@ -29,7 +29,7 @@ zurückführen:
     senden, als bestimmungsgemäß über den betreffenden Leitungsabschnitt
     möglich ist.
 
-*   Eine schlechte Leitung: es ist nicht möglich, die volle Bandbreite zu
+*   Eine schlechte Leitung: es ist nicht möglich, die volle Datenübertragungsrate zu
     nutzen, die über einen Leitungsabschnitt zur Verfügung stehen sollte.
 
 *   Ein überlastetes Gateway: dieses benötigt zu viel Zeit, um Daten zwischen
@@ -85,11 +85,11 @@ eine hohe Latenz, weil zuerst die gepufferten Pakete gesendet werden und dann
 neu angekommene.
 
 Wenn die Überlast durch ungeregelte Datenströme hervorgerufen wird, wie VoIP
-oder Videostreams, dann hilft nur die Bandbreite zu erhöhen, oder den
+oder Videostreams, dann hilft nur die Datenübertragungsrate zu erhöhen, oder den
 Datenstrom umzuleiten oder gezielt zu reduzieren.
 
 Geregelte Datenströme, wie TCP, regulieren normalerweise ihre
-Sendegeschwindigkeit so, dass die zu Verfügung stehende Bandbreite möglichst
+Sendegeschwindigkeit so, dass die zu Verfügung stehende Datenübertragungsrate möglichst
 optimal genutzt wird.
 Nur funktioniert genau diese Regelung bei Bufferbloat nicht mehr auf Grund der
 durch den Puffer eingeführten zusätzlichen Latenz.
@@ -122,7 +122,7 @@ zuzuordnen.
 Mit Netflow lässt sich dass zumindest ansatzweise einschätzen.
 
 In diesem Fall ist zu überlegen, ob durch geschicktere Platzierung von
-Servern und Arbeitsstationen der Bedarf an Bandbreite reduziert werden kann.
+Servern und Arbeitsstationen der Bedarf an Datenübertragungsrate reduziert werden kann.
 Das ist aber ein Thema für die Netzwerksplanung und nicht für die
 Fehlerbeseitigung.
 
