@@ -38,6 +38,10 @@ Broadcast
   Siehe auch *Unicast* und *Multicast*.
 
 Bufferbloat
+: Damit bezeichnet man das Phänomen in paketvermittelten Netzwerken wie dem
+  Internet, dass exzessives Puffern von Datenpaketen in Gateways zu hoher
+  Latenz und Variationen in der Übertragungszeit von Datenpaketen führt und
+  auch den Gesamtdurchsatz des Netzes verringern kann.
 
 CIDR
 : *Classless Inter Domain Routing* (CIDR) beschreibt ein Verfahren, um bei
@@ -106,7 +110,16 @@ Datenbank
   Neben den genannten gibt es noch andere, im Rahmen dieses Buches weniger
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
+Datendurchsatz
+: Damit bezeichnet man die im Mittel über einen Übertragungsweg pro
+  Zeiteinheit  übertragene digitale Datenmenge.
+
 Datenübertragungsrate
+: Diese bezeichnet die digitale Datenmenge, die in einer definierten Zeit
+  übertragen wird.
+  Die maximal mögliche Datenübertragunsrate bezeichnet man auch als
+  Kanalkapazität, die, gemeinsam mit der Latenz, zwei wesentliche Kenngrößen
+  eines Übertragungsweges darstellen.
 
 DHCP
 : Das *Dynamic Host Configuration Protocol* ermöglicht die Zuweisung der
@@ -139,6 +152,9 @@ Einhängepunkt
 : siehe [Mount Point](#glossar-mount-point).
 
 EWMA
+: *Exponentially-Weighted Moving Average* ist ein Verfahren zur Glättung von
+  Zeitreihen, bei denen ältere Datenpunkte geringer gewichtet werden als
+  neuere.
 
 {#glossar-firmware}
 Firmware
@@ -213,6 +229,14 @@ IP, IPv4, IPv6
   Version 4 (IPv4) wird in RFC 791 beschrieben, Version 6 (IPv6) in RFC 2640.
 
 IPG
+: Das *Interpacket Gap* bezeichnet den minimalen Abstand zwischen zwei auf
+  einem Übertragungsmedium gesendeten Datenpaketen.
+
+Jitter
+: Als Jitter bezeichnet man die Varianz der Laufzeit von Datenpaketen.
+  Dieser Effekt ist insbesondere bei Multimedia-Übertragungen stören, da
+  einzelne Datenpakete zu früh oder zu spät für eine kontinuierliche
+  Darstellung ankommen.
 
 Kerberos
 : Kerberos ist ein verteilter Authentisierungsdienst für Computernetze.
@@ -260,6 +284,10 @@ Korrelation
   nicht hervor.
 
 Latenz
+: Die Latenz bezeichnet in Computer-Netzwerken die Zeit zwischen dem Senden
+  eines Datenpaketes und der Ankunft beim Empfänger.
+  Zusammen mit der maximalen Datenübertragungsrate ist sie eine wesentliche
+  Kenngröße eines Übertragungsweges.
 
 LDAP
 : Das *Lightweight Directory Access Protocol* erlaubt die Abfrage und die
@@ -341,6 +369,11 @@ Multicast
   Siehe auch *Unicast* und *Broadcast*.
 
 Netflow
+: Netflow ist eine ursprünglich von Cisco entwickelte Technik um Informationen
+  über die Datenströme an einem Gateway zu einem Sammelpunkt für das
+  Monitoring zu senden.
+  Damit sind detailliertere Auswertungen möglich, die unter anderem auch zur
+  Performanceanalyse verwendet werden können.
 
 Netzsegment
 : Der Begriff wird auf den verschiedenen OSI-Ebenen für unterschiedliche
@@ -446,6 +479,10 @@ PXE, Preboot Execution Environment
   TFTP zum Übertragen von Dateien, wie zum Beispiel Betriebssystemimages.
 
 QoS
+: *Quality of Service*, deutsch auch Dienstgüte, beschreibt, wie gut ein
+  Dienst aus Anwendersicht ist.
+  In IP-Netzen wird QoS üblicherweise mit den Parametern Latenz, Jitter,
+  Paketverlustrate und Datendurchsatz erfasst.
 
 RAID
 : Ein *Redundand Array of Independent Disks* ist eine Kombination von mehreren
@@ -480,6 +517,14 @@ Router
   über die Weiterleitung von Datenpaketen anhand ihrer Zieladresse.
 
 RTT
+: Die *Round Trip Time*, deutsch Paketumlaufzeit, gibt die Zeit an, die ein
+  Datenpaket benötigt um in einem Rechnernetz von der Quelle zum Ziel und
+  zurück zu kommen.
+  Das Programm `ping` weist diese aus.
+  Die RTT allein reicht nicht zur Bewertung der Qualität des Netzes, da die
+  RTT von mehreren Faktoren beeinflusst wird.
+  Eine Änderung der RTT kann aber auf außergewöhnliche Umstände im Netz
+  deuten.
 
 SAS
 : *Serial Attached SCSI* ist ein Nachfolger der parallelen SCSI-Schnittstelle.
@@ -525,6 +570,9 @@ SMTP
   Das Protokoll ist textbasiert und in RFC 5321 beschrieben.
 
 SNMP
+: Das *Simple Network Management Protocol* dient der Überwachung und Steuerung
+  von Netzwerkelementen von einer zentralen Station aus.
+  Es ist unter anderem in den RFCs 1157 und 3410 beschrieben.
 
 Standardausgabe, -eingabe, fehlerausgabe
 : Diese drei Standard-Datenströme im Betriebssystem UNIX werden auch *STDIN*,
@@ -597,6 +645,9 @@ Thrashing
   Rechenleistung ist deutlich herabgesetzt.
 
 Traffic-Shaping
+: Traffic-Shaping ist eine Möglichkeit in IP-Netzwerken QoS zu gewährleisten.
+  Dabei werden bestimmte Datenpakete vorrangig behandelt beziehungsweise ein
+  bestimmte Datenübertragungsrate reserviert.
 
 UDP
 : Das *Universal Datagram Protocol* ist ein minimales verbindungsloses
