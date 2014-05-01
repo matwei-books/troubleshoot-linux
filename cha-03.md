@@ -1,7 +1,5 @@
 # Nachbereitung
 
-Es heißt, Voraussagen sind schwierig, besonders über die Zukunft.
-Für die Vergangenheit ist es einfacher.
 Manchen Leuten scheint es gegeben, häufiger als andere richtige Voraussagen
 zu machen und damit Probleme schneller zu lösen.
 Beobachtet man diese Leute genauer, stellt man fest, das sie
