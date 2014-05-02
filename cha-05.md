@@ -1,7 +1,7 @@
 # Totalausfall {#cha-lokal-totalausfall}
 
 Ein Totalausfall bedeutet für mich zuallererst: der Rechner selbst ist keine
-große Hilfe bei der Fehlersuche.
+Hilfe bei der Fehlersuche.
 Das muss nicht heißen, dass der Rechner überhaupt nicht mehr reagiert, aber
 auf jeden Fall stehen mir nicht alle Werkzeuge zur Verfügung, die ich sonst
 zur Analyse einsetzen könnte.
@@ -10,15 +10,15 @@ Ich betrachte die folgenden Probleme als Totalausfall eines Rechners.
 
 *  Hardwarefehler, der Rechner reagiert überhaupt nicht beim Einschalten.
    Abgesehen von dem Tipp, den Stromanschluss zu überprüfen, gehe ich darauf
-   nicht weiter ein.
+   hier nicht weiter ein.
 
 *  Boot-Probleme, zwar passiert etwas, die Hardware scheint größtenteils in
    Ordnung, aber das Betriebssystem wird nicht gestartet.
    Ich analysiere den Bootprozess Schritt für Schritt, beobachte, wie
    weit das System kommt und versuche die Ursache zu ermitteln.
 
-*  Der Rechner war normal gestartet, hat eine Zeit lang gearbeitet, aber jetzt
-   reagiert er nicht mehr.
+*  Einfrieren, der Rechner war normal gestartet, hat eine Zeit lang
+   gearbeitet, aber jetzt reagiert er nicht mehr.
    Ich versuche zunächst den Rechner mit Magic SysRequest geordnet neu zu
    starten und nachträglich zu analysieren.
    Falls möglich, werte ich die mit SysRequest gewonnenen Erkenntnisse aus.
@@ -44,6 +44,6 @@ Ich betrachte die folgenden Probleme als Totalausfall eines Rechners.
    Bei den Gastsystemen sind meine Optionen abhängig von der verwendeten
    Virtualisierungslösung und deren Werkzeugen zur Diagnose.
    Manchmal kann ich einfach die Festplattenpartitionen des Gastsystems im
-   Hostsystem oder einem anderen Gastsystem einhängen und dann dort untersuchen.
+   Hostsystem oder einem anderen Gastsystem einhängen und dort untersuchen.
    Damit stehen mir zusätzliche Werkzeuge zur Verfügung.
 

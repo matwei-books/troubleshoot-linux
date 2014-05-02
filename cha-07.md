@@ -8,7 +8,7 @@ Die drei wesentlichen Engpässe beim Betrieb eines Rechners sind CPU,
 Hauptspeicher und I/O.
 Welcher von diesen drei im Moment gerade den Betrieb hemmt, bekomme ich sehr
 schnell mit dem Befehl `vmstat` heraus.
-Damit weiß ich allerdings erst, wo ich suchen muss, die eigentliche Ursache
+Damit weiß ich allerdings erst, wo ich suchen will, die eigentliche Ursache
 muss ich noch ermitteln.
 
 Oft ist es einfach nur eine Überlast, das heißt, das System erhält temporär
@@ -23,4 +23,4 @@ mehr RAM, schnellere Festplatten und Netzwerkkarten.
 Oder ich verteile die Last auf mehrere Systeme.
 
 Als Einführung in das Gebiet empfehle ich [Loukides1996](#bib-loukides1996),
-das 2002 in zweiter Auflage erschien.
+das mittlerweile in neuer Auflage erschien.

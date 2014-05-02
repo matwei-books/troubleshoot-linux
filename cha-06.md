@@ -14,8 +14,7 @@ einige Informationen gesammelt.
 
 *   Ist es reproduzierbar?
 
-*   Gibt es zeitliche Muster (zum Beispiel, wenn das Problem immer zur
-    gleichen Stunde auftritt)?
+*   Gibt es zeitliche Muster?
 
 *   Sind alle betroffen oder nur ein Teil der Nutzer?
 
