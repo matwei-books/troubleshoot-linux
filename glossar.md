@@ -1,14 +1,14 @@
 
 # Glossar
 
-## A
+## ARP 
 
 ARP
 : Das *Address Resolution Protocol* ermittelt die zu einer IP-Adresse
   gehörende Adresse der Netzzugangsschicht, in den meisten Fällen Ethernet.
   Das Protokoll wird in RFC 826 beschrieben.
 
-## B
+## BIOS - Bufferbloat
 
 BIOS
 : Das BIOS, von *Basic Input/Output System* ist die
@@ -47,7 +47,7 @@ Bufferbloat
   Latenz und Variationen in der Übertragungszeit von Datenpaketen führt und
   auch den Gesamtdurchsatz des Netzes verringern kann.
 
-## C
+## CIDR - Crypto-PAn
 
 CIDR
 : *Classless Inter Domain Routing* (CIDR) beschreibt ein Verfahren, um bei
@@ -77,11 +77,11 @@ Crypto-PAn
   Schlüssel initialisiert werden, und erlaubt dadurch die Umsetzungen
   konsistent über verschiedene Mitschnitte zu halten.
 
-## D
+## DAC - DRM
 
 {#glossar-dac}
-DAC, Discretionary Access Control
-: Bei der Discretionary Access Control (deutsch: Benutzerbestimmbare
+DAC
+: Bei der *Discretionary Access Control* (deutsch: Benutzerbestimmbare
   Zugriffskontrolle) wird die Entscheidung, ob auf eine Ressource zugegriffen
   werden darf, allein auf der Basis der Identität des Benutzers getroffen.
   Dieser steht die [Mandatory Access Control](#glossar-mac) gegenüber, die den
@@ -151,22 +151,19 @@ DNS
   das primär der Zuordnung von Rechnernamen zu IP-Adressen dient.
   Es ist in den RFCs 1034 und 1035 beschrieben.
 
-DRM, Direct Rendering Manager
-: Der Direct Rendering Manager ist ein Linux-Kernelmodul, das Zugriff auf den
+DRM
+: Der *Direct Rendering Manager* ist ein Linux-Kernelmodul, das Zugriff auf den
   Speicher der Grafik-Karte gewährt.
   Damit ist es möglich, diesen auch ohne X-Server in Programmen zu verwenden.
 
-## E
-
-Einhängepunkt
-: siehe [Mount Point](#glossar-mount-point).
+## EWMA
 
 EWMA
 : *Exponentially-Weighted Moving Average* ist ein Verfahren zur Glättung von
   Zeitreihen, bei denen ältere Datenpunkte geringer gewichtet werden als
   neuere.
 
-## F
+## Firmware
 
 {#glossar-firmware}
 Firmware
@@ -175,7 +172,7 @@ Firmware
   Vorkehrungen änderbar ist.
   Bei Computern lädt die Firmware das Betriebssystem.
 
-## G
+## Gateway - Gerätedatei
 
 Gateway
 : Ein Gateway verbindet Rechnernetze, die auf unterschiedlichen
@@ -197,7 +194,7 @@ Gerätedatei
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf die
   Zusammenhänge von Dateien und Dateisystemen ein.
 
-## H
+## HTTP
 
 HTTP
 : Das *Hypertext Transfer Protocol* dient zum Übertragen von Daten im
@@ -208,7 +205,7 @@ HTTP
   Das Protokoll wird in RFC 1945 (Version 1.0) und RFC 2616 (Version 1.1)
   beschrieben.
 
-## I
+## ICMP - IPG
 
 ICMP
 : Das *Internet Control Message Protocol* dient dem Austausch von Steuer und
@@ -218,6 +215,13 @@ ICMP
 IDE, Integrated Drive Electronics
 : Das ist eine ältere Festplattenschnittstelle, bei der die Steuerelektronik
   im Festplattengehäuse integriert ist.
+
+IEEE
+: Das *Institute of Electrical and Electronics Engineers* ist ein
+  Berufsverband von Ingenieuren der Elektro und Informationstechnik.
+  Bekannt ist das IEEE unter anderem für die von ihm herausgegebenen
+  Standards und Normen, die sich in vielen Bereichen der Computertechnik
+  finden lassen.
 
 IGMP
 : Das *Internet Group Management Protocol* dient zur Organisation von
@@ -250,7 +254,7 @@ IPG
 : Das *Interpacket Gap* bezeichnet den minimalen Abstand zwischen zwei auf
   einem Übertragungsmedium gesendeten Datenpaketen.
 
-## J
+## Jitter
 
 Jitter
 : Als Jitter bezeichnet man die Varianz der Laufzeit von Datenpaketen.
@@ -258,7 +262,7 @@ Jitter
   einzelne Datenpakete zu früh oder zu spät für eine kontinuierliche
   Darstellung ankommen.
 
-## K
+## Kerberos - Korrelation
 
 Kerberos
 : Kerberos ist ein verteilter Authentisierungsdienst für Computernetze.
@@ -305,7 +309,7 @@ Korrelation
   Ob die Beziehung kausal ist und falls ja, wie, geht aus der Korrelation
   nicht hervor.
 
-## L
+## Latenz - LWL
 
 Latenz
 : Die Latenz bezeichnet in Computer-Netzwerken die Zeit zwischen dem Senden
@@ -350,18 +354,15 @@ Log, Logdatei, Logfile
   Dabei kann den Nachrichten eine Priorität und ein Bereich zugewiesen
   werden.
 
-## M
+LWL
+: Lichtwellenleiter sind konfektionierte Kabel zur Übertragung von Licht.
+  Mit geeigneten Medienwandlern, die an ein Netzwerk angeschlossen werden,
+  dienen die LWL zur Datenübertragung.
 
-Magic SysRequest
-: Als Magic SysRequest bezeichnet man eine Reihe von Tastenkombinationen mit
-  der Taste `Druck/S-Abf`, über die sich verschiedene Funktionen des Kernels
-  aufrufen lassen, solange dieser noch nicht abgestürzt ist.
-  In [Kapitel 5](#sec-lokal-total-magic-sysrq) gehe ich auf eine Möglichkeit
-  ein, mit Hilfe des Magic SysRequest ein hängendes System sicher neu zu
-  starten.
+## MAC - Multicast
 
 {#glossar-mac}
-Mandatory Access Control, MAC
+MAC, Mandatory Access Control
 : Wenn in einem System die Regeln für die Zugangsrechte zentral und zwingend
   vorgegeben werden, spricht man von Mandatory Access Control (deutsch:
   zwingend erforderliche Zugangskontrolle). Dem gegen über steht die
@@ -371,12 +372,39 @@ Mandatory Access Control, MAC
   In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
   verschiedene Optionen der Zugangskontrolle bei Linux ein.
 
+MAC, Media Access Control
+: Media Access Control ist Teil einer Erweiterung der OSI-Modells durch die
+  IEEE. Dabei wird die Sicherungsschicht des OSI-Modells (Schicht 2)
+  unterteilt in Media Access Control und Logical Link Control.
+  MAC ist die untere der beiden Schichten.
+  
+MAC-Adresse
+: Die Media-Access-Control-Adresse ist die Hardware-Adresse eines
+  Netzwerkadapters.
+  Diese dient als eindeutiger Identifikator im Netzwerk.
+
+Magic SysRequest
+: Als Magic SysRequest bezeichnet man eine Reihe von Tastenkombinationen mit
+  der Taste `Druck/S-Abf`, über die sich verschiedene Funktionen des Kernels
+  aufrufen lassen, solange dieser noch nicht abgestürzt ist.
+  In [Kapitel 5](#sec-lokal-total-magic-sysrq) gehe ich auf eine Möglichkeit
+  ein, mit Hilfe des Magic SysRequest ein hängendes System sicher neu zu
+  starten.
+
 Master Boot Record, MBR
 : Der MBR ist der erste Sektor eines Speichermediums, welches sich in
   Partitionen aufteilen läßt, wie zum Beispiel eine Festplatte.
   Dieser enthält eine Tabelle, die die Aufteilung des Mediums beschreibt und
   optional für Computer mit BIOS einen Bootloader, der den Betriebssystemstart
   einleiten kann.
+
+MII
+: Das *Media Independent Interface* ist Bestandteil von modernen
+  Ethernet-Chipsätzen.
+  Bei diesen wurde der Chipsatz in zwei Komponenten aufgeteilt: MDI (Media
+  Dependent Interface) und MII.
+  Das MII ist über verschiedene Hersteller und Medien gleich, das MDI ist für
+  verschiedene Hersteller und Medien unterschiedlich.
 
 {#glossar-mount-point}
 Mount-Point
@@ -394,7 +422,7 @@ Multicast
   gesendet.
   Siehe auch *Unicast* und *Broadcast*.
 
-## N
+## Netflow - NTP
 
 Netflow
 : Netflow ist eine ursprünglich von Cisco entwickelte Technik um Informationen
@@ -426,7 +454,7 @@ NTP
   Computersystemen über das Netz.
   Die aktuelle Version 4 ist in RFC 5905 beschrieben.
 
-## O
+## OSI-Modell - Overlay-Dateisystem
 
 OSI-Modell
 : Das *Open Systems Interconnection Model* ist ein Schichtenmodell, welches
@@ -449,7 +477,7 @@ Overlay-Dateisystem
   Overlay-Dateisysteme werden zum Beispiel bei Livesystemen eingesetzt, die
   von CD-ROM starten und alle Dateiänderungen in den RAM schreiben.
 
-## P
+## PAC-Datei - PXE
 
 PAC-Datei
 : Mit Hilfe einer *Proxy-Auto-Config-Datei* kann ein Webbrowser
@@ -510,7 +538,7 @@ PXE, Preboot Execution Environment
   Diese nutzt die Protokolle DHCP zum Übertragen von Bootinformationen und
   TFTP zum Übertragen von Dateien, wie zum Beispiel Betriebssystemimages.
 
-## Q
+## QoS
 
 QoS
 : *Quality of Service*, deutsch auch Dienstgüte, beschreibt, wie gut ein
@@ -518,7 +546,7 @@ QoS
   In IP-Netzen wird QoS üblicherweise mit den Parametern Latenz, Jitter,
   Paketverlustrate und Datendurchsatz erfasst.
 
-## R
+## RAID - RTT
 
 RAID
 : Ein *Redundand Array of Independent Disks* ist eine Kombination von mehreren
@@ -562,13 +590,18 @@ RTT
   Eine Änderung der RTT kann aber auf außergewöhnliche Umstände im Netz
   deuten.
 
-## S
+## SAS - Syslog
 
 SAS
 : *Serial Attached SCSI* ist ein Nachfolger der parallelen SCSI-Schnittstelle.
   Dieses umgeht das Problem von parallelen Schnittstellen, dass die
   Signallaufzeiten der einzelnen Adern nicht zu stark differieren dürfen,
   dadurch, dass eine Leitung mit serieller Schnittstelle verwendet wird.
+
+SASL
+: Der *Simple Authentication and Security Layer* ist ein Mechanismus, der von
+  verschiedenen Protokollen zur Authentifizierung verwendet wird.
+  Er ist in RFC 4422 beschrieben.
 
 SATA
 : *Serial-ATA* oder auch *Serial Advanced Technology Attachment* wurde aus dem
@@ -612,6 +645,14 @@ SNMP
   von Netzwerkelementen von einer zentralen Station aus.
   Es ist unter anderem in den RFCs 1157 und 3410 beschrieben.
 
+Socket
+: Ein Socket ist ein Software-Modul, über das ein Computerprogramm Daten
+  austauschen kann.
+  Es gibt Sockets für die Netzwerkkommunikation und für die
+  Interprozesskommunikation (IPC), letztere werden UNIX-Sockets genannt.
+  Netzwerksockets werden unterschieden in Stream Sockets und Datagram
+  Sockets.
+
 Standardausgabe, -eingabe, fehlerausgabe
 : Diese drei Standard-Datenströme im Betriebssystem UNIX werden auch *STDIN*,
   *STDOUT* und *STDERR* genannt.
@@ -628,6 +669,10 @@ Standardausgabe, -eingabe, fehlerausgabe
   Programmen verbunden werden.
   In [Kapitel 4](#sec-unix-programmschnittstellen) gehe ich bei den
   Programmschnittstellen näher auf die Datenströme ein.
+
+STP
+: Das *Spanning Tree Protocol* ist ein Protokoll, mit dem Switches automatisch
+  eindeutige Verbindungswege untereinander bestimmen können.
 
 Swap, Swapping
 : Wenn ein bestimmter Speicherbereich eines Prozesses längere Zeit nicht
@@ -652,7 +697,7 @@ Syslog
   Lognachrichten an andere Rechner sendet oder von anderen Rechnern
   entgegennimmt.
 
-## T
+## Tail-Merging - Traffic-Shaping
 
 Tail-Merging, Tail-Packing
 : Traditionell waren die kleinsten Einheiten in Dateisystemen Blöcke mit einer
@@ -689,7 +734,7 @@ Traffic-Shaping
   Dabei werden bestimmte Datenpakete vorrangig behandelt beziehungsweise ein
   bestimmte Datenübertragungsrate reserviert.
 
-## U
+## UDP - Unicast
 
 UDP
 : Das *Universal Datagram Protocol* ist ein minimales verbindungsloses
@@ -710,7 +755,7 @@ Unicast
 : Eine Unicast-Nachricht geht vom Sender zu genau einem Empfänger.
   Vergleiche hierzu *Multicast* und *Broadcast*.
 
-## V
+## Vermittlungsschicht - Virtualisierung
 
 Vermittlungsschicht (OSI-Modell)
 : Die Vermittlungsschicht ist die dritte Schicht im OSI-Modell für
@@ -739,7 +784,7 @@ Virtualisierung
   physikalischen Dingen wie einer emulierten Hardware, Datenspeichers oder
   Netzwerkanschlusses.
 
-## W
+## WPAD
 
 WPAD
 : Mit dem *Web Proxy Autodiscovery Protocol* können Web-Clients (Browser) zu
