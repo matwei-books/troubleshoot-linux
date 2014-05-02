@@ -11,10 +11,10 @@ ARP
 ## BIOS - Bufferbloat
 
 BIOS
-: Das BIOS, von *Basic Input/Output System* ist die
+: Das *Basic Input/Output System* ist die
   [Firmware](#glossar-firmware) der PCs, die auf den IBM-PC zurückgehen.
 
-Bitübertragungsschicht (OSI-Modell)
+Bitübertragungsschicht
 : Die Bitübertragungsschicht ist die unterste Schicht des OSI-Modells für
   Netzwerkprotokolle.
   Sie stellt Hilfsmittel zur Verfügung, um Bits über physische Verbindungen
@@ -30,7 +30,7 @@ Bootstrapping
 BPF
 : *Der Berkeley Packet Filter* bietet auf UNIX-ähnlichen Systemen eine
   Software-Schnittstelle zu Netzwerkgeräten und erlaubt darüber Datagramme der
-  Sicherungsschicht (link layer) zu empfangen und zu senden.
+  Sicherungsschicht zu empfangen und zu senden.
   Das Programm `tcpdump` nutzt beispielsweise BPF für den Zugriff auf die
   Datagramme der Netzschnittstellen. Seine Handbuchseite enthält eine
   umfangreiche Beschreibung der Filterausdrücke, mit denen die
@@ -39,18 +39,18 @@ BPF
 Broadcast
 : Eine Broadcast-Nachricht ist eine Nachricht, die an alle Teilnehmer des
   Netzes gesendet wird.
-  Siehe auch *Unicast* und *Multicast*.
+  Vergleiche dazu *Unicast* und *Multicast*.
 
 Bufferbloat
 : Damit bezeichnet man das Phänomen in paketvermittelten Netzwerken wie dem
   Internet, dass exzessives Puffern von Datenpaketen in Gateways zu hoher
-  Latenz und Variationen in der Übertragungszeit von Datenpaketen führt und
+  Latenz und Jitter bei der Übertragung von Datenpaketen führt und
   auch den Gesamtdurchsatz des Netzes verringern kann.
 
 ## CIDR - Crypto-PAn
 
 CIDR
-: *Classless Inter Domain Routing* (CIDR) beschreibt ein Verfahren, um bei
+: *Classless Inter Domain Routing* beschreibt ein Verfahren, um bei
   IPv4 den IP-Adressraum effizienter auszunutzen.
   Mit CIDR entfällt die feste Zuordnung einer IPv4-Adresse zu einer
   Netzklasse, aus welcher die Präfixlänge hervorging.
@@ -70,7 +70,7 @@ CPU
 
 Crypto-PAn
 : *Cryptography-based  Prefix-preserving Anonymization* ist ein Verfahren, um
-  die IP-Adressen in Netzwerk-Mitschnitten zu anonymisieren.
+  die IP-Adressen in Netzwerk-Dumps zu anonymisieren.
   Dabei werden die IP-Adressen einzeln umgesetzt, Netzwerk-Präfixe bleiben
   erhalten.
   Das Verfahren nutzt kryptographische Pseudo-Zufallszahlen, die mit einem
@@ -84,14 +84,11 @@ DAC
 : Bei der *Discretionary Access Control* (deutsch: Benutzerbestimmbare
   Zugriffskontrolle) wird die Entscheidung, ob auf eine Ressource zugegriffen
   werden darf, allein auf der Basis der Identität des Benutzers getroffen.
-  Dieser steht die [Mandatory Access Control](#glossar-mac) gegenüber, die den
-  Zugang auf Grund allgemeiner Regeln und zusätzlicher Informationen über den
-  Benutzer trifft.
+  Diesem Verfahren steht die [Mandatory Access Control](#glossar-mac)
+  gegenüber, die den Zugang auf Grund allgemeiner Regeln und zusätzlicher
+  Informationen über den Benutzer erlaubt oder verbietet.
   In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
   verschiedene Optionen der Zugangskontrolle bei Linux ein.
-
-Dateibaum
-: [siehe Dateisystem](#glossar-dateisystem)
 
 {#glossar-dateisystem}
 Dateisystem
@@ -119,13 +116,12 @@ Datenbank
   relevante Datenbankmodelle, außerdem können Mischformen auftreten.
 
 Datendurchsatz
-: Damit bezeichnet man die im Mittel über einen Übertragungsweg pro
-  Zeiteinheit  übertragene digitale Datenmenge.
+: Der Mittelwert der Datenübertragungsrate wird Datendurchsatz genannt.
 
 Datenübertragungsrate
 : Diese bezeichnet die digitale Datenmenge, die in einer definierten Zeit
   übertragen wird.
-  Die maximal mögliche Datenübertragunsrate bezeichnet man auch als
+  Die maximal mögliche Datenübertragungsrate bezeichnet man auch als
   Kanalkapazität, die, gemeinsam mit der Latenz, zwei wesentliche Kenngrößen
   eines Übertragungsweges darstellen.
 
@@ -136,11 +132,11 @@ DHCP
   DNS-Server, Zeitserver oder Informationen zu HTTP-Proxy-Servern übergeben
   werden.
 
-DMA, Direct Memory Access
-: Beim Speicherdirektzugriff greifen externe Geräte wie zum Beispiel
-  Festplatten- oder USB-Controller ohne den Umweg über die CPU auf den
-  Speicher zu.
-  Das entlastet die CPU, so dass diese mehr Rechenzeit für andere Aufgaben zu
+DMA
+: Beim *Direct Memory Access* (deutsch: Speicherdirektzugriff) greifen
+  externe Geräte wie zum Beispiel Festplatten- oder USB-Controller ohne den
+  Umweg über die CPU auf den Hauptspeicher zu.
+  Das entlastet die CPU, so dass diese mehr Rechenzeit für andere Aufgaben zur
   Verfügung hat.
   Dafür kann der Hauptspeicher ohne Einfluss des Betriebssystems verändert
   werden, was im schlimmsten Fall zum Absturz oder zur Kompromittierung des
@@ -213,12 +209,12 @@ ICMP
   Es wird in RFC 792 beschrieben.
 
 IDE, Integrated Drive Electronics
-: Das ist eine ältere Festplattenschnittstelle, bei der die Steuerelektronik
-  im Festplattengehäuse integriert ist.
+: *Integrated Drive Electronics* ist eine ältere Schnittstelle für Festplatten,
+  bei der die Steuerelektronik im Festplattengehäuse integriert ist.
 
 IEEE
 : Das *Institute of Electrical and Electronics Engineers* ist ein
-  Berufsverband von Ingenieuren der Elektro und Informationstechnik.
+  Berufsverband von Ingenieuren der Elektro- und Informationstechnik.
   Bekannt ist das IEEE unter anderem für die von ihm herausgegebenen
   Standards und Normen, die sich in vielen Bereichen der Computertechnik
   finden lassen.
@@ -238,9 +234,9 @@ Initramfs
 
 {#glossar-inode}
 Inode
-: Ein Inode (von engl. *index node*) ist ein Eintrag in einem
+: Ein Inode ist ein Eintrag in einem
   [Dateisystem](#glossar-dateisystem), der die Verwaltungsinformationen
-  (Metadaten) für die zugehörige Datei enthält.
+  für die zugehörige Datei enthält.
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
   von Dateien, Inodes und Verzeichnissen detaillierter ein.
 
@@ -258,7 +254,7 @@ IPG
 
 Jitter
 : Als Jitter bezeichnet man die Varianz der Laufzeit von Datenpaketen.
-  Dieser Effekt ist insbesondere bei Multimedia-Übertragungen stören, da
+  Dieser Effekt stört insbesondere bei Multimedia-Übertragungen, da
   einzelne Datenpakete zu früh oder zu spät für eine kontinuierliche
   Darstellung ankommen.
 
@@ -307,7 +303,7 @@ Korrelation
 : Eine Korrelation beschreibt eine Beziehung zwischen zwei Merkmalen,
   Ereignissen oder Zuständen.
   Ob die Beziehung kausal ist und falls ja, wie, geht aus der Korrelation
-  nicht hervor.
+  selbst nicht hervor.
 
 ## Latenz - LWL
 
@@ -355,7 +351,7 @@ Log, Logdatei, Logfile
   werden.
 
 LWL
-: Lichtwellenleiter sind konfektionierte Kabel zur Übertragung von Licht.
+: *Lichtwellenleiter* sind konfektionierte Kabel zur Übertragung von Licht.
   Mit geeigneten Medienwandlern, die an ein Netzwerk angeschlossen werden,
   dienen die LWL zur Datenübertragung.
 
@@ -373,13 +369,13 @@ MAC, Mandatory Access Control
   verschiedene Optionen der Zugangskontrolle bei Linux ein.
 
 MAC, Media Access Control
-: Media Access Control ist Teil einer Erweiterung der OSI-Modells durch die
+: Media Access Control ist Teil einer Erweiterung des OSI-Modells durch die
   IEEE. Dabei wird die Sicherungsschicht des OSI-Modells (Schicht 2)
   unterteilt in Media Access Control und Logical Link Control.
   MAC ist die untere der beiden Schichten.
   
 MAC-Adresse
-: Die Media-Access-Control-Adresse ist die Hardware-Adresse eines
+: Die Media-Access-Control-Adresse ist die Hardwareadresse eines
   Netzwerkadapters.
   Diese dient als eindeutiger Identifikator im Netzwerk.
 
@@ -391,9 +387,9 @@ Magic SysRequest
   ein, mit Hilfe des Magic SysRequest ein hängendes System sicher neu zu
   starten.
 
-Master Boot Record, MBR
-: Der MBR ist der erste Sektor eines Speichermediums, welches sich in
-  Partitionen aufteilen läßt, wie zum Beispiel eine Festplatte.
+MBR
+: Der *Master Boot Record* ist der erste Sektor eines Speichermediums, welches
+  sich in Partitionen aufteilen läßt, wie zum Beispiel eine Festplatte.
   Dieser enthält eine Tabelle, die die Aufteilung des Mediums beschreibt und
   optional für Computer mit BIOS einen Bootloader, der den Betriebssystemstart
   einleiten kann.
@@ -434,6 +430,7 @@ Netflow
 Netzsegment
 : Der Begriff wird auf den verschiedenen OSI-Ebenen für unterschiedliche
   Abgrenzungen verwendet:
+
   *   auf Schicht 1 bezeichnet er das gemeinsame physische Medium, zum
       Beispiel das Koaxialkabel einer 10Base2-Verbindung, alle per Hub
       verbundenen Rechner einer 10BaseT-Verbindung oder zwei per TP-Kabel
@@ -483,7 +480,7 @@ PAC-Datei
 : Mit Hilfe einer *Proxy-Auto-Config-Datei* kann ein Webbrowser
   automatisch den passenden Proxyserver für eine gewünschte URL ermitteln.
   In [Kapitel 11](#sec-proxy-auto-config) gehe ich näher auf die
-  Funktionsweise automatischen Proxy-Konfiguration ein.
+  automatische Proxy-Konfiguration ein.
 
 Paging
 : Mit Paging bezeichnet man die Speicherverwaltung per Seitenadressierung im
@@ -498,7 +495,7 @@ Paging
 PMU
 : Die *Performance Monitoring Unit* ist ein Bestandteil moderner CPUs, der in
   verschiedenen Zählern Performancewerte während der Arbeit der CPU sammelt
-  und Ereignisse (Interrupts) beim Erreichen von bestimmten Zuständen oder
+  und Interrupts beim Erreichen von bestimmten Zuständen oder
   Zählerständen auslösen kann.
 
 Partitionstabelle
@@ -533,15 +530,16 @@ Prozess
   [Kapitel 4](#sec-unix-prozessmodell) geht näher auf das UNIX-Prozessmodell
   ein.
 
-PXE, Preboot Execution Environment
-: PXE ist eine Erweiterung zum Starten von Rechnern über Rechnernetze.
+PXE
+: Das *Preboot Execution Environment* ist eine Erweiterung zum Starten von
+  Rechnern über Rechnernetze.
   Diese nutzt die Protokolle DHCP zum Übertragen von Bootinformationen und
   TFTP zum Übertragen von Dateien, wie zum Beispiel Betriebssystemimages.
 
 ## QoS
 
 QoS
-: *Quality of Service*, deutsch auch Dienstgüte, beschreibt, wie gut ein
+: *Quality of Service*, (deutsch: Dienstgüte), beschreibt, wie gut ein
   Dienst aus Anwendersicht ist.
   In IP-Netzen wird QoS üblicherweise mit den Parametern Latenz, Jitter,
   Paketverlustrate und Datendurchsatz erfasst.
@@ -549,7 +547,7 @@ QoS
 ## RAID - RTT
 
 RAID
-: Ein *Redundand Array of Independent Disks* ist eine Kombination von mehreren
+: Ein *Redundant Array of Independent Disks* ist eine Kombination von mehreren
   Festplatten zu einem logischen Laufwerk um eine bessere Datenverfügbarkeit
   bei Ausfall einzelner Platten und/oder einen größeren Datendurchsatz zu
   erreichen.
@@ -582,7 +580,7 @@ Router
 
 RTT
 : Die *Round Trip Time*, deutsch Paketumlaufzeit, gibt die Zeit an, die ein
-  Datenpaket benötigt um in einem Rechnernetz von der Quelle zum Ziel und
+  Datenpaket benötigt, um in einem Rechnernetz von der Quelle zum Ziel und
   zurück zu kommen.
   Das Programm `ping` weist diese aus.
   Die RTT allein reicht nicht zur Bewertung der Qualität des Netzes, da die
@@ -614,13 +612,13 @@ SCSI
 
 Shell
 : Die Shell ist ein interaktives Programm, über das der Benutzer mit dem
-  Computer kommuniziert und spezielle Programme startet.
+  Computer kommuniziert und andere Programme startet.
   In den meisten Fällen versteht man unter einer Shell das Programm, dass
   nach dem Anmelden an einer Text-Konsole oder via SSH gestartet wird und
   eine Kommandozeile zur Bedienung präsentiert.
   Im erweiterten Sinn sind auch grafische Benutzeroberflächen Shells.
 
-Sicherungsschicht (OSI-Modell)
+Sicherungsschicht
 : Die Sicherungsschicht ist die zweite Schicht des OSI-Modells für
   Netzwerkprotokolle.
   Sie regelt den Zugriff auf das Übertragungsmedium und sorgt für eine
@@ -678,8 +676,8 @@ Swap, Swapping
 : Wenn ein bestimmter Speicherbereich eines Prozesses längere Zeit nicht
   benutzt wurde, kann er auf Festplatte ausgelagert werden, um Speicherplatz
   für andere Prozesse zu gewinnen.
-  Wird der Speicher später wieder benötigt, wird er von der Platte  in den RAM
-  geladen.
+  Benötigt der Prozess den Speicher später wieder, wird er von der Platte in
+  den RAM geladen.
   Diesen Vorgang nennt man Swapping.
 
 {#glossar-syslog}
@@ -718,7 +716,7 @@ TCP
   Protokolls ein.
 
 TFTP
-: Das **Trivial File Transfer Protocol** ist ein sehr einfaches
+: Das *Trivial File Transfer Protocol* ist ein sehr einfaches
   Dateiübertragungsprotokoll.
   Es unterstützt nur das Lesen und Schreiben von Dateien.
 
@@ -731,7 +729,7 @@ Thrashing
 
 Traffic-Shaping
 : Traffic-Shaping ist eine Möglichkeit in IP-Netzwerken QoS zu gewährleisten.
-  Dabei werden bestimmte Datenpakete vorrangig behandelt beziehungsweise ein
+  Dabei werden bestimmte Datenpakete vorrangig behandelt beziehungsweise eine
   bestimmte Datenübertragungsrate reserviert.
 
 ## UDP - Unicast
@@ -749,7 +747,7 @@ Umgebungsvariablen
   Im Unterschied zur Kommandozeile, deren Variablen über ihre Position
   verwendet werden, werden Umgebungsvariablen über ihren Namen identifiziert.
   [Kapitel 4](#sec-unix-programmschnittstellen) geht im Rahmen der
-  Programmschnittstellen auf Umgebungsvariablen ein.
+  Prozess-Schnittstellen auf Umgebungsvariablen ein.
 
 Unicast
 : Eine Unicast-Nachricht geht vom Sender zu genau einem Empfänger.
@@ -757,7 +755,7 @@ Unicast
 
 ## Vermittlungsschicht - Virtualisierung
 
-Vermittlungsschicht (OSI-Modell)
+Vermittlungsschicht
 : Die Vermittlungsschicht ist die dritte Schicht im OSI-Modell für
   Netzwerkprotokolle.
   Sie sorgt bei paketorientierten Diensten für die Weiterleitung von
@@ -775,14 +773,14 @@ Verzeichnis
   Verhältnis von Dateien und Verzeichnissen in Dateisystemen ein.
 
 VGA
-: **Video Graphics Array** ist ein Computergrafik-Standard, der
+: *Video Graphics Array* ist ein Computergrafik-Standard, der
   bestimmte Kombinationen von Bildauflösung und Farbanzahl sowie
   Bildwiederholfrequenz definiert.
 
 Virtualisierung
 : Virtualisierung bezeichnet die Erzeugung von virtuellen, das heißt nicht
-  physikalischen Dingen wie einer emulierten Hardware, Datenspeichers oder
-  Netzwerkanschlusses.
+  physikalischen Dingen wie emulierter Hardware, Datenspeicher oder
+  Netzwerkanschlüsse.
 
 ## WPAD
 
@@ -791,5 +789,5 @@ WPAD
   verwendende Proxy-Server automatisch finden, wenn die PAC-Datei unter einer
   definierten URL zu erreichen ist.
   In [Kapitel 11](#sec-proxy-auto-config) gehe ich näher auf die
-  Funktionsweise automatischen Proxy-Konfiguration ein.
+  automatische Proxy-Konfiguration ein.
 
