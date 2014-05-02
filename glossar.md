@@ -1,10 +1,14 @@
 
 # Glossar
 
+## A
+
 ARP
 : Das *Address Resolution Protocol* ermittelt die zu einer IP-Adresse
   gehörende Adresse der Netzzugangsschicht, in den meisten Fällen Ethernet.
   Das Protokoll wird in RFC 826 beschrieben.
+
+## B
 
 BIOS
 : Das BIOS, von *Basic Input/Output System* ist die
@@ -43,6 +47,8 @@ Bufferbloat
   Latenz und Variationen in der Übertragungszeit von Datenpaketen führt und
   auch den Gesamtdurchsatz des Netzes verringern kann.
 
+## C
+
 CIDR
 : *Classless Inter Domain Routing* (CIDR) beschreibt ein Verfahren, um bei
   IPv4 den IP-Adressraum effizienter auszunutzen.
@@ -70,6 +76,8 @@ Crypto-PAn
   Das Verfahren nutzt kryptographische Pseudo-Zufallszahlen, die mit einem
   Schlüssel initialisiert werden, und erlaubt dadurch die Umsetzungen
   konsistent über verschiedene Mitschnitte zu halten.
+
+## D
 
 {#glossar-dac}
 DAC, Discretionary Access Control
@@ -148,6 +156,8 @@ DRM, Direct Rendering Manager
   Speicher der Grafik-Karte gewährt.
   Damit ist es möglich, diesen auch ohne X-Server in Programmen zu verwenden.
 
+## E
+
 Einhängepunkt
 : siehe [Mount Point](#glossar-mount-point).
 
@@ -156,12 +166,16 @@ EWMA
   Zeitreihen, bei denen ältere Datenpunkte geringer gewichtet werden als
   neuere.
 
+## F
+
 {#glossar-firmware}
 Firmware
 : Unter Firmware versteht man Software, die in elektronischen Geräten fest
   eingebettet ist und, wenn überhaupt, dann oft nur mit speziellen
   Vorkehrungen änderbar ist.
   Bei Computern lädt die Firmware das Betriebssystem.
+
+## G
 
 Gateway
 : Ein Gateway verbindet Rechnernetze, die auf unterschiedlichen
@@ -183,6 +197,8 @@ Gerätedatei
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf die
   Zusammenhänge von Dateien und Dateisystemen ein.
 
+## H
+
 HTTP
 : Das *Hypertext Transfer Protocol* dient zum Übertragen von Daten im
   Netzwerk.
@@ -191,6 +207,8 @@ HTTP
   untereinander.
   Das Protokoll wird in RFC 1945 (Version 1.0) und RFC 2616 (Version 1.1)
   beschrieben.
+
+## I
 
 ICMP
 : Das *Internet Control Message Protocol* dient dem Austausch von Steuer und
@@ -232,11 +250,15 @@ IPG
 : Das *Interpacket Gap* bezeichnet den minimalen Abstand zwischen zwei auf
   einem Übertragungsmedium gesendeten Datenpaketen.
 
+## J
+
 Jitter
 : Als Jitter bezeichnet man die Varianz der Laufzeit von Datenpaketen.
   Dieser Effekt ist insbesondere bei Multimedia-Übertragungen stören, da
   einzelne Datenpakete zu früh oder zu spät für eine kontinuierliche
   Darstellung ankommen.
+
+## K
 
 Kerberos
 : Kerberos ist ein verteilter Authentisierungsdienst für Computernetze.
@@ -283,6 +305,8 @@ Korrelation
   Ob die Beziehung kausal ist und falls ja, wie, geht aus der Korrelation
   nicht hervor.
 
+## L
+
 Latenz
 : Die Latenz bezeichnet in Computer-Netzwerken die Zeit zwischen dem Senden
   eines Datenpaketes und der Ankunft beim Empfänger.
@@ -326,6 +350,8 @@ Log, Logdatei, Logfile
   Dabei kann den Nachrichten eine Priorität und ein Bereich zugewiesen
   werden.
 
+## M
+
 Magic SysRequest
 : Als Magic SysRequest bezeichnet man eine Reihe von Tastenkombinationen mit
   der Taste `Druck/S-Abf`, über die sich verschiedene Funktionen des Kernels
@@ -368,6 +394,8 @@ Multicast
   gesendet.
   Siehe auch *Unicast* und *Broadcast*.
 
+## N
+
 Netflow
 : Netflow ist eine ursprünglich von Cisco entwickelte Technik um Informationen
   über die Datenströme an einem Gateway zu einem Sammelpunkt für das
@@ -398,6 +426,8 @@ NTP
   Computersystemen über das Netz.
   Die aktuelle Version 4 ist in RFC 5905 beschrieben.
 
+## O
+
 OSI-Modell
 : Das *Open Systems Interconnection Model* ist ein Schichtenmodell, welches
   als Entwurfsgrundlage für Kommunikationsprotokolle entwickelt wurde.
@@ -418,6 +448,8 @@ Overlay-Dateisystem
   dort gelesen.
   Overlay-Dateisysteme werden zum Beispiel bei Livesystemen eingesetzt, die
   von CD-ROM starten und alle Dateiänderungen in den RAM schreiben.
+
+## P
 
 PAC-Datei
 : Mit Hilfe einer *Proxy-Auto-Config-Datei* kann ein Webbrowser
@@ -478,11 +510,15 @@ PXE, Preboot Execution Environment
   Diese nutzt die Protokolle DHCP zum Übertragen von Bootinformationen und
   TFTP zum Übertragen von Dateien, wie zum Beispiel Betriebssystemimages.
 
+## Q
+
 QoS
 : *Quality of Service*, deutsch auch Dienstgüte, beschreibt, wie gut ein
   Dienst aus Anwendersicht ist.
   In IP-Netzen wird QoS üblicherweise mit den Parametern Latenz, Jitter,
   Paketverlustrate und Datendurchsatz erfasst.
+
+## R
 
 RAID
 : Ein *Redundand Array of Independent Disks* ist eine Kombination von mehreren
@@ -525,6 +561,8 @@ RTT
   RTT von mehreren Faktoren beeinflusst wird.
   Eine Änderung der RTT kann aber auf außergewöhnliche Umstände im Netz
   deuten.
+
+## S
 
 SAS
 : *Serial Attached SCSI* ist ein Nachfolger der parallelen SCSI-Schnittstelle.
@@ -614,6 +652,8 @@ Syslog
   Lognachrichten an andere Rechner sendet oder von anderen Rechnern
   entgegennimmt.
 
+## T
+
 Tail-Merging, Tail-Packing
 : Traditionell waren die kleinsten Einheiten in Dateisystemen Blöcke mit einer
   Größe, die ein Vielfaches von 512 ist.
@@ -649,6 +689,8 @@ Traffic-Shaping
   Dabei werden bestimmte Datenpakete vorrangig behandelt beziehungsweise ein
   bestimmte Datenübertragungsrate reserviert.
 
+## U
+
 UDP
 : Das *Universal Datagram Protocol* ist ein minimales verbindungsloses
   Protokoll zur Datenübertragung.
@@ -667,6 +709,8 @@ Umgebungsvariablen
 Unicast
 : Eine Unicast-Nachricht geht vom Sender zu genau einem Empfänger.
   Vergleiche hierzu *Multicast* und *Broadcast*.
+
+## V
 
 Vermittlungsschicht (OSI-Modell)
 : Die Vermittlungsschicht ist die dritte Schicht im OSI-Modell für
@@ -694,6 +738,8 @@ Virtualisierung
 : Virtualisierung bezeichnet die Erzeugung von virtuellen, das heißt nicht
   physikalischen Dingen wie einer emulierten Hardware, Datenspeichers oder
   Netzwerkanschlusses.
+
+## W
 
 WPAD
 : Mit dem *Web Proxy Autodiscovery Protocol* können Web-Clients (Browser) zu
