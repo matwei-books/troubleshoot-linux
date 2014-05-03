@@ -237,6 +237,15 @@ Aufgerufen: 2014-05-03
 Die Quelle für RFCs und Internet Standards von der Internet Engineering Task
 Force.
 
+##### Leanpub {#bib-www-leanpub}
+Leanpub - Publish Early, Publish Often;
+<https://leanpub.com/>  
+Aufgerufen: 2014-05-03
+
+Autoren und Herausgeben können Leanpub nutzen im fertige Bücher und Bücher in
+Bearbeitung zu veröffentlichen.
+Dieses Buch selbst ist bei und mit Leanpub entstanden.
+
 ##### Perf Wiki {#bib-www-perfwiki}
 Perf Wiki;
 <https://perf.wiki.kernel.org/>  

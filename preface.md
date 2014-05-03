@@ -2,6 +2,16 @@
 
 # Vorwort {#vorwort}
 
+Johannes Loxen sagte in seiner Keynote zum Frühjahrsfachgespräch 2012 der GUUG
+über den Unterschied von Closed-Source und Open-Source Software:
+
+> "Wenn es nicht funktioniert, hörst Du bei Closed-Source auf zu denken und
+> rufst den Hersteller-Support an. Bei Open-Source fängt das Denken dann erst
+> richtig an".
+
+Dieses Buch ist für alle, die nicht nur intensiv sondern vor allem auch
+strukturiert nachdenken wollen.
+
 Ich habe bereits viel Zeit mit Fehlersuche verbracht.
 Schon als Kind beim Basteln, wenn etwas nicht funktionierte.
 Dann in meinem ersten Beruf, bei der Reparatur von Telefonen und
@@ -54,6 +64,28 @@ Aus diesem Grund lasse ich diesen Bereich außen vor.
 Das gleiche gilt für IPv6 und WLAN, die ich zwar privat einsetze, aber
 noch nicht im beruflichen Umfeld, so dass meine Erfahrungen damit nicht
 ausreichen für eine fundierte und strukturierte Darstellung.
+
+In der Keynote von Johannes Loxen ging es so weiter:
+
+> "Manchmal wünscht man sich von den Closed-Source-Admins, dass Sie
+> versuchen, weiter zu denken, indem sie sich der typischen Mittel der
+> Open-Source-Welt bedienen, also Netzwerk-Sniffer oder Debuggern.
+> Allerdings wünscht man sich auch umgekehrt manchmal, dass
+> Open-Source-Admins nicht weiter denken - vor allem, wenn dies Zeit und
+> Geld verbrennt und die entstehenden Kosten in keinem Verhältnis zum Wert
+> des Problems stehen".
+
+Hier gilt es eine Balance zu finden.
+Bei Problemen, die weit über meinen Horizont gehen, habe ich kein Problem
+damit, mir sofort Hilfe zu suchen.
+Einfache Probleme sind in der Regel im Nu geklärt.
+Anders ist es bei Problemen, die nur wenig schwieriger sind, als mein
+bisheriger Kenntnisstand.
+Das sind die Probleme, die am meisten Spaß machen, bei denen ich den
+Flow-Zustand erreiche, viel dabei lerne, besser werde und die Zeit vergesse.
+Ich nutze in diesem Fall gern Timeboxing, stelle einen Kurzzeitwecker auf eine
+knappe halbe Stunde und nutze die Unterbrechung, um ein wenig Bewegung zu
+bekommen und mich zu überzeugen, dass ich noch auf dem richtigen Weg bin.
 
 ## Für wen ist dieses Buch
 

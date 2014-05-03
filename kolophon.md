@@ -1,8 +1,7 @@
 
 # Kolophon
 
-Dieses Buch ist im Markdown-Format mit Erweiterungen von
-[Leanpub](https://leanpub.com/)  geschrieben.
+Dieses Buch ist im Markdown-Format mit Erweiterungen von Leanpub geschrieben.
 Anschließend wurden aus den Markdown-Quelldateien
 die PDF-, EPUB- and MOBI-Versionen erzeugt.
 
