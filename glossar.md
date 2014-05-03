@@ -12,7 +12,7 @@ ARP
 
 BIOS
 : Das *Basic Input/Output System* ist die
-  [Firmware](#glossar-firmware) der PCs, die auf den IBM-PC zurückgehen.
+  Firmware der PCs, die auf den IBM-PC zurückgehen.
 
 Bitübertragungsschicht
 : Die Bitübertragungsschicht ist die unterste Schicht des OSI-Modells für
@@ -84,7 +84,7 @@ DAC
 : Bei der *Discretionary Access Control* (deutsch: Benutzerbestimmbare
   Zugriffskontrolle) wird die Entscheidung, ob auf eine Ressource zugegriffen
   werden darf, allein auf der Basis der Identität des Benutzers getroffen.
-  Diesem Verfahren steht die [Mandatory Access Control](#glossar-mac)
+  Diesem Verfahren steht die Mandatory Access Control
   gegenüber, die den Zugang auf Grund allgemeiner Regeln und zusätzlicher
   Informationen über den Benutzer erlaubt oder verbietet.
   In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
@@ -181,8 +181,7 @@ Gateway
 Gerätedatei
 : Über Gerätedateien erlaubt der Kernel normalen Anwenderprogrammen den
   Zugriff auf die Hardware des Systems.
-  Dabei können die Gerätedateien wie
-  [reguläre Dateien](#glossar-regulaere-datei) verwendet werden.
+  Dabei können die Gerätedateien wie reguläre Dateien verwendet werden.
   Man unterscheidet blockorientierte und zeichenorientierte Gerätedateien.
   Ursprünglich wurden Gerätedateien mit dem Programm `mknod` angelegt.
   Später übernahm *devfs* das dynamische Erzeugen von Gerätedateien.
@@ -234,9 +233,8 @@ Initramfs
 
 {#glossar-inode}
 Inode
-: Ein Inode ist ein Eintrag in einem
-  [Dateisystem](#glossar-dateisystem), der die Verwaltungsinformationen
-  für die zugehörige Datei enthält.
+: Ein Inode ist ein Eintrag in einem Dateisystem, der die
+  Verwaltungsinformationen für die zugehörige Datei enthält.
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
   von Dateien, Inodes und Verzeichnissen detaillierter ein.
 
@@ -320,9 +318,8 @@ LDAP
   Die aktuelle Version ist in den RFCs 4510 und 4511 beschrieben.
 
 Link
-: Ein Link ist ein Verweis auf einen [Inode](#glossar-inode) in einem
-  Dateisystem.
-  Die meisten Links sind Einträge in [Dateisystemen](#glossar-dateisystem),
+: Ein Link ist ein Verweis auf einen Inode in einem Dateisystem.
+  Die meisten Links sind Einträge in Dateisystemen,
   die einen Namen in einem Verzeichnis mit einem Inode verknüpfen,
   diese werden auch Hardlinks genannt.
   Neben den Hardlinks gibt es symbolische Links, auch Softlink genannt, die
@@ -345,7 +342,7 @@ Log, Logdatei, Logfile
   den Namen oder die Adresse des Rechners und den Namen und die PID des
   Prozesses, der die Lognachricht erzeugte.
   Damit nicht alle Programme dieselbe Datei zum Schreiben öffnen müssen, gibt
-  es auf den Systemen einen [Syslog](#glossar-syslog)-Dienst, dem sie die
+  es auf den Systemen einen Syslog-Dienst, dem sie die
   Lognachrichten mittels Bibliotheksfunktionen übergeben.
   Dabei kann den Nachrichten eine Priorität und ein Bereich zugewiesen
   werden.
@@ -362,7 +359,7 @@ MAC, Mandatory Access Control
 : Wenn in einem System die Regeln für die Zugangsrechte zentral und zwingend
   vorgegeben werden, spricht man von Mandatory Access Control (deutsch:
   zwingend erforderliche Zugangskontrolle). Dem gegen über steht die
-  benutzerbestimmbare Zugangskontrolle ([DAC](#glossar-dac)), die dem Nutzer
+  benutzerbestimmbare Zugangskontrolle (DAC), die dem Nutzer
   selbst das Festlegen der Zugangsregeln zu Dateien und Verzeichnissen
   erlaubt.
   In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
@@ -555,18 +552,15 @@ RAID
 {#glossar-regulaere-datei}
 reguläre Datei
 : Eine reguläre Datei enthält permanente Daten, die als Bitfolge in einem
-  [Dateisystem](#glossar-dateisystem) auf einem Datenträger
-  gespeichert werden.
-  Die Verwaltungsinformationen für die Datei werden in einem
-  [Inode](#glossar-inode) abgelegt.
+  Dateisystem auf einem Datenträger gespeichert werden.
+  Die Verwaltungsinformationen für die Datei werden in einem Inode abgelegt.
   Ein und dieselbe reguläre Datei kann mehrere Namen haben, die als Link auf
-  den zugehörigen Inode in den [Verzeichnissen](#glossar-verzeichnis) des
-  Dateisystems geführt werden.
+  den zugehörigen Inode in den Verzeichnissen des Dateisystems geführt werden.
   In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
   von Dateien und Verzeichnissen detaillierter ein.
 
 Rescue-System
-: Ein Rescue-System ist ein [Live-System](#glossar-live-system), dass
+: Ein Rescue-System ist ein Live-System, dass
   zur Wiederherstellung von beschädigten Betriebssystemen geeignet ist.
 
 RIP, RIP2
@@ -683,7 +677,7 @@ Swap, Swapping
 {#glossar-syslog}
 Syslog
 : Der Syslog-Dienst auf einem Rechner nimmt am UNIX-Socket */dev/log*
-  [Lognachrichten](#glossar-log) entgegen und schreibt sie entsprechend
+  Lognachrichten entgegen und schreibt sie entsprechend
   seiner Konfiguration, der Priorität und dem Bereich in Dateien im
   Verzeichnis */var/log/*.
   Einige Syslog-Dämonen schreiben die Lognachrichten stattdessen in
@@ -721,9 +715,9 @@ TFTP
   Es unterstützt nur das Lesen und Schreiben von Dateien.
 
 Thrashing
-: Damit bezeichnet man den Zustand, wenn ein Betriebssystem beim
-  [Paging](#glossar-paging) die meiste Zeit mit dem Nachladen und Auslagern
-  von Speicherseiten beschäftigt ist.
+: Damit bezeichnet man den Zustand, wenn ein Betriebssystem beim Paging die
+  meiste Zeit mit dem Nachladen und Auslagern von Speicherseiten beschäftigt
+  ist.
   Der Prozessor verbringt die meiste Zeit im Wartezustand und die verfügbare
   Rechenleistung ist deutlich herabgesetzt.
 
@@ -741,9 +735,8 @@ UDP
   ankommen, in der sie gesendet werden.
 
 Umgebungsvariablen
-: Neben den Variablen, die ein Programm beim Aufruf in der
-  [Kommandozeile](#glossar-kommandozeile) übergeben bekommt, erhält es weitere
-  Variablen in der Aufrufumgebung.
+: Neben den Variablen, die ein Programm beim Aufruf in der Kommandozeile
+  übergeben bekommt, erhält es weitere Variablen in der Aufrufumgebung.
   Im Unterschied zur Kommandozeile, deren Variablen über ihre Position
   verwendet werden, werden Umgebungsvariablen über ihren Namen identifiziert.
   [Kapitel 4](#sec-unix-programmschnittstellen) geht im Rahmen der
@@ -766,9 +759,9 @@ Vermittlungsschicht
 
 {#glossar-verzeichnis}
 Verzeichnis
-: Ein Verzeichnis ist eine spezielle Art von Dateien in einem
-  [Dateisystem](#glossar-dateisystem), die nur Dateinamen, gepaart mit der
-  Referenz auf die zugehörigen [Inodes](#glossar-inode) enthalten.
+: Ein Verzeichnis ist eine spezielle Art von Dateien in einem Dateisystem,
+  die nur Dateinamen, gepaart mit der Referenz auf die zugehörigen Inodes
+  enthalten.
   [Kapitel 4](#sec-linux-grundlagen-dateien) dieses Buches geht näher auf das
   Verhältnis von Dateien und Verzeichnissen in Dateisystemen ein.
 
