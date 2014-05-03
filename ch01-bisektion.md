@@ -1,8 +1,8 @@
 
 ## Bisektion {#sec-methoden-bisektion}
 
-Die Bisektion, auch Intervallhalbierungsverfahren genannt, wird verwendet um
-bei einem Fehler, der in einem Intervall auftritt, schneller zu finden.
+Die Bisektion, auch Intervallhalbierungsverfahren genannt, verwende ich um
+eine Fehlerstelle, die in einem Intervall auftritt, schneller zu finden.
 Das Intervall kann örtlich sein - zum Beispiel bei einer Datenübertragung
 über mehrere Hops - oder zeitlich - zum Beispiel, wenn sich der Fehler in
 Logfiles zeigt und ich den Zeitpunkt des ersten Auftretens über viele
@@ -15,7 +15,7 @@ dessen Grenzen sich unterscheiden.
 Bei diesem fahre ich mit der Bisektion fort.
 
 Wenn ich zum Beispiel einen Rechner in einem weit entfernten Netz zwar via
-Ping erreichen kann, aber zum Beispiel nicht mit Port 25, dann kann ich 
+Ping erreichen kann, aber nicht mit Port 25, dann kann ich 
 zunächst untersuchen, ob Datenpakete zu Port 25 beim Sender abgehen und
 ob sie beim Empfänger ankommen.
 Kann ich die Datenpakete beim Sender nachweisen, aber beim Empfänger nicht,

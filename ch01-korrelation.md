@@ -18,10 +18,9 @@ Im mathematischen Sinne beschreibt die Korrelation einen statistischen
 Zusammenhang im Gegensatz zur Proportionalität, die einen festes Verhältnis
 beschreibt.
 
-Oft will ich Vierfelder-Korrelationskoeffizient für ein Merkmal und den Fehler
-ermitteln.
-Um diesen zu berechnen stelle ich eine Kontingenztafel auf, in der ich die
-gemeinsame Häufigkeit der Merkmale eintrage.
+Will ich den Vierfelder-Korrelationskoeffizient (Phi-Koeffizient) für ein
+Merkmal und den Fehler ermitteln, stelle ich eine Kontingenztafel auf,
+in der ich die gemeinsame Häufigkeit der Merkmale eintrage.
 
 |                         | kein Fehler | Fehler |
 |-------------------------|-------------|--------|
@@ -48,10 +47,10 @@ Das sagt zwar nichts aus über die Ursache, es gibt mir aber die Möglichkeit,
 das Problem kurzfristig temporär aus dem Weg zu schaffen und, wenn die Zeit
 geeignet ist, das Problem hervorzurufen, um es gründlich zu studieren.
 
-Eine andere Klasse von Problemen, bei denen mir Korrelationen weiterhelfen
+Eine Klasse von Problemen, bei denen mir Korrelationen weiterhelfen
 können, sind intermittierende Probleme, die sich dem andersartigen Zugang
 entziehen.
-Bei diesen Problem hilft mir am Anfang nur, so viele Daten wie möglich über
+Bei diesen Problemen hilft mir am Anfang nur, so viele Daten wie möglich über
 das betroffene Gesamtsystem zu sammeln.
 Bei der Analyse dieser Daten hilft mir dann die Kovarianzanalyse, das heisst,
 ich vergleiche jeweils paarweise verschiedene beobachtete Systemvariablen und
@@ -59,14 +58,13 @@ ermittle den Korrelationskoeffizienten.
 
 Wichtig dabei ist, dass ich immer die zusammengehörigen Daten in Beziehung
 setze.
-Da ich den Zusammenhang meist über die Uhrzeit hergestelle, sorge ich also
+Da ich den Zusammenhang meist über die Uhrzeit herstelle, sorge ich also
 entweder im Vorfeld für gleichlaufende Uhren, oder ich muss den Zeitoffset
-bestimmen und rausrechnen.
+bestimmen und heraus rechnen.
 
 Ein Programm, das sehr hilfreich für die Kovarianzanalyse ist, wurde in
 [WSA2011](#bib-wsa2011) beschrieben.
 
-Wichtig bei allen Korrelationsanalysen ist, sich vor Augen zu halten, dass
-unabhängige Merkmale immer eine Kovarianz nahe 0 haben.
-
+Wichtig bei Korrelationsanalysen ist, sich vor Augen zu halten, dass
+unabhängige Merkmale eine Kovarianz nahe 0 haben.
 
