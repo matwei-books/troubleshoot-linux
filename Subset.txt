@@ -4,7 +4,7 @@ ch01.md
 ch01-entscheidungsbaum.md
 ch01-bisektion.md
 ch01-korrelation.md
-cha-01-abkuerzungen.md
+ch01-abkuerzungen.md
 cha-02.md
 cha-02-problemaufnahme.md
 cha-02-selber-denken.md

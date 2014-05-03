@@ -14,7 +14,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch01-entscheidungsbaum.md \
                $(DROPBOXDIR)/ch01-bisektion.md \
                $(DROPBOXDIR)/ch01-korrelation.md \
-               $(DROPBOXDIR)/cha-01-abkuerzungen.md \
+               $(DROPBOXDIR)/ch01-abkuerzungen.md \
                $(DROPBOXDIR)/cha-02.md \
                $(DROPBOXDIR)/cha-02-problemaufnahme.md \
                $(DROPBOXDIR)/cha-02-selber-denken.md \
@@ -141,7 +141,7 @@ SOURCES = $(BOOK) \
           ch01-entscheidungsbaum.md \
           ch01-bisektion.md \
           ch01-korrelation.md \
-          cha-01-abkuerzungen.md \
+          ch01-abkuerzungen.md \
           cha-02.md \
           cha-02-problemaufnahme.md \
           cha-02-selber-denken.md \
@@ -261,7 +261,7 @@ CHAPTERS = \
     ch01-entscheidungsbaum.md \
     ch01-bisektion.md \
     ch01-korrelation.md \
-    cha-01-abkuerzungen.md \
+    ch01-abkuerzungen.md \
     cha-02.md \
     cha-02-problemaufnahme.md \
     cha-02-selber-denken.md \
