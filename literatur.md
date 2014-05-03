@@ -230,7 +230,7 @@ analysieren kann, wenn man mit einfachen Methoden nicht weiter kommt.
 ## Online-Quellen
 
 ##### IETF Tools {#bib-www-ietftools}
-IETF-related tools, standalone or hosted on tools.ietf.org.
+IETF-related tools, standalone or hosted on tools.ietf.org  
 <http://tools.ietf.org/>  
 Aufgerufen: 2014-05-03
 
@@ -238,7 +238,7 @@ Die Quelle für RFCs und Internet Standards von der Internet Engineering Task
 Force.
 
 ##### Leanpub {#bib-www-leanpub}
-Leanpub - Publish Early, Publish Often;
+Leanpub - Publish Early, Publish Often  
 <https://leanpub.com/>  
 Aufgerufen: 2014-05-03
 
@@ -247,7 +247,7 @@ Bearbeitung zu veröffentlichen.
 Dieses Buch selbst ist bei und mit Leanpub entstanden.
 
 ##### Perf Wiki {#bib-www-perfwiki}
-Perf Wiki;
+Perf Wiki  
 <https://perf.wiki.kernel.org/>  
 Aufgerufen: 2014-03-12
 
@@ -257,7 +257,7 @@ Linux.
 ##### POSIX.1-2008 {#bib-posix1-2008}
 IEEE and The Open Group; The Open Group Technical Standard Base
 Specifications, Issue 7;
-POSIX.1-2008 / IEEE Std. 1003.1™-2008;
+POSIX.1-2008 / IEEE Std. 1003.1™-2008  
 <http://pubs.opengroup.org/onlinepubs/9699919799/>  
 Aufgerufen: 2013-11-29
 
@@ -268,7 +268,7 @@ des Quellcodes zu unterstützen.
 
 ##### POSIX.FileCap {#bib-web-posix-capabilities}
 Chris Friedhoff;
-POSIX Capabilities & File POSIX Capabilities;
+POSIX Capabilities & File POSIX Capabilities  
 <http://www.friedhoff.org/posixfilecaps.html>  
 Aufgerufen: 2013-12-20
 
