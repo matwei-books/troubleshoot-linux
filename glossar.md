@@ -87,7 +87,7 @@ DAC
   Diesem Verfahren steht die Mandatory Access Control
   gegenüber, die den Zugang auf Grund allgemeiner Regeln und zusätzlicher
   Informationen über den Benutzer erlaubt oder verbietet.
-  In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
+  In Kapitel sechs gehe ich näher auf
   verschiedene Optionen der Zugangskontrolle bei Linux ein.
 
 {#glossar-dateisystem}
@@ -98,7 +98,7 @@ Dateisystem
   des Dateisystems zu den entsprechenden Datenblöcken und Metadaten.
   Abhängig von der Art des Datenträgers und dem Einsatzzweck des Dateisystems
   kommen verschiedene Arten von Dateisystemen zum Einsatz.
-  In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf den
+  In Kapitel 4 gehe ich näher auf den
   Zusammenhang von Dateisystemen und Dateien ein.
 
 {#glossar-datenbank}
@@ -186,7 +186,7 @@ Gerätedatei
   Ursprünglich wurden Gerätedateien mit dem Programm `mknod` angelegt.
   Später übernahm *devfs* das dynamische Erzeugen von Gerätedateien.
   In modernen Linuxsystemen werden Gerätedateien mit *udev* verwaltet.
-  In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich näher auf die
+  In Kapitel 4 gehe ich näher auf die
   Zusammenhänge von Dateien und Dateisystemen ein.
 
 ## HTTP
@@ -235,7 +235,7 @@ Initramfs
 Inode
 : Ein Inode ist ein Eintrag in einem Dateisystem, der die
   Verwaltungsinformationen für die zugehörige Datei enthält.
-  In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
+  In Kapitel 4 gehe ich auf die Zusammenhänge
   von Dateien, Inodes und Verzeichnissen detaillierter ein.
 
 IP, IPv4, IPv6
@@ -294,7 +294,7 @@ Kommandozeile
   `\0` abgeschlossen werden.
   Beim Aufruf eines Programms aus einer Shell kann die Kommandozeile aus einer
   oder mehreren Textzeilen zusammengebaut werden.
-  In [Kapitel 4](#sec-unix-programmschnittstellen) gehe ich im Rahmen der
+  In Kapitel 4 gehe ich im Rahmen der
   Programmschnittstellen auf die Kommandozeile ein.
 
 Korrelation
@@ -325,7 +325,7 @@ Link
   Neben den Hardlinks gibt es symbolische Links, auch Softlink genannt, die
   nicht auf einen Inode verweisen, sondern auf einen anderen Dateinamen.
   Für weitere Informationen zu Dateien, Verzeichnissen und Links
-  [siehe Kapitel 4](#sec-linux-grundlagen-dateien).
+  siehe Kapitel 4.
 
 Live-System
 : Mit diesem Begriff bezeichnet man ein Betriebssystem, das ohne Installation
@@ -362,7 +362,7 @@ MAC, Mandatory Access Control
   benutzerbestimmbare Zugangskontrolle (DAC), die dem Nutzer
   selbst das Festlegen der Zugangsregeln zu Dateien und Verzeichnissen
   erlaubt.
-  In [Kapitel sechs](#sec-lokal-zugriffsrechte) gehe ich näher auf
+  In Kapitel sechs gehe ich näher auf
   verschiedene Optionen der Zugangskontrolle bei Linux ein.
 
 MAC, Media Access Control
@@ -380,7 +380,7 @@ Magic SysRequest
 : Als Magic SysRequest bezeichnet man eine Reihe von Tastenkombinationen mit
   der Taste `Druck/S-Abf`, über die sich verschiedene Funktionen des Kernels
   aufrufen lassen, solange dieser noch nicht abgestürzt ist.
-  In [Kapitel 5](#sec-lokal-total-magic-sysrq) gehe ich auf eine Möglichkeit
+  In Kapitel 5 gehe ich auf eine Möglichkeit
   ein, mit Hilfe des Magic SysRequest ein hängendes System sicher neu zu
   starten.
 
@@ -453,7 +453,7 @@ NTP
 OSI-Modell
 : Das *Open Systems Interconnection Model* ist ein Schichtenmodell, welches
   als Entwurfsgrundlage für Kommunikationsprotokolle entwickelt wurde.
-  In [Kapitel 9](#sec-osi-modell) gehe ich näher auf dieses Modell ein.
+  In Kapitel 9 gehe ich näher auf dieses Modell ein.
 
 OSPF
 : *Open Shortest Path First* ist ein dynamisches Routingprotokoll, das in RFC
@@ -476,7 +476,7 @@ Overlay-Dateisystem
 PAC-Datei
 : Mit Hilfe einer *Proxy-Auto-Config-Datei* kann ein Webbrowser
   automatisch den passenden Proxyserver für eine gewünschte URL ermitteln.
-  In [Kapitel 11](#sec-proxy-auto-config) gehe ich näher auf die
+  In Kapitel 11 gehe ich näher auf die
   automatische Proxy-Konfiguration ein.
 
 Paging
@@ -513,7 +513,7 @@ Programm
   werden können, von Programmen in "höheren" Programmiersprachen, die vor der
   Abarbeitung durch den Prozessor erst in Maschinencode übersetzt werden oder
   durch spezielle Programme interpretiert werden.
-  In [Kapitel 4](#sec-unix-prozessmodell) gehe ich näher auf den Zusammenhang
+  In Kapitel 4 gehe ich näher auf den Zusammenhang
   von Programmen und Prozessen ein.
 
 {#glossar-prozess}
@@ -524,7 +524,7 @@ Prozess
   Kontext, der unter anderem auf die verarbeiteten Daten verweist.
   Der Prozess wird durch das Programm gesteuert und durch den Kontext und die
   verarbeiteten Daten beeinflusst.
-  [Kapitel 4](#sec-unix-prozessmodell) geht näher auf das UNIX-Prozessmodell
+  Kapitel 4 geht näher auf das UNIX-Prozessmodell
   ein.
 
 PXE
@@ -556,7 +556,7 @@ reguläre Datei
   Die Verwaltungsinformationen für die Datei werden in einem Inode abgelegt.
   Ein und dieselbe reguläre Datei kann mehrere Namen haben, die als Link auf
   den zugehörigen Inode in den Verzeichnissen des Dateisystems geführt werden.
-  In [Kapitel 4](#sec-linux-grundlagen-dateien) gehe ich auf die Zusammenhänge
+  In Kapitel 4 gehe ich auf die Zusammenhänge
   von Dateien und Verzeichnissen detaillierter ein.
 
 Rescue-System
@@ -625,7 +625,7 @@ Signal
   Der sendende Prozess benötigt bestimmte Rechte, um einem anderen Prozess ein
   Signal zu senden.
   Im Rahmen des UNIX-Prozessmodells gehe ich in
-  [Kapitel 4](#sec-unix-prozessmodell) näher auf Signale ein.
+  Kapitel 4 näher auf Signale ein.
 
 SMTP
 : Das *Simple Mail Transfer Protocol* dient dem Versenden und Weiterleiten
@@ -659,7 +659,7 @@ Standardausgabe, -eingabe, fehlerausgabe
   In den gängigen Shells können diese Datenströme durch Eingabeumleitung
   (`<`), Ausgabeumleitung (`>`) oder Verknüpfung (`|`) mit Dateien oder
   Programmen verbunden werden.
-  In [Kapitel 4](#sec-unix-programmschnittstellen) gehe ich bei den
+  In Kapitel 4 gehe ich bei den
   Programmschnittstellen näher auf die Datenströme ein.
 
 STP
@@ -706,7 +706,7 @@ Tail-Merging, Tail-Packing
 TCP
 : Das *Transmission Control Protocol* ist ein paketvermitteltes, zuverlässiges
   und verbindungsorientiertes Protokoll zur Datenübertragung.
-  In [Kapitel 9](#sec-tcp-grundlagen) gehe ich auf einige Eigenschaften dieses
+  In Kapitel 9 gehe ich auf einige Eigenschaften dieses
   Protokolls ein.
 
 TFTP
@@ -739,7 +739,7 @@ Umgebungsvariablen
   übergeben bekommt, erhält es weitere Variablen in der Aufrufumgebung.
   Im Unterschied zur Kommandozeile, deren Variablen über ihre Position
   verwendet werden, werden Umgebungsvariablen über ihren Namen identifiziert.
-  [Kapitel 4](#sec-unix-programmschnittstellen) geht im Rahmen der
+  Kapitel 4 geht im Rahmen der
   Prozess-Schnittstellen auf Umgebungsvariablen ein.
 
 Unicast
@@ -762,7 +762,7 @@ Verzeichnis
 : Ein Verzeichnis ist eine spezielle Art von Dateien in einem Dateisystem,
   die nur Dateinamen, gepaart mit der Referenz auf die zugehörigen Inodes
   enthalten.
-  [Kapitel 4](#sec-linux-grundlagen-dateien) dieses Buches geht näher auf das
+  Kapitel 4 dieses Buches geht näher auf das
   Verhältnis von Dateien und Verzeichnissen in Dateisystemen ein.
 
 VGA
@@ -781,6 +781,6 @@ WPAD
 : Mit dem *Web Proxy Autodiscovery Protocol* können Web-Clients (Browser) zu
   verwendende Proxy-Server automatisch finden, wenn die PAC-Datei unter einer
   definierten URL zu erreichen ist.
-  In [Kapitel 11](#sec-proxy-auto-config) gehe ich näher auf die
+  In Kapitel 11 gehe ich näher auf die
   automatische Proxy-Konfiguration ein.
 

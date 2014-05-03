@@ -40,11 +40,11 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/cha-05-initramfs.md \
                $(DROPBOXDIR)/cha-05-magic-sysrequest.md \
                $(DROPBOXDIR)/cha-05-kernel-panic.md \
-               $(DROPBOXDIR)/cha-06.md \
+               $(DROPBOXDIR)/ch06.md \
                $(DROPBOXDIR)/cha-06-erste-minute.md \
                $(DROPBOXDIR)/cha-06-dienste.md \
                $(DROPBOXDIR)/cha-06-init-programme.md \
-               $(DROPBOXDIR)/cha-06-zugriffsrechte.md \
+               $(DROPBOXDIR)/ch06-zugriffsrechte.md \
                $(DROPBOXDIR)/cha-06-mount-probleme.md \
                $(DROPBOXDIR)/cha-07.md \
                $(DROPBOXDIR)/cha-07-cpu.md \
@@ -167,11 +167,11 @@ SOURCES = $(BOOK) \
           cha-05-initramfs.md \
           cha-05-magic-sysrequest.md \
           cha-05-kernel-panic.md \
-          cha-06.md \
+          ch06.md \
           cha-06-erste-minute.md \
           cha-06-dienste.md \
           cha-06-init-programme.md \
-          cha-06-zugriffsrechte.md \
+          ch06-zugriffsrechte.md \
           cha-06-mount-probleme.md \
           cha-07.md \
           cha-07-cpu.md \
@@ -287,11 +287,11 @@ CHAPTERS = \
     cha-05-initramfs.md \
     cha-05-magic-sysrequest.md \
     cha-05-kernel-panic.md \
-    cha-06.md \
+    ch06.md \
     cha-06-erste-minute.md \
     cha-06-dienste.md \
     cha-06-init-programme.md \
-    cha-06-zugriffsrechte.md \
+    ch06-zugriffsrechte.md \
     cha-06-mount-probleme.md \
     cha-07.md \
     cha-07-cpu.md \

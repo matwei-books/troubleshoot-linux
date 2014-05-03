@@ -1,5 +1,5 @@
 
-## Zugriffsprobleme {#sec-local-zugriffsrechte}
+## Zugriffsprobleme {#sec-lokal-zugriffsrechte}
 
 Ein Indiz für ein Zugriffsproblem ist zum Beispiel ein fehlgeschlagener
 Systemaufruf, den ich in der Ausgabe von *strace* finden kann, wie diesen hier:
