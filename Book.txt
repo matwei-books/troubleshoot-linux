@@ -1,6 +1,7 @@
 preface.md
 part1.md
-cha-01.md
+ch01.md
+ch01-entscheidungsbaum.md
 cha-02.md
 cha-03.md
 part2.md

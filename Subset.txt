@@ -1,7 +1,7 @@
 preface.md
 part1.md
-cha-01.md
-cha-01-entscheidungsbaum.md
+ch01.md
+ch01-entscheidungsbaum.md
 cha-01-bisektion.md
 cha-01-korrelation.md
 cha-01-abkuerzungen.md

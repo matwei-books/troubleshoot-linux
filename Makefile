@@ -10,8 +10,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/$(PREVIEW) \
                $(DROPBOXDIR)/$(SAMPLE) \
                $(DROPBOXDIR)/preface.md \
-               $(DROPBOXDIR)/cha-01.md \
-               $(DROPBOXDIR)/cha-01-entscheidungsbaum.md \
+               $(DROPBOXDIR)/ch01.md \
+               $(DROPBOXDIR)/ch01-entscheidungsbaum.md \
                $(DROPBOXDIR)/cha-01-bisektion.md \
                $(DROPBOXDIR)/cha-01-korrelation.md \
                $(DROPBOXDIR)/cha-01-abkuerzungen.md \
@@ -137,8 +137,8 @@ SOURCES = $(BOOK) \
           $(PREVIEW) \
           $(SAMPLE) \
           preface.md \
-          cha-01.md \
-          cha-01-entscheidungsbaum.md \
+          ch01.md \
+          ch01-entscheidungsbaum.md \
           cha-01-bisektion.md \
           cha-01-korrelation.md \
           cha-01-abkuerzungen.md \
@@ -257,8 +257,8 @@ SOURCES = $(BOOK) \
 #
 CHAPTERS = \
     preface.md \
-    cha-01.md \
-    cha-01-entscheidungsbaum.md \
+    ch01.md \
+    ch01-entscheidungsbaum.md \
     cha-01-bisektion.md \
     cha-01-korrelation.md \
     cha-01-abkuerzungen.md \
@@ -390,11 +390,11 @@ all:
 
 dropbox: $(DROPBOXFILES)
 
-partial: dropbox
-	sleep 10 && leanpub partial_preview
+partial: dropbox revision.md
+	sleep 15 && leanpub partial_preview
 
 preview: dropbox revision.md
-	sleep 10 && leanpub preview
+	sleep 15 && leanpub preview
 
 proofreading:
 	bin/make_proofreading_file

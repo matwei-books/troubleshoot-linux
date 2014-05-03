@@ -5,13 +5,16 @@ Wenn ich auf ein neues Problem treffe, versuche ich es so schnell wie
 möglich zu charakterisieren, um die nächsten Schritte zu seiner Behebung
 herauszufinden.
 Dabei helfen mir Entscheidungsbäume.
-Programmierern ist so etwas als Programmablaufplan bekannt.
-Mein grundlegender Entscheidungsbaum bei der Fehlersuche sieht immer so aus:
+Programmierer kennen so etwas als Programmablaufplan.
+
+Mein grundlegender Entscheidungsbaum bei der Fehlersuche sieht immer so aus,
+wie im folgenden Bild.
+Grundsätzlich werde ich nur tätig, wenn eine der Fragen mit nein beantwortet
+wird.
+Damit habe ich fast alle Probleme abgedeckt, lediglich intermittierende
+Probleme erfasst der Entscheidungsbaum nicht.
 
 ![Allgemeiner Entscheidungsbaum](images/eb-allgemein-3-yed.png)
-
-Grundsätzlich werde ich nur tätig, wenn eine der Fragen mit nein beantwortet
-wird und habe damit fast alle Probleme abgedeckt.
 
 Meine erste Frage geht danach, ob überhaupt noch etwas funktioniert oder ob
 es sich um einen Totalausfall handelt.
@@ -23,10 +26,10 @@ funktioniert und irgendwann stellt sich heraus, dass der ganze Rechner
 eingefroren ist und zwar noch den letzten Bildschirm zeigt, aber weder auf
 Tastatur, Maus noch Netzwerkzugriffe reagiert.
 Ein anderes Mal kommt die Meldung, dass das Internet nicht geht (Totalausfall)
-und auf die Bitte ein oder zwei andere Websites zu besuchen, stellt sich heraus,
-dass doch nur die Startseite des Browsers betroffen ist.
+und auf die Bitte, ein oder zwei andere Websites zu besuchen,
+stellt sich heraus, dass nur die Startseite des Browsers betroffen ist.
 Darum versuche ich mit den ersten Fragen herauszufinden, ob es sich um einen
-Totalausfall handelt, der anders behandelt werden muß als ein Teilausfall.
+Totalausfall handelt, den ich anders behandeln muß als einen Teilausfall.
 
 Wenn ich einen Totalausfall ausgeschlossen habe, frage ich als nächstes, ob
 alle für das Problem relevanten Dienste funktionieren.
@@ -38,7 +41,7 @@ was nicht und sich dann über Abhängigkeiten der Teilsysteme an den oder die
 Urheber des Problems heranzutasten.
 Dabei gilt es immer im Hinterkopf zu behalten, dass es zwar meist einen
 konkreten Auslöser für ein Problem gibt, aber oft mehrere Ursachen.
-Eine Möglichkeit, diese Frage zu beantworten, ist verschiedene Funktionen einer
+Eine Möglichkeit, diese Frage zu beantworten, ist, verschiedene Funktionen einer
 Software auszuprobieren, verschiedene Netzdienste und Netzziele zu testen.
 Hierbei kann ein Monitoringsystem wie Nagios gute Dienste leisten, wenn es
 entsprechend aufgesetzt ist.
@@ -73,18 +76,18 @@ Ich gehe in diesem Fall von unten - dem gemeldeten Performanceproblem -
 einen Schritt nach oben um sicher zu sein, dass meine folgenden Überlegungen
 auf einer gesicherten Basis stehen. Zum Beispiel kann ein ausgefallener
 DNS-Server durch Redundanz zwar kompensiert werden, aber trotzdem zu
-Verzögerungen durch Timeouts führen, die dann als Performanceprobleme
-wahrgenommen werden können.
+Verzögerungen durch Timeouts führen, die dann als Performanceproblem
+wahrgenommen werden.
 
 Außer den drei Hauptfragen gibt es eine vierte Frage, die ich ständig
 im Hinterkopf behalten muss.
 Das ist die Frage nach intermittierenden Fehlern und nach der
-Reproduzierbarkeit des Problems beziehungsweise meiner Beobachtungen.
+Reproduzierbarkeit des Problems, beziehungsweise meiner Beobachtungen.
 Habe ich es mit intermittierenden Fehlern zu tun, kann ich nicht mit
 Sicherheit sagen, ob das Problem wirklich gelöst ist.
 Nicht einmal, ob meine bisherigen Überlegungen überhaupt zutreffen.
-Stattdessen hatte ich es vielleicht gerade mit einem komplikationsfreien
-Zeitpunkt zu tun und kurz danach kommt das Problem wieder.
+Stattdessen hatte ich es vielleicht gerade mit einer komplikationsfreien
+Zeit zu tun und kurz danach kommt das Problem wieder.
 Bei intermittierenden Problemen bleibt mir nur, Daten zu sammeln und über
 Korrelation eine Idee zu bekommen, was das Problem auslösen könnte.
 Jede Idee, die mir dazu einfällt, muss ich dahingehend prüfen, ob sie
