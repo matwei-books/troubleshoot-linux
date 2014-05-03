@@ -2,9 +2,9 @@ preface.md
 part1.md
 ch01.md
 ch01-entscheidungsbaum.md
-cha-01-bisektion.md
-cha-01-korrelation.md
-cha-01-abkuerzungen.md
+ch01-bisektion.md
+ch01-korrelation.md
+ch01-abkuerzungen.md
 cha-02.md
 cha-03.md
 part2.md
