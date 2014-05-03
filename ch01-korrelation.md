@@ -18,8 +18,8 @@ Im mathematischen Sinne beschreibt die Korrelation einen statistischen
 Zusammenhang im Gegensatz zur Proportionalität, die einen festes Verhältnis
 beschreibt.
 
-Will ich den Vierfelder-Korrelationskoeffizient (Phi-Koeffizient) für ein
-Merkmal und den Fehler ermitteln, stelle ich eine Kontingenztafel auf,
+Will ich den Vierfelder-Korrelationskoeffizient {$$}\phi{/$$}
+für ein Merkmal und den Fehler ermitteln, stelle ich eine Kontingenztafel auf,
 in der ich die gemeinsame Häufigkeit der Merkmale eintrage.
 
 |                         | kein Fehler | Fehler |

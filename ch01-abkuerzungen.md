@@ -39,8 +39,8 @@ evaluiert werden, die bestätigt, dass der Test auch versagen kann. Das gleiche
 gilt für fehlgeschlagene Tests. Diese müssen evaluiert werden, ob sie
 funktionieren können.
 
-Wenn ein Verbindungsversuch auf einem Rechner fehlschlägt, versuche ich den
-gleichen Versuch von einem anderen Rechner aus um nachzuweisen, dass er hätte
+Ist ein Verbindungsversuch auf einem Rechner fehlgeschlagen, versuche ich den
+gleichen Versuch auf einem anderen Rechner, um nachzuweisen, dass er hätte
 funktionieren können. Das hat mich schon oft davor bewahrt, einen
 Netzwerkfehler zu vermuten, wenn lediglich ein Paketfilter
 die Verbindung unterbunden hatte.
