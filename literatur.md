@@ -8,9 +8,9 @@ Christiansen, Tom and Torkington, Nathan;
 Perl Kochbuch; O'Reilly, Köln, 2000;  
 ISBN: 3-89721-140-8
 
-Neben dem Kamel-Buch (*Programmieren mit Perl*) ist das für mich das
+Neben dem [Kamel-Buch](#bib-wcs1997) ist dieses für mich das
 wichtigste Buch bei der Arbeit mit Perl.
-Der Vorteil dieses Buches, vom Standpunkt der Fehlersuche, ist die
+Der Vorteil dieses Buches ist die
 Darbietung als anwendungsbereite Rezepte, so dass ich mich auf das zu
 lösende Problem konzentrieren kann und nicht auf die subtilen Feinheiten
 der Programmiersprache umschalten muss.
@@ -22,13 +22,13 @@ Das neue GARANTIERT ZEICHNEN LERNEN: Die Befreiung unserer schöpferischen
 Gestaltungskräfte; Rowohlt, Reinbek bei Hamburg, 2012;  
 ISBN: 978-3-498-01669-2
 
-Dieses Buch hat vordergründig rein gar nichts mit Fehlersuche zu tun.
+Dieses Buch hat vordergründig nichts mit Fehlersuche zu tun.
 Betty Edwards gibt in diesem Buch einige Tipps zum Umschalten der
 verschiedenen Gehirn-Modi, konkret zwischen dem logisch-analytischen und dem
 bildlich-intuitiven Denken.
 Für die erfolgreiche Fehlersuche insbesondere bei schwierigen Problemen ist es
 vorteilhaft mit beiden Modi souverän umzugehen.
-Dabei kann dieses Buch helfen.
+Das zu lernen, kann dieses Buch helfen.
 
 ##### Foessmeier1991 {#bib-foessmeier1991}
 
@@ -40,7 +40,7 @@ ISBN: 3-540-53521-7
 
 Eigentlich eher für Programmierer, die Software für UNIX schreiben, gedacht,
 war dieses Buch eine Offenbarung für mich um zu verstehen, wie Programme
-unter UNIX (und Linux) kommunizieren.
+unter UNIX und Linux kommunizieren.
 
 ##### Kahneman2011 {#bib-kahneman2011}
 
@@ -61,7 +61,7 @@ System Performance Tuning;
 O'Reilly, Sebastopol, 1996;  
 ISBN 0-937175-60-9
 
-Obwohl schon etwas älter, führt dieses Buch doch grundlegend in das Gebiet des
+Dieses Buch führt grundlegend in das Gebiet des
 Performance-Tuning von UNIX-Systemen ein. 2002 gab es eine zweite Auflage mit
 Gian-Paolo D. Musumeci als Koautor.
 
@@ -75,9 +75,9 @@ ISBN: 0-596-00275-0
 Dieses Buch führt in die Grundlagen und Feinheiten des IP Routing ein, wie es
 in Cisco-Routern implementiert ist. Da es sich nicht auf die Konfiguration
 beschränkt, sondern auch die Mechanismen und die gesendeten Datagramme
-erläutert, ist es für mich insbesondere zur Analyse von Routingprotokollen
-eine große Hilfe. Mit der Routingsoftware Quagga kann ich auch die
-Konfigurationsbeispiele unter Linux nachvollziehen, da sich deren
+erläutert, ist es insbesondere zur Analyse von Routingprotokollen
+eine große Hilfe. Mit der Routingsoftware Quagga lassen sich die
+Konfigurationsbeispiele auch unter Linux nachvollziehen, da sich deren
 Benutzerschnittstelle stark an IOS von Cisco orientiert.
 
 ##### Polya2010 {#bib-polya2010}
@@ -120,6 +120,19 @@ Vielmehr geht es darum unter welchen Umständen Systeme von kleinen Störungen
 profitieren können und wie man den Zufall zu einem Verbündeten statt zu einem
 Gegner machen kann.
 
+##### WCS1997 {#bib-wcs1997}
+Larry Wall, Tom Christiansen and Randal L. Schwartz;
+Programmieren mit Perl;
+O'Reilly, Köln 1997;  
+ISBN 3-930673-48-7
+
+Die Einführung in die Programmiersprache Perl.
+In dem Buch wird nicht nur die Sprache selbst kurzweilig vorgestellt, sondern
+auch ein Einblick in Hintergründe und die mit dieser Programmiersprache
+verbundene Kultur gegeben.
+Die zweite deutsche Auflage führt Jon Orwant statt Randal Schwartz als Autoren
+auf.
+
 ##### Weidner2012 {#bib-weidner2012}
 Weidner, Mathias; Linux kopflos mit PC Engines ALIX;
 Lulu Press, Raleigh, 2012;  
@@ -147,10 +160,17 @@ Bonwick, Jeff; The slab allocator: an object-caching kernel memory
 allocator; Proceedings of the USENIX Summer 1994 Technical Conference on
 USENIX Summer 1994 Technical Conference - Volume 1, S. 6
 
+In diesem Artikel stellte der Autor ein effizientes Verfahren zur
+Speicherverwaltung für SunOS vor. Das Verfahren, Slab Allocator, gelangte
+1999 in den Linux-Kernel.
+
 ##### ctDiedrich2012 {#bib-ct-diedrich2012}
 Diedrich, Dr. Oliver; Zugriffschutz - Dateiüberwachung mit Fanotify;
 c't Magazin für Computertechnik 2012 Heft 9, S. 174ff;
 ISSN 0724-8679
+
+Der Autor stellt in diesem Artikel die Möglichkeiten der
+Fanotify Systemschnittstelle vor.
 
 ##### ctZivadinovic2012 {#bib-ct-zivadinovic2012}
 Dušan Zivadinović; Blindflug mit Full Speed - Wie die TCP/IP-Flusskontrolle
@@ -209,9 +229,17 @@ analysieren kann, wenn man mit einfachen Methoden nicht weiter kommt.
 
 ## Online-Quellen
 
+##### IETF Tools {#bib-www-ietftools}
+IETF-related tools, standalone or hosted on tools.ietf.org.
+<http://tools.ietf.org/>  
+Aufgerufen: 2014-05-03
+
+Die Quelle für RFCs und Internet Standards von der Internet Engineering Task
+Force.
+
 ##### Perf Wiki {#bib-www-perfwiki}
 Perf Wiki;
-<https://perf.wiki.kernel.org/>
+<https://perf.wiki.kernel.org/>  
 Aufgerufen: 2014-03-12
 
 In diesem Wiki finden sich Informationen zum Performancezählersubsystem von
@@ -232,7 +260,7 @@ des Quellcodes zu unterstützen.
 ##### POSIX.FileCap {#bib-web-posix-capabilities}
 Chris Friedhoff;
 POSIX Capabilities & File POSIX Capabilities;
-<http://www.friedhoff.org/posixfilecaps.html>
+<http://www.friedhoff.org/posixfilecaps.html>  
 Aufgerufen: 2013-12-20
 
 Dieser Artikel, 2008 geschrieben, führt mit praktischen Beispielen in den
