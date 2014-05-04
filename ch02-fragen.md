@@ -21,7 +21,7 @@ anzuschauen.
 Wenn der Link zu einer Mailingliste ging, kann ich versuchen, ein anderes
 Archiv dieser Mailingliste ausfindig zu machen.
 Oder ich schaue nach, ob ich die Website im Internetarchiv, der
-[Wayback Machine](https://archive.org/web/) finde.
+[Wayback Machine](#bib-www-waybackmachine) finde.
 
 T> Beinahe das Wichtigste an einer Internetsuche ist ein Zeitlimit, nach dem
 T> ich die Suche abbreche.
@@ -34,17 +34,17 @@ Kollegen sind oft gute Ansprechpartner bei schwierigen Problemen.
 Zum einen sind sie durch die gemeinsame Arbeit mit dem konkreten Rechner oder
 Netzwerk vertraut, haben das gleiche Problem vielleicht schon gehabt und
 können sofort weiterhelfen.
-Zum anderen kennt man sich durch jahrelange gemeinsame Arbeit und
+Zum anderen kennt man sich durch die gemeinsame Arbeit und
 weiß, welche Fragen man wem stellen kann.
 
 Die andere Seite der Medaille ist, dass die Kollegen nicht dafür angestellt
 sind, meine Probleme zu lösen, sondern eigene haben.
 
 Will ich also ein Problem mit einem Kollegen besprechen, sollte ich meine
-Hausaufgaben gemacht haben und selbst über das Problem nachgedacht und selbst
+Hausaufgaben gemacht, selbst über das Problem nachgedacht und selbst
 dazu im Internet gesucht haben.
-Dann bin ich vorbereitet und kann dem Kollegen konkrete Fragen stellen und auf
-sein Nachfragen hoffentlich fundiert antworten.
+Dann bin ich vorbereitet, kann dem Kollegen konkrete Fragen stellen und auf
+sein Nachfragen fundiert antworten.
 
 Bevor ich meinen Kollegen befrage, schaue ich genau hin, ob er beschäftigt ist
 und sende gegebenenfalls die Frage als E-Mail, um seinen Arbeitsfluss nicht
@@ -57,13 +57,13 @@ können.
 Dann ist es sogar hilfreich, wenn der Kollege nicht zu stark mit der Materie
 vertraut ist, weil ich noch genauer und vor allem verständlicher formulieren
 muss.
-Auch hier gilt wieder: halt die Kollegen nicht von der Arbeit ab.
+Auch hier gilt: halt die Kollegen nicht von der Arbeit ab.
 
 ### Foren / Mailinglisten
 
 Für Foren und Mailinglisten gilt im wesentlichen das gleiche wie für Kollegen.
 
-Ich muss hier aber beachten, dass die Motivation dort zu antworten auf
+Ich muss aber beachten, dass die Motivation hier zu antworten auf
 Freiwilligkeit beruht.
 
 Ein sehr wichtiger Punkt ist, dass Foren und Mailinglisten öffentlich sind.

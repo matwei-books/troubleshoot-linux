@@ -1,7 +1,7 @@
 
 ## Wenn ich feststecke
 
-Ich glaube, so etwas hat fast jeder schon mal erlebt.
+So etwas hat vermutlich fast jeder schon mal erlebt.
 Man steckt fest in einem Problem, hat alles ausprobiert, aber nichts
 funktioniert, das Problem ist nicht zu fassen.
 Entnervt lässt man es liegen, geht Essen, Schlafen oder Spazieren.
@@ -26,14 +26,14 @@ Dieser Modus arbeitet langsam, dafür ist er methodisch und in der Lage,
 logische Schlussfolgerungen herzuleiten.
 Dieser Modus benötigt sehr viel Energie.
 
-Der andere Modus nutzt vorzugsweise entwicklungsgeschichtlich ältere Areale
+Der andere Modus nutzt entwicklungsgeschichtlich ältere Areale
 des Gehirns, die sich auch schon bei Reptilien nachweisen lassen.
 Dieser Modus arbeitet schnell, intuitiv und effizient.
 
 Ist der bewusste Modus aktiv, schweigt der unbewusste.
 Durch die Pause für den bewussten Modus bekam der unbewusste Modus
 Gelegenheit, das Problem auf seine Art zu bearbeiten.
-Die Ergebnisse des Unterbewusstsein treten dann als eine Art Geistesblitz in
+Die Ergebnisse des Unterbewusstseins treten dann als eine Art Geistesblitz in
 das Bewusstsein.
 Natürlich müssen diese Ergebnisse noch evaluiert werden und es gibt keine
 Garantie, dass man immer eine Lösung für das konkrete Problem bekommt.
@@ -41,4 +41,6 @@ Aber vielleicht zeigen sich Wege, wie das Problem notfalls umgangen werden
 kann.
 
 Für weitere Informationen zu den Denkprozessen im Gehirn empfehle ich
-[[Kahneman2011](#bib-kahneman2011)].
+[[Kahneman2011](#bib-kahneman2011)] und zum Thema Kreativität
+[[Csikszentmihalyi2014](#bib-csikszentmihalyi2014)].
+

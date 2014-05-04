@@ -3,7 +3,18 @@
 
 ## Bücher
 
-##### CT2000 {#bib-ct2000}
+#### Csikszentmihalyi2014 {#bib-csikszentmihalyi2014}
+Csikszentmihalyi, Mihaly; FLOW und Kreativität;
+Klett-Cotta Verlag, Stuttgart 2014  
+ISBN: 978-3-608-94882-6
+
+Bereits 1975 beschrieb M. Csikszentmihalyi das Konzept des Flow, das bei
+einigen Menschen auftritt, die offensichtlich Freude an bestimmten Tätigkeiten
+haben. In diesem Buch fasst er dieses Konzept mit Erkenntnissen aus Interviews
+kreativer Menschen und Hinweisen zur Förderung der persönlichen Kreativität
+zusammen.
+
+#### CT2000 {#bib-ct2000}
 Christiansen, Tom and Torkington, Nathan;
 Perl Kochbuch; O'Reilly, Köln, 2000;  
 ISBN: 3-89721-140-8
@@ -15,7 +26,7 @@ Darbietung als anwendungsbereite Rezepte, so dass ich mich auf das zu
 lösende Problem konzentrieren kann und nicht auf die subtilen Feinheiten
 der Programmiersprache umschalten muss.
 
-##### Edwards2012 {#bib-edwards2012}
+#### Edwards2012 {#bib-edwards2012}
 
 Edwards, Betty;
 Das neue GARANTIERT ZEICHNEN LERNEN: Die Befreiung unserer schöpferischen
@@ -30,7 +41,7 @@ Für die erfolgreiche Fehlersuche insbesondere bei schwierigen Problemen ist es
 vorteilhaft mit beiden Modi souverän umzugehen.
 Das zu lernen, kann dieses Buch helfen.
 
-##### Foessmeier1991 {#bib-foessmeier1991}
+#### Foessmeier1991 {#bib-foessmeier1991}
 
 Fößmeier, Reinhard;
 Die Schnittstellen von UNIX-Programmen: Tips zur Programm-Organisation unter
@@ -42,7 +53,7 @@ Eigentlich eher für Programmierer, die Software für UNIX schreiben, gedacht,
 war dieses Buch eine Offenbarung für mich um zu verstehen, wie Programme
 unter UNIX und Linux kommunizieren.
 
-##### Kahneman2011 {#bib-kahneman2011}
+#### Kahneman2011 {#bib-kahneman2011}
 
 Kahneman, Daniel;
 Thinking, fast and slow;
@@ -54,7 +65,7 @@ verschiedenen Gehirn-Modi befasst.
 Nicht direkt zum Thema Fehlersuche, aber sehr erhellend darüber, warum und wie
 man sich immer wieder selbst an der Nase herumführt.
 
-##### Loukides1996 {#bib-loukides1996}
+#### Loukides1996 {#bib-loukides1996}
 
 Loukides, Mike Kosta;
 System Performance Tuning;
@@ -65,7 +76,7 @@ Dieses Buch führt grundlegend in das Gebiet des
 Performance-Tuning von UNIX-Systemen ein. 2002 gab es eine zweite Auflage mit
 Gian-Paolo D. Musumeci als Koautor.
 
-##### Malhotra2002 {#bib-malhotra2002}
+#### Malhotra2002 {#bib-malhotra2002}
 
 Malhotra, Ravi;
 IP Routing
@@ -80,7 +91,7 @@ eine große Hilfe. Mit der Routingsoftware Quagga lassen sich die
 Konfigurationsbeispiele auch unter Linux nachvollziehen, da sich deren
 Benutzerschnittstelle stark an IOS von Cisco orientiert.
 
-##### Polya2010 {#bib-polya2010}
+#### Polya2010 {#bib-polya2010}
 
 Pólya, George;
 Schule des Denkens: Vom Lösen mathematischer Probleme;
@@ -95,7 +106,21 @@ der Problemlösung aus, die er in seinem Buch dann ausführlich erläutert.
 Die vier Phasen sind: 1. verstehe die Aufgabe, 2. mache einen Plan, 3. führe
 den Plan aus, 4. prüfe die erhaltene Lösung.
 
-##### Sloan2001 {#bib-sloan2001}
+#### Roam2009 {#bib-roam2009}
+Roam, Dan;
+Auf der Serviette erklärt, Mit ein paar Strichen schnell überzeugen statt
+lange präsentieren;
+Redline Verlag, 2009;  
+ISBN 978-3-86881-016-5
+
+Der Autor beschreibt in diesem Buch, wie man mit wenig Aufwand Probleme
+visualisieren kann und damit seine eigenen Gedanken besser ordnen sowie das
+Problem anderen verständlich erklären kann.
+Obwohl das Buch, laut Klappentext, Hilfe für das Visualisieren von
+Geschäftsideen geben soll, sind die Prinzipien und Ideen bei der Fehlersuche
+mindestens ebenso hilfreich.
+
+#### Sloan2001 {#bib-sloan2001}
 
 Sloan, Joseph D.;
 Network troubleshooting tools;
@@ -105,7 +130,7 @@ ISBN 978-0-596-00186-5
 Dieses Buch stellt etliche Werkzeuge für die Fehlersuche vor und zeigt wie man
 mit relativ einfachen Werkzeugen komplexe Fragen beantworten kann.
 
-##### Taleb2012 {#bib-taleb2012}
+#### Taleb2012 {#bib-taleb2012}
 
 Taleb, Nassim Nicholas;
 Antifragile, Things that Gain from Disorder
@@ -120,7 +145,7 @@ Vielmehr geht es darum unter welchen Umständen Systeme von kleinen Störungen
 profitieren können und wie man den Zufall zu einem Verbündeten statt zu einem
 Gegner machen kann.
 
-##### WCS1997 {#bib-wcs1997}
+#### WCS1997 {#bib-wcs1997}
 Larry Wall, Tom Christiansen and Randal L. Schwartz;
 Programmieren mit Perl;
 O'Reilly, Köln 1997;  
@@ -133,7 +158,7 @@ verbundene Kultur gegeben.
 Die zweite deutsche Auflage führt Jon Orwant statt Randal Schwartz als Autoren
 auf.
 
-##### Weidner2012 {#bib-weidner2012}
+#### Weidner2012 {#bib-weidner2012}
 Weidner, Mathias; Linux kopflos mit PC Engines ALIX;
 Lulu Press, Raleigh, 2012;  
 ISBN 978-1-4717-2849-5
@@ -146,7 +171,7 @@ ausführlicher.
 
 ## Artikel in Zeitschriften, Proceedings, ...
 
-##### Bartsch2013 {#bib-bartsch2013}
+#### Bartsch2013 {#bib-bartsch2013}
 Bartsch, Michael; Service Level Agreements - rechtliche Aspekte;
 Informatik-Spektrum, Volume 36, Ausgabe 5, Oktober 2013, S. 449ff;  
 DOI 10.1007/s00287-013-0712-1
@@ -155,7 +180,7 @@ In diesem Beitrag für Nichtjuristen geht der Autor in verständlicher Form auf
 die rechtlichen Aspekte von Service Level Agreements als Bestandteil von
 IT-Verträgen ein.
 
-##### Bonwick1994 {#bib-bonwick1994}
+#### Bonwick1994 {#bib-bonwick1994}
 Bonwick, Jeff; The slab allocator: an object-caching kernel memory
 allocator; Proceedings of the USENIX Summer 1994 Technical Conference on
 USENIX Summer 1994 Technical Conference - Volume 1, S. 6
@@ -164,7 +189,7 @@ In diesem Artikel stellte der Autor ein effizientes Verfahren zur
 Speicherverwaltung für SunOS vor. Das Verfahren, Slab Allocator, gelangte
 1999 in den Linux-Kernel.
 
-##### ctDiedrich2012 {#bib-ct-diedrich2012}
+#### ctDiedrich2012 {#bib-ct-diedrich2012}
 Diedrich, Dr. Oliver; Zugriffschutz - Dateiüberwachung mit Fanotify;
 c't Magazin für Computertechnik 2012 Heft 9, S. 174ff;
 ISSN 0724-8679
@@ -172,7 +197,7 @@ ISSN 0724-8679
 Der Autor stellt in diesem Artikel die Möglichkeiten der
 Fanotify Systemschnittstelle vor.
 
-##### ctZivadinovic2012 {#bib-ct-zivadinovic2012}
+#### ctZivadinovic2012 {#bib-ct-zivadinovic2012}
 Dušan Zivadinović; Blindflug mit Full Speed - Wie die TCP/IP-Flusskontrolle
 funktioniert;
 c't Magazin für Computertechnik 2012 Heft 10, S. 188ff;
@@ -182,7 +207,7 @@ Der Autor erläutert in diesem Artikel leicht verständlich, wie die in TCP
 enthaltene Flusskontrolle dazu beiträgt, die Datenübertragungsrate einer Verbindung
 möglichst optimal auszunutzen.
 
-##### ctHM2013 {#bib-ct-hm2013}
+#### ctHM2013 {#bib-ct-hm2013}
 Hillier, Gernot, Mauerer, Dr. Wolfgang; Linux durchleuchtet - Perf als
 Universalschnittstelle für Performance-Analysen unter Linux;
 c't Magazin für Computertechnik 2013, Heft 3, S. 166ff;
@@ -192,7 +217,7 @@ Dieser Artikel geht auf die Möglichkeiten der Performance-Analyse mit Hilfe
 der Performance-Counter der CPU ein und stellt das Programm `perf` vor, dass
 eine einheitliche Schnittstelle dafür unter Linux bereitstellt.
 
-##### ctTZ2013a {#bib-ct-tz2013a}
+#### ctTZ2013a {#bib-ct-tz2013a}
 Michael Tremer, Dušan Zivadinović; Kürzungsmaßnahme - Internet-Tuning:
 Puffercontrolle mit CoDel;
 c't Magazin für Computertechnik 2013, Heft 13, S. 184ff;
@@ -201,7 +226,7 @@ ISSN 0724-8679
 In diesem Artikel erläutern die Autoren die Wirkungsweise des CoDel-Verfahrens
 zum Router-Queue-Management bei Bufferbloat.
 
-##### ctTZ2013b {#bib-ct-tz2013b}
+#### ctTZ2013b {#bib-ct-tz2013b}
 Michael Tremer, Dušan Zivadinović; Paketbeschleuniger - Internet-Tuning mit
 IPFire und CoDel;
 c't Magazin für Computertechnik 2013, Heft 13, S. 188f;
@@ -211,14 +236,14 @@ Dieser Praxis-Artikel zeigt, wie man mit der Firewall-Appliance IPFire erste
 Erfahrungen mit dem CoDel-Verfahren zum Router-Queue-Management bei
 Bufferbloat machen kann.
 
-##### Koenig2012 {#bib-koenig2012}
+#### Koenig2012 {#bib-koenig2012}
 König, Harald; strace für Linux-Versteher; UpTimes - Mitgliederzeitschrift
 der German Unix User Group; Ausgabe 2012/1, S. 61ff
 
 Harald König zeigt in seinem Artikel welche Informationen über ein
 Linux-Programm er mit *strace* gewinnen kann.
 
-##### WSA2011 {#bib-wsa2011}
+#### WSA2011 {#bib-wsa2011}
 Weigend, Johannes and Siedersleben, Johannes and Adersberger, Josef;
 Dynamische Analyse mit dem Software-EKG; Informatik-Spektrum, Volume 34,
 Ausgabe 5, Oktober 2011, S. 484ff;  
@@ -229,7 +254,16 @@ analysieren kann, wenn man mit einfachen Methoden nicht weiter kommt.
 
 ## Online-Quellen
 
-##### IETF Tools {#bib-www-ietftools}
+#### Bullet Journal {#bib-www-bulletjournal}
+For the list-makers, the note-takers, the Post-It note pilots, the
+track-keepers, and the dabbling doodlers.  
+<http://bulletjournal.com/>  
+Aufgerufen: 2014-05-04
+
+Ich hatte schon jahrelang Laborbücher in A5-Kladden geführt.
+Mit diesem System habe ich es auf eine höhere Stufe gehoben.
+
+#### IETF Tools {#bib-www-ietftools}
 IETF-related tools, standalone or hosted on tools.ietf.org  
 <http://tools.ietf.org/>  
 Aufgerufen: 2014-05-03
@@ -237,7 +271,7 @@ Aufgerufen: 2014-05-03
 Die Quelle für RFCs und Internet Standards von der Internet Engineering Task
 Force.
 
-##### Leanpub {#bib-www-leanpub}
+#### Leanpub {#bib-www-leanpub}
 Leanpub - Publish Early, Publish Often  
 <https://leanpub.com/>  
 Aufgerufen: 2014-05-03
@@ -246,7 +280,7 @@ Autoren und Herausgeben können Leanpub nutzen im fertige Bücher und Bücher in
 Bearbeitung zu veröffentlichen.
 Dieses Buch selbst ist bei und mit Leanpub entstanden.
 
-##### Perf Wiki {#bib-www-perfwiki}
+#### Perf Wiki {#bib-www-perfwiki}
 Perf Wiki  
 <https://perf.wiki.kernel.org/>  
 Aufgerufen: 2014-03-12
@@ -254,7 +288,7 @@ Aufgerufen: 2014-03-12
 In diesem Wiki finden sich Informationen zum Performancezählersubsystem von
 Linux.
 
-##### POSIX.1-2008 {#bib-posix1-2008}
+#### POSIX.1-2008 {#bib-posix1-2008}
 IEEE and The Open Group; The Open Group Technical Standard Base
 Specifications, Issue 7;
 POSIX.1-2008 / IEEE Std. 1003.1™-2008  
@@ -266,7 +300,7 @@ Betriebssysteme, einschließlich eines Befehlsinterpreters (Shell) und
 allgemeiner Hilfsprogramme um die Portabilität von Anwendungen auf der Ebene
 des Quellcodes zu unterstützen.
 
-##### POSIX.FileCap {#bib-web-posix-capabilities}
+#### POSIX.FileCap {#bib-web-posix-capabilities}
 Chris Friedhoff;
 POSIX Capabilities & File POSIX Capabilities  
 <http://www.friedhoff.org/posixfilecaps.html>  
@@ -274,3 +308,17 @@ Aufgerufen: 2013-12-20
 
 Dieser Artikel, 2008 geschrieben, führt mit praktischen Beispielen in den
 Umgang mit POSIX Capabilities ein.
+
+#### Wayback Machine {#bib-www-waybackmachine}
+Internet Archive Wayback Machine  
+<https://archive.org/web/>  
+Aufgerufen: 2014-05-04
+
+Eine der besten Erfindungen gegen die Flüchtigkeit des Internet.
+Mit der Wayback Machine lassen sich ältere Versionen von bestehenden und
+bereits vergangenen WWW-Seiten betrachten.
+Natürlich sind nicht alle Seiten und erst recht nicht alle Versionen der
+einzelnen Seiten enthalten.
+Trotzdem ist es den Versuch wert, wenn eine irgendwo beworbene URL nicht mehr
+erreichbar ist.
+

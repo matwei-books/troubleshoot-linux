@@ -15,14 +15,14 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch01-bisektion.md \
                $(DROPBOXDIR)/ch01-korrelation.md \
                $(DROPBOXDIR)/ch01-abkuerzungen.md \
-               $(DROPBOXDIR)/cha-02.md \
-               $(DROPBOXDIR)/cha-02-problemaufnahme.md \
-               $(DROPBOXDIR)/cha-02-selber-denken.md \
-               $(DROPBOXDIR)/cha-02-logs.md \
-               $(DROPBOXDIR)/cha-02-fragen.md \
-               $(DROPBOXDIR)/cha-02-laborbuch.md \
-               $(DROPBOXDIR)/cha-02-hilfsaufgabe.md \
-               $(DROPBOXDIR)/cha-02-feststecken.md \
+               $(DROPBOXDIR)/ch02.md \
+               $(DROPBOXDIR)/ch02-problemaufnahme.md \
+               $(DROPBOXDIR)/ch02-selber-denken.md \
+               $(DROPBOXDIR)/ch02-logs.md \
+               $(DROPBOXDIR)/ch02-fragen.md \
+               $(DROPBOXDIR)/ch02-laborbuch.md \
+               $(DROPBOXDIR)/ch02-hilfsaufgabe.md \
+               $(DROPBOXDIR)/ch02-feststecken.md \
                $(DROPBOXDIR)/cha-03.md \
                $(DROPBOXDIR)/cha-03-kontrolle.md \
                $(DROPBOXDIR)/cha-03-vertiefung.md \
@@ -142,14 +142,14 @@ SOURCES = $(BOOK) \
           ch01-bisektion.md \
           ch01-korrelation.md \
           ch01-abkuerzungen.md \
-          cha-02.md \
-          cha-02-problemaufnahme.md \
-          cha-02-selber-denken.md \
-          cha-02-logs.md \
-          cha-02-fragen.md \
-          cha-02-laborbuch.md \
-          cha-02-hilfsaufgabe.md \
-          cha-02-feststecken.md \
+          ch02.md \
+          ch02-problemaufnahme.md \
+          ch02-selber-denken.md \
+          ch02-logs.md \
+          ch02-fragen.md \
+          ch02-laborbuch.md \
+          ch02-hilfsaufgabe.md \
+          ch02-feststecken.md \
           cha-03.md \
           cha-03-kontrolle.md \
           cha-03-vertiefung.md \
@@ -262,14 +262,14 @@ CHAPTERS = \
     ch01-bisektion.md \
     ch01-korrelation.md \
     ch01-abkuerzungen.md \
-    cha-02.md \
-    cha-02-problemaufnahme.md \
-    cha-02-selber-denken.md \
-    cha-02-logs.md \
-    cha-02-fragen.md \
-    cha-02-laborbuch.md \
-    cha-02-hilfsaufgabe.md \
-    cha-02-feststecken.md \
+    ch02.md \
+    ch02-problemaufnahme.md \
+    ch02-selber-denken.md \
+    ch02-logs.md \
+    ch02-fragen.md \
+    ch02-laborbuch.md \
+    ch02-hilfsaufgabe.md \
+    ch02-feststecken.md \
     cha-03.md \
     cha-03-kontrolle.md \
     cha-03-vertiefung.md \

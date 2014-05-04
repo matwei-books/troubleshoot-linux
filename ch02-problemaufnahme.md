@@ -22,7 +22,7 @@ Die nachfolgenden muss ich meist allein beantworten.
 
 *   Wie schnell soll es sein?
 
-*   Und wie kriege ich das alles heraus?
+*   Wie kriege ich das alles heraus?
 
 Wenn ich ein Problem selbst feststelle, kann ich diese Fragen in meinem
 Rhythmus beantworten, mit der nötigen Sorgfalt.
@@ -34,7 +34,7 @@ der irgendetwas schnell erledigt haben will.
 Diese Arten von Problemaufnahmen haben eins gemeinsam: da ist jemand, der
 seine ganz eigene Vorstellung von der Wichtigkeit, Dringlichkeit und mitunter
 auch von der Lösung des Problems hat.
-Das kann richtig sein oder falsch.
+Die kann richtig sein oder falsch.
 
 Schwierig wird es, wenn ich mich durch Vorurteile auf eine falsche Fährte
 schicken lasse oder wenn ich nicht mehr klar denken kann, durch den
@@ -101,13 +101,6 @@ Dann einfach zu sagen, *ich kümmere mich drum*, hätte solches Verhalten nur
 zementiert, mit dem Effekt, dass selbst simpelste Sachen unreflektiert an
 Level 2 Support weitergereicht werden.
 
-Nachdem ich den Druck abgebaut hatte, konnte ich mich daran machen,
-die Gedanken meines Kollegen, also das, was er über das Problem wusste,
-zu nutzen.
-Anhand des Entscheidungsbaumes fragte ich als nächstes, ob alle Webserver
-nicht erreichbar sind oder nur externe oder gar nur bestimmte, und
-was sie alles ausprobiert hätten.
-
 A> Bei uns ist es üblich, dass reihum alle Mitarbeiter ein paar Stunden
 A> Telefonsupport machen und damit die Probleme der Kunden direkt mitbekommen.
 A> Das halte ich für eine gute Idee, weil es den Horizont erweitert für die
@@ -129,6 +122,13 @@ A> Das mag kurzzeitig angehen, wenn der aufnehmende Kollege überhaupt keine
 A> Ahnung von der Materie hat.
 A> Langfristig ist es sinnvoll, den Mitarbeiter für die Hotline zu schulen
 A> und gegebenenfalls die Dokumentation der Routineaufgaben zu überarbeiten.
+
+Nachdem ich den Druck abgebaut hatte, konnte ich mich daran machen,
+die Gedanken meines Kollegen, also das, was er über das Problem wusste,
+zu nutzen.
+Anhand des Entscheidungsbaumes fragte ich als nächstes, ob alle Webserver
+nicht erreichbar sind oder nur externe oder gar nur bestimmte, und
+was sie alles ausprobiert hätten.
 
 An diesem Tag musste ich keine eigenen Gedanken mehr hinzufügen, weil noch
 während der ersten Fragen klar wurde, dass nur einzelne Webserver im

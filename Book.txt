@@ -5,7 +5,14 @@ ch01-entscheidungsbaum.md
 ch01-bisektion.md
 ch01-korrelation.md
 ch01-abkuerzungen.md
-cha-02.md
+ch02.md
+ch02-problemaufnahme.md
+ch02-selber-denken.md
+ch02-logs.md
+ch02-fragen.md
+ch02-laborbuch.md
+ch02-hilfsaufgabe.md
+ch02-feststecken.md
 cha-03.md
 part2.md
 cha-04.md
