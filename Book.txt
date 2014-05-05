@@ -15,6 +15,7 @@ ch02-hilfsaufgabe.md
 ch02-feststecken.md
 ch03.md
 ch03-kontrolle.md
+ch03-vertiefung.md
 part2.md
 cha-04.md
 cha-05.md

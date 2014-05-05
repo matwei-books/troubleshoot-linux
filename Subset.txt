@@ -15,7 +15,7 @@ ch02-hilfsaufgabe.md
 ch02-feststecken.md
 ch03.md
 ch03-kontrolle.md
-cha-03-vertiefung.md
+ch03-vertiefung.md
 cha-03-verallgemeinern.md
 cha-03-verhindern.md
 cha-03-schulung.md
