@@ -6,7 +6,7 @@ ch01-bisektion.md
 ch01-korrelation.md
 ch01-abkuerzungen.md
 ch02.md
-cha-03.md
+ch03.md
 part2.md
 cha-04.md
 cha-05.md

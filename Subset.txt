@@ -13,8 +13,8 @@ ch02-fragen.md
 ch02-laborbuch.md
 ch02-hilfsaufgabe.md
 ch02-feststecken.md
-cha-03.md
-cha-03-kontrolle.md
+ch03.md
+ch03-kontrolle.md
 cha-03-vertiefung.md
 cha-03-verallgemeinern.md
 cha-03-verhindern.md
