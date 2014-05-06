@@ -24,3 +24,7 @@ In der Verallgemeinerung führen mich diese Fragen und ihre Antworten zu einem
 an meine konkrete Umgebung und Situation angepassten Entscheidungsbaum, der
 zukünftige Fehlersuchen beschleunigen kann.
 
+X> Nimm die Aufzeichnungen zu einer der letzten Fehlersuchen zur Hand und
+X> fasse die Erkenntnisse zusammen in einem Artikel.
+X> Wenn Du willst kannst Du den Artikel veröffentlichen.
+

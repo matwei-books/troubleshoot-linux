@@ -26,7 +26,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch03.md \
                $(DROPBOXDIR)/ch03-kontrolle.md \
                $(DROPBOXDIR)/ch03-vertiefung.md \
-               $(DROPBOXDIR)/cha-03-verallgemeinern.md \
+               $(DROPBOXDIR)/ch03-verallgemeinern.md \
                $(DROPBOXDIR)/cha-03-verhindern.md \
                $(DROPBOXDIR)/cha-03-schulung.md \
                $(DROPBOXDIR)/cha-03-detail-gesamt.md \
@@ -153,7 +153,7 @@ SOURCES = $(BOOK) \
           ch03.md \
           ch03-kontrolle.md \
           ch03-vertiefung.md \
-          cha-03-verallgemeinern.md \
+          ch03-verallgemeinern.md \
           cha-03-verhindern.md \
           cha-03-schulung.md \
           cha-03-detail-gesamt.md \
@@ -273,7 +273,7 @@ CHAPTERS = \
     ch03.md \
     ch03-kontrolle.md \
     ch03-vertiefung.md \
-    cha-03-verhindern.md \
+    ch03-verhindern.md \
     cha-03-verallgemeinern.md \
     cha-03-schulung.md \
     cha-03-detail-gesamt.md \
