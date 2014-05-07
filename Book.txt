@@ -17,6 +17,7 @@ ch03.md
 ch03-kontrolle.md
 ch03-vertiefung.md
 ch03-verallgemeinern.md
+ch03-verhindern.md
 part2.md
 cha-04.md
 cha-05.md
