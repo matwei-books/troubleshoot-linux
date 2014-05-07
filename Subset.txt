@@ -18,7 +18,7 @@ ch03-kontrolle.md
 ch03-vertiefung.md
 ch03-verallgemeinern.md
 ch03-verhindern.md
-cha-03-schulung.md
+ch03-schulung.md
 cha-03-detail-gesamt.md
 part2.md
 cha-04.md
