@@ -19,6 +19,7 @@ ch03-vertiefung.md
 ch03-verallgemeinern.md
 ch03-verhindern.md
 ch03-schulung.md
+ch03-detail-gesamt.md
 part2.md
 cha-04.md
 cha-05.md
