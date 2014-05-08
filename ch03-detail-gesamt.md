@@ -2,9 +2,10 @@
 ## Details und Gesamtbild {#sec-details-gesamtbild}
 
 Vor meinem Studium habe ich einen Beruf erlernt, in dem ich unter anderem
-Telefonvermittlungsstellen reparieren können musste, die damals noch mit
-Relais funktionierten. Damals hatten wir zwei Arten dieser Anlagen. Die
-alten, mit Hebdrehwählern hatten nur wenige Relais. Wenn man in
+Telefonvermittlungsanlagen, die damals noch mit Relais funktionierten,
+reparieren musste.
+Damals hatten wir zwei Arten dieser Anlagen.
+Die alten, mit Hebdrehwählern hatten nur wenige Relais. Wenn man in
 der Vermittlungsstelle beobachtete, was beim Abheben des Telefonhörers
 passierte, dann konnte man das nächste betätigte Relais ansagen.
 
@@ -41,10 +42,23 @@ Was ich aber immer noch kann, ist relativ schnell zwischen dem Gesamtbild
 eines Problems und den Details zu wechseln.
 
 Dieser Exkurs in eine längst vergangene Zeit war nötig, um einen Aspekt
-hervorzuheben, der damals so wichtig ist, wie heute: dass die unzähligen
-Details, die man bei der Fehlersuche wissen muss, für sich genommen nichts
-wert sind, wenn es nicht gelingt, diese in ein Gesamtbild einzufügen und
+hervorzuheben, der damals so wichtig war, wie er heute ist: dass die unzähligen
+Details, die ich bei der Fehlersuche wissen muss, für sich genommen nichts
+wert sind, wenn es mir nicht gelingt, diese in ein Gesamtbild einzufügen und
 richtig zu bewerten.
 Wenn ich in der Lage bin, das Gesamtbild zu sehen, kann ich für jedes Detail
 einschätzen, ob es korrekt, falsch oder irrelevant ist und mich dann dem
 nächsten zuwenden.
+
+Da nicht jeder heute Zugang zu alten Telefonvermittlungsanlagen und deren
+Schaltplänen hat, sind vielleicht andere Methoden gefragt, die beiden Modi
+des Gehirns und vor allem das Umschalten zwischen diesen zu trainieren.
+Eine Möglichkeit bietet das Zeichnen.
+Nicht so, wie es in den meisten allgemeinbildenden Schulen gehandhabt wird,
+sondern eher so, wie es in [[Edwards2012](#bib-edwards2012)] beschrieben ist.
+Für die Fehlersuche ist es nicht von Belang, wie gut man zeichnen kann.
+Der souveräne Umgang mit den beiden Modi ist aber enorm hilfreich bei
+komplexen Problemen, die man nicht auf einmal erfassen kann.
+Diesen Umgang und das Umschalten zwischen beiden Modi zu trainieren ist mit
+dem genannten Buch sehr gut möglich.
+
