@@ -23,7 +23,7 @@ ch03-detail-gesamt.md
 part2.md
 ch04.md
 ch04-dateien.md
-cha-04-prozessmodell.md
+ch04-prozessmodell.md
 cha-04-schnittstellen.md
 cha-05.md
 cha-05-bootprobleme.md

@@ -23,6 +23,7 @@ ch03-detail-gesamt.md
 part2.md
 ch04.md
 ch04-dateien.md
+ch04-prozessmodell.md
 cha-05.md
 ch06.md
 cha-07.md
