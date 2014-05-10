@@ -21,8 +21,8 @@ ch03-verhindern.md
 ch03-schulung.md
 ch03-detail-gesamt.md
 part2.md
-cha-04.md
-cha-04-dateien.md
+ch04.md
+ch04-dateien.md
 cha-04-prozessmodell.md
 cha-04-schnittstellen.md
 cha-05.md

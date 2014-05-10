@@ -30,8 +30,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch03-verhindern.md \
                $(DROPBOXDIR)/ch03-schulung.md \
                $(DROPBOXDIR)/ch03-detail-gesamt.md \
-               $(DROPBOXDIR)/cha-04.md \
-               $(DROPBOXDIR)/cha-04-dateien.md \
+               $(DROPBOXDIR)/ch04.md \
+               $(DROPBOXDIR)/ch04-dateien.md \
                $(DROPBOXDIR)/cha-04-prozessmodell.md \
                $(DROPBOXDIR)/cha-04-schnittstellen.md \
                $(DROPBOXDIR)/cha-05.md \
@@ -157,8 +157,8 @@ SOURCES = $(BOOK) \
           ch03-verhindern.md \
           ch03-schulung.md \
           ch03-detail-gesamt.md \
-          cha-04.md \
-          cha-04-dateien.md \
+          ch04.md \
+          ch04-dateien.md \
           cha-04-prozessmodell.md \
           cha-04-schnittstellen.md \
           cha-05.md \
@@ -277,8 +277,8 @@ CHAPTERS = \
     ch03-verallgemeinern.md \
     ch03-schulung.md \
     ch03-detail-gesamt.md \
-    cha-04.md \
-    cha-04-dateien.md \
+    ch04.md \
+    ch04-dateien.md \
     cha-04-prozessmodell.md \
     cha-04-schnittstellen.md \
     cha-05.md \
