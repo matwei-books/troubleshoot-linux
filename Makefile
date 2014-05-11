@@ -33,7 +33,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch04.md \
                $(DROPBOXDIR)/ch04-dateien.md \
                $(DROPBOXDIR)/ch04-prozessmodell.md \
-               $(DROPBOXDIR)/cha-04-schnittstellen.md \
+               $(DROPBOXDIR)/ch04-schnittstellen.md \
                $(DROPBOXDIR)/cha-05.md \
                $(DROPBOXDIR)/cha-05-bootprobleme.md \
                $(DROPBOXDIR)/cha-05-vm.md \
@@ -160,7 +160,7 @@ SOURCES = $(BOOK) \
           ch04.md \
           ch04-dateien.md \
           ch04-prozessmodell.md \
-          cha-04-schnittstellen.md \
+          ch04-schnittstellen.md \
           cha-05.md \
           cha-05-bootprobleme.md \
           cha-05-vm.md \
@@ -280,7 +280,7 @@ CHAPTERS = \
     ch04.md \
     ch04-dateien.md \
     ch04-prozessmodell.md \
-    cha-04-schnittstellen.md \
+    ch04-schnittstellen.md \
     cha-05.md \
     cha-05-bootprobleme.md \
     cha-05-vm.md \

@@ -6,17 +6,15 @@ auf der Kommandozeile und rufe die verschiedensten Programme auf.
 Für das Aufrufen von Programmen selbst, brauche ich keine weiteren Kenntnisse.
 Bei der Fehlersuche, ist es jedoch von Vorteil, wenn ich genau weiß,
 wie ich mit einem Programm kommunizieren kann.
-Das Buch von Reinhard Fößmeier [[Foessmeier1991]](#bib-foessmeier1991)
-erläutert die verschiedenen Schnittstellen von Programmen unter UNIX sehr
-ausführlich.
+Reinhard Fößmeier erläutert in [[Foessmeier1991]](#bib-foessmeier1991)
+die verschiedenen Schnittstellen von Programmen unter UNIX sehr ausführlich.
 
 ### Kommandozeile
 
-Die Kommandozeile selbst bezeichnet Fößmeier als K-Schnittstelle.
-Diese bezeichnet eine Reihe von Parameter, die als C-Strings übergeben werden
-und die jedes Programm beim Aufruf übergeben bekommt.
-Diese werden von *strace* als Parameter beim `execve()` Systemaufruf
-angezeigt.
+Die Kommandozeile bezeichnet Fößmeier als K-Schnittstelle.
+Diese besteht aus einer Reihe von Parametern, die als C-Strings übergeben werden
+und die jedes Programm beim Aufruf erhält.
+Das Programm `strace` zeigt diese als Parameter beim `execve()` Systemaufruf an.
 
 Mit dieser Schnittstelle kann ich nur in einer Richtung kommunizieren: von der
 Aufrufumgebung zum Programm.
@@ -28,9 +26,9 @@ Aufruf übergebenen Parameter.
 In C-Programmen bekommt die Funktion `main()` als ersten Parameter die Anzahl
 und als zweiten Parameter einen Zeiger auf das Parameterfeld.
 
-Prinzipiell gibt es keine Regeln für die Gestaltung dieser Parameter. Es haben
-sich aber einige Konventionen herausgebildet, die von sehr vielen Programmen
-eingehalten werden und für die es Unterstützung bei der Programmierung durch
+Prinzipiell gibt es keine Regeln für die Gestaltung dieser Parameter.
+Es hat sich aber eine Konvention herausgebildet, die von vielen Programmen
+eingehalten wird und für die es Unterstützung bei der Programmierung durch
 einige Bibliotheken gibt. Nach dieser Konvention werden Parameter in folgende
 Gruppen eingeteilt:
 
@@ -65,7 +63,7 @@ Bindestrich beginnt.
 
 Umgebungsvariablen bezeichnet Fößmeier als U-Schnittstelle.
 Im Gegensatz zur K-Schnittstelle, deren Parameter positionsabhängig sind,
-können diese Variablen nur über ihren Namen angesprochen werden.
+kann ich diese Variablen nur über ihren Namen ansprechen.
 
 Auch mit dieser Schnittstelle kann ich nur von der Aufrufumgebung in Richtung
 aufgerufenes Programm kommunizieren.
@@ -73,13 +71,15 @@ aufgerufenes Programm kommunizieren.
 In Shell-Skripts kann ich auf diese Variablen, genau wie auf lokale
 Variablen über den Namen mit vorangestelltem `$` zugreifen.
 
-Das Setzen der Umgebungsvariablen für ein aufgerufenes Programm ist abhängig
-von der verwendeten Shell. Bei der POSIX-Shell und den damit kompatiblen
-geschieht das durch einfache Zuweisung `variable="wert"`. Die
-Anführungszeichen um den Wert sind nur notwendig, wenn dieser Leerzeichen
-enthält. Für die Übergabe an aufgerufene Programme gibt es zwei Möglichkeiten:
+Wie ich Umgebungsvariablen für ein aufgerufenes Programm setze, hängt
+von der verwendeten Shell ab.
+Bei der POSIX-Shell und den damit kompatiblen geschieht das durch einfache
+Zuweisung `variable="wert"`.
+Die Anführungszeichen um den Wert sind notwendig, wenn dieser Leerzeichen
+enthält.
+Für die Übergabe an aufgerufene Programme habe ich zwei Möglichkeiten:
 
-*   Die Variable wird mit der Anweisung `export` gekennzeichnet, was für die
+*   Ich kennzeichne die Variable mit der Anweisung `export`, was für die
     Shell dem Befehl gleich kommt, diese Variable an alle nachfolgend
     aufgerufenen Programme zu übergeben.
 
@@ -88,23 +88,24 @@ enthält. Für die Übergabe an aufgerufene Programme gibt es zwei Möglichkeite
             export TERM
             ssh server1
 
-*   Die Variable wird unmittelbar vor Aufruf des Programmes (in der selben
-    Zeile) gesetzt. In diesem Fall gilt der Variablenwert nur für diesen, mit
-    dieser Zeile gestarteten Prozess.
+*   Alternativ setze ich die Variable unmittelbar vor Aufruf des Programmes in
+    derselben Zeile.
+    In diesem Fall gilt der Variablenwert nur für den in dieser Zeile
+    gestarteten Prozess.
 
 {line-numbers=off,lang="text"}
          TERM=vt220 ssh server2
 
 Da die Kommunikation nur in einer Richtung geht, gibt es keine Möglichkeit,
 für ein aufgerufenes Programm, die Umgebungsvariablen des aufrufenden
-Programmes zu ändern. Bei der Shell greift man dafür  auf einen
-Trick zurück, indem die Shell die Ausgabe des aufgerufenen Programms
-interpretiert und dieses die Zuweisung an Variablen in die Standardausgabe
-schreibt.
+Prozesses zu ändern.
+Bei Shellprogrammen kann ich dafür auf einen Trick zurückgreifen, bei dem die
+Shell die Ausgabe des aufgerufenen Programms interpretiert und dieses die
+Zuweisung an Variablen in die Standardausgabe schreibt.
 
 {line-numbers=off,lang="text"}
     $ echo $abc
-    $ eval $(echo abc=def)
+    $ eval $(/bin/echo abc=def)
     $ echo $abc
     def
 
@@ -114,8 +115,8 @@ Wenn ein Prozess durch Aufruf von `exit()` endet, kann er einen ganzzahligen
 Wert als Statuscode angeben. Dieser Statuscode und der Zeitpunkt zu dem der
 Prozess endet bilden die R-Schnittstelle.
 
-Der Statuscode wird von der Shell und dem Programm *make* ausgewertet.
-Der Statuscode `0` wird dabei als erfolgreiche Beendigung des
+Die Shell und das Programm `make` zum Beispiel werten diesen Statuscode aus.
+Ein Wert von `0` wird dabei als erfolgreiche Beendigung des
 Programms gewertet, alle anderen Codes deuten auf ein Problem und sind
 abhängig vom aufgerufenen Programm.
 
@@ -123,18 +124,20 @@ In der Shell kann ich den Statuscode des letzten aufgerufenen Programms in der
 Variable `$?` abfragen.
 In C-Programmen durch Aufruf der Funktion `wait()`.
 
-Wenn ich ein Shell-Skript mit der Option `-e` starte, bricht die Shell ab,
-sobald ein aufgerufenes Programm einen anderen Rückgabewert als `0` hat. Das
-ist auch das Standardverhalten von `make`.
+Starte ich ein Shell-Skript mit der Option `-e`, bricht die Shell die
+Abarbeitung ab, sobald ein aufgerufenes Programm einen anderen Rückgabewert
+als `0` hat.
+Das ist auch das Standardverhalten von `make`.
 
 ### Datenströme
 
 Die S-Schnittstelle fasst alle Schnittstellen zusammen, die aus einem Strom
-von Zeichen bestehen. Das können die Standard-Datenströme sein
-(STDIN, STDOUT, STDERR) oder weitere geöffnete Dateien, Sockets oder Pipes.
+von Zeichen bestehen.
+Das können die Standard-Datenströme sein (STDIN, STDOUT, STDERR) oder weitere
+geöffnete Dateien, Sockets oder Pipes.
 
 Auf der Kommandozeile sind insbesondere die Standard-Datenströme relevant,
-da einzelne Programme damit verkettet werden können, so dass jedes folgende
+da ich einzelne Programme damit verketten kann, so dass jedes folgende
 Programm die Standardausgabe (STDOUT) des vorigen Programms als
 Standardeingabe (STDIN) bekommt.
 
@@ -148,22 +151,23 @@ Zeilen ignoriert bis auf diejenigen, die das Wort *CRON* enthalten:
 Prinzipiell kann über eine S-Schnittstelle ein unbegrenzter Strom von Daten
 übertragen werden, wie in obigem Beispiel.
 
-Mit dem *Dateiende* (EOF) kann zu einem Datenstrom übermittelt werden, dass
-keine weiteren Daten mehr folgen. In diesem Fall kann ein Programm angemessen
-reagieren und sich beispielsweise beenden:
+Mit *Dateiende* (EOF) wird zu einem Datenstrom übermittelt, dass keine
+weiteren Daten mehr folgen.
+In diesem Fall kann ein Programm angemessen reagieren und sich beispielsweise
+beenden:
 
 {line-numbers=off,lang="text"}
     $ zcat /var/log/syslog* | grep CRON
 
 In diesem Beispiel liest das Programm `zcat` alle Dateien aus dem Verzeichnis
-*/var/log*, deren Name mit *syslog* beginnt (komprimiert und unkomprimiert)
-und sendet ihren Inhalt wie im Beispiel davor an `grep`.
-Wenn der Inhalt aller Dateien zur Standardausgabe geschickt ist,
-beendet sich `zcat`, wodurch seine Standardausgabe geschlossen wird.
-Das übermittelt der Kernel als *Dateiende* bei STDIN an `grep`, welches sich
+*/var/log*, deren Name mit *syslog* beginnt und sendet ihren Inhalt wie im
+Beispiel davor an `grep`.
+Nachdem es den Inhalt aller Dateien zur Standardausgabe geschickt hat,
+beendet sich `zcat`, wobei seine Standardausgabe geschlossen wird.
+Der Kernel übermittelt das als *Dateiende* bei STDIN an `grep`, welches sich
 daraufhin ebenfalls beendet.
 
-Wenn ich Daten von Hand in die Standardeingabe eines Prozesses schreibe, kann
+Schreibe ich Daten von Hand in die Standardeingabe eines Prozesses, kann
 ich mit *CTRL-D* die Dateiendeinformation für den lesenden Prozess erzeugen.
 
 ### Dateien
@@ -171,9 +175,11 @@ ich mit *CTRL-D* die Dateiendeinformation für den lesenden Prozess erzeugen.
 Die N-Schnittstelle entspricht dem Inode, der eine Datei in einem Dateisystem
 beschreibt. Diese Schnittstelle enthält Metainformationen über die betreffende
 Datei, aber nicht die Daten selbst.
+Ich verwende diese Schnittstelle um die Verwaltungsinformationen der Dateien
+abzufragen oder zu ändern.
 
-Bei Gerätedateien ist es möglich, darüber Einstellungen an den
-betreffenden Geräten vorzunehmen.
+Bei Gerätedateien kann ich darüber auch Einstellungen an den
+betreffenden Geräten vornehmen.
 
 ### Text-Terminal
 
@@ -189,6 +195,6 @@ Im Cooked Mode sammelt diese Schnittstelle meine Eingabe bis zum
 *RETURN* um sie dann als ganze Zeile an den Prozess zu schicken.
 
 Auf der Kommandozeile kann ich über das Programm `stty` auf diese
-Schnittstelle zugreifen und sie bearbeiten. In C-Programmen verwende ich die
-Funktion `ioctl()`.
+Schnittstelle zugreifen und sie bearbeiten.
+In *C* Programmen verwende ich die Funktion `ioctl()`.
 
