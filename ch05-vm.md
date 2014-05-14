@@ -21,7 +21,7 @@ Besser ist in meinen Augen, die Partitionen des betroffenen Images gleich im
 Hostsystem für die Analyse und Störungsbeseitigung einzubinden und die
 Vorteile der Shell für zügiges Arbeiten zu nutzen.
 
-Dann habe ich aber das Problem, dass ich auf dem Hostsystem nicht, wie bei den
+Dann habe ich das Problem, dass ich auf dem Hostsystem nicht, wie bei den
 eigenen Festplatten, die Partitionen direkt zur Verfügung habe, sondern nur
 das Komplettimage der Festplatte für die VM.
 Und dieses beginnt nicht mit dem Dateisystem sondern mit der Partitionstabelle.
@@ -30,7 +30,7 @@ der Partition mitgeben.
 
 Den Offset kann ich mit dem Programm fdisk bestimmen.
 Dieses listet mit der Option `-l` die Partitionen und deren Offsets auf.
-Da wir letztere genau bestimmen müssen, verwenden wir zusätzlich die Option
+Da ich letztere genau bestimmen muss, verwende ich zusätzlich die Option
 `-u`, damit fdisk die Offsets als Anzahl von Sektoren zu je 512 Byte ausgibt:
 
 {line-numbers=off,lang="text"}
@@ -56,7 +56,7 @@ Da wir letztere genau bestimmen müssen, verwenden wir zusätzlich die Option
           338944   82  Linux swap
 
 Der Offset für die Systempartition `ssh3p1` ist {$$}512 \times 2048{/$$},
-also 1048576.
+also {$$}1048576{/$$}.
 Damit kann ich diese Partition im Hostsystem wie folgt einhängen:
 
 {line-numbers=off,lang="text"}
@@ -70,8 +70,8 @@ nicht läuft.
 Das ist beim Untersuchen von Bootproblemen meist gegeben.
 Bei laufenden VMs habe ich mit LVM die Möglichkeit, einen Snapshot anzufertigen
 und diesen Snapshot nur-lesend einzuhängen.
-Dabei muss ich aber bedenken, dass Dateien, die in der VM geöffnet waren,
-eventuell in einem inkonsistenten Zustand sind.
+Dabei muss ich bedenken, dass Dateien, die in der VM geöffnet waren,
+vermutlich in einem inkonsistenten Zustand sind.
 
 A> #### Reparatur mit chroot
 A> 

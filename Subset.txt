@@ -27,7 +27,7 @@ ch04-prozessmodell.md
 ch04-schnittstellen.md
 ch05.md
 ch05-bootprobleme.md
-cha-05-vm.md
+ch05-vm.md
 cha-05-initramfs.md
 cha-05-magic-sysrequest.md
 cha-05-kernel-panic.md
