@@ -37,7 +37,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch05.md \
                $(DROPBOXDIR)/ch05-bootprobleme.md \
                $(DROPBOXDIR)/ch05-vm.md \
-               $(DROPBOXDIR)/cha-05-initramfs.md \
+               $(DROPBOXDIR)/ch05-initramfs.md \
                $(DROPBOXDIR)/cha-05-magic-sysrequest.md \
                $(DROPBOXDIR)/cha-05-kernel-panic.md \
                $(DROPBOXDIR)/ch06.md \
@@ -164,7 +164,7 @@ SOURCES = $(BOOK) \
           ch05.md \
           ch05-bootprobleme.md \
           ch05-vm.md \
-          cha-05-initramfs.md \
+          ch05-initramfs.md \
           cha-05-magic-sysrequest.md \
           cha-05-kernel-panic.md \
           ch06.md \
@@ -284,7 +284,7 @@ CHAPTERS = \
     ch05.md \
     ch05-bootprobleme.md \
     ch05-vm.md \
-    cha-05-initramfs.md \
+    ch05-initramfs.md \
     cha-05-magic-sysrequest.md \
     cha-05-kernel-panic.md \
     ch06.md \

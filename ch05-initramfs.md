@@ -1,12 +1,12 @@
 
 ## Fehlersuche im Initramfs {#sec-lokal-initramfs}
 
-Einen wesentlichen Einfluss auf den Systemstart hat das Initramfs.
-Das ist ein kleines, komprimiertes Dateisystem, das zusammen mit dem Kernel
-vom Bootloader in den Hauptspeicher geladen wird und dann für das Laden beim
+Ein wesentliches Element des Systemstarts ist das Initramfs.
+Das ist ein kleines Dateisystem, das der Bootloader zusammen mit dem Kernel
+in den Hauptspeicher lädt, und das für das Laden beim
 Start benötigter Treiber und deren Konfiguration zuständig ist.
-Damit ist es möglich, einen modularen Kernel, wie er bei den meisten
-Distributionen heutzutage verwendet wird, an unterschiedliche Hardware
+Damit ist es möglich, einen modularen Kernel, wie ihn die meisten
+Distributionen heutzutage verwenden, an unterschiedliche Hardware
 anzupassen.
 Somit ist es nur noch in seltenen Fällen nötig, einen Kernel speziell für
 eine bestimmte Maschine zu kompilieren.
@@ -17,15 +17,15 @@ Beim Systemstart lädt der Bootloader sowohl den Kernel als auch das
 komprimierte Initramfs in den Hauptspeicher.
 Anschließend startet er den Kernel und übergibt dabei die Kerneloptionen.
 Der Kernel selbst reserviert einen Teil des Hauptspeichers und erzeugt darin
-ein virtuelles RAM-Dateisystem.
-In dieses entpackt er das komprimierte Initramfs.
-Anschließend startet er das Skript init in der Wurzel der virtuellen RAM-Disk.
-Alles weitere kann durch Analyse dieses Skripts erschlossen werden und ist von
+ein RAM-Dateisystem.
+In dieses entpackt er das Initramfs.
+Anschließend startet er das Skript `init` im Wurzelverzeichnis der RAM-Disk.
+Alles weitere kann ich durch Analyse dieses Skripts erschließen, das ist von
 Distribution zu Distribution verschieden.
 
 Im Rahmen der Fehlersuche beschäftige ich mich mit dem Initramfs nur,
 wenn ein System nicht startet.
-Dabei interessieren mich vor allem folgende Fragen:
+Dabei interessieren mich vor allem zwei Fragen:
 
 *   Wie kann ich Fehler im Initramfs finden?
 
@@ -33,18 +33,18 @@ Dabei interessieren mich vor allem folgende Fragen:
 
 ### Wie kann ich Fehler im Initramfs finden?
 
-Ich setze bei der Fehlersuche im Initramfs an, wenn ich genau weiß, dass der
+Ich suche den Fehler im Initramfs, wenn ich genau weiß, dass der
 Fehler nach dem Start des init Skripts und vor dem Einhängen des eigentlichen
 Root-Dateisystems passiert.
 
 Bei den automatisch erzeugten Initramfs der verschiedenen Distributionen lande
-ich bei Problemen manchmal in einer Shell und kann darin dann versuchen, mit
+ich bei Problemen manchmal in einer Shell und kann dann versuchen, mit
 den Werkzeugen des Initramfs das Problem zu analysieren.
 Da auf dem Initramfs fast immer `busybox` vorhanden ist, stehen mir hier oft
 mehr Werkzeuge zur Verfügung, als auf den ersten Blick ersichtlich ist.
 
-Bekomme ich keine Shell oder fehlt mir ein Werkzeug, dann komme ich nicht
-umhin, das Initramfs zu modifizieren.
+Bekomme ich keine Shell oder fehlt mir ein Werkzeug, muss ich das Initramfs
+modifizieren.
 Dabei kann ich das aktuelle als Ausgangsbasis nehmen.
 
 Bei Debian-basierten Distributionen ist das Initramfs ein komprimiertes
@@ -56,9 +56,9 @@ Dieses kann ich wie folgt entpacken:
 
 Nun kann ich in den entpackten Verzeichnissen die Skripts anpassen und
 gegebenenfalls weitere Programme installieren.
-Dabei muss ich aber darauf achten, dass alle benötigten Bibliotheken vorhanden
+Dabei muss ich darauf achten, dass alle benötigten Bibliotheken vorhanden
 sind.
-Das kann ich mit chroot überprüfen.
+Das kann ich mit `chroot` überprüfen.
 Anschließend baue ich ein neues Initramfs:
 
 {line-numbers=off,lang="text"}
@@ -75,13 +75,13 @@ und/oder installieren.
 Bei PXELINUX passe ich einfach die Datei im Verzeichnis pxelinux.cfg auf dem
 TFTP-Server an, so dass das modifizierte Initramfs geladen wird.
 
-### Wie mache ich eine gefundene Lösung permanent?
+### Wie mache ich meine Lösung permanent?
 
 Habe ich im vorigen Schritt eine Lösung für mein Problem gefunden, dann will
 ich diese dauerhaft im System verankern.
-Hier kommt das Problem in's Spiel, dass bei jedem Kernelupdate oder der
-Installation von Kernelmodulen automatisch ein neues Initramfs erzeugt wird.
-Dabei werden meine Änderungen ignoriert, wenn ich sie nicht an den richtigen
+Hier kommt in's Spiel, dass der Paketmanager bei jedem Kernelupdate
+oder der Installation von Kernelmodulen automatisch ein neues Initramfs erzeugt.
+Dabei ignoriert er meine Änderungen, wenn ich sie nicht an den richtigen
 Stellen unterbringe.
 
 #### Permanente Änderungen bei Debian GNU/Linux

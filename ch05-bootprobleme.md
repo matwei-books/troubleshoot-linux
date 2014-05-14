@@ -26,8 +26,8 @@ ein:
     startet ein Initialisierungsskript vom Initramfs. In dieser Phase kann ich
     nicht eingreifen, nur beobachten.
 5.  Das Initialisierungsskript des Initramfs lädt Treiber, überprüft das
-    Root-Dateisystem und hängt dieses ein. Bei einem Problem startet es eine
-    Shell, in der ich dieses interaktiv bearbeiten kann.
+    Root-Dateisystem und hängt dieses ein. Bei einem Problem startet es
+    manchmal eine Shell, in der ich dieses interaktiv bearbeiten kann.
 6.  Sobald das Root-Dateisystem als rootfs eingehängt ist, übergibt das
     Initialisierungsskript an den Initd des Systems, der über Skripts weitere
     Dateisysteme einhängt sowie Hintergrunddienste und Anmeldeprogramme startet.
@@ -188,7 +188,7 @@ Nach Ausgabe einiger Zeilen bleibt der Kernel mit der Meldung
 
 Das kann an einer fehlerhaften Kernkomponente, wie Prozessor, Speicher oder
 Chipsatz auf dem Mainboard liegen.
-Insbesondere, wenn der Kernel gleich nach dem Anlaufen mit Panik abbricht.
+Insbesondere, wenn der Kernel gleich nach dem Anlaufen mit Panic abbricht.
 In diesem Fall muss ich mit den Kernelparametern experimentieren.
 Manchmal hilft eine Internet-Suche nach der
 gleichen Hardware in Zusammenhang mit Problemen bei Linux.
@@ -300,9 +300,9 @@ NFS-Root der Netzwerkadapter.
 
 Falls das Root-Dateisystem als UUID oder Label spezifiziert wurde, kann ich
 mit `blkid` alle Label und UUIDs ausgeben lassen.
-Unter /proc und /sys kann ich weitere Informationen zu erkannter Hardware
+Unter */proc* und */sys* kann ich weitere Informationen zu erkannter Hardware
 finden.
-So liefert mir zum Beispiel /proc/mdstat Informationen zu einem Software-RAID.
+So liefert mir */proc/mdstat* zum Beispiel Informationen zu einem Software-RAID.
 
 ### Udev
 
@@ -386,7 +386,7 @@ Die Datei /etc/fstab kann ich als erste Anlaufstelle nehmen, die mir Hinweise
 auf die Partition und das Dateisystem gibt.
 Diese benötige ich, um das richtige Programm für die Dateisystemüberprüfung
 zu verwenden.
-Allerdings stehen in /etc/fstab auch nur die Label beziehungsweise UUID,
+Allerdings stehen in /etc/fstab auch nur Label beziehungsweise UUID,
 die ich aus der Konsolenmeldung bereits kenne.
 
 Mit den verschiedenen Partitionierungsprogrammen kann ich mir die

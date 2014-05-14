@@ -1,8 +1,6 @@
 
 ## Bootprobleme virtueller Maschinen {#sec-lokal-bootprobleme-vm}
 
-### Partitionen von Festplattenimages einhängen {#sec-mount-hdimage-partition}
-
 Bei Problemen mit dem Start von virtuellen Maschinen ist es oft hilfreich,
 wenigstens die Bootpartition der betroffenen VM zu untersuchen.
 
@@ -16,6 +14,8 @@ Administrationsoberfläche und der VM, mit der ich das Festplattenimage
 untersuche, wechseln.
 Dadurch verliere ich Zeit beim Zuordnen, Ein- und Aushängen und den
 Startversuchen.
+
+### Partitionen von Festplattenimages einhängen {#sec-mount-hdimage-partition}
 
 Besser ist in meinen Augen, die Partitionen des betroffenen Images gleich im
 Hostsystem für die Analyse und Störungsbeseitigung einzubinden und die
@@ -63,7 +63,7 @@ Damit kann ich diese Partition im Hostsystem wie folgt einhängen:
     # mount /dev/camion/ssh3 /tmp/mnt \
             -o loop,offset=1048576
 
-Wenn ich fertig bin, hänge ich die Partition normal mit umount wieder aus.
+Wenn ich fertig bin, hänge ich die Partition normal mit `umount` wieder aus.
 
 Wichtig ist, dass ich die Partition im Hostsystem nur einhänge, wenn die VM
 nicht läuft.
@@ -93,7 +93,7 @@ A>     # mount -o bind /sys /mnt/rescue/sys
 A>     # mount -o bind /proc /mnt/rescue/proc
 A>     # chroot /mnt/rescue
 A> 
-A> Dann kann ich, zum Beispiel, aus der chroot-Umgebung heraus den Bootlader
+A> Dann kann ich, zum Beispiel, aus der chroot-Umgebung heraus den Bootloader
 A> *grub* mit `grub-install /dev/sdX` erneut im MBR installieren.
 A> Oder mit `update-grub` die Steuerdatei neu zusammensetzen lassen.
 

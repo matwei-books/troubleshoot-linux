@@ -28,6 +28,7 @@ ch04-schnittstellen.md
 ch05.md
 ch05-bootprobleme.md
 ch05-vm.md
+ch05-initramfs.md
 ch06.md
 cha-07.md
 cha-08.md
