@@ -25,7 +25,8 @@ ch04.md
 ch04-dateien.md
 ch04-prozessmodell.md
 ch04-schnittstellen.md
-cha-05.md
+ch05.md
+ch05-bootprobleme.md
 ch06.md
 cha-07.md
 cha-08.md

@@ -1,8 +1,8 @@
 
 ## Bootprobleme {#sec-lokal-bootprobleme}
 
-Zwar treten Bootprobleme selten auf, wenn sie erstmal da sind, bekommen
-sie aber die volle Konzentration, weil eben wirklich "nichts mehr geht".
+Zwar treten Bootprobleme selten auf, wenn sie aber erstmal da sind, bekommen
+sie die volle Konzentration, weil eben wirklich "nichts mehr geht".
 
 Um die Bootprobleme eines Systems diagnostizieren und beheben zu
 können, muss ich das Verhalten eines gesunden Systems beim Startvorgang
@@ -27,12 +27,12 @@ ein:
     nicht eingreifen, nur beobachten.
 5.  Das Initialisierungsskript des Initramfs lädt Treiber, überprüft das
     Root-Dateisystem und hängt dieses ein. Bei einem Problem startet es eine
-    Shell, in der dieses interaktiv bearbeitet werden kann.
+    Shell, in der ich dieses interaktiv bearbeiten kann.
 6.  Sobald das Root-Dateisystem als rootfs eingehängt ist, übergibt das
     Initialisierungsskript an den Initd des Systems, der über Skripts weitere
     Dateisysteme einhängt sowie Hintergrunddienste und Anmeldeprogramme startet.
     Wenn dieser auf Probleme mit Dateisystemen trifft, bietet er an,
-    das Problem in einer Shell (nach Eingabe eines Kennworts) zu lösen,
+    das Problem in einer Shell - nach Eingabe eines Kennworts - zu lösen,
     oder einen Neustart zu versuchen.
 7.  Sobald ich mich am System regulär anmelden kann, ist der Rechner
     benutzbar, auch wenn noch Systemteile initialisiert werden.
@@ -85,7 +85,7 @@ bevor der Bootloader den Kernel lädt.
 
 Die Meldung 'Loading Kernel' oder 'Loading initial ramdisk' zeigt den Übergang
 von Phase 2 zu Phase 3 an.
-Diese wird gefolgt von Dutzenden Kernelmeldungen zur Hardware-Initialisierung,
+Dieser folgen Dutzende Kernelmeldungen zur Hardware-Initialisierung,
 die bei der Kernel-Option `quiet` unterdrückt worden wären.
 
 Eine Meldung wie 'dracut: dracut ...' bei Fedora oder 'Write protecting the
@@ -99,7 +99,7 @@ anmelden kann, betrachte ich den Systemstart als abgeschlossen, auch wenn im
 Hintergrund noch der eine oder andere Dienst gestartet wird.
 
 Mit dem Wissen um die Übergänge zwischen den einzelnen Phasen des Startvorgangs
-kann ich mich den Problemen in den einzelnen Bootphasen zuwenden.
+kann ich mich nun den Problemen in den einzelnen Bootphasen zuwenden.
 
 Da Probleme mit der Firmware abhängig von der konkreten Hardware sind,
 behandle ich diese hier nicht weiter.
@@ -111,13 +111,14 @@ des Kernels haben können.
 
 Bleibt nach den Selbsttests der Firmware der Bildschirm schwarz, kommt eine
 Meldung wie 'Operating system not found' oder erscheinen Fehlermeldungen von
-Grub, Lilo oder anderen Bootloadern, haben wir ein Problem mit dem Bootloader.
+Grub, Lilo oder anderen Bootloadern, habe ich ein Problem mit dem Bootloader.
 
 Eine mögliche Ursache ist, dass die Firmware den Bootmanager nicht gefunden
-hat. Das kann auf einen defekten Master Boot Record (MBR) hindeuten.
-Möglich ist auch, dass der Bootloader nicht im Master Boot Record, sondern in
-einer Partition installiert und diese nicht als bootfähig gekennzeichnet wurde.
-Möglicherweise wurde die Bootreihenfolge im BIOS geändert oder durch einen
+hat.
+Das kann auf einen defekten Master Boot Record (MBR) hindeuten.
+Möglich ist auch, dass der Bootloader nicht im MBR, sondern in einer Partition
+installiert und diese nicht als bootfähig gekennzeichnet ist.
+Vielleicht wurde die Bootreihenfolge im BIOS geändert oder durch einen
 zusätzlich angesteckten Datenträger durcheinander gebracht.
 Eventuell ist die Installation des Bootmanagers beschädigt.
 Grub2 zum Beispiel speichert einen Teil des Bootmanagers direkt hinter dem MBR
@@ -142,7 +143,8 @@ A> Zeitpunkt verpasst habe.
 A> 
 A> Wichtig ist, falls ich den Rechner mit meinen Änderungen starten konnte, dass
 A> ich die Änderungen permanent in der Grub-Konfiguration ablege.
-A> Das ist abhängig von der Distribution, deren Anleitung hilft mir da weiter.
+A> Wie genau, ist abhängig von der Distribution, deren Anleitung hilft mir da
+A> weiter.
 
 Wenn eine Vertauschung der Bootreihenfolge und ein zusätzlicher Datenträger
 ausgeschlossen werden können, starte ich den Rechner von einem Live- oder
@@ -150,7 +152,7 @@ Rescue-System auf einer CD-ROM oder einem USB-Stick. Dann kann ich die
 Systemplatte mit allen zur Verfügung stehenden Mitteln und Werkzeugen
 überprüfen.
 
-*   Ist die Partitionstabelle defekt?
+*   Ist die Partitionstabelle korrekt?
 
 *   Sind die Dateisysteme in Ordnung?
 
@@ -175,11 +177,11 @@ alle nicht zum Booten benötigten Komponenten entfernen.
 Falls das System dann startet, füge ich nach und nach die einzelnen
 Komponenten wieder hinzu, bis der Fehler wieder auftritt.
 
-Als nächstes kann ich systematisch die verschiedenen Hardware-relevanten
+Als nächstes kann ich systematisch die verschiedenen hardwarerelevanten
 Kernelparameter durchprobieren. Dann genauso die BIOS-Einstellungen und
 schließlich die Kombination beider.
 
-### Kernel Panik
+### Kernel Panic
 
 Nach Ausgabe einiger Zeilen bleibt der Kernel mit der Meldung
 'Kernel panic' stehen.
@@ -188,7 +190,7 @@ Das kann an einer fehlerhaften Kernkomponente, wie Prozessor, Speicher oder
 Chipsatz auf dem Mainboard liegen.
 Insbesondere, wenn der Kernel gleich nach dem Anlaufen mit Panik abbricht.
 In diesem Fall muss ich mit den Kernelparametern experimentieren.
-Eventuell hilft eine Internet-Suche nach der
+Manchmal hilft eine Internet-Suche nach der
 gleichen Hardware in Zusammenhang mit Problemen bei Linux.
 
 Bei Problemen mit Treibern versuche ich meist die folgenden Strategien:
@@ -250,15 +252,15 @@ ein paar Zeilen weiter oben. Steht dort ein `Oops`, hat der Kernel ein
 Problem erkannt und zunächst versucht weiter zu arbeiten.
 
 Ein `Oops` ist eine Abweichung vom korrekten Verhalten des Kernels, die
-eine Fehlermeldung produziert, welche via syslog protokolliert werden kann.
-Im Gegensatz dazu ist bei einem Kernel-Panik kein Logging mehr möglich.
+eine Fehlermeldung produziert, welche via Syslog protokolliert werden kann.
+Im Gegensatz dazu ist bei einem Kernel-Panic kein Logging mehr möglich.
 Wenn der Kernel ein Problem entdeckt, gibt er eine `Oops` Nachricht aus und
 beendet den verursachenden Prozess.
 Die offizielle Dokumentation dazu findet sich in der Datei *oops_tracing.txt*
 bei der Kernel-Dokumentation.
 Sobald ein System einen `Oops` erlebt hat, arbeiten einige interne Ressourcen
 nicht mehr korrekt.
-Das wiederum kann zu weiteren `Oops` und schließlich zum Kernel-Panik führen.
+Das wiederum kann zu weiteren `Oops` und schließlich zum Kernel-Panic führen.
 Daher ist es bei der Analyse wichtig, sich zunächst auf den ersten `Oops` zu
 konzentrieren.
 Dabei helfen Internet-Suchen, die Dokumentation und gegebenenfalls eine Anfrage
@@ -276,10 +278,10 @@ Als erstes sehe ich mir hier die Bootloader-Konfiguration genau an.
 
 *   Ist das Root-Dateisystem korrekt angegeben? 
 
-*   Ist, bei NFS-Rootfs, der Server mit dem Rootfs erreichbar und auf ihm
+*   Ist, bei NFS-Root, der Server mit dem Rootfs erreichbar und auf ihm
     das Dateisystem?
     
-Eventuell muss ich den Rechner mit einem Live- oder Rescue-System starten,
+Manchmal muss ich den Rechner mit einem Live- oder Rescue-System starten,
 um das Problem genauer einzugrenzen und zu beheben.
 
 ### Probleme im Initramfs
@@ -289,7 +291,7 @@ Bekomme ich Meldungen wie `dracut: Warning: ...` (Fedora) oder
 Shell-Prompt, dann haben die Skripts des Initramfs das Root-Dateisystem nicht
 gefunden.
 
-Mit `dmesg|less` kann ich mir die Kernelmeldungen noch einmal ansehen.
+Mit `dmesg|less` sehe ich mir die Kernelmeldungen noch einmal an.
 Dabei suche ich nach Meldungen zu den Speichersystemen.
 Habe ich less nicht zur Verfügung, kann ich mit `<Shift>-<Bild auf/ab>`
 blättern.
@@ -326,9 +328,9 @@ Der Init-Daemon hat ein Problem beim Dateisystemcheck erkannt und bietet mir
 an, dieses in einer Shell zu beheben. Dazu muss ich das Kennwort von *root*
 wissen.
 
-Ein Neustart mit `<CTRL>-D` wird mir nicht weiterhelfen, da wir es hier mit
-einem schwerwiegenden Problem im Dateisystem zu tun haben und beim nächsten
-Start genauso weit kommen würden.
+Ein Neustart mit `<CTRL>-D` wird mir nicht weiterhelfen, da ich es hier mit
+einem schwerwiegenden Problem im Dateisystem zu tun habe und beim nächsten
+Start genauso weit kommen würde.
 
 Ich brauche also das Kennwort oder eine andere Möglichkeit, eine
 Root-Shell auf dem Rechner zu bekommen, wie zum Beispiel die Option
@@ -339,44 +341,46 @@ A>
 A> Bei der Erläuterung des [UNIX-Prozessmodelles](#sec-unix-prozessmodell) hatte
 A> ich erwähnt, dass der Lebenszyklus aller Prozesse bis auf den ersten mit dem
 A> `fork()` Systemaufruf beginnt.
+A> 
 A> Der erste Prozess wird vom Kernel gestartet und führt traditionell das
 A> Programm */sbin/init* aus.
 A> Dieses Programm liest seine Konfiguration ein und startet entsprechend dieser
 A> andere Prozesse, welche die Hardware initialisieren oder Dienste
 A> bereitstellen.
 A> Mit dem Kernelparameter `init`, den der Bootloader an den Kernel übergibt,
-A> kann ich ein anderes Programm bestimmen, das als erstes gestartet wird.
+A> kann ich ein anderes Programm bestimmen.
 A> Mit `init=/bin/sh` lege ich zum Beispiel die Standard-Shell als Startprogramm
 A> fest.
 A> Das ist im Normalfall nicht sinnvoll, da die Shell keinerlei
 A> Initialisierung vornimmt und somit keine Dateisysteme außer dem
-A> Root-Dateisystem eingehängt und auch sonst keine Dienste gestartet sind.
+A> Root-Dateisystem eingehängt und auch sonst keine Dienste gestartet werden.
+A> 
 A> In Notfällen, wenn *init* beschädigt ist, oder ich das Kennwort von *root*
 A> nicht weiß, kann ich aber die nötigen Initialisierungen selbst vornehmen
 A> und damit das System wieder benutzbar machen.
 
 Dann starte ich die Dateisystemüberprüfung von Hand für alle
-benötigten Dateisysteme und starte den Rechner anschließend neu. Läuft der
-Rechner wieder, muss ich nun noch schauen, ob und welche
+benötigten Dateisysteme und starte den Rechner anschließend neu.
+Läuft der Rechner wieder, muss ich nun noch schauen, welche
 Dateien ich aus dem Backup ersetzen muss.
 
 Problem erkannt, Problem gelöst. 
 Oder?
 
 Habe ich den Rechner selbst aufgesetzt und mir notiert, welche Partitionen mit
-welchem Dateisystem wo eingehängt sind, dann ist es wirklich so einfach.
+welchem Dateisystem wo eingehängt werden, dann ist es wirklich so einfach.
 Bei einem fremden Rechner, oder wenn es ein älteres Gerät ist, zu dem ich keine
-Aufzeichnungen habe, muss ich noch herausfinden, welche Partitionen ich
+Aufzeichnungen habe, muss ich erst herausfinden, welche Partitionen ich
 mit `fsck` überprüfen muss.
 
 In der Bildschirmmeldung steht, bei welcher Partition die automatische
 Überprüfung aufgegeben hat. Nötigenfalls kann ich mit `<Shift>-<PgUp>` nach oben
-blättern, wenn die Meldung schon nach oben hinaus geschoben wurde.
+blättern, wenn die Meldung schon nach oben hinaus geschoben ist.
 
 Je nach Alter des Rechners und verwendeter Linux Distribution steht da entweder
 ein Gerätename wie /dev/sda1, ein Label wie ``rootfs'' oder eine UUID.
 Das fsck-Programm erwartet als Angabe einen Gerätenamen.
-Beim Label und bei der UUID muss ich die Zuordnung herausbekommen.
+Beim Label und bei der UUID muss ich die Zuordnung dafür herausbekommen.
 
 Die Datei /etc/fstab kann ich als erste Anlaufstelle nehmen, die mir Hinweise
 auf die Partition und das Dateisystem gibt.
@@ -406,8 +410,8 @@ Alternativ kann ich die Gerätedateien mit `findfs` bestimmen:
     # findfs UUID=f779141e-...-9dde9de0b64f
     /dev/sda1
 
-Habe ich keines dieser Programme, aber file, dann kann ich mich wie folgt
-behelfen (Umbruch ist von mir eingefügt):
+Habe ich keines dieser Programme, aber file, hilft das folgende Vorgehen
+(Umbruch ist von mir eingefügt):
 
 {line-numbers=off,lang="text"}
     # dd if=/dev/sda1 of=sda1 bs=4096 count=1
