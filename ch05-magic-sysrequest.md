@@ -16,7 +16,7 @@ der einen neuen Prozess startet, dauert ewig.
 
 Habe ich bereits einen Systemmonitor laufen, zeigt dieser mir mindestens
 eines dieser Symptome: die CPUs sind 100 Prozent ausgelastet, der
-Hauptspeicher ist voll und das System lagert ständig Speicherseiten aus und
+Hauptspeicher ist voll, das System lagert ständig Speicherseiten aus und
 die Systemlast (die Anzahl der Prozesse, die auf Rechenzeit warten) ist sehr
 hoch.
 
@@ -46,23 +46,23 @@ Die genannten Schlüsseltasten bewirken das folgende:
 | u | alle Dateisysteme nur-lesend einhängen               |
 | b | Neustart                                             |
 
-Insbesondere die letzten drei Funktionen bewirken, dass das Dateisystem vor
-dem Neustart sauber ausgehängt wird.
-Damit sollte der Dateisystemcheck zumindest von daher keine Fehler finden.
+Insbesondere die letzten drei Funktionen bewirken, dass der Kernel die
+Dateisysteme vor dem Neustart sauber aushängt.
+Damit sollte der Dateisystemcheck fehlerfrei laufen.
 Mit dem zweiten Befehl (`e`) haben die Prozesse zumindest die Chance,
 ihre geöffneten Dateien sauber zu schließen.
 Dazu ist die Pause von einigen Sekunden vor dem nächsten Befehl (`i`)
 notwendig.
 
 Außer diesen sechs Funktionen bietet der Magic SysRequest noch weitere, deren
-Beschreibung sich in der Datei sysrq.txt in der Kerneldokumentation findet.
+Beschreibung ich in der Datei *sysrq.txt* in der Kerneldokumentation finde.
 
 Damit Magic SysRequest überhaupt zur Verfügung steht, muss dieses Feature im
 Kernel kompiliert sein.
 Das ist bei den Kerneln der meisten Distributionen der Fall.
 Die entsprechende Konfigurationsvariable heisst `CONFIG_MAGIC_SYSRQ`.
 Außerdem muss es aktiviert sein.
-Das kontrolliere ich über die Datei /proc/sys/kernel/sysrq.
+Über die Datei */proc/sys/kernel/sysrq* kann ich das kontrollieren.
 Steht in dieser 0, ist Magic SysRequest deaktiviert.
 Bei einer 1 sind alle Funktionen aktiv, bei einer höheren Zahl erfahre ich aus
-der oben erwähnten Datei sysrq.txt, welche Funktionen aktiv sind.
+der oben erwähnten Datei *sysrq.txt*, welche Funktionen aktiv sind.

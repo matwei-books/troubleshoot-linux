@@ -29,8 +29,8 @@ ch05.md
 ch05-bootprobleme.md
 ch05-vm.md
 ch05-initramfs.md
-cha-05-magic-sysrequest.md
-cha-05-kernel-panic.md
+ch05-magic-sysrequest.md
+ch05-kernel-panic.md
 ch06.md
 cha-06-erste-minute.md
 cha-06-init-programme.md
