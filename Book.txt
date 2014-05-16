@@ -32,6 +32,7 @@ ch05-initramfs.md
 ch05-magic-sysrequest.md
 ch05-kernel-panic.md
 ch06.md
+ch06-erste-minute.md
 cha-07.md
 cha-08.md
 part3.md
