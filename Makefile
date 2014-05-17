@@ -42,8 +42,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch05-kernel-panic.md \
                $(DROPBOXDIR)/ch06.md \
                $(DROPBOXDIR)/ch06-erste-minute.md \
+               $(DROPBOXDIR)/ch06-init-programme.md \
                $(DROPBOXDIR)/cha-06-dienste.md \
-               $(DROPBOXDIR)/cha-06-init-programme.md \
                $(DROPBOXDIR)/ch06-zugriffsrechte.md \
                $(DROPBOXDIR)/cha-06-mount-probleme.md \
                $(DROPBOXDIR)/cha-07.md \
@@ -169,8 +169,8 @@ SOURCES = $(BOOK) \
           ch05-kernel-panic.md \
           ch06.md \
           ch06-erste-minute.md \
+          ch06-init-programme.md \
           cha-06-dienste.md \
-          cha-06-init-programme.md \
           ch06-zugriffsrechte.md \
           cha-06-mount-probleme.md \
           cha-07.md \
@@ -289,8 +289,8 @@ CHAPTERS = \
     ch05-kernel-panic.md \
     ch06.md \
     ch06-erste-minute.md \
+    ch06-init-programme.md \
     cha-06-dienste.md \
-    cha-06-init-programme.md \
     ch06-zugriffsrechte.md \
     cha-06-mount-probleme.md \
     cha-07.md \

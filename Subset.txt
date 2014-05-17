@@ -33,7 +33,7 @@ ch05-magic-sysrequest.md
 ch05-kernel-panic.md
 ch06.md
 ch06-erste-minute.md
-cha-06-init-programme.md
+ch06-init-programme.md
 cha-06-dienste.md
 ch06-zugriffsrechte.md
 cha-06-mount-probleme.md
