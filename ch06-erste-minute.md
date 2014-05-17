@@ -1,12 +1,12 @@
 
 ## Die ersten Minuten auf dem Server {#sec-local-erste-minute}
 
-Zusätzlich habe ich die Gewohnheit entwickelt, bestimmte Informationen immer
-abzufragen, wenn ich mich an einem Server anmelde.
+Manche Informationen frage ich fast immer ab, wenn ich mich an einem Server
+anmelde.
 Damit bekomme ich einen intuitiven Einblick in den Allgemeinzustand des
 Servers und eventuell weitere Hinweise.
 
-### uptime, vmstat - Systemlast
+### uptime, w, last - Zeit, Systemlast, Benutzer
 
 Das Programm `uptime` zeigt mir neben der Systemzeit, wie lange der
 Systemstart zurückliegt, wieviel Benutzer angemeldet sind und die
@@ -42,14 +42,14 @@ normalen Betriebsbereich.
 Natürlich werde ich versuchen die Ursache der Lastspitze zu ermitteln, um zu
 entscheiden, welche präventiven Maßnahmen ich für die Zukunft ergreifen will.
 
-Eine Alternative zu *uptime* ist das Programm `w`.
-Dieses zeigt in der ersten Zeile die gleichen Daten an wie *uptime*.
-In den nachfolgenden zeigt es, wer gerade angemeldet ist, wann er das letzte
-Mal etwas eingegeben hat und welches Programm er zuletzt aufgerufen hat.
-Damit weiß ich gleich, mit wem ich Kontakt aufnehmen muss, wenn noch jemand
+Eine Alternative zu *uptime* ist das Programm `w`,
+das in der ersten Zeile die gleichen Daten wie *uptime* anzeigt.
+In den nachfolgenden Zeilen zeigt es, wer gerade angemeldet ist, wann er das
+letzte Mal etwas eingegeben hat und welches Programm er zuletzt aufgerufen hat.
+Damit weiß ich, mit wem ich Kontakt aufnehmen muss, falls jemand
 anderes angemeldet ist.
 Das Programm `w` entnimmt, ebenso wie das Programm `who` die Informationen
-über angemeldete Benutzer per Voreinstellung der Datei */var/log/utmp*.
+über angemeldete Benutzer der Datei */var/log/utmp*.
 
 Falls ich den Beginn des Problems mit letzten Änderungen am System korrelieren
 will, rufe ich das Programm `last` auf.
@@ -66,8 +66,8 @@ letzten Anmeldungen interessieren:
     reboot  system boot..Thu Nov 7 06:48 - 07:57...
     mathias pts/1      ..Wed Nov 6 09:10 - 11:49...
 
-`last` entnimmt diese Daten per Voreinstellung der Datei */var/log/wtmp*.
-Diese Datei wird üblicherweise am Monatsanfang umbenannt in */var/log/wtmp.1*,
+Diese Daten entnimmt `last` der Datei */var/log/wtmp*.
+Die Datei wird üblicherweise am Monatsanfang umbenannt in */var/log/wtmp.1*,
 so dass immer nur die Daten des laufenden Monats zur Verfügung stehen.
 Will ich die Anmeldungen des Vormonats sehen, gebe ich dieses explizit an:
 
@@ -80,9 +80,9 @@ Bei mehreren Konten schaue ich in der Datei *.bash_history* im
 Benutzerverzeichnis des in der fraglichen Zeit angemeldeten Benutzers nach.
 Falls der Benutzer die csh verwendet, schaue ich stattdessen in *.history*.
 
-### vmstat
+### vmstat - Performancewerte
 
-Mit dem Programm `vmstat` bekomme ich ein genaueres Gefühl dafür, wie es einer
+Mit dem Programm `vmstat` bekomme ich ein Gefühl dafür, wie es einer
 Maschine im Moment gerade geht.
 Beim Anmelden an der Maschine rufe ich dieses oft wie folgt auf:
 
@@ -123,7 +123,7 @@ Das deutet auf Speicherprobleme hin.
 
 ### free - Hauptspeicher
 
-Der dritte Befehl, der mir hilft ein Bild über den Zustand der
+Der nächste Befehl, der mir hilft ein Bild über den Zustand der
 Maschine zu bekommen, ist `free`.
 
 {line-numbers=off,lang="text"}
@@ -134,12 +134,11 @@ Maschine zu bekommen, ist `free`.
     Swap:         5153    0 5153
 
 Dieser Befehl zeigt mir den insgesamt vorhandenen, den benutzten und den
-freien Speicher an.
-Außerdem wieviel des Speichers für dynamisch vergebene Dateisystem-Caches
-verwendet wurde.
-Mich interessiert jedoch vor allem die letzte Zeile, die angibt, wieviel
-Auslagerungsspeicher zur Verfügung steht und wieviel davon bereits benutzt
-wurde.
+freien Speicher an und außerdem, wieviel Speicher der Kernel gerade für
+Dateicaches verwendet.
+Mich interessiert vor allem die letzte Zeile, die angibt, wieviel
+Auslagerungsspeicher zur Verfügung steht und wieviel der Kernel bereits
+ausgelagert hat.
 Gerade bei hoher Systemlast sorgt auf Festplatten ausgelagerter RAM für eine
 weitere spürbare Verlangsamung des Systems, so dass ich hier schnell für
 Abhilfe sorgen möchte.
@@ -151,7 +150,7 @@ Dieser zeigt mir den verfügbaren Platz auf den Dateisystemen der eingehängten
 Partitionen an.
 Ich rufe diesen Befehl zweimal auf, einmal mit Option `-i`, für die Statistik
 der Inodes und einmal ohne für die Belegung des Plattenplatzes.
-Die Option `-h` ist lediglich für die Ausgabe in lesbarer Form,
+Die Option `-h` ist für die Ausgabe in lesbarer Form,
 zum Beispiel 586G statt der Anzahl in Bytes.
 
 {line-numbers=off,lang="text"}
@@ -174,16 +173,16 @@ verfügbaren Plattenplatz sorgen kann.
 Die verfügbaren Inodes in einem Dateisystem werden seltener aufgebraucht.
 Dazu müssten auf dem Dateisystem viele kleine Dateien angelegt sein.
 Bei Mailservern mit Postfächern im Maildir-Format oder bei Newsservern kann
-das jedoch vorkommen.
+das vorkommen.
 
 Platzprobleme auf den Laufwerken können sich auf verschiedene Art bemerkbar
 machen, noch bevor ich sie beim Besuch des Rechners entdecke.
 Das Problem ist, dass sie von außen meist nicht als solche erkennbar sind,
-weil lediglich ein oder mehrere Dienste den Betrieb einstellen.
-Insbesondere, wenn diese durch große Protokolldateien verursacht werden, kann
-es passieren, dass scheinbar genügend Platz ist, wenn ich mich anmelde und
+weil nur ein oder wenige Dienste den Betrieb einstellen.
+Insbesondere, wenn die Platzprobleme durch große Protokolldateien verursacht
+werden, kann es passieren, dass genügend Platz ist, wenn ich mich anmelde und
 nachsehe.
-In der Nacht werden oft die Protokolldateien rotiert und dadurch wieder Platz
+In der Nacht werden die Protokolldateien rotiert und dadurch wieder Platz
 geschaffen, bis der Plattenplatz erneut aufgebraucht ist.
 Aus diesem Grund ist es sinnvoll, den Plattenplatz automatisch, zum Beispiel
 von Nagios, überwachen zu lassen.
@@ -191,11 +190,11 @@ von Nagios, überwachen zu lassen.
 A> Auch wenn dieser Abschnitt vielleicht den Eindruck erweckt, dass ich
 A> viele Probleme
 A> gleich nach dem Anmelden am Server diagnostizieren kann, passiert es mir
-A> immer wieder, dass ich wie blind an einem Problem festhänge, weil ich
-A> solche Kleinigkeiten, wie die Kontrolle der Inodes mit `df -i` vergessen
-A> habe.
-A> In einem konkreten Fall hatte CFEngine das Verzeichnis
-A> */var/cfengine/output* mit kleinen Dateien für Statusmeldungen zugemüllt.
+A> immer wieder, dass ich an einem Problem festhänge, weil ich
+A> solche Kleinigkeiten, wie die Kontrolle der Inodes mit `df -i` vergesse.
+A> 
+A> In einem konkreten Fall hatte CFEngine ein Dateisystem
+A> mit kleinen Dateien für Statusmeldungen zugemüllt.
 A> Normalerweise generiert CFEngine ungefähr aller 5 Minuten eine
 A> Statusmeldung.
 A> Bei knapp 300 Statusmeldungen am Tag hatte ich das Problem fast zwei
@@ -207,7 +206,7 @@ A> Das hat mich einige unnötige Zeit bei der Fehlersuche gekostet.
 A> 
 A> Nachdem ich schließlich auf die aufgebrauchten Inodes gekommen war, war das
 A> nächste Problem, die Dateien zu finden.
-A> Einzeln in alle Verzeichnisse zu schauen, hat keinen Zweck.
+A> Einzeln in alle Verzeichnisse zu schauen dauert zu lange.
 A> Mit `find` kann ich das automatisieren.
 A> Aber mit welchen Optionen?
 A> 
@@ -226,12 +225,12 @@ A> Ich suche unterhalb des Einhängepunkts des betroffenen Dateisystems
 A> (`$mountpoint`) ausschließlich in diesem Dateisystem (`-xdev`) nach
 A> Verzeichnissen (`-type d`) deren Größe einen bestimmten Wert überschreitet
 A> (`-size +300k`).
-A> Bei der Größe muss ich wahrscheinlich etwas experimentieren, wenn ich
+A> Bei der Größe muss ich etwas experimentieren, wenn ich
 A> zuviel oder zuwenig Ergebnisse bekomme.
 A> 
-A> Auf genau diese Art bin ich bei dem konkreten Problem auf
+A> Auf genau diese Art bin ich bei diesem Problem auf
 A> */var/cfengine/output/* und darüber auf CFEngine als Verursacher gekommen.
-A> Der betreffende Rechner hatte eine Testkonfiguration und sich selbst als
+A> Der Rechner hatte eine Testkonfiguration und sich selbst als
 A> Policy-Server eingestellt.
 A> Nach Konfiguration des richtigen Policy-Servers erledigte sich das Problem
 A> in kurzer Zeit von selbst.
@@ -263,7 +262,7 @@ Mit etwas Erfahrung sehe ich damit schon intuitiv, ob ein Rechner "krank" ist.
 Der Befehl `ps xjf`, auf Systemen, die `pstree` nicht installiert haben, ist
 weniger übersichtlich und nur ein schwacher Ersatz.
 
-Mit diesen ersten fünf Befehlen, die ich gewohnheitsmäßig nach der
+Mit diesen ersten Befehlen, die ich gewohnheitsmäßig nach der
 Anmeldung am Server aufrufe, bekomme ich schnell eine intuitive
 Einschätzung - ein Gefühl - für den Zustand des Systems.
 Alle weiteren Schritte hängen vom konkreten Problem und der Situation auf dem
