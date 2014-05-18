@@ -2,7 +2,7 @@
 ## PID 1 - Init
 
 Bei dem ersten vom Kernel gestarteten Prozess, habe ich es je nach Alter
-und verwendeter Distribution des Linux-Systems mit einem der folgenden
+und Distribution des Linux-Systems mit einem der folgenden
 Programme zu tun:
 
 *   SysVInit
@@ -13,14 +13,14 @@ Programme zu tun:
 
 Bei sehr alten Systemen besteht noch die Möglichkeit, dass ein BSD-Init im
 Einsatz ist.
-Ehrlich gesagt, habe ich sowas schon sehr lange nicht mehr gesehen.
+Ehrlich gesagt, habe ich das schon sehr lange nicht mehr gesehen.
 
 ### SysVInit
 
 SysVInit ist einer der ältesten Init-Dämonen unter Linux.
 Er wird über die Datei */etc/inittab* gesteuert.
 Bei diesem Dämon läuft der Rechner in einem von mehreren möglichen
-Runleveln, die bestimmten Systemzuständen zugeordnet werden.
+Runleveln, die bestimmten Systemzuständen entsprechen.
 Je nachdem, in welchem Zustand sich das System gerade befindet, startet oder
 beendet SysVInit die zugehörigen Dienste.
 
@@ -51,38 +51,38 @@ Vergleichbar diesem Shellcode:
         $s start
     done
 
-Die Reihenfolge, in der die Skripts aufgerufen werden, hängt vom Namen des
+Die Reihenfolge, in der die Skripts aufgerufen werden, hängt vom Namen der
 Skripts ab.
 Dieser setzt sich zusammen aus dem Buchstabe `K` oder `S`, einer
 zweistelligen Zahl und dem eigentlichen Namen des Skripts.
 Die Zahl bestimmt die Reihenfolge und bei gleicher Zahl der Name.
 Wenn SysVInit Dienste parallel startet, dann diejenigen mit der selben Zahl.
 
-Üblicherweise wird das Skript selbst im Verzeichnis */etc/init.d/* oder
-*/etc/rc/init.d/* abgelegt und in den Verzeichnissen für die Runlevel befindet
-sich nur ein symbolischer Link darauf, dessen Name der obigen Konvention
+Üblicherweise liegt das Skript im Verzeichnis */etc/init.d/* oder
+*/etc/rc/init.d/* während sich in den Verzeichnissen für die Runlevel
+nur ein symbolischer Link darauf befindet, dessen Name der obigen Konvention
 entspricht.
 
 Etwas komplizierter, als eben beschrieben, verläuft das Starten und Anhalten
-von Diensten, wenn SysVInit mit Makefile-ähnlicher Parallelverarbeitung läuft.
+von Diensten, wenn SysVInit mit Parallelverarbeitung läuft.
 In diesem Fall müssen die Abhängigkeiten für die Startreihenfolge in allen
-Skripts in Kommentarkopfzeilen korrekt beschrieben sein. Diese Kopfzeilen sind
-in der Handbuchseite zu `insserv` beschrieben.
+Skripts in Kommentarkopfzeilen beschrieben sein.
+Diese Kopfzeilen beschreibt die Handbuchseite zu `insserv`.
 
 Für das Aktivieren und Deaktivieren von Boot-Skripts empfiehlt sich auf
 Debian-basierenden Systemen das Programm `update-rc.d`, welches die
 erforderlichen Links von */etc/rc$rl.d/* zu den Skripts in */etc/init.d/*
 anlegt.
 Dieses Skript kann auf zweierlei Arten aufgerufen werden.
-Im älteren (Legacy-)Modus werden Reihenfolge und Runlevel auf der
-Kommandozeile vorgegeben.
+Im älteren (Legacy-)Modus gebe ich Reihenfolge und Runlevel auf der
+Kommandozeile vor.
 Im Default-Modus bestimmt es mittels `insserv` die Abhängigkeiten aus den
 LSB-konformen Kommentarkopfzeilen der Skripts und berechnet damit die
 Reihenfolge.
 
-Sollte ich feststellen, dass die Reihenfolge geändert werden muss, brauche ich
+Sollte ich eine andere Reihenfolge benötigen, brauche ich
 nicht die Zeilen im Skript selbst ändern, sondern kann diese mit
-entsprechenden Dateien im Verzeichnis */etc/insserv.override/* überschreiben.
+Dateien im Verzeichnis */etc/insserv.override/* überschreiben.
 
 ### Upstart
 
@@ -137,13 +137,12 @@ zeigt den Status eines einzelnen Jobs, in diesem Fall von dbus.
 Beim Beenden eines Jobs kümmert sich Upstart nur um den per `exec` angegebenen
 Prozess.
 Diesem sendet es zunächst ein SIGTERM und, falls er sich nicht schnell genug
-beendet, ein SIGKILL hinterher.
+beendet, ein SIGKILL.
 
 Mit den Befehlen `pre-stop` und `post-stop` in der Beschreibung des Jobs kann
 ich Befehle angeben, die Upstart vor und nach Beenden des Dienstes ausführen
 soll.
-Damit kann ich gegebenenfalls das System aufräumen und zum Beispiel übrig
-gebliebene PID-Dateien entfernen.
+Damit kann ich das System aufräumen und übrig gebliebene PID-Dateien entfernen.
 
 Analog gibt es mit `pre-start` und `post-start` Anweisungen für den Start
 eines Jobs.
@@ -170,7 +169,7 @@ Damit kann ich zum Beispiel über Udev Reaktionen auslösen, wenn ein Stück
 Hardware angesteckt oder abgezogen wird.
 
 Für die Fehlersuche wichtiger ist, dass ich damit gezielt einzelne Details von
-Upstart untersuchen kann, indem ich ein Ereignis vorgebe und die gestarteten
+Upstart untersuchen kann, indem ich ein Ereignis vorgebe und die Reaktion der
 Programme beobachte.
 
 ### Systemd
@@ -179,40 +178,38 @@ Mit Systemd ist nach Upstart ein zweites modernes Programm für die
 Systeminitialisierung und Ressourcenverwaltung am Start.
 Neben dem parallelen Start von Hintergrunddiensten, den bereits Upstart und
 ansatzweise auch SysVInit beherrschen, ist ein wesentliches Merkmal von
-Systemd, dass Abhängigkeiten zwischen Diensten nicht explizit festgelegt
-werden müssen.
-Für weitere Informationen empfehle ich einen Blick in die Handbuchseiten zu
-`systemd` und `systemd.conf`.
+Systemd, dass ich Abhängigkeiten zwischen Diensten nicht explizit festlegen
+muss.
 
 Damit Systemd Hintergrunddienste ohne explizite Konfiguration der
 Abhängigkeiten parallel starten kann, nutzt es die sogenannte
 Socket-Aktivierung.
 Das bedeutet, dass Systemd die Sockets anlegt, über die die verschiedenen
-Dienste miteinander kommunizieren, wie zum Beispiel */dev/log* für den
+Dienste miteinander kommunizieren, wie */dev/log* für den
 Protokolldienst.
 Anschließend übergibt es die Sockets den Diensten beim Start.
 Der Kernel blockiert einen Prozess, der in einen Socket schreibt, bis
 ein anderer Prozess aus diesem Socket liest.
 Umgekehrt wird ein lesender Prozess blockiert, bis ein anderer Prozess in
 den Socket geschrieben hat.
-Auf diese Weise  werden die einzelnen Dienste automatisch aktiviert, wenn die
+Auf diese Weise aktiviert der Kernel die einzelnen Dienste automatisch, wenn die
 Gegenstelle am Socket verfügbar ist.
 
-Das hat zusätzlich den Vorteil, dass ich einen abgestürzten Dienst einfach neu
-starten kann, ohne dass mit dem Socket verbundene Programme die Verbindung
-verlieren.
+Das hat den zusätzlichen Vorteil, dass ich einen abgestürzten Dienst einfach neu
+starten kann, ohne dass andere mit dem Socket verbundene Programme die
+Verbindung verlieren.
 Da der Kernel eingehende Anfragen puffert, kann der neue Dienst dort
 fortfahren, wo der alte aufgehört hat.
 
-Die verschiedenen Aufgaben von Systemd sind in Units organisiert.
-Für jede Aufgabe benötigt man eine Konfigurationsdatei für die entsprechende
+Die Aufgaben von Systemd sind in Units organisiert.
+Für jede Aufgabe benötige ich eine Konfigurationsdatei für die entsprechende
 Unit.
 Diese Dateien liegen im Verzeichnis */lib/systemd/system/*.
-Gibt es eine gleichnamige Datei unter */etc/systemd/system/*, dann ignoriert
+Gibt es eine gleichnamige Datei unter */etc/systemd/system/*, ignoriert
 Systemd die Datei unter */lib/*.
 So ist es möglich, die Konfiguration dauerhaft an das eigene System
 anzupassen, ohne Gefahr zu laufen, dass die Änderungen bei der nächsten
-Systemaktualisierung überschrieben werden.
+Aktualisierung des Systems überschrieben werden.
 
 Mit dem Befehl `systemctl` kann ich mir eine Liste der Units ausgeben lassen.
 
@@ -220,18 +217,18 @@ Es gibt verschiedene Typen von Units, die Systemd an der Endung des
 Dateinamens erkennt:
 
 .service
-: Service-Units, die sich um Dienste kümmern, welche bei SysVInit meist über
-  Init-Skripts gestartet oder beendet werden.
+: Service-Units, die sich um Dienste kümmern, welche SysVInit meist über
+  Init-Skripts startet oder beendet.
 
 .mount
 : Units zum Ein- und Aushängen von Dateisystemen
 
 .path
-: Die spezifizierten Dateien und Verzeichnissen werden mit *inotify*
+: Die spezifizierten Dateien und Verzeichnisse werden mit *inotify*
   überwacht.
 
 .socket
-: Ein oder mehrere Sockets, die für die Socket-Aktivierung angelegt werden.
+: Ein oder mehrere Sockets, für die Socket-Aktivierung.
   Für den Start der zugehörigen Dienste ist jedoch eine Service-Unit
   zuständig.
 
@@ -252,7 +249,7 @@ Da Kindprozesse die Gruppenzugehörigkeit erben, können diese Prozessgruppen
 als Einheit verwaltet werden und alle zugehörigen Prozesse beim Beenden eines
 Dienstes zuverlässig beendet werden.
 
-Am häufigsten kommt das Programm `systemctl` bei der Fehlersuche zum Einsatz.
+Sehr häufig setze ich das Programm `systemctl` bei der Fehlersuche ein.
 Ohne Argumente zeigt dieses mir eine Liste der Units an.
 Da das sehr viele sein können, kann ich mit den entsprechenden Optionen die
 Auswahl einschränken.
@@ -266,7 +263,7 @@ Dieser Befehl zeigt mir alle Service-Units an.
     systemctl status ntpd.service
 
 Damit bekomme ich weitere Informationen zum NTP-Dienst.
-Unter anderem auch den Zeitpunkt des Abbruchs und den Fehlercode, bei Units,
+Unter anderem den Zeitpunkt des Abbruchs und den Fehlercode, bei Units,
 die in der Liste als `failed` markiert sind.
 
 Wie bereits erwähnt fassen Target-Units mehrere Units zusammen.
@@ -276,12 +273,12 @@ Will ich beim Systemstart eine andere Unit, kann ich diese im Bootloader auf
 der Kernel-Kommandozeile angeben:
 
 {line-numbers=off,lang="text"}
-    systemd.unit=multi-user.target
+    systemd.unit=rescue.target
 
 Will ich im Betrieb umschalten, geht das zum Beispiel mit 
 
 {line-numbers=off,lang="text"}
-    # systemctl isolate rescue.target
+    # systemctl isolate multi-user.target
 
 Um eine Unit permanent zum Standard zu machen, passe ich den symbolischen Link
 von `default.target` an, so dass er auf die gewünschte Unit verweist.
@@ -313,12 +310,12 @@ beim Bootloader angeben:
 {line-numbers=off,lang="text"}
     systemd.log_target=kmsg systemd.log_level=debug
 
-Damit landen die Fehlermeldungen im Kernelpuffer und können später mit dmesg
+Damit landen die Fehlermeldungen im Kernelpuffer und können später mit `dmesg`
 betrachtet werden.
 
-Systemd kann das System über die systemctl-Befehle `poweroff`, `halt` und
-`reboot` ausschalten, anhalten und neu starten.
-Mit `systemctl kexec` kann ich darüber hinaus direkt einen konfigurierten
+Über die systemctl-Befehle `poweroff`, `halt` und `reboot` kann systemd
+das System ausschalten, anhalten und neu starten.
+Mit `systemctl kexec` kann ich darüber hinaus direkt einen vorkonfigurierten
 Kernel vom laufenden Kernel starten lassen und so das System unter Umgehung
 von BIOS und Bootloader neu starten.
 
@@ -339,9 +336,9 @@ filtern:
     # journalctl /dev/sd?
 
 Bei einigen Distributionen, Fedora wäre zu nennen, kann Systemd bereits aus
-dem Initramfs starten und beim Herunterfahren von da wieder aktiv werden.
+dem Initramfs starten.
 
-Seit einiger Zeit kann man auch Timer-Units anlegen, die andere Units zu
+Seit einiger Zeit ist es möglich Timer-Units anzulegen, die andere Units zu
 bestimmten oder wiederkehrenden Zeitpunkten starten können.
-Damit kann Systemd die Aufgaben von `cron` und `at` übernehmen.
+Damit kann Systemd Aufgaben von `cron` und `at` übernehmen.
 
