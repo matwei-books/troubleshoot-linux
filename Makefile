@@ -43,7 +43,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch06.md \
                $(DROPBOXDIR)/ch06-erste-minute.md \
                $(DROPBOXDIR)/ch06-init-programme.md \
-               $(DROPBOXDIR)/cha-06-dienste.md \
+               $(DROPBOXDIR)/ch06-dienste.md \
                $(DROPBOXDIR)/ch06-zugriffsrechte.md \
                $(DROPBOXDIR)/cha-06-mount-probleme.md \
                $(DROPBOXDIR)/cha-07.md \
@@ -170,7 +170,7 @@ SOURCES = $(BOOK) \
           ch06.md \
           ch06-erste-minute.md \
           ch06-init-programme.md \
-          cha-06-dienste.md \
+          ch06-dienste.md \
           ch06-zugriffsrechte.md \
           cha-06-mount-probleme.md \
           cha-07.md \
@@ -290,7 +290,7 @@ CHAPTERS = \
     ch06.md \
     ch06-erste-minute.md \
     ch06-init-programme.md \
-    cha-06-dienste.md \
+    ch06-dienste.md \
     ch06-zugriffsrechte.md \
     cha-06-mount-probleme.md \
     cha-07.md \

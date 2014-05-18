@@ -1,32 +1,32 @@
 
 ## Ein Dienst startet nicht
 
-Der Rechner fährt hoch, ich kann mich anmelden, auf den ersten flüchtigen
+Der Rechner fährt hoch, ich kann mich anmelden, auf den ersten
 Blick scheint alles in Ordnung.
-Bis mich Nagios oder ein verärgerter Kunde darauf aufmerksam macht, dass
+Bis mich Nagios oder ein Kunde darauf aufmerksam macht, dass
 mindestens ein Dienst nicht funktioniert.
 
 Also noch einmal anmelden und den Dienst von Hand starten.
-Wie das genau geht, hängt von dem verwendeten `init` Dämon ab,
+Wie das genau geht, hängt vom `init` Dämon ab,
 darauf bin ich im vorigen Abschnitt eingegangen.
 
 A> Es gab eine Zeit in der es unter Administratoren als
-A> verdienstvoll galt, eine möglichst hohe Systemlaufzeit zu erreichen.
+A> verdienstvoll galt, eine hohe Systemlaufzeit zu erreichen.
 A> Laufzeiten von **x** mal hundert Betriebstagen waren keine Seltenheit.
 A> Ich gebe zu, das ich mich daran beteiligt habe.
 A> Für Einzelsysteme, die ständig benötigte Dienste anbieten, halte ich das
-A> heute noch für sinnvoll.
+A> noch heute für sinnvoll.
 A> 
-A> Die Gewichte verschieben sich jedoch, sobald man eine größere Anzahl
+A> Die Gewichte verschieben sich jedoch, sobald ich eine größere Anzahl
 A> von Systemen betreuen muss, und genügend Redundanz im Netz vorhanden ist,
 A> dass es auf das einzelne System nicht mehr so sehr ankommt.
 A> Dann ist wichtiger, dass das System schnell startet und vor allem
 A> vollständig, das heißt, mit allen definierten Diensten.
-A> Aus diesem Grund habe ich mir angewöhnt, Server häufiger neu zu starten
+A> Aus diesem Grund habe ich mir angewöhnt, Server häufiger zu starten
 A> und anschließend zu kontrollieren, ob alle Dienste verfügbar sind.
 A> 
-A> Bei dieser Gelegenheit kann ich gleich sehen, welchen Einfluss der Ausfall
-A> des konkreten Servers auf das Gesamtsystem hat.
+A> Bei dieser Gelegenheit kann ich auch sehen, welchen Einfluss der Ausfall
+A> dieses Servers auf das Gesamtsystem hat.
 
 ### Dienst läßt sich von Hand starten
 
@@ -36,8 +36,8 @@ Es bleibt jedoch die Ungewissheit, warum der Dienst nicht automatisch
 startete.
 
 Wenn ich keinen offensichtlichen Grund finde, warum ein Dienst nicht lief,
-also keine direkten Hinweise in den Logs finde und auch niemand den Dienst
-abgeschaltet hatte, muss ich denn Startvorgang des Dienstes beim
+also keine Hinweise in den Logs finde und auch niemand den Dienst
+abgeschaltet hatte, muss ich den Startvorgang des Dienstes beim
 Systemstart untersuchen.
 
 Lässt sich der Dienst problemlos von Hand starten, kommen folgende Gründe
@@ -51,12 +51,12 @@ in Frage:
 
 *   es gab ein Rechteproblem.
 
-Bei einem Problem mit einem fehlenden anderen Dienst muss ich
-mit der Reihenfolge experimentieren.
+Bei einem Problem mit einem fehlenden anderen Dienst experimentiere ich mit
+der Reihenfolge.
 
 Als erstes schalte ich die Protokollierung des Bootvorgangs ein.
 Bei Systemen, die auf Debian basieren und SysVInit verwenden kann ich
-dafür in der Datei */etc/default/rcS* die Variable `VERBOSE=yes` setzen..
+dafür in der Datei */etc/default/rcS* die Variable `VERBOSE=yes` setzen.
 
 Oft kann ich dann an Hand der Reihenfolge, in der die Dienste starten,
 schon sehen, was nicht in Ordnung ist.
@@ -109,19 +109,17 @@ als Werkzeuge zurück.
 
 Die Shell, mit der Option `-x` gestartet, zeigt jeden aufgerufenen Befehl, 
 und jede gesetzte Variable an.
-In den meisten Fällen kann ich dann schon sehen, was den Fehler
-verursacht.
+In den meisten Fällen sehe ich dann schon, was den Fehler verursacht.
 
 Reicht auch das nicht und ich weiß nur, welches Binärprogramm nicht
 richtig arbeitet, aber nicht warum, dann setze ich `strace` ein.
-Damit finde ich auch in schwierigen Fällen oft noch die Ursache eines
-Problems.
+Damit finde ich auch in schwierigen Fällen oft die Ursache eines Problems.
 In vielen Fällen ist es eine Datei, die sich nicht am erwarteten
 Platz befindet oder ein Problem mit Zugriffsrechten.
 
 Statt `strace` kann ich `ltrace` verwenden, das außer Systemaufrufen
 auch Bibliotheksaufrufe protokolliert und somit den Prozess noch
 detaillierter beobachtet.
-Dafür habe ich dann wiederum noch mehr Protokollzeilen auszuwerten, was
+Dafür muss ich dann mehr Protokollzeilen auswerten, was
 das Finden der relevanten Zeilen nicht einfacher macht.
 

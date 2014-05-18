@@ -34,6 +34,7 @@ ch05-kernel-panic.md
 ch06.md
 ch06-erste-minute.md
 ch06-init-programme.md
+ch06-dienste.md
 cha-07.md
 cha-08.md
 part3.md
