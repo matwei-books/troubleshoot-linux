@@ -35,6 +35,7 @@ ch06.md
 ch06-erste-minute.md
 ch06-init-programme.md
 ch06-dienste.md
+ch06-zugriffsrechte.md
 cha-07.md
 cha-08.md
 part3.md

@@ -13,13 +13,13 @@ Rolle von Dateien und Verzeichnissen nötig, wie im Grundlagenkapitel zu Linux
 gegeben.
 
 Ich beginne meine Betrachtungen mit der traditionellen benutzerbestimmten
-Zugriffskontrolle (discretionary access control, DAC) an und und komme danach
+Zugriffskontrolle (discretionary access control, DAC) und komme danach
 zu erweiterten Dateiattributen, Capabilities, AppArmor und SELinux.
 
 Allen Mechanismen für Zugriffskontrolle gemeinsam ist, dass in dem Moment
 die Zugriffsrechte geprüft, und gewährt oder verweigert werden,
-in dem ein Subjekt (ein Prozess) eine Aktion, wie zum Beispiel Lesen oder
-Schreiben, auf ein Objekt (eine Datei) anwenden will,
+in dem ein Subjekt - ein Prozess - eine Aktion, wie zum Beispiel Lesen oder
+Schreiben, auf ein Objekt - eine Datei - anwenden will,
 
 ### Traditionelle Unix-Dateirechte
 
@@ -33,67 +33,73 @@ des Prozesses.
 
 #### Grundlegende Rechte
 
-Das Leserecht (**r**, read) bedeutet für reguläre und Gerätedateien, dass
-Daten aus dieser gelesen werden dürfen. Für Verzeichnisse bedeutet es, dass
-diese aufgelistet werden dürfen.
+Mit dem Leserecht (**r**, read) darf ein Prozess Daten aus regulären und
+Gerätedateien lesen und Verzeichnisse auflisten.
 
-Das Schreibrecht (**w**, write) bedeutet für reguläre Dateien und
-Gerätedateien, dass Daten dorthin geschrieben werden dürfen.
-Bei Verzeichnissen bedeutet es, dass Einträge neu angelegt beziehungsweise
-entfernt werden dürfen, unabhängig von den Rechten der Datei, auf die
+Hat ein Prozess das Schreibrecht (**w**, write), darf er Daten in reguläre
+Dateien und Gerätedateien schreiben.
+Bei Verzeichnissen bedeutet es, dass er Einträge neu anlegen beziehungsweise
+entfernen darf, unabhängig von den Rechten der Datei, auf die
 der betreffende Eintrag verweist.
-Somit ist es möglich, eine Datei zu löschen oder umzubenennen, auf die man
-keine Schreib- oder Leserechte besitzt.
-Das ist auch einsichtig, wenn man sich vor Augen hält, dass ein
+Somit ist es möglich, eine Datei zu löschen oder umzubenennen, auf die ein
+Prozess keine Schreib- oder Leserechte besitzt.
+Das wird klar, wenn ich mir vor Augen halte, dass ein
 Verzeichniseintrag nichts weiter ist, als ein Name für und ein Verweis auf
-eine Datei und nur insofern die Eigenschaften einer Datei beeinflusst, dass im
-Inode gezählt wird, wie viele Verweise auf eine Datei es gibt.
-Erst, nachdem der letzte Verweis entfernt wurde, wird der von der Datei
-belegte Speicherplatz wirklich freigegeben.
+eine Datei und nur insofern die Eigenschaften der Datei beeinflusst als im
+Inode gezählt wird, wie viele Verweise auf die Datei es gibt.
+Erst, nachdem der letzte Verweis entfernt wurde, gibt der Kernel den von der
+Datei belegten Speicherplatz wirklich frei.
 
-Das Ausführrecht (**x**, execute) bei einer regulären Datei bedeutet, dass sie
-von einem Prozess ausgeführt werden kann.
+Das Ausführrecht (**x**, execute) bei einer regulären Datei bedeutet, dass
+ein Prozess sie ausführen kann.
 Dabei ist bei einer Binärdatei nicht einmal das Leserecht auf diese Datei nötig.
-Bei einem ausführbaren Skript benötige ich das Leserecht, da der
+Bei einem ausführbaren Skript benötigt der Prozess das Leserecht, da der
 Skript-Interpreter die Datei lesen muss, um ihr Programm abzuarbeiten.
-Bei einem Verzeichnis bedeutet das **x** Bit, dass ich in das Verzeichnis
-wechseln und darin verzeichnete Dateien benutzen darf.
-Dafür brauche ich kein Leserecht, wenn ich den Namen der Datei kenne.
+Bei einem Verzeichnis bedeutet das **x** Bit, dass der Prozess in das
+Verzeichnis wechseln und darin verzeichnete Dateien benutzen darf.
+Dafür braucht er kein Leserecht, wenn er den Namen der Datei kennt.
 
 #### Sonderrechte
 
 Zusätzlich zu den Standardrechten gibt es drei Bits für Sonderrechte.
 
-Das *setuid* Bit bei einer ausführbaren Datei bedeutet, dass diese nicht
-unter der UID des aufrufenden Prozesses, sondern unter der der Datei
-ausgeführt wird.
+Bei einer ausführbaren Datei mit gesetztem  *setuid* Bit ändert sich die UID
+des ausführenden Prozesses zu der der Datei.
 
 Das *setgid* Bit bei einem Verzeichnis bewirkt, dass in diesem Verzeichnis
 neu angelegte Dateien automatisch der Gruppe des Verzeichnisses anstelle der
 aktiven Gruppe des erzeugenden Prozesses zugeordnet werden.
 
-Das *sticky* Bit bewirkt bei einem Verzeichnis, dass Dateien in diesem
-Verzeichnis nur von ihrem Eigentümer oder *root* gelöscht werden dürfen.
-Bei einer ausführbaren Datei bewirkte es früher, dass der Programmcode nach
-der Ausführung im Hauptspeicher verblieb. 
+In Verzeichnissen mit gesetztem  *sticky* Bit dürfen nur *root* oder der
+Eigentümer einer Datei diese löschen.
+Dieses Bit ist üblicherweise beim */tmp/* Verzeichnis gesetzt:
+
+{line-numbers=off,lang="text"}
+    $ ls -ld /tmp/
+    drwxrwxrwt 16 root root 12288 Mai 21 08:17 /tmp/
+
+Bei einer ausführbaren Datei bewirkte das *sticky* Bit früher, dass der
+Programmcode nach der Ausführung im Hauptspeicher verblieb. 
 Das brachte Vorteile bei Programmen, die sehr häufig benutzt wurden und dann
 nicht mehr jedesmal von der Platte geladen werden mussten.
 Bei modernen Systemen ist das obsolet.
 
 #### Einschränkungen
 
-Die Zugriffsrechte können durch Optionen beim Einhängen des Dateisystems
-eingeschränkt sein. Diese kann ich mit dem Befehl `mount` ohne Parameter
-anzeigen lassen.
+Ich kann die Zugriffsrechte durch Optionen beim Einhängen des Dateisystems
+einschränken.
+Diese Einschränkungen kann ich mit dem Befehl `mount` ohne Parameter anzeigen
+lassen.
 
 Die Option *noexec* bewirkt, dass das **x** Bit keinen Effekt hat.
-Damit gekennzeichnete Dateien kann ich nicht einfach durch Angabe ihres Pfades
-starten.
+Damit gekennzeichnete Dateien kann ich nun nicht einfach durch Angabe ihres
+Pfades starten.
 
 Die Option *nosuid* bewirkt, dass das **setuid** Bit keinen Effekt hat.
-Dateien werden immer mit der UID des aufrufenden Prozesses ausgeführt.
+Auch diese Dateien werden dann immer mit der UID des aufrufenden Prozesses
+ausgeführt.
 
-#### Programme zum Ansehen und Bearbeiten der Zugriffsrechte
+#### Ansehen und Bearbeiten der Zugriffsrechte
 
 Um die traditionellen Zugriffsrechte einer Datei anzusehen kann ich das
 Programm `ls` mit der Option `-l` verwenden:
@@ -108,6 +114,9 @@ Programm `ls` mit der Option `-l` verwenden:
 
 Das Programm zeigt mir in der ersten Spalte den Typ und die Rechte der Datei
 an, in der dritten Spalte den Eigentümer und in der vierten die Gruppe.
+
+Mit dem Programm `id` kann ich die UID und GIDs meiner Shell ermitteln.
+Das Programm `ps` zeigt mir diese für beliebige Prozesse an.
 
 Um den Eigentümer einer Datei zu ändern, verwende ich das Programm *chown*.
 Diese Operation ist nur *root* erlaubt, da alle anderen Benutzer
@@ -151,7 +160,7 @@ Ich gehe hier nur auf die wichtigsten für die Fehlersuche ein.
 
 Bei Dateien mit dem Attribut `a` kann ich den vorhandenen Text nicht
 verändern, sondern lediglich neuen Text hinzufügen.
-Dieses Attribut ist damit eine gute Wahl für Logdateien.
+Dieses Attribut ist eine gute Wahl für Logdateien.
 
 Dateien mit dem Attribut `c` werden komprimiert auf der Platte abgelegt.
 Das ist im Normalbetrieb nicht weiter von Belang.
@@ -163,13 +172,13 @@ Dateien mit dem Attribut `i` kann ich nicht ändern, löschen oder umbenennen.
 Ich kann keinen zusätzlichen Link anlegen und den Dateiinhalt nicht
 ändern.
 
-Bei Dateien mit dem Attribut `s` werden beim Löschen alle Blöcke mit `0x0`
-überschrieben und diese vor dem Löschen der Datei auf die Platte
-zurückgeschrieben.
-Das heißt, diese Dateien sind nicht wiederherstellbar.
+Bei Dateien mit dem Attribut `s` überschreibt der Kernel beim Löschen alle
+Blöcke mit `0x0` und schreibt diese vor dem Löschen der Datei auf die Platte
+zurück.
+Das heißt, ich kann diese Dateien nicht wiederherstellen.
 Bei sensiblen Daten würde ich mich jedoch nicht darauf verlassen,
 da mitunter die Elektronik des
-Speichermediums Sektoren vor dem Betriebssystem verbirgt und damit meine
+Speichermediums Sektoren vor dem Betriebssystem verbirgt und meine
 Anstrengungen, eine Datei sicher zu löschen, zunichte macht.
 
 Demgegenüber werden bei Dateien mit dem Attribut `u` beim Löschen Inode
@@ -177,8 +186,8 @@ und Dateiblöcke explizit vor weiterer Verwendung geschützt, so dass die
 Datei auch bei intensiver Plattennutzung wieder gerettet werden kann.
 
 Bei Dateien mit dem Attribut `t` gibt es kein *tail merge*.
-Beim *Tail-Merging* wird der freie Platz im letzten Dateiblock für mehrere
-Dateien in einem gemeinsamen Block verwendet.
+Beim *Tail-Merging* werden die Daten des letzten Dateiblocks für mehrere
+Dateien in einen gemeinsamen Block geschrieben.
 Damit kann zum Beispiel der Bootlader LILO nicht umgehen.
 Mit dem Attribut `t` für die Datei des Kernel-Images wird Tail-Merging
 unterdrückt und es gibt keine Probleme mit dem Bootlader.
@@ -246,8 +255,6 @@ inheritable Kennzeichen der einzelnen Capabilities. Dann setzt es das
 Effective Set des Prozesses für die Capabilities, die im Permitted Set des
 Prozesses enthalten sind.
 
-Für Details verweise ich auf den Web-Artikel von Chris Friedhoff.
-
 #### Was muss ich tun?
 
 Kommen wir zum praktischen Teil, am Beispiel von *ping*.
@@ -259,7 +266,7 @@ Nachdem ich das SUID-Bit entfernt habe, funktioniert das Programm nicht mehr:
     $ ping -c1 localhost
     ping: icmp open socket: Operation not permitted
 
-Die Ursache wird mir hier schon angegeben, *strace* zeigt es noch einmal
+Die Fehlermeldung zeigt mir schon die Ursache, *strace* macht es noch einmal
 deutlich:
 
 {line-numbers=off,lang="text"}
@@ -298,9 +305,9 @@ Kennzeichen *inheritable*:
 
 Da die File-Capability mit dem Kennzeichen *inheritable* nur wirkt, wenn
 auch der Prozess das Kennzeichen *inheritable* für
-diese Capability besitzt, fehlen mir nun die nötigen Rechte.
+diese Capability besitzt, fehlen mir die nötigen Rechte.
 
-Diese kann ich zum Beispiel beim Login am System, oder mit `su`
+Diese kann ich beim Login am System, oder mit `su`
 bekommen, wenn ich *libpam-cap* installiert habe.
 Für `su` füge ich die folgende Zeile in */etc/pam.d/su* ein
 
@@ -384,8 +391,7 @@ es aktiv ist:
 
 AppArmor beschränkt nur Anwendungen, für die Profile definiert sind.
 Falls AppArmor nicht aktiviert ist oder keine Profile geladen sind, kann ich
-in den meisten Fällen davon ausgehen, dass die Probleme nicht von AppArmor
-verursacht werden.
+davon ausgehen, dass das Problem nicht von AppArmor verursacht wird.
 
 #### Nachrichten im Logfile
 
@@ -427,7 +433,7 @@ Um den Audit-Modus zu ändern, schreibe ich den gewünschten Modus in die Datei:
 AppArmor prüft nur Tasks (Prozesse), für die es ein Profil gibt.
 Dabei kennt es vier Modi:
 
-*   **Enforce mode** - nur Statusereignisse (Laden von Profilen, ...) und
+*   **Enforce mode** - nur Statusereignisse und
       abgewiesene Ereignisse erzeugen Audit-Nachrichten.
 
 *   **Complain mode** - wie *Enforce Mode*, außer dass es den Nachrichtentyp
@@ -445,17 +451,16 @@ Profile können Kennzeichen (Flags) enthalten, die das Audit beeinflussen.
 
 *   **Deny rule** - jedes passende Ereignis zu einer Regel, die diesen Präfix
       enthält, wird ohne Protokollnachricht abgewiesen.
-      Das setzt man ein, wenn
-      die abgewiesenen Ereignisse bekannt sind und nicht die Systemlogs
-      vollschreiben sollen.
+      Das setze ich ein, wenn ich die abgewiesenen Ereignisse kenne und nicht
+      in den Systemlogs sehen will.
 
 *   **Audit rule** - mit diesem Präfix werden die zur Regel passenden
       Ereignisse protokolliert.
 
 #### Beschränkungen eines Prozesses untersuchen
 
-Wenn ich ein Problem mit AppArmor untersuche, schaue ich zunächst, ob der
-betreffende Prozess überhaupt von AppArmor beschränkt wird.
+Wenn ich ein Problem mit AppArmor untersuche, schaue ich zunächst, ob AppArmor
+den betroffenen Prozess überhaupt beschränkt.
 Das kann ich entweder mit `ps` machen oder indem ich mir die entsprechenden
 Attribute des Prozesses im *proc* Dateisystem anschaue:
 
@@ -483,7 +488,7 @@ Dieses interaktive Programm durchsucht die Protokolldatei und schlägt bei
 unbekannten AppArmor-Ereignissen Änderungen am jeweiligen Profil vor.
 Am Ende schreibt es die Änderungen in die Profildatei und lädt die
 geänderten Profile neu.
-Nötigenfalls werden die Profile laufender Prozesse aktualisiert.
+Falls nötig, aktualisiert es die Profile laufender Prozesse.
 
 Alternativ kann ich die Profildatei unter */etc/apparmor.d/* mit einem Editor
 direkt bearbeiten und mit
@@ -500,7 +505,7 @@ weniger Rechten wieder hinzuzufügen und dann den Prozess neu zu starten.
 
 #### Profile in den Beschwerdemodus setzen
 
-Wenn ich ein Profil gerade nicht anpassen kann, kann ich es
+Wenn ich ein Profil im Moment nicht anpassen kann, kann ich es
 in den Beschwerdemodus setzen.
 Entweder zeitweilig, bis zum Reboot:
 
@@ -525,7 +530,7 @@ Richtlinien und Regeln vorgegeben.
 
 SELinux besteht aus einem Kernelmodul, unterstützenden Werkzeugen und
 Konfigurationsdateien.
-Damit kann man die Zugriffskontrolle sehr feinkörnig einstellen.
+Damit kann ich die Zugriffskontrolle sehr feinkörnig einstellen.
 SELinux funktioniert dabei völlig unabhängig von den traditionellen
 Benutzernamen und Gruppen.
 
@@ -551,25 +556,6 @@ auf dem betrachteten System:
     Mode from config file:          permissive
     Policy version:                 24
     Policy from config file:        default
-
-Bei einem konkreten Problem bekomme ich erste Hinweise durch eine
-Kontextabfrage:
-
-{line-numbers=off,lang="text"}
-    $ ls -Z /etc/fstab 
-    system_u:object_r:etc_t:s0 /etc/fstab
-    $ ps -Z
-    LABEL                             PID TTY    TIME CMD
-    unconfined_u:unconfined_r:unconfined_t:s0-s0:\
-    c0.c1023 1215 pts/0 00:00:00 bash
-    unconfined_u:unconfined_r:unconfined_t:s0-s0:\
-    c0.c1023 1359 pts/0 00:00:00 ps
-    $ id
-    uid=1000(mathias) gid=1000(mathias) \
-    Gruppen=1000(mathias),4(adm),24(cdrom),25(floppy),\
-    27(sudo),29(audio),30(dip),44(video),46(plugdev) \
-    Kontext=unconfined_u:unconfined_r:unconfined_t:\
-    s0-s0:c0.c1023
 
 #### Betriebsmodi
 
@@ -599,7 +585,7 @@ Richtlinien und Regeln überhaupt kein Arbeiten mehr erlauben.
 
 #### Konzepte
 
-Eine Richtlinie (Policy) als Grundkonzept von SELinux ist eine Sammlung von
+Eine Richtlinie (Policy) ist eine Sammlung von
 Vereinbarungen und Regeln, die dem SELinux-Kern sagen, was erlaubt ist, was
 nicht und wie er sich in verschiedenen Situationen verhalten soll.
 
@@ -616,6 +602,22 @@ policy*).
 Das zweite wichtige Konzept bei SELinux ist der Kontext.
 Jeder Prozess und Socket, jede Datei und Pipe ist mit einem Kontext markiert,
 den ich zum Beispiel mit `ps -Z`, oder `ls -Z` erfragen kann.
+
+{line-numbers=off,lang="text"}
+    $ ls -Z /etc/fstab 
+    system_u:object_r:etc_t:s0 /etc/fstab
+    $ ps -Z
+    LABEL                             PID TTY    TIME CMD
+    unconfined_u:unconfined_r:unconfined_t:s0-s0:\
+    c0.c1023 1215 pts/0 00:00:00 bash
+    unconfined_u:unconfined_r:unconfined_t:s0-s0:\
+    c0.c1023 1359 pts/0 00:00:00 ps
+    $ id
+    uid=1000(mathias) gid=1000(mathias) \
+    Gruppen=1000(mathias),4(adm),24(cdrom),25(floppy),\
+    27(sudo),29(audio),30(dip),44(video),46(plugdev) \
+    Kontext=unconfined_u:unconfined_r:unconfined_t:\
+    s0-s0:c0.c1023
 
 Der Kontext ist unabhängig von der traditionellen UNIX-UID oder -GID.
 Programme mit gesetztem SUID-Bit, `su` oder `sudo` ändern den Kontext
@@ -648,12 +650,11 @@ beim Einhängen mit `mount`.
 
 #### Informationen zu verweigerten Zugriffen finden
 
-Die wichtigste Eigenschaft von SELinux ist, dass es alle Aktionen protokollieren
-kann.
-Damit ist wirklich alles gemeint, also sowohl genehmigte Aktionen als auch
-abgewiesene Aktionen.
+Die wichtigste Eigenschaft von SELinux ist, dass es alle Aktionen
+protokolliert, sowohl genehmigte als auch abgewiesene Aktionen.
 Im laufenden Betrieb ist es in den meisten Fällen nicht notwendig, jede
 einzelne Aktion zu protokollieren, die genehmigten sind meist uninteressant.
+Mit `dontaudit` kann ich diese von der Protokollierung ausnehmen.
 
 Wo ich die Protokolle von SELinux finde, hängt von der benutzten Distribution
 ab, meist finde ich sie unterhalb von */var/log/*.
@@ -671,22 +672,22 @@ behalten:
     Diese Ablehnungen kann ich in den Regeln durch `dontaudit` Anweisungen
     von der Protokollierung ausnehmen.
 
-2.  Ablehnungen werden protokolliert, wenn sie auftreten.
-    Das bedeutet, dass ich jede Menge davon sehen werde, von denen viele nichts
+2.  Ich werde jede Menge Ablehnungen sehen, von denen viele nichts
     mit dem Problem zu tun haben, das ich gerade untersuche.
 
 3.  Wenn zu viele Ablehnungen hintereinander kommen, kann es vorkommen, dass
     der Linux-Kernel einige unterdrückt.
     Wenn das passiert taucht eine Nachricht auf, die angibt wie viele
     Meldungen unterdrückt wurden.
-    Das heißt, dass ich im Log nicht alles finde, was SELinux gemeldet hat.
+    Das heißt dann, dass ich im Log vielleicht nicht alles finde, was SELinux
+    gemeldet hat.
 
 #### Logeinträge untersuchen
 
-In den SELinux-Tutorials im Gentoo Wiki findet sich eine gute
+In den SELinux-Tutorials im Gentoo Wiki findet sich eine ausführliche
 [Anleitung zur Auswertung der SELinux Protokolle](https://wiki.gentoo.org/wiki/SELinux/Tutorials/Where_to_find_SELinux_permission_denial_details).
 
-Betrachten wir als Beispiel eine Ablehnung im *audit.log* des Audit-Dämons,
+Betrachten wir eine Ablehnung im *audit.log* des Audit-Dämons,
 die ich am Text `type=AVC` am Zeilenanfang erkenne:
 
 {line-numbers=off,lang="text"}
@@ -725,7 +726,7 @@ Die einzelnen Teile bedeuten:
 *   denied
 
     Wie SELinux entschieden hat, entweder *denied* oder *granted*.
-    Im permissive Mode steht hier ein *denied*, auch wenn die Operation dann
+    Im permissive Mode steht hier ein *denied*, auch wenn die Operation
     ausgeführt wurde.
 
 *   `{ execute }`
@@ -745,7 +746,7 @@ Die einzelnen Teile bedeuten:
 *   path="/lib/i686/cmov/libc-2.11.3.so"
 
     Die Zieldatei der Operation.
-    Dazu muss man wissen, dass
+    Dazu muss ich wissen, dass
     */lib/i686/cmov/libc-2.11.3.so* die Standard-C-Bibliothek ist, die das
     Programm *hello* als eine der ersten öffnet und mit *mmap()* und dem
     Argument `PROT_EXEC` in seinen Speicherbereich einblenden will.
@@ -766,7 +767,7 @@ Die einzelnen Teile bedeuten:
 
 *   scontext=unconfined_u:unconfined_r:haifux_t:s0-s0:c0.c1023
 
-    Der Quellcontext (*source context*) des Prozesses (die Domain).
+    Der Quellcontext (*source context*) des Prozesses, die Domain.
 
 *   tcontext=system_u:object_r:lib_t:s0 tclass=file
 
@@ -776,7 +777,7 @@ Die einzelnen Teile bedeuten:
 #### Versteckte Ablehnungen
 
 Ich hatte schon angedeutet, dass ich Ablehnungen, welche
-normalerweise nicht das Verhalten einer Anwendung beeinflussen, mit `dontaudit`
+das Verhalten einer Anwendung nicht beeinflussen, mit `dontaudit`
 Anweisungen von der Protokollierung ausnehmen kann.
 
 Sollte ich bei meiner Fehlersuche den Verdacht haben, dass eine dieser

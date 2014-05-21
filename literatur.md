@@ -254,6 +254,14 @@ analysieren kann, wenn man mit einfachen Methoden nicht weiter kommt.
 
 ## Online-Quellen
 
+#### AppArmor {#bib-www-apparmor}
+Die Seiten des AppArmor-Projekts.  
+<http://apparmor.net/>  
+Aufgerufen: 2014-05-21
+
+Bei der Dokumentation finden sich Handbuchseiten, HowTos, Tutorials und eine
+Anleitung, wie man bestimmt, ob AppArmor ein Problem verursacht.
+
 #### Bullet Journal {#bib-www-bulletjournal}
 For the list-makers, the note-takers, the Post-It note pilots, the
 track-keepers, and the dabbling doodlers.  
@@ -308,6 +316,14 @@ Aufgerufen: 2013-12-20
 
 Dieser Artikel, 2008 geschrieben, führt mit praktischen Beispielen in den
 Umgang mit POSIX Capabilities ein.
+
+#### SELinux
+Die Projektseite des SELinux-Projektes.  
+<http://selinuxproject.org/>  
+Aufgerufen: 2014-05-21
+
+Von grundlegenden Konzepten bis anwendbaren Rezepten findet sich hier eine
+Menge Information zu SELinux
 
 #### Wayback Machine {#bib-www-waybackmachine}
 Internet Archive Wayback Machine  
