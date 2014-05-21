@@ -37,8 +37,8 @@ ch06-init-programme.md
 ch06-dienste.md
 ch06-zugriffsrechte.md
 ch06-mount-probleme.md
-cha-07.md
-cha-07-cpu.md
+ch07.md
+ch07-cpu.md
 cha-07-ram.md
 cha-07-io.md
 cha-08.md
