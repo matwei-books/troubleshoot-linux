@@ -279,6 +279,14 @@ Aufgerufen: 2014-05-03
 Die Quelle für RFCs und Internet Standards von der Internet Engineering Task
 Force.
 
+#### Perf Wiki
+Linux profiling with performance counters  
+<https://perf.wiki.kernel.org/>  
+Aufgerufen: 2014-05-22
+
+In diesem Wiki finden sich viele nützliche Informationen für die
+Performanceanalyse mittels CPU Performance Counter und `perf`.
+
 #### Leanpub {#bib-www-leanpub}
 Leanpub - Publish Early, Publish Often  
 <https://leanpub.com/>  

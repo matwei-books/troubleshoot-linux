@@ -2,7 +2,7 @@
 ## Engpass CPU
 
 Habe ich festgestellt, dass die CPU den Engpass des Systems bildet, dann will
-ich als nächstes wissen, was sie da gerade macht.
+ich als nächstes wissen, was sie gerade macht.
 Mit `vmstat` habe ich nicht nur herausbekommen, dass die CPU bremst, sondern
 auch, ob sie mehr im Userland, das heißt mit dem Code des Benutzerprogramms
 und den Bibliotheken, oder mehr im Systembereich, also mit dem Kernelcode,
@@ -32,7 +32,7 @@ Mit `ps` sortiere ich die Prozesse wie folgt:
 
 Habe ich im Moment keine Möglichkeit, weitere Dienste zu beenden, kann ich mit
 `renice` den Scheduler anweisen, bestimmte Prozesse höher oder niedriger zu
-priorisieren, so dass sie mehr oder weniger Rechenzeit zugeteilt bekommen.
+priorisieren, so dass er diesen mehr oder weniger Rechenzeit zuteilt.
 
 Langfristig kann ich mit Systemaccounting den Ressourcenbedarf der einzelnen
 Programme festhalten und diesen für weitere Entscheidungen heranziehen.
@@ -47,10 +47,18 @@ diese Weise mit zum Problem bei.
 
 Einige Programme lassen sich so konfigurieren, dass sie weniger Ressourcen
 verbrauchen.
-Da ich hier dazu keine allgemeinen Hinweise geben kann, verweise ich auf die
+Da ich dazu keine allgemeinen Hinweise geben kann, verweise ich auf die
 Dokumentation der entsprechenden Software.
 Ist das nicht möglich, kann ich das Programm vielleicht durch ein anderes
 ersetzen, welches weniger Ressourcen benötigt.
+
+Bei modernen Prozessoren habe ich oft die Möglichkeit, die Taktfrequenz der
+CPU per Software zu manipulieren.
+Falls die CPU momentan nicht mit der maximal möglichen Taktfrequenz arbeitet,
+kann ich diese mit den *cpufrequtils* bei einem Engpass kurzfristig anheben.
+Das Programm `cpufreq-info` zeigt mir Informationen zur aktuellen und zu
+einstellbaren Taktfrequenzen.
+Mit `cpufreq-set` ändere ich die Einstellungen.
 
 Schließlich habe ich noch die Möglichkeit, durch Hardware-Erweiterungen das
 System zu beschleunigen.
@@ -63,7 +71,7 @@ konfigurierte Systeme nehmen und die Last zwischen diesen aufteilen, ich
 kann die verschiedenen Teilaufgaben auf verschiedene Maschinen verteilen, zum
 Beispiel eine Maschine für die Verschlüsselung, eine für die Anwendung und
 eine für die Datenbank. Und natürlich kann ich beide Formen gleichzeitig
-verwenden und je nach Bedarf mischen.
+verwenden und mischen.
 
 ### Performance Monitoring Unit der CPU
 
