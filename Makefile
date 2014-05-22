@@ -48,7 +48,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch06-mount-probleme.md \
                $(DROPBOXDIR)/ch07.md \
                $(DROPBOXDIR)/ch07-cpu.md \
-               $(DROPBOXDIR)/cha-07-ram.md \
+               $(DROPBOXDIR)/ch07-ram.md \
                $(DROPBOXDIR)/cha-07-io.md \
                $(DROPBOXDIR)/cha-08.md \
                $(DROPBOXDIR)/cha-08-acct.md \
@@ -175,7 +175,7 @@ SOURCES = $(BOOK) \
           ch06-mount-probleme.md \
           ch07.md \
           ch07-cpu.md \
-          cha-07-ram.md \
+          ch07-ram.md \
           cha-07-io.md \
           cha-08.md \
           cha-08-acct.md \
@@ -295,7 +295,7 @@ CHAPTERS = \
     ch06-mount-probleme.md \
     ch07.md \
     ch07-cpu.md \
-    cha-07-ram.md \
+    ch07-ram.md \
     cha-07-io.md \
     cha-08.md \
     cha-08-acct.md \

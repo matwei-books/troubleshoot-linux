@@ -39,7 +39,7 @@ ch06-zugriffsrechte.md
 ch06-mount-probleme.md
 ch07.md
 ch07-cpu.md
-cha-07-ram.md
+ch07-ram.md
 cha-07-io.md
 cha-08.md
 cha-08-acct.md
