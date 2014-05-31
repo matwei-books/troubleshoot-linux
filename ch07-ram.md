@@ -3,30 +3,28 @@
 
 Wenn ich mit den Programmen `free`, `vmstat` oder interaktiv mit `top`
 herausbekommen habe, dass der Hauptspeicher momentan der Flaschenhals des
-Systems ist, muss ich nun herausfinden, was konkret den gesamten Hauptspeicher
+Systems ist, will ich nun herausfinden, was konkret den gesamten Hauptspeicher
 aufbraucht und was ich dagegen unternehmen kann.
 
 Um ein Programm in einem Prozess abzuarbeiten, kopiert der Kernel es zuvor
-aus dem Dateisystem in den RAM. Dabei werden nur die Teile, die gerade
-aktuell abgearbeitet werden sollen und nicht das komplette Programm
-kopiert.
+aus dem Dateisystem in den RAM.
+Dabei kopiert er nur die Speicherseiten, die als nächstes abgearbeitet werden
+sollen und nicht das komplette Programm.
 Das gleiche Programm, wenn es in verschiedenen Prozessen abläuft,
-wird auch nur einmal kopiert, lediglich den Stack und
-den Heap hat jeder Prozess für sich persönlich.
-Es ist ratsam, nach Programmen mit wenig Speicherbedarf Ausschau zu halten.
-Auch ist es von Vorteil, wenn ein Programm, wie *busybox* so viele andere
-wie möglich ersetzt, weil es von vielen Prozessen verwendet werden
-und so Speicherplatz im RAM und im Dateisystem sparen kann.
+wird nur einmal kopiert, lediglich den Stack und
+den Heap hat jeder Prozess für sich allein.
+Ein Programm, wie *busybox*, dass viele andere Programme ersetzen kann,
+spart Speicherplatz im RAM und im Dateisystem.
 
-Weiteren RAM benötige ich für Overlay-Dateisysteme, *tmpfs*
-oder *loopback*-Mounts.
+Für Overlay-Dateisysteme, *tmpfs* oder *loopback*-Mounts benötige ich
+weiteren RAM.
 Dieser Speicher steht den Prozessen nicht als Arbeitsspeicher zur
 Verfügung.
 
 Schließlich verwendet der Kernel den Speicher, der noch nicht für oben
 genannte Zwecke verwendet wurde, als Pufferspeicher für Dateizugriffe.
-Darum muss ich mich nicht kümmern, da dieser
-Speicher automatisch freigegeben und für andere Zwecke verwendet wird.
+Darum muss ich mich nicht kümmern, da der Kernel diesen
+Speicher automatisch freigibt und für andere Zwecke verwendet.
 
 Der Hauptspeicher der X86-Rechnerarchitektur wird in drei Bereiche
 unterteilt:
@@ -68,38 +66,38 @@ Dateizugriffe.
 
 Mit dem Programm `top` kann ich einzelne Prozesse, die besonders viel
 Speicher verbrauchen, näher eingrenzen.
-Es liefert im Kopf eine Übersicht über die Prozesse, die CPU-Last und den
-Gesamtspeicherverbrauch und darunter eine Tabelle mit den Daten
+Es liefert in den Kopfzeilen eine Übersicht über die Prozesse, die CPU-Last
+und den Gesamtspeicherverbrauch und darunter eine Tabelle mit den Daten
 einzelner Prozesse.
-Die Ausgabe wird kontinuierlich aktualisiert und kann modifiziert werden.
+Die Ausgabe wird laufend aktualisiert und lässt sich anpassen.
 Mit `?` erhalte ich eine Hilfeseite über die möglichen Modifikationen.
 Mich interessiert in diesem Fall die Sortierung nach Speicherverbrauch,
 die ich durch Eingabe von `m` bekomme.
 
 ![top - sortiert nach Speicherbedarf](images/top-sorted-by-mem.png)
 
-Für die Speicheranalyse sind hier vor allem vier Spalten interessant
+Für die Speicheranalyse interessieren mich vor allem vier Spalten:
 
 VIRT
 : steht für die virtuelle Größe des Prozesses.
   Diese setzt sich zusammen aus dem eingeblendeten Speicher, in den
-  Adressbereich eingeblendeten Dateien und Speicher, der mit anderen Prozessen
-  geteilt wird.
+  Adressbereich eingeblendeten Dateien und Speicher, den der Prozess
+  mit anderen teilt.
   Mit anderen Worten, der Speicher auf den ein Prozess gerade Zugriff hat.
   Darin ist auch der ausgelagerte Speicher enthalten.
 
 RES
 : steht für *resident size*, den physischen Speicher, den der Prozess belegt.
-  Dieser wird für die *%MEM* Spalte herangezogen.
+  Dieser geht in die Berechnung der *%MEM* Spalte ein.
 
 SHR
-: ist der Anteil von *VIRT*, der mit anderen Prozessen geteilt werden kann.
+: ist der Anteil von *VIRT*, den der Prozess mit anderen teilen kann.
 
 %MEM
 : ist der prozentuale Anteil eines Prozesses am verfügbaren physischen Speicher.
 
-Mit dem Programm *ps* kann ich einen Schnappschuss des momentanen
-Speicherverbrauchs aller Prozesse bekommen:
+Mit dem Programm *ps* bekomme ich einen Schnappschuss des momentanen
+Speicherverbrauchs aller Prozesse:
 
 {line-numbers=off,lang="bash"}
     $ ps aux
@@ -108,7 +106,8 @@ Speicherverbrauchs aller Prozesse bekommen:
     ...
     mathias 9042  0.0  0.3 2344   904 ...ps aux
 
-Um die größten Speicherverbraucher zu finden, sortiere ich nach Spalte 6, RSS:
+Um die Prozesse mit dem größten Speicherverbrauch zu finden,
+sortiere ich nach Spalte 6, RSS:
 
 {line-numbers=off,lang="bash"}
     $ ps aux|sort -n -k6 -r |head
@@ -124,8 +123,8 @@ Um die größten Speicherverbraucher zu finden, sortiere ich nach Spalte 6, RSS:
     root     220  0.0  0.2 2252   720 ...udevd --daemon
 
 Für die Speicheranalyse interessieren mich die Spalten *VSZ* (virtual set
-size), *RSS* (resident set size) und *PID* (process id). Die letztere,
-um damit den betreffenden Prozess mit *pmap* genauer zu untersuchen:
+size), *RSS* (resident set size) und *PID* (process id). Die PID,
+um damit den Prozess mit *pmap* zu untersuchen:
 
 {line-numbers=off,lang="bash"}
     $ sudo pmap -d 1031
@@ -151,15 +150,15 @@ teilt.
 
 ### Swappiness
 
-Falls, trotz aller Bemühungen, Speicher ausgelagert werden muss,
-kann ich ab Kernel 2.6 zumindest darauf Einfluss zu
-nehmen, ob der Kernel eher Prozesse und Daten auslagert (*swapping*),
+Falls, trotz aller Bemühungen, der Speicher im System knapp wird,
+kann ich ab Kernel 2.6 zumindest darauf Einfluss nehmen, ob der Kernel eher
+Prozesse und Daten auslagert (*swapping*),
 oder eher die Caches verkleinert, wenn der Speicher zur Neige geht.
 Das geht mit dem Parameter *Swappiness*, der als Zahl von 0 .. 100
 eingestellt wird. Dabei bedeutet 100, das der Kernel eher auslagert und
 0, dass der Cache sehr klein werden kann. Die Standardeinstellung ist
-60, für Laptops wird ein Wert kleiner oder gleich 20 empfohlen. Dieser
-Parameter kann zur Laufzeit geändert werden:
+60, für Laptops wird ein Wert kleiner oder gleich 20 empfohlen. Diesen
+Parameter kann ich zur Laufzeit ändern:
 
 {line-numbers=off,lang="bash"}
     # sysctl -w vm.swappiness = 30
