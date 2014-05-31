@@ -49,7 +49,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch07.md \
                $(DROPBOXDIR)/ch07-cpu.md \
                $(DROPBOXDIR)/ch07-ram.md \
-               $(DROPBOXDIR)/cha-07-io.md \
+               $(DROPBOXDIR)/ch07-io.md \
                $(DROPBOXDIR)/cha-08.md \
                $(DROPBOXDIR)/cha-08-acct.md \
                $(DROPBOXDIR)/cha-08-bonnie.md \
@@ -176,7 +176,7 @@ SOURCES = $(BOOK) \
           ch07.md \
           ch07-cpu.md \
           ch07-ram.md \
-          cha-07-io.md \
+          ch07-io.md \
           cha-08.md \
           cha-08-acct.md \
           cha-08-bonnie.md \
@@ -296,7 +296,7 @@ CHAPTERS = \
     ch07.md \
     ch07-cpu.md \
     ch07-ram.md \
-    cha-07-io.md \
+    ch07-io.md \
     cha-08.md \
     cha-08-acct.md \
     cha-08-bonnie.md \

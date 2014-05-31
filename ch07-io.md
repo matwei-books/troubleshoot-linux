@@ -11,7 +11,7 @@ kümmere ich mich im dritten Teil des Buches.
 Sie können durch spezielle Hardware verursacht werden, das lasse ich außen vor,
 weil diese Probleme nur mit eben dieser Hardware gelöst werden können.
 Oder, sie kommen durch Plattenzugriffe zustande, die ich optimieren kann.
-Genau darum geht es in dem nun folgenden Abschnitt.
+Darum geht es in dem folgenden Abschnitt.
 
 Wenn ich die Platten-Performance verbessern will, brauche ich ein gewisses
 Grundverständnis über die Zusammenhänge und die Stellen, an denen ich
@@ -20,26 +20,25 @@ verifizieren.
 
 ### Grundlagen
 
-Daten, die auf Festplatte gespeichert sind, sind den Benutzerprogrammen im
-Allgemeinen als Dateien im Dateisystem zugänglich.
+Benutzerprogramme greifen auf Daten, die auf Festplatte gespeichert sind,
+meist über Dateien im Dateisystem zu.
 Einige Datenbanksysteme arbeiten statt mit Dateien direkt mit den
 Blockdevices, die die Festplatte beziehungsweise deren Partition repräsentieren.
 Da bei diesen Datenbanksystemen meist in der Dokumentation Anleitungen zum
-Performancetuning zu finden sind, lasse ich auch diese hier außen vor.
+Performancetuning zu finden sind, lasse ich auch diese außen vor.
 
 Ich betrachte als oberste Abstraktion für den Zugriff auf
-Festplattendaten Dateien in den zugehörigen, mit `mount` eingebundenen
-Dateisystemen.
-Auf dieser Ebene kann ich Einfluß auf die Performance nehmen, durch die Wahl
-des Dateisystems und die Parameter für `mount` beim Einhängen in den Dateibaum.
+Festplattendaten Dateien in den mit `mount` eingebundenen Dateisystemen.
+Auf dieser Ebene nehme ich Einfluss auf die Performance durch die Wahl des
+Dateisystems und die Parameter für `mount` beim Einhängen in den Dateibaum.
 
-Die nächsttiefere Ebene ist das Blockdevice, auf dem das Dateisystem angelegt
-ist.
+Die nächsttiefere Ebene ist das Blockdevice, welches das Dateisystem trägt.
 Hier habe ich selten eine Wahl bezüglich des Treibers.
 Bei speziellen Blockdevices, wie zum Beispiel verschlüsselten Partitionen,
 stehen mir mitunter Alternativen offen, die ich gegeneinander abwägen muss.
-Habe ich mehr Festplatten als ich Plattenplatz benötige, kann ich durch die
-Wahl geeigneter RAID-Level das System für meinen Bedarf optimieren.
+Habe ich mehrere Festplatten und mehr Plattenplatz als ich benötige, kann
+ich durch die Wahl geeigneter RAID-Level das System für meinen Bedarf
+optimieren.
 Dabei darf ich neben der Geschwindigkeit die Datensicherheit nicht aus den
 Augen lassen.
 
@@ -50,14 +49,14 @@ SATA, SAS, die ich bei fertigen Systemen und konkreten Festplatten nicht mehr
 ändern kann.
 Allerdings habe ich die Möglichkeit, durch Änderung einiger Parameter die
 Übertragung der Daten zu beschleunigen.
-Diese Parameter kann ich mit dem Programm `hdparm` einstellen.
+Diese Parameter stelle ich mit dem Programm `hdparm` ein.
 
 Halten wir fest, dass ich die Geschwindigkeit der Dateizugriffe
 beeinflussen kann durch:
 
 *   die Wahl der Hardware und Übertragungsmodi
 *   den Kerneltreiber, dessen Optionen und gegebenenfalls den RAID-Level
-*   die Wahl des Dateisystems und der Optionen beim Einhängen dieses in den
+*   die Wahl des Dateisystems und der Optionen beim Einhängen desselben in den
     Dateibaum
 
 ### Verifizierung der Tuningmaßnahmen
@@ -89,8 +88,8 @@ anderen Aufgaben ist, damit ich die Messungen vergleichen kann.
 ### Monitoring
 
 Habe ich kein unbelastetes System, an dem ich in Ruhe meine Messungen machen
-kann, sondern ein stark belastetes, dem ich helfen will, dann bin ich mit
-`top` und `iostat` besser bedient.
+kann, sondern ein stark belastetes, dem ich helfen will, greife ich zu
+`top` und `iostat`.
 
 Bei `top` schalte ich mit den Tasten `F` und dann `u` die Anzeige um, so dass
 sie nach Pagefaults sortiert wird.
@@ -101,15 +100,15 @@ Der Befehl
 {line-numbers=off,lang="text"}
     $ iostat -p -xk
 
-zeigt mir auf, welchen Partitionen geschrieben beziehungsweise gelesen wird.
+zeigt mir, auf welchen Partitionen geschrieben, beziehungsweise gelesen wird.
 Mit `fuser` und `lsof` kann ich die Dateien und Verzeichnisse ermitteln und
-diese vielleicht auf eine andere Platte verschieben, um die Last gleichmäßiger
+auf eine andere Platte verschieben, um die Last gleichmäßiger
 zu verteilen.
 
 ### Tuningmaßnahmen
 
 Die Einstellungen sollten vor Inbetriebnahme des Systems erfolgen.
-Ist es erstmal produktiv, bleibt oft keine Zeit für größere Maßnahmen.
+Ist es produktiv, bleibt oft keine Zeit für größere Maßnahmen.
 
 Wenn es möglich ist, eine weitere Platte einzubauen, kann ich damit die Last
 besser verteilen und so das System entlasten.

@@ -40,6 +40,7 @@ ch06-mount-probleme.md
 ch07.md
 ch07-cpu.md
 ch07-ram.md
+ch07-io.md
 cha-08.md
 part3.md
 cha-09.md

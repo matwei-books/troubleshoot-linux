@@ -40,7 +40,7 @@ ch06-mount-probleme.md
 ch07.md
 ch07-cpu.md
 ch07-ram.md
-cha-07-io.md
+ch07-io.md
 cha-08.md
 cha-08-acct.md
 cha-08-bonnie.md
