@@ -43,6 +43,7 @@ ch07-ram.md
 ch07-io.md
 ch08.md
 ch08-acct.md
+ch08-bonnie.md
 part3.md
 cha-09.md
 cha-10.md

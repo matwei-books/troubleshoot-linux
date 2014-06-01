@@ -43,7 +43,7 @@ ch07-ram.md
 ch07-io.md
 ch08.md
 ch08-acct.md
-cha-08-bonnie.md
+ch08-bonnie.md
 cha-08-busybox.md
 cha-08-c.md
 cha-08-dd.md

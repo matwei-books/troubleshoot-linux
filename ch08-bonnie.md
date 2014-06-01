@@ -1,15 +1,15 @@
 
 ## bonnie++ {#sec-lokal-werkzeuge-bonnie}
 
-Bei jeglicher Art von Performance Tuning ist es essentiell, eine
-Bestandsaufnahme vor den Tuning-Maßnahmen und danach zu machen, um sich von
+Bei jeglicher Art von Performance Tuning mache ich grundsätzlich je eine
+Bestandsaufnahme vor den Tuning-Maßnahmen und danach, um mich von
 der Wirkung des Tunings zu überzeugen.
 Bonnie++ ist ein Programm, mit dem ich die Performance der Lese- und
 Schreiboperationen im Dateisystem in Zahlen ausdrücken und damit
 vergleichen kann.
 Ich setze bonnie++ ein, wenn ich
 
-*   Optimierungen am Festplattenzugriff (zum Beispiel mit hdparm)
+*   Optimierungen am Festplattenzugriff, zum Beispiel mit `hdparm`,
     verifizieren will,
 
 *   Optimierungen am Dateisystem verifizieren will, oder
@@ -25,7 +25,7 @@ Das Programm gibt für jeden Test, den es durchführt, zwei Kennzahlen
 aus: die geschaffte Arbeit (je mehr, um so besser) und die dafür benötigte
 CPU-Zeit (je weniger, umso besser).
 
-Die Tests teilen sich grob in zwei Abschnitte, die ich überspringen kann.
+Die Tests teilen sich grob in zwei Abschnitte.
 In einem Abschnitt testet bonnie++ den I/O-Durchsatz mit großen Dateien,
 wie er ähnlich bei Datenbankanwendungen vorkommt.
 Im anderen Abschnitt geht es um das Erzeugen, Lesen und Löschen vieler
@@ -39,12 +39,13 @@ Zu diesem Zweck kann ich mehrere bonnie++ Prozesse synchron starten.
 
 Die Ausgabe von bonnie++ kommt, wie schon beim Vorgängerprogramm bonnie als
 Text mit 80 Spalten.
-Zusätzlich gibt bonnie++ die Werte noch als kommaseparierte Werte (CSV)
+Zusätzlich gibt bonnie++ die Daten als kommaseparierte Werte (CSV)
 aus, die einfacher weiterverarbeitet werden und mehr als 80 Zeichen pro Zeile
 einnehmen können.
 Für diese CSV-Daten gibt es zwei Programme (`bon_csv2html`, `bon_csv2txt`),
 die die Daten für die HTML-Ausgabe beziehungsweise das bekannte Textformat
-aufbereiten. In deren Handbuchseiten sind die Felder der CSV-Daten
+aufbereiten.
+Die Felder der CSV-Daten sind in den Handbuchseiten der beiden Programme
 beschrieben.
 
 ### Optionen
@@ -62,7 +63,7 @@ beschrieben.
 : Die Anzahl der Dateien für den Dateierzeugungstest.
   Die Anzahl wird als Vielfaches von 1024 angegeben.
   Ist die Anzahl 0, überspringt bonnie++ diesen Test.
-  Per Default werden leere Dateien angelegt.
+  Per Default legt `bonnie++` leere Dateien an.
   Es ist möglich, die maximale und minimale Größe der Dateien und die Anzahl
   der Verzeichnisse durch Doppelpunkt getrennt gemeinsam mit der Anzahl
   anzugeben.
@@ -75,9 +76,9 @@ beschrieben.
 
 *-u user*
 : Der Benutzer, unter dem der bonnie++ Prozess laufen soll.
-  Bonnie++ kann als normaler Nutzer gestartet werden.
-  Startet man es als root, gibt man mit dieser Option einen anderen Benutzer
-  vor, um Fehler am Dateisystem zu vermeiden.
+  Ich kann `bonnie++` als normaler Nutzer starten.
+  Starte ich es als root, gebe ich mit dieser Option einen anderen Benutzer
+  vor, um Fehler im Dateisystem zu vermeiden.
 
 *-f | -f size*
 : Fast Mode Control, überspringt den zeichenweisen
