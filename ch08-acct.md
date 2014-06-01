@@ -3,12 +3,12 @@
 
 Abrechnungsprogramme spielen eine wichtige Rolle bei der
 Performanceoptimierung.
-Sie liefern einen einfachen Weg um herauszufinden, was ein Rechner macht.
-Welche Anwendungen laufen, wieviel Systemzeit verbrauchen
-diese Programme, wie stark belasten sie das System, und so weiter.
+Sie liefern einen einfachen Weg um herauszufinden, was ein Rechner macht,
+welche Anwendungen laufen, wieviel Systemzeit
+die Prozesse verbrauchen, wie stark sie das System belasten.
 Wenn ich die Programme und ihr Verhalten im Großen und Ganzen kenne,
 kann ich mir eine Strategie überlegen, um die Performance zu optimieren.
-Das Programmpaket acct liefert diese Abrechnungsdaten.
+Das Programmpaket *acct* liefert diese Abrechnungsdaten.
 
 Natürlich belastet das Führen der Statistiken das System zusätzlich.
 Und Extra-Plattenplatz benötigen die Statistiken auch.
@@ -17,11 +17,11 @@ Statistikerfassung reagiert, arbeitet es bereits in einem Bereich nahe der
 Belastungsgrenze und eine Analyse der Systemperformance und entsprechende
 Maßnahmen sind längst fällig.
 
-Ist das Paket acct installiert, so wird das Accounting meist automatisch
-beim Systemstart via accton eingeschaltet.
+Ist das Paket *acct* installiert, so wird das Accounting meist automatisch
+beim Systemstart via `accton` eingeschaltet.
 Will ich es deaktivieren, reicht es nicht, es über das Startscript
 auszuschalten, da cron in regelmäßigen Abständen die Komprimierung der
-Protokolle anstößt und dabei das Accounting ab und wieder angeschaltet wird.
+Protokolle anstößt und dabei das Accounting ab- und wieder angeschaltet wird.
 Um das Accounting zu deaktivieren ändere ich bei Debian-Systemen in
 */etc/default/acct* die Variable `ACCT_ENABLE` auf 0.
 
@@ -31,7 +31,7 @@ der Anzahl der Aufrufe des Programms in der ersten Spalte und den
 folgenden Bezeichnungen in den anderen Spalten:
 
 *cpu*
-: die Summe von von CPU-System- und -Userzeit in CPU-Minuten
+: die Summe von System- und Userzeit in CPU-Minuten
 
 *re*
 : die ``wirkliche'' Laufzeit des Programms
@@ -58,8 +58,8 @@ folgenden Bezeichnungen in den anderen Spalten:
 Ganz rechts, ohne Bezeichnung steht der Programmname.  
 Ist dieser mit einem Asterisk ('*') gekennzeichnet, ist das Programm als
 Daemon gelaufen. Das heißt, es hat `fork()` aufgerufen, aber nicht
-`exec()`. Daemon-Prozesse sammeln durch ihre lange Laufzeit auch sehr
-viel CPU-Zeit an.
+`exec()`.
+Daemon-Prozesse sammeln durch ihre lange Laufzeit sehr viel CPU-Zeit an.
 
 Die Tabelle ist nach der CPU-Zeit absteigend sortiert.
 
@@ -70,8 +70,8 @@ Mit den folgenden Optionen kann ich die Ausgabe von sa modifizieren, die
 Handbuchseite kennt noch mehr davon:
 
 *-a | --list-all-names*
-: Zeigt alle Programme (fasst keine Programme unter
-  `***other*` zusammen).
+: Zeigt alle Programme, fasst keine Programme unter  
+  `***other*` zusammen.
 
 *-b | --sort-sys-user-div-calls*
 : Sortiert die Aufrufe nach der
@@ -79,7 +79,7 @@ Handbuchseite kennt noch mehr davon:
 
 *-d | --sort-avio*
 : Sortiert nach der durchschnittlichen Anzahl der
-  I/O-Operationen.
+  Eingabe-/Ausgabe-Operationen.
 
 *-D | --sort-tio*
 : Sortiert nach der Gesamtzahl der I/O-Operationen.

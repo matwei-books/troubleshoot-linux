@@ -41,8 +41,8 @@ ch07.md
 ch07-cpu.md
 ch07-ram.md
 ch07-io.md
-cha-08.md
-cha-08-acct.md
+ch08.md
+ch08-acct.md
 cha-08-bonnie.md
 cha-08-busybox.md
 cha-08-c.md

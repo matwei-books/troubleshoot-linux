@@ -41,7 +41,8 @@ ch07.md
 ch07-cpu.md
 ch07-ram.md
 ch07-io.md
-cha-08.md
+ch08.md
+ch08-acct.md
 part3.md
 cha-09.md
 cha-10.md
