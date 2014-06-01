@@ -1,14 +1,15 @@
 
 ## busybox {#sec-lokal-werkzeuge-busybox}
 
-Busybox kombiniert Miniversionen vieler gebräuchlicher UNIX-Befehle in einem
+Busybox kombiniert Mini-Versionen vieler gebräuchlicher UNIX-Befehle in einem
 Programm.
-Es ist mit Blick auf Größenoptimierung und geringe Ressourcen geschrieben.
+Es ist mit Blick auf Größenoptimierung und geringen Ressourcenverbrauch
+geschrieben.
 Für ein arbeitsfähiges System benötige ich nur noch ein */dev*
 Verzeichnis mit den Gerätedateien, ein */etc* Verzeichnis mit den
 Konfigurationsdateien und einen Linux-Kernel.
 Busybox ist extrem anpassungsfähig.
-Beim Kompilieren kann ich festlegen, welche Befehle mit hineinkommen und
+Beim Kompilieren kann ich festlegen, welche Befehle hineinkommen und
 so die Funktionalität gegen die Programmgröße abwägen.
 Das macht es ideal für eingebettete Systeme und kleine Systemumgebungen.
 
@@ -21,8 +22,7 @@ Auch in kleineren Einzelgeräten, wie Routern, wird es oft eingesetzt.
 Busybox ist ein Multi-Call-Binary.
 Das heißt, es verhält sich komplett anders, je nachdem, wie es aufgerufen
 wird.
-Sämtliche UNIX-Befehle, die beim Kompilieren aktiviert wurden, kann ich auf
-zwei Arten aufrufen.
+Sämtliche enthaltenen UNIX-Befehle kann ich auf zwei Arten aufrufen.
 Entweder ich gebe den Befehl als erstes Argument und danach dessen Argumente
 an:
 
@@ -36,8 +36,8 @@ es über diesen Link auf:
     $ /bin/busybox ln -s /bin/busybox ./cp
     $ ./cp file file.bak
 
-Hätte ich `busybox` stattdessen über einen Link namens `mv` aufgerufen, wäre
-die Datei nicht kopiert sondern umbenannt worden.
+Hieße der Link stattdessen `mv`, hätte `busybox` die Datei nicht kopiert
+sondern umbenannt.
 
 Weil Busybox extrem konfigurierbar ist, möchte ich vielleicht wissen, welche
 Funktionen mein konkretes Binary kennt.
@@ -73,9 +73,9 @@ Dazu rufe ich Busybox ohne Argumente auf:
 Da die in Busybox implementierten Versionen der UNIX-Befehle von den
 täglich benutzten in Details abweichen, muss ich die genauen Optionen wissen.
 Neben der Handbuchseite, die ich in einer kleinen Umgebung oft
-nicht zur Verfügung habe, hilft mir hierbei Busybox selbst.
-Ich rufe den Befehl mit der Option `--help` auf, die von den meisten der
-implementierten Befehle verstanden wird:
+nicht zur Verfügung habe, hilft mir Busybox selbst.
+Ich rufe den Befehl mit der Option `--help` auf, die die meisten der
+implementierten Befehle verstehen:
 
 {line-numbers=off,lang="text"}
     $ busybox ln --help
