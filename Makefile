@@ -56,7 +56,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch08-busybox.md \
                $(DROPBOXDIR)/ch08-c.md \
                $(DROPBOXDIR)/ch08-dd.md \
-               $(DROPBOXDIR)/cha-08-fio.md \
+               $(DROPBOXDIR)/ch08-fio.md \
                $(DROPBOXDIR)/cha-08-fuser.md \
                $(DROPBOXDIR)/cha-08-gdb.md \
                $(DROPBOXDIR)/cha-08-hdparm.md \
@@ -183,7 +183,7 @@ SOURCES = $(BOOK) \
           ch08-busybox.md \
           ch08-c.md \
           ch08-dd.md \
-          cha-08-fio.md \
+          ch08-fio.md \
           cha-08-fuser.md \
           cha-08-gdb.md \
           cha-08-hdparm.md \
@@ -303,7 +303,7 @@ CHAPTERS = \
     ch08-busybox.md \
     ch08-c.md \
     ch08-dd.md \
-    cha-08-fio.md \
+    ch08-fio.md \
     cha-08-fuser.md \
     cha-08-gdb.md \
     cha-08-hdparm.md \

@@ -24,7 +24,7 @@ gewünschte Last sehr genau zusammenstellen kann.
 Die Jobs, die `fio` abarbeitet, werden in Dateien beschrieben, deren
 Format den *Ini*-Dateien entspricht, mit Sektionen, die durch ihren Namen in
 eckigen Klammern eingeleitet werden und Kommentaren, die mit `;` oder `#`
-am Zeilenanfang eingeleitet werden.
+am Zeilenanfang beginnen.
 
 Meist rufe ich `fio` nur mit dem Namen der Job-Datei als einzigem Argument auf.
 Habe ich nur einen einzigen Job, könnte ich dessen Parameter auch gleich auf
