@@ -51,16 +51,18 @@ Mit `lsof` schaue ich nach, welches Programm welche Datei geöffnet hat:
 
 {line-numbers=off,lang="text"}
     $ lsof -p5021
-    lsof -p5021
     COMMAND...  FD   TYPE...NAME
     less   ... txt    REG.../bin/less
     ...
     less   ...   4r   REG.../home/.../code/fnotify.c
+
+In diesem Beispiel habe ich in einer zweiten Konsole den Quelltext mit `less`
+betrachtet, was mir `lsof` in einer weiteren Konsole anzeigt.
 
 Fanotify bietet noch weitergehende Möglichkeiten.
 So kann ich den Prozess blockieren und den Zugriff erlauben oder verbieten.
 Oder ich modifiziere die Datei vor dem Zugriff.
 Eine ausführliche Behandlung dieser Systemschnittstelle würde den Rahmen
 dieses Buches sprengen, aber es ist in manchen Fällen gut zu wissen, dass
-sich noch etwas machen lässt.
+sich da noch etwas machen lässt.
 
