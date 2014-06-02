@@ -12,15 +12,15 @@ Bei der Fehlersuche verwende ich es um
 
 #### Dateien von einem anderen Rechner sichern
 
-Um Dateien zwischen zwei Rechnern hin und her zu kopieren, verwende ich am
+Um Dateien zwischen zwei Rechnern zu kopieren, verwende ich am
 liebsten `scp` oder `rsync`.
 
 In manchen Fällen, wenn beide Befehle nicht zur Verfügung stehen oder ich
 Daten von einer Gerätedatei kopieren möchte, greife ich auf `dd` zurück.
 
 Bei kleinen Linux-Routern, die von einer read-only eingehängten Flash-Disk
-betrieben werden, sichere ich die Flash-Disk mit folgendem Befehl (auf einem
-anderen Rechner):
+betrieben werden, sichere ich die Flash-Disk mit folgendem Befehl, von einem
+anderen Rechner:
 
 {line-numbers=off,lang="text"}
     $ ssh root@r-xyz dd if=/dev/sda | dd of=r-xyz.image
@@ -44,7 +44,7 @@ Partitionstabelle angezeigt.
 {line-numbers=off,lang="text"}
     # dd if=/dev/sda of=sda.image bs=512 count=1
 
-Mit diesem Befehl sichere ich die Partionstabelle.
+Damit sichere ich die Partionstabelle.
 
 {line-numbers=off,lang="text"}
     # dd if=sda.image of=/dev/sda
@@ -60,14 +60,14 @@ Festplattensektoren.
 
 Moderne Festplatten haben ungenutzten Plattenplatz, mit denen sie
 defekte Sektoren ersetzen können.
-Allerdings nur, wenn auf den betreffenden Block geschrieben wird.
+Allerdings nur, wenn auf diesen Sektor geschrieben wird.
 
 {line-numbers=off,lang="text"}
-    # dd if=/dev/null of=/dev/sda1 bs=BLOCKSIZE \
-         seek=OFFSET count=1 oflag=direct,dsync
+    # dd if=/dev/null of=/dev/sda1 bs=$BLOCKSIZE \
+         seek=$OFFSET count=1 oflag=direct,dsync
 
 Mit diesem Befehl beschreibe ich gezielt einen Sektor der Festplatte.
-Dabei ist `BLOCKSIZE` die Größe eines Sektors der Festplatte und `OFFSET` die
+Dabei ist `$BLOCKSIZE` die Größe eines Sektors der Festplatte und `$OFFSET` die
 Differenz zwischen dem defekten Sektor und dem Anfang der Partition in
 Sektoren.
 Wenn die Plattenelektronik beim Schreiben bemerkt, dass der ursprüngliche
@@ -75,8 +75,8 @@ Block defekt ist, ersetzt sie diesen durch einen Reserveblock und die
 Festplatte ist "repariert".
 
 Wie ich herausbekomme, welchen Sektor ich beschreiben muss, ist im
-[Bad Block Howto][badblockhowto] beschrieben und in einem
-[Artikel auf Pro-Linux.de][prolinuxbadblocks].
+[Bad Block Howto][badblockhowto] in Englisch und in einem
+[Artikel auf Pro-Linux.de][prolinuxbadblocks] in deutscher Sprache beschrieben.
 
 [badblockhowto]: http://smartmontools.sourceforge.net/BadBlockHowTo.txt 
 
