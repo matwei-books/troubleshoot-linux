@@ -262,6 +262,17 @@ Aufgerufen: 2014-05-21
 Bei der Dokumentation finden sich Handbuchseiten, HowTos, Tutorials und eine
 Anleitung, wie man bestimmt, ob AppArmor ein Problem verursacht.
 
+#### Bad block HOWTO for smartmontools {#bib-www-bad-block-howto}
+This article describes what actions might be taken when smartmontools detects
+a bad block on a disk.  
+<http://smartmontools.sourceforge.net/badblockhowto.html>  
+Aufgerufen: 2014-06-02
+
+Der Artikel erläutert, wie man eine Festplatte "reparieren" kann, für die die
+*smartmontools* fehlerhafte Blöcke gemeldet haben. Obwohl von 2007, ist der
+Artikel immer noch brauchbar, wenn man gezwungen ist, eine Festplatte mit
+fehlerhaften Blöcken weiter zu betreiben.
+
 #### Bullet Journal {#bib-www-bulletjournal}
 For the list-makers, the note-takers, the Post-It note pilots, the
 track-keepers, and the dabbling doodlers.  
