@@ -48,7 +48,7 @@ ch08-busybox.md
 ch08-c.md
 ch08-dd.md
 ch08-fio.md
-cha-08-fuser.md
+ch08-fuser.md
 cha-08-gdb.md
 cha-08-hdparm.md
 cha-08-lsof.md

@@ -48,6 +48,7 @@ ch08-busybox.md
 ch08-c.md
 ch08-dd.md
 ch08-fio.md
+ch08-fuser.md
 part3.md
 cha-09.md
 cha-10.md

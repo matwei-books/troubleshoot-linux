@@ -57,7 +57,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch08-c.md \
                $(DROPBOXDIR)/ch08-dd.md \
                $(DROPBOXDIR)/ch08-fio.md \
-               $(DROPBOXDIR)/cha-08-fuser.md \
+               $(DROPBOXDIR)/ch08-fuser.md \
                $(DROPBOXDIR)/cha-08-gdb.md \
                $(DROPBOXDIR)/cha-08-hdparm.md \
                $(DROPBOXDIR)/cha-08-lsof.md \
@@ -184,7 +184,7 @@ SOURCES = $(BOOK) \
           ch08-c.md \
           ch08-dd.md \
           ch08-fio.md \
-          cha-08-fuser.md \
+          ch08-fuser.md \
           cha-08-gdb.md \
           cha-08-hdparm.md \
           cha-08-lsof.md \
@@ -304,7 +304,7 @@ CHAPTERS = \
     ch08-c.md \
     ch08-dd.md \
     ch08-fio.md \
-    cha-08-fuser.md \
+    ch08-fuser.md \
     cha-08-gdb.md \
     cha-08-hdparm.md \
     cha-08-lsof.md \
