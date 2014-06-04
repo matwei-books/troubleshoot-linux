@@ -12,7 +12,7 @@ Für einige der Optionen benötige ich eine aktuelle Kernelversion.
 Allgemein sieht der Aufruf von hdparm wie folgt aus:
 
 {line-numbers=off,lang="text"}
-    hdparm [optionen] [geraet ..]
+    hdparm [$optionen] [$geraet ...]
 
 Mit manchen Optionen kann ich Parameter sowohl abfragen als auch setzen
 (get/set).
@@ -35,7 +35,7 @@ Weitere Informationen gibt es, wie immer, in den Handbuchseiten.
   Mit `-A0` wird es ausgeschaltet, mit `-A1`  eingeschaltet.
 
 *-B*
-: (get/set) Einstellen der Advanced Power Management (APM) Eigenschaften der
+: (get/set) Advanced Power Management (APM) Eigenschaften der
   Platte, soweit diese das unterstützt.
   Gültig sind Werte von 1, für die meiste Energieeinsparung, bis 254, für die
   höchste I/O-Performance, mit dem Wert 255 wird es ganz abgeschaltet.
@@ -50,14 +50,14 @@ Weitere Informationen gibt es, wie immer, in den Handbuchseiten.
   Es geht hierbei um den Transfer via PCI oder VLB zum Hostadapter. Das
   Kabel zur Festplatte hat immer 16 Bit.
 
-*--fibmap dateiname*
+*--fibmap $dateiname*
 : Liefert die Liste der Blockextents (Sektorbereiche),
   die die Datei auf der Platte belegt.
 
   Damit kann ich mir die Fragmentierung einer Datei auf der Platte
   ansehen, oder die Blöcke für Fehlertests bestimmen.
 
-  Wenn diese Option verwendet wird, muss sie die einzige sein.
+  Wenn ich diese Option verwende, muss sie die einzige sein.
 
 *-g*
 : Zeigt die Laufwerksgeometrie (Zylinder, Köpfe, Sektoren), die
@@ -80,7 +80,7 @@ Weitere Informationen gibt es, wie immer, in den Handbuchseiten.
   Es kann allerdings in einigen Fällen zu massiven Dateisystemfehlern
   führen.
 
-*--read-sector sektornummer*
+*--read-sector $sektornummer*
 : Liest den angegebenen Sektor und
   schreibt den Inhalt in Hex-Darstellung zum Standardausgang.
   Die Sektornummer wird als Dezimalzahl angegeben.
@@ -90,19 +90,19 @@ Weitere Informationen gibt es, wie immer, in den Handbuchseiten.
   die Option `--write-sector` verwenden.
 
 *-t*
-: Nimmt die Zeit von Lesezugriffen für Benchmarks und
-  Vergleichsmessungen. Um brauchbare Werte zu erhalten, muss man diese
-  Funktion mindestens zweimal bei einem ansonsten inaktiven System, das heißt
-  keine anderen aktiven Prozesse, und genügend freiem Hauptspeicher ausführen. 
+: Nimmt die Zeit von Lesezugriffen für Benchmarks und Vergleichsmessungen.
+  Um brauchbare Werte zu erhalten, muss ich diese Funktion mindestens zweimal
+  bei einem ansonsten inaktiven System, das heißt keine anderen aktiven
+  Prozesse, und genügend freiem Hauptspeicher wiederholen. 
   Diese Funktion zeigt, wie schnell Daten ohne den Overhead des
   Dateisystems gelesen werden können.
 
 *-T*
 : Nimmt die Zeit von Cache-Read-Zugriffen. Auch diese Funktion
-  sollte mindestens zweimal bei ansonsten inaktivem System wiederholt
-  werden. Das zeigt den Durchsatz von Prozessor, Cache und RAM.
+  sollte ich mindestens zweimal bei ansonsten inaktivem System wiederholen.
+  Zeigt den Durchsatz von Prozessor, Cache und RAM.
 
-*--write-sector sektornummer*
+*--write-sector $sektornummer*
 : Schreibt Nullen in den Sektor.
   **Sehr gefährlich!**
   Irre ich mich in der Sektornummer, werden möglicherweise vitale

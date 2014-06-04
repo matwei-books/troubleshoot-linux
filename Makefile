@@ -59,7 +59,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch08-fio.md \
                $(DROPBOXDIR)/ch08-fuser.md \
                $(DROPBOXDIR)/ch08-gdb.md \
-               $(DROPBOXDIR)/cha-08-hdparm.md \
+               $(DROPBOXDIR)/ch08-hdparm.md \
                $(DROPBOXDIR)/cha-08-lsof.md \
                $(DROPBOXDIR)/cha-08-ltrace.md \
                $(DROPBOXDIR)/cha-08-netstat.md \
@@ -186,7 +186,7 @@ SOURCES = $(BOOK) \
           ch08-fio.md \
           ch08-fuser.md \
           ch08-gdb.md \
-          cha-08-hdparm.md \
+          ch08-hdparm.md \
           cha-08-lsof.md \
           cha-08-ltrace.md \
           cha-08-netstat.md \
@@ -306,7 +306,7 @@ CHAPTERS = \
     ch08-fio.md \
     ch08-fuser.md \
     ch08-gdb.md \
-    cha-08-hdparm.md \
+    ch08-hdparm.md \
     cha-08-lsof.md \
     cha-08-ltrace.md \
     cha-08-netstat.md \
