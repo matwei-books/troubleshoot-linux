@@ -64,7 +64,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch08-ltrace.md \
                $(DROPBOXDIR)/ch08-netstat.md \
                $(DROPBOXDIR)/ch08-perf.md \
-               $(DROPBOXDIR)/cha-08-perl.md \
+               $(DROPBOXDIR)/ch08-perl.md \
                $(DROPBOXDIR)/cha-08-shell.md \
                $(DROPBOXDIR)/cha-08-sysstat.md \
                $(DROPBOXDIR)/cha-08-strace.md \
@@ -191,7 +191,7 @@ SOURCES = $(BOOK) \
           ch08-ltrace.md \
           ch08-netstat.md \
           ch08-perf.md \
-          cha-08-perl.md \
+          ch08-perl.md \
           cha-08-shell.md \
           cha-08-sysstat.md \
           cha-08-strace.md \
@@ -311,7 +311,7 @@ CHAPTERS = \
     ch08-ltrace.md \
     ch08-netstat.md \
     ch08-perf.md \
-    cha-08-perl.md \
+    ch08-perl.md \
     cha-08-shell.md \
     cha-08-sysstat.md \
     cha-08-strace.md \
