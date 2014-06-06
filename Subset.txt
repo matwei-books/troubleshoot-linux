@@ -56,7 +56,7 @@ ch08-ltrace.md
 ch08-netstat.md
 ch08-perf.md
 ch08-perl.md
-cha-08-shell.md
+ch08-shell.md
 cha-08-strace.md
 cha-08-sysstat.md
 cha-08-vmstat.md

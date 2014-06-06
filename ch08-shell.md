@@ -1,7 +1,8 @@
 
 ## Shell {#sec-lokal-werkzeuge-shell}
 
-Ein wichtiges Hilfsmittel bei der Fehlersuche ist die Shell. Dies in
+Die Shell ist für mich ein wichtiges Hilfsmittel bei der Fehlersuche.
+Dies in
 zweierlei Hinsicht: zum einen starte ich in einer interaktiven Shell die
 Kommandos, mit denen ich den Fehler eingrenzen will, zum anderen verwende
 ich die Shell für simple, schnell zusammengeschriebene Programme, die mich bei
@@ -9,15 +10,15 @@ der Fehlersuche unterstützen.
 
 Bei der Arbeit auf der Kommandozeile bevorzuge ich eine Shell mit
 History-Funktion und Kommandozeilenergänzung (command line completion).
-Die History-Funktion benutze ich vor allen Dingen, um bereits ausgeführte
+Die History-Funktion benutze ich, um bereits ausgeführte
 Befehle wieder hervorzuholen, gegebenenfalls geringfügig zu ändern und noch
 einmal auszuführen. Die Kommandozeilenergänzung beschleunigt den Zusammenbau
-von neuen Befehlen, in denen die Shell, meist nach Eingabe von `<TAB>`,
+von neuen Befehlen, indem die Shell, meist nach Eingabe von `<TAB>`,
 die Zeile komplettiert oder die nächsten Argumente vorschlägt, wenn mehrere
 Vervollständigungen möglich sind.
-Das halte ich für unverzichtbar um bei der Fehlersuche den Gedankenflug nicht
+Das halte ich für unverzichtbar um den Gedankenflug nicht
 abreißen zu lassen.
-Ich bin an die Bash gewöhnt, aber andere Shells können das meist ebensogut.
+Ich bin an die Bash gewöhnt, aber andere Shells können das ebensogut.
 
 Für Shell-Scripts bevorzuge ich als kleinsten gemeinsamen Nenner die POSIX
 Shell (`/bin/sh`).
@@ -37,18 +38,16 @@ Fehlersuche verwendet habe
 
 ### Strace Invocator
 
-Manchmal habe ich ein Problem mit einem Programm, bei dem ich auf
-[strace](#sec-lokal-werkzeuge-strace) zurückgreife,
-um das Programm bei der Arbeit zu beobachten.
-Wenn dieses Programm jedoch nicht von Kommandozeile,
-sondern von einem anderen Programm gestartet wird, greife ich auf folgenden
-Trick zurück: Ich benenne das Programm um indem ich an den Namen die Endung
+Bei einem schwierigen Problem greife ich oft auf
+[strace](#sec-lokal-werkzeuge-strace) zurück,
+um den Prozess bei der Arbeit zu beobachten.
+Wenn dieser Prozess jedoch nicht von Kommandozeile,
+sondern von einem anderen Prozess gestartet wird, verwende ich folgenden
+Trick: Ich benenne das Programm um, indem ich an den Namen die Endung
 `.orig` anhänge. Unter dem ursprünglichen Programmnamen platziere ich
 einen Link auf dieses Skript:
 
 <<[strace-invocator](code/strace-invocator.sh)
-
-Zeile 1 zeigt an, dass das Skript mit der POSIX Shell läuft.
 
 In Zeile 2 bestimme ich den Namen des aufgerufenen Programms und in Zeile 3
 den Namen des eigentlichen Programms.
@@ -129,6 +128,6 @@ Mit Shell-Debugging dagegen so:
     === GDB Tests ===
     + break
     
-Damit kann ich genau sehen, was beim Abarbeiten des Skripts passiert.
+Damit sehe ich genau, was beim Abarbeiten des Skripts passiert.
 Alle Variablenzuweisungen mit den zugehörigen Werten sowie die Befehlsaufrufe
-mit ihren Argumenten stehen auf je einer Zeile, die mit `+ ` eingeleitet wird.
+mit ihren Argumenten stehen auf je einer Zeile, die mit `'+ '` eingeleitet wird.
