@@ -53,7 +53,7 @@ ch08-gdb.md
 ch08-hdparm.md
 ch08-lsof.md
 ch08-ltrace.md
-cha-08-netstat.md
+ch08-netstat.md
 cha-08-perf.md
 cha-08-perl.md
 cha-08-shell.md

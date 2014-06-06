@@ -196,7 +196,7 @@ Bleibt zum Schluss nur noch anzumerken, dass *ext2* und *ext3* die Attribute
 `c`, `s` und `u` nicht honorieren.
 Diese beiden Dateisystem verwenden auch kein Tail-Merging.
 
-### POSIX Capabilities
+### POSIX Capabilities {#ch06-rechte-posix-cap}
 
 Das Ziel bei der Entwicklung der POSIX Capabilities war, die alles umfassenden
 Privilegien des *root* Benutzers aufzuteilen in einzelne Privilegien, die je
