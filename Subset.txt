@@ -54,7 +54,7 @@ ch08-hdparm.md
 ch08-lsof.md
 ch08-ltrace.md
 ch08-netstat.md
-cha-08-perf.md
+ch08-perf.md
 cha-08-perl.md
 cha-08-shell.md
 cha-08-strace.md

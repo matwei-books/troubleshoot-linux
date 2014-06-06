@@ -54,6 +54,7 @@ ch08-hdparm.md
 ch08-lsof.md
 ch08-ltrace.md
 ch08-netstat.md
+ch08-perf.md
 part3.md
 cha-09.md
 cha-10.md
