@@ -7,7 +7,7 @@ den Fehlermeldungen oder Systemprotokollen finde.
 Wenn ich mit einem Programm noch wenig Erfahrung habe, keine Hilfe 
 im Internet finde, aber das Problem trotzdem so schnell wie möglich
 beheben will.
-In [Koenig2012](#bib-koenig2012) führt Harald König sehr gut in die Arbeit
+In [[Koenig2012](#bib-koenig2012)] führt Harald König sehr gut in die Arbeit
 mit strace ein.
   
 Strace hilft mir, wenn ich beobachten will, wie ein Programm
@@ -52,11 +52,11 @@ Dabei bedeuten die Optionen
 : Die Ausgabe geht in die Datei *make.strace*.
 
 Bei Problemen mit bereits gestarteten Prozessen verwende ich die Option
-`-p PID` um mich mit dem Prozess mit dieser PID zu verbinden.
+`-p $PID` um mich mit dem Prozess mit dieser PID zu verbinden.
 Alle weiteren Optionen bleiben wie gehabt, auf die Angabe des Programmnamens
 und der Programmparameter kann ich verzichten.
 Prozesse, die bereits vorher von dem untersuchten Prozess gestartet wurden,
-beobachtet `strace` nicht, wohl aber neu gestartete Prozesse, wenn ich wieder
+beobachtet `strace` nicht, wohl aber neu gestartete Prozesse, wenn ich
 die Option `-f` angebe.
 
 Schwieriger ist es, wenn ein Programm ein zweites aufruft, dieses ein
@@ -72,3 +72,11 @@ beschrieben.
 Natürlich darf ich am Ende nicht vergessen, das Skript wieder durch das
 Originalprogramm zu ersetzen.
 
+X> Mache Dich mit `strace` vertraut, indem Du ein einfaches Program wie `ls`
+X> mit strace beobachtest:
+X> 
+{line-numbers=off,lang="bash"}
+X>     strace -o ls.strace ls -l
+X> 
+X> Studiere die einzelnen Systemaufrufe mit Hilfe der Handbuchseiten und
+X> versuche zu verstehen, was beim Ablauf des Programmes passiert.
