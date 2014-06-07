@@ -58,6 +58,7 @@ ch08-perf.md
 ch08-perl.md
 ch08-shell.md
 ch08-strace.md
+ch08-sysstat.md
 part3.md
 cha-09.md
 cha-10.md
