@@ -94,9 +94,13 @@ Linux und/oder IP-Netzwerke.
 
 Ich setze grundlegende Kenntnisse der Kommandozeile voraus und dass der Leser
 weiß, wie er sie erreicht.
+Zum Teil setze ich für die Analyse von Problemen spezielle Software ein, die
+nicht auf jedem System installiert ist.
+Ich gehe davon aus, dass der Leser weiß, wie er Software auf seinem Rechner
+installiert.
 
-Dieses Buch soll Anfängern über die ersten Hürden bei der Fehlersuche helfen
-und sie bei ihren ersten Schritten begleiten.
+Dieses Buch soll Anfängern in der Systemadministration über die ersten Hürden
+bei der Fehlersuche helfen und sie bei ihren ersten Schritten begleiten.
 Gestandene Administratoren werden vielleicht die eine oder andere Anregung
 entnehmen können.
 
