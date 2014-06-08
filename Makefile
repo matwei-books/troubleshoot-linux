@@ -68,7 +68,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch08-shell.md \
                $(DROPBOXDIR)/ch08-strace.md \
                $(DROPBOXDIR)/ch08-sysstat.md \
-               $(DROPBOXDIR)/cha-08-vmstat.md \
+               $(DROPBOXDIR)/ch08-vmstat.md \
                $(DROPBOXDIR)/cha-09.md \
                $(DROPBOXDIR)/cha-09-osi-modell.md \
                $(DROPBOXDIR)/cha-09-arp.md \
@@ -195,7 +195,7 @@ SOURCES = $(BOOK) \
           ch08-shell.md \
           ch08-strace.md \
           ch08-sysstat.md \
-          cha-08-vmstat.md \
+          ch08-vmstat.md \
           cha-09.md \
           cha-09-osi-modell.md \
           cha-09-arp.md \
@@ -315,7 +315,7 @@ CHAPTERS = \
     ch08-shell.md \
     ch08-strace.md \
     ch08-sysstat.md \
-    cha-08-vmstat.md \
+    ch08-vmstat.md \
     cha-09.md \
     cha-09-osi-modell.md \
     cha-09-arp.md \
