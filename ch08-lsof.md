@@ -84,7 +84,7 @@ nicht machen würde.
 
 Die Option `-d $s` erwartet eine Liste von Dateideskriptoren (diese
 stehen in der Ausgabe in Spalte FD), die ich einschließen, oder mit `^`
-ausschließen kann. Möchte ich zwar das Arbeitsverzeichnis, aber nicht die
+ausschließen kann. Möchte ich das Arbeitsverzeichnis, aber nicht
 Standardeingabe, -ausgabe und -fehlerausgabe von Prozessen wissen, dann
 drücke ich das so aus:
 

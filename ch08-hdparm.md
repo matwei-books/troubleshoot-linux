@@ -114,13 +114,13 @@ Weitere Informationen gibt es, wie immer, in den Handbuchseiten.
   wirklich mit einem defekten Sektor zu tun habe.
 
 *-W*
-: (get/set) Zeigt beziehungsweise modifiziert das Write Caching
+: (get/set) Zeigt und modifiziert das Write Caching
   des IDE/SATA Laufwerks. 1 bedeutet eingeschaltet.
 
 *-z*
 : Zwingt den Kernel, die Partitionstabelle neu zu lesen.
 
-In der Datei /etc/hdparm.conf kann ich die Default-Konfiguration für hdparm
+In */etc/hdparm.conf* kann ich die Default-Konfiguration für hdparm
 hinterlegen.
 Diese Datei ist gut kommentiert, so dass ich mir weitere Erläuterungen dazu
 spare.

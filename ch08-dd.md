@@ -78,6 +78,6 @@ Wie ich herausbekomme, welchen Sektor ich beschreiben muss, ist im
 [Bad Block Howto][badblockhowto] in Englisch und in einem
 [Artikel auf Pro-Linux.de][prolinuxbadblocks] in deutscher Sprache beschrieben.
 
-[badblockhowto]: http://smartmontools.sourceforge.net/BadBlockHowTo.txt 
+[badblockhowto]: http://smartmontools.sourceforge.net/badblockhowto.html
 
 [prolinuxbadblocks]: http://www.pro-linux.de/-01028c

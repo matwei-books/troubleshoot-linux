@@ -30,7 +30,7 @@ Ringpuffer speichert.
 Das Analyseprogramm wertet den Ringpuffer aus und stellt den Bezug vom
 Befehlszählerinhalt zu den CPU-Befehlen an dieser Stelle her.
 
-Dadurch ergibt sich ein geringer Overhead bei der Beobachtung der Programme
+Dadurch ergibt sich ein geringer Overhead beim Beobachten der Programme
 und diese können auch innerhalb von Funktionen beobachtet werden.
 Allerdings kann es vorkommen, dass der ermittelte Wert des Befehlszählers auf
 Grund von Verzögerungen bis zum Aufruf des Handlers nicht exakt ist.

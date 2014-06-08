@@ -78,7 +78,7 @@ wiederholte Anzeige der Kopfzeilen abschalten. Letztere sind insbesondere
 bei länger laufender Ausgabe praktisch, wenn ich nicht genau im Kopf habe,
 welche Spalte was anzeigt. Daher verwende ich `-n` so gut wie nie.
 
-Mit Option `-m`, die Superuserprivilegien erfordert, zeigt `vmstat`
+Mit der Option `-m`, die Superuserprivilegien erfordert, zeigt `vmstat`
 Informationen zum Slab Allocator an. Das ist ein Verfahren zur Verwaltung
 des Arbeitsspeichers. Weitere Informationen dazu finden sich in
 [[Bonwick1994](#bib-bonwick1994)].
