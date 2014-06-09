@@ -27,8 +27,8 @@ Die folgenden Schichten sind im OSI-Modell definiert:
 Die Instanzen auf Sender und Empfängerseite müssen nach festgelegten Regeln
 (dem Protokoll) arbeiten und bilden dann eine logische horizontale Verbindung
 über diese Schicht. Die in der gleichen Schicht definierten Netzwerkprotokolle
-mit klar definierten Schnittstellen sind untereinander, abhängig von ihren
-spezifischen Eigenschaften, austauschbar.
+mit klar definierten Schnittstellen sind, abhängig von ihren
+spezifischen Eigenschaften, untereinander austauschbar.
 
 Reale Protokolle bilden mitunter mehrere Schichten des OSI-Modells ab. Zum
 Beispiel:

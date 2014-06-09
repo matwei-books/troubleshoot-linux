@@ -14,7 +14,7 @@ ch06.md
 ch07.md
 ch08.md
 part3.md
-cha-09.md
+ch09.md
 cha-10.md
 cha-11.md
 cha-12.md

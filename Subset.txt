@@ -61,8 +61,8 @@ ch08-strace.md
 ch08-sysstat.md
 ch08-vmstat.md
 part3.md
-cha-09.md
-cha-09-osi-modell.md
+ch09.md
+ch09-osi-modell.md
 cha-09-arp.md
 cha-09-ipv4-netzmasken.md
 cha-09-zustaende-tcp.md

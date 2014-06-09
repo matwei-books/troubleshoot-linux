@@ -69,8 +69,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch08-strace.md \
                $(DROPBOXDIR)/ch08-sysstat.md \
                $(DROPBOXDIR)/ch08-vmstat.md \
-               $(DROPBOXDIR)/cha-09.md \
-               $(DROPBOXDIR)/cha-09-osi-modell.md \
+               $(DROPBOXDIR)/ch09.md \
+               $(DROPBOXDIR)/ch09-osi-modell.md \
                $(DROPBOXDIR)/cha-09-arp.md \
                $(DROPBOXDIR)/cha-09-ipv4-netzmasken.md \
                $(DROPBOXDIR)/cha-09-zustaende-tcp.md \
@@ -196,8 +196,8 @@ SOURCES = $(BOOK) \
           ch08-strace.md \
           ch08-sysstat.md \
           ch08-vmstat.md \
-          cha-09.md \
-          cha-09-osi-modell.md \
+          ch09.md \
+          ch09-osi-modell.md \
           cha-09-arp.md \
           cha-09-ipv4-netzmasken.md \
           cha-09-zustaende-tcp.md \
@@ -316,8 +316,8 @@ CHAPTERS = \
     ch08-strace.md \
     ch08-sysstat.md \
     ch08-vmstat.md \
-    cha-09.md \
-    cha-09-osi-modell.md \
+    ch09.md \
+    ch09-osi-modell.md \
     cha-09-arp.md \
     cha-09-ipv4-netzmasken.md \
     cha-09-zustaende-tcp.md \
