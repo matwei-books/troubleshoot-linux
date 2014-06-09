@@ -63,7 +63,7 @@ ch08-vmstat.md
 part3.md
 ch09.md
 ch09-osi-modell.md
-cha-09-arp.md
+ch09-arp.md
 cha-09-ipv4-netzmasken.md
 cha-09-zustaende-tcp.md
 cha-09-routing-algorithm.md

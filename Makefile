@@ -71,7 +71,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch08-vmstat.md \
                $(DROPBOXDIR)/ch09.md \
                $(DROPBOXDIR)/ch09-osi-modell.md \
-               $(DROPBOXDIR)/cha-09-arp.md \
+               $(DROPBOXDIR)/ch09-arp.md \
                $(DROPBOXDIR)/cha-09-ipv4-netzmasken.md \
                $(DROPBOXDIR)/cha-09-zustaende-tcp.md \
                $(DROPBOXDIR)/cha-09-routing-algorithm.md \
@@ -198,7 +198,7 @@ SOURCES = $(BOOK) \
           ch08-vmstat.md \
           ch09.md \
           ch09-osi-modell.md \
-          cha-09-arp.md \
+          ch09-arp.md \
           cha-09-ipv4-netzmasken.md \
           cha-09-zustaende-tcp.md \
           cha-09-routing-algorithm.md \
@@ -318,7 +318,7 @@ CHAPTERS = \
     ch08-vmstat.md \
     ch09.md \
     ch09-osi-modell.md \
-    cha-09-arp.md \
+    ch09-arp.md \
     cha-09-ipv4-netzmasken.md \
     cha-09-zustaende-tcp.md \
     cha-09-routing-algorithm.md \
