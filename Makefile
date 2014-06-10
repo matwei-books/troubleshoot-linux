@@ -73,7 +73,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch09-osi-modell.md \
                $(DROPBOXDIR)/ch09-arp.md \
                $(DROPBOXDIR)/ch09-ipv4-netzmasken.md \
-               $(DROPBOXDIR)/cha-09-zustaende-tcp.md \
+               $(DROPBOXDIR)/ch09-zustaende-tcp.md \
                $(DROPBOXDIR)/cha-09-routing-algorithm.md \
                $(DROPBOXDIR)/cha-10.md \
                $(DROPBOXDIR)/cha-10-netzausfall-rechner.md \
@@ -200,7 +200,7 @@ SOURCES = $(BOOK) \
           ch09-osi-modell.md \
           ch09-arp.md \
           ch09-ipv4-netzmasken.md \
-          cha-09-zustaende-tcp.md \
+          ch09-zustaende-tcp.md \
           cha-09-routing-algorithm.md \
           cha-10.md \
           cha-10-netzausfall-rechner.md \
@@ -320,7 +320,7 @@ CHAPTERS = \
     ch09-osi-modell.md \
     ch09-arp.md \
     ch09-ipv4-netzmasken.md \
-    cha-09-zustaende-tcp.md \
+    ch09-zustaende-tcp.md \
     cha-09-routing-algorithm.md \
     cha-10.md \
     cha-10-netzausfall-rechner.md \
