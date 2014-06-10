@@ -6,7 +6,7 @@ Zu einer Zeit, in der IPv6 langsam an Fahrt gewinnt, mutet das vielleicht etwas
 anachronistisch an.
 Leider wird IPv4 noch fast überall eingesetzt und die Kenntnis der Netzgrenzen
 ist bei der Fehlersuche in IPv4-Netzen Grundvoraussetzung.
-Es lohnt sich daher für den Netzwerk Troubleshooter nach wie vor, diese zu
+Es lohnt sich daher für den Netzwerk-Troubleshooter nach wie vor, diese zu
 memorieren, falls er nicht in der Lage ist, sie in annehmbarer Zeit im Kopf
 auszurechnen.
 
@@ -52,9 +52,10 @@ bei der klassenbasierten Adresse die erste 0 hat.
 | /+6  | 252 | FC  | 0, 4, 8, 12, 16, ...    |
 | /+7  | 254 | FE  | 0, 2, 4, 6, 8, ...      |
 
-Die Netzadresse gibt an, an welcher Adresse das betreffende Netz beginnt.
-Diese Adresse kann nicht für Hosts vergeben werden. In der Tabelle habe ich
-nur maximal die ersten fünf aufgeführt. Die weiteren ergeben sich, indem man
+Die Netzadresse gibt an, an welcher Adresse ein Netz beginnt.
+Diese Adresse kann ich nicht für Hosts vergeben.
+In der Tabelle habe ich nur maximal die ersten fünf Netzadressen aufgeführt.
+Die weiteren ergeben sich, indem man
 die erste oder zweite zu allen Netzadressen der nächsthöheren Zeile addiert.
 Die zugehörige Broadcast-Adresse ist die Adresse des nächsten Netzwerkes mit
 gleicher Bitmaske, vermindert um 1.
@@ -65,8 +66,9 @@ Die Netzmaske ist `/16+5`, in Vierernotation `255.255.248.0`.
 Die Netzadresse ist `10.21.32.00`, die Broadcastadresse ist `10.21.39.255`.
 In diesem Segment stehen 2046 Adressen für Hosts zur Verfügung.
 
-Wer die IPv4-Netzmasken nicht selbst ausrechnen möchte, kann sich
-zum Beispiel das Programm *ipcalc* ansehen, das bei einigen Distributionen
-mitgeliefert wird.
-Dieses kommt mit einem CGI-Wrapper, so dass es auch als
-Netzdienst im lokalen Netz eingerichtet werden kann.
+Wer die IPv4-Netzmasken nicht selbst ausrechnen möchte,
+kann sich das Programm *ipcalc* ansehen,
+das bei einigen Distributionen mitgeliefert wird.
+Dieses kommt mit einem CGI-Wrapper,
+so dass es auch als Netzdienst eingerichtet werden kann.
+
