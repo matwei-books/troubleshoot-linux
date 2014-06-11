@@ -74,7 +74,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch09-arp.md \
                $(DROPBOXDIR)/ch09-ipv4-netzmasken.md \
                $(DROPBOXDIR)/ch09-zustaende-tcp.md \
-               $(DROPBOXDIR)/cha-09-routing-algorithm.md \
+               $(DROPBOXDIR)/ch09-routing-algorithm.md \
                $(DROPBOXDIR)/cha-10.md \
                $(DROPBOXDIR)/cha-10-netzausfall-rechner.md \
                $(DROPBOXDIR)/cha-10-netzausfall-segment.md \
@@ -201,7 +201,7 @@ SOURCES = $(BOOK) \
           ch09-arp.md \
           ch09-ipv4-netzmasken.md \
           ch09-zustaende-tcp.md \
-          cha-09-routing-algorithm.md \
+          ch09-routing-algorithm.md \
           cha-10.md \
           cha-10-netzausfall-rechner.md \
           cha-10-netzausfall-segment.md \
@@ -321,7 +321,7 @@ CHAPTERS = \
     ch09-arp.md \
     ch09-ipv4-netzmasken.md \
     ch09-zustaende-tcp.md \
-    cha-09-routing-algorithm.md \
+    ch09-routing-algorithm.md \
     cha-10.md \
     cha-10-netzausfall-rechner.md \
     cha-10-netzausfall-segment.md \
