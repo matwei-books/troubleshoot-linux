@@ -384,6 +384,17 @@ Magic SysRequest
   ein, mit Hilfe des Magic SysRequest ein hängendes System sicher neu zu
   starten.
 
+{#glossar-msl}
+Maximum Segment Lifetime, MSL
+: ist die Zeit, die ein TCP-Segment im Internet existieren kann.
+  Mit diesem Wert wird die Zeitspanne festgelegt, in der ein TCP-Socket im
+  `TIME_WAIT` Status verbleibt.
+  Der Wert ist willkürlich festgelegt und kann bei Linux mit dem folgenden
+  Befehl angesehen werden:
+
+{line-numbers=off,lang="text"}
+      $ cat /proc/sys/net/ipv4/tcp_fin_timeout
+
 MBR
 : Der *Master Boot Record* ist der erste Sektor eines Speichermediums, welches
   sich in Partitionen aufteilen läßt, wie zum Beispiel eine Festplatte.

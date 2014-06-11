@@ -4,23 +4,21 @@
 Ich betrachte hier die Zustände einer TCP-Verbindung, weil TCP vermutlich das
 am häufigsten im Netz vorkommende Protokoll ist.
 Außerdem ist es komplex genug, um sich wenigstens mit den grundlegenden
-Interna zu beschäftigen und um das Verhalten des Protokolls im Störungsfall
-einschätzen zu können.
+Interna zu beschäftigen damit ich das Verhalten der Beteiligten im Störungsfall
+einschätzen kann.
 
 ### Verbindungsaufbau
 
 Beim Aufbau einer TCP-Verbindung haben wir immer eine passive Seite
-(üblicherweise der Server, bei FTP auch manchmal der Client) und eine aktive
+- üblicherweise der Server, bei FTP auch manchmal der Client - und eine aktive
 Seite.
-Die passive Seite befindet sich im Zustand LISTEN.
+Die passive Seite beginnt im Zustand LISTEN.
 
-A> Den Zustand der TCP-Verbindungen auf einem Rechner kann man sich
-A> mit dem Befehl
+A> Um den Zustand der TCP-Verbindungen auf einem Rechner anzusehen nutze ich
+A> den Befehl
 A>
 {line-numbers=off,lang="text"}
 A>     $ netstat -ant
-A>
-A> anzeigen lassen.
 
 Ein erfolgreicher Verbindungsaufbau benötigt drei Datenpakete und geht wie
 folgt vonstatten:
@@ -36,7 +34,7 @@ Der Client bestätigt das SYN-ACK-Paket mit ACK und geht in den Zustand
 Sobald das ACK-Paket beim Server ankommt geht dieser ebenfalls in den Zustand
 *ESTABLISHED* und die Verbindung ist vollständig etabliert.
 
-Nur bei den ersten beiden Datenpaketen kann man vom Netzwerk aus sehen, welche
+Nur bei den ersten beiden Datenpaketen kann ich vom Netzwerk aus sehen, welche
 Seite die Verbindung aktiv aufgebaut hat.
 
 Wenn an dem betreffenden Port auf Serverseite kein Prozess lauscht oder der
@@ -71,14 +69,18 @@ sendet keine Daten mehr, nur noch ACK.
 Irgendwann sendet B ebenfalls ein FIN-Paket und geht in den Zustand *LAST_ACK*
 über.
 Sobald A das FIN-Paket empfängt, bestätigt es dieses mit ACK und geht für die
-doppelte MSL in den Zustand *TIME_WAIT* und danach in den Zustand *CLOSED*.
+doppelte [MSL](#glossar-msl) in den Zustand *TIME_WAIT* und danach in den
+Zustand *CLOSED*.
 B geht mit Empfang der Bestätigung von A sofort in den Zustand *CLOSED*.
 
-Da A noch eine Zeit lang im Zustand *TIME_WAIT* verbleibt, kann man auf dem
-betreffenden Rechner mit `netstat -ant` sehen, dass dieser die Verbindung
+Da A noch eine Zeit lang im Zustand *TIME_WAIT* verbleibt, kann ich solange
+mit `netstat -ant` sehen, dass dieser die Verbindung
 zuerst geschlossen hat.
 
 ### Flusssteuerung
+
+In [[ctZivadinovic2012](#bib-ct-zivadinovic2012)] erläutert der Autor die
+Funktionsweise der TCP-Flusskontrolle ausführlich und sehr anschaulich.
 
 Es gibt zwei Aspekte bei der TCP-Flusssteuerung.
 Zum einen teilt der Empfänger dem Sender mit, wie viele Bytes er momentan
@@ -102,13 +104,20 @@ Deutschlands etwa fünfzig Millisekunden und interkontinental mehr als hundert
 Millisekunden.
 Der Sender sendet maximal soviel Daten, wie im *Receive Window* vorgegeben,
 ohne Bestätigung durch ACK-Pakete an den Empfänger.
-Bei einer RTT von 1 Millisekunde und einem *Receive Window* von 50000 kann der
-Sender maximal 50000 Byte pro Millisekunde senden, also etwa 50 MByte pro
-Sekunde.
-Bei einer RTT von 100 Millisekunden und ansonsten gleichen Parametern kann der
-Sender nur noch maximal 50000 Byte in 100 Millisekunden senden, das heißt nur
-noch 500 KByte pro Sekunde.
-Darum ist es bei Breitbandverbindungen mit hoher RTT eventuell hilfreich, das
+
+Die folgende Tabelle soll den Einfluß der RTT auf die erzielbare Datenrate
+verdeutlichen.
+Bei einer Erhöhung der RTT um das zehnfache sinkt die Datenrate um den Fakter
+zehn, wenn das *Receive Window* gleich bleibt.
+
+{width="wide"}
+|  RWIN | RTT (ms) | Datenrate (MB/s) |
+|-------|----------|------------------|
+| 50000 |        1 |             ~ 50 |
+| 50000 |       10 |              ~ 5 |
+| 50000 |      100 |            ~ 0,5 |
+
+Darum ist es bei Breitbandverbindungen mit hoher RTT hilfreich, das
 *Receive Window* des Empfängers zu erhöhen, wenn die maximal mögliche
 Datenübertragungsrate nicht erreicht wird.
 
@@ -123,7 +132,7 @@ Dieser Multiplikator ist eine Potenz von zwei und kann von {$$}2^{0}{/$$} bis
 beim Aushandeln der Verbindung wird nur der Exponent übertragen.
 
 Für die Flusssteuerung zur Vermeidung von Überlast gibt es verschiedene
-Algorithmen, die gemeinsam verwendet werden können.
+Algorithmen, die zum Teil gemeinsam verwendet werden können.
 Der Sender führt für die Verbindung ein Congestion Window, das ihm anzeigt,
 wieviel Bytes er momentan auf die Leitung schicken könnte.
 
@@ -159,5 +168,3 @@ Zusätzlich zum letzten regulären Paket bestätigt der Empfänger in den DUP-AC
 die außer der Reihe angekommenen Datenpakete in zusätzlichen
 TCP-Headerfeldern, so dass diese nicht noch einmal gesendet werden müssen.
 
-In [ctZivadinovic2012](#bib-ct-zivadinovic2012) erläutert der Autor die
-Funktionsweise der TCP-Flusskontrolle ausführlich und sehr anschaulich.
