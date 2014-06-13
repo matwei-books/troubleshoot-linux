@@ -69,7 +69,7 @@ sendet keine Daten mehr, nur noch ACK.
 Irgendwann sendet B ebenfalls ein FIN-Paket und geht in den Zustand *LAST_ACK*
 über.
 Sobald A das FIN-Paket empfängt, bestätigt es dieses mit ACK und geht für die
-doppelte [MSL](#glossar-msl) in den Zustand *TIME_WAIT* und danach in den
+doppelte MSL in den Zustand *TIME_WAIT* und danach in den
 Zustand *CLOSED*.
 B geht mit Empfang der Bestätigung von A sofort in den Zustand *CLOSED*.
 
