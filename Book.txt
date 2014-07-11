@@ -67,7 +67,8 @@ ch09-arp.md
 ch09-ipv4-netzmasken.md
 ch09-zustaende-tcp.md
 ch09-routing-algorithm.md
-cha-10.md
+ch10.md
+ch10-netzausfall-rechner.md
 cha-11.md
 cha-12.md
 cha-13.md

@@ -3,7 +3,7 @@
 
 Komme ich zu einem Rechner, der überhaupt keine Verbindung zum Netz hat, dann
 beginne ich in der untersten Schicht, der physikalischen oder
-Bitübertragungsschicht, im [OSI-Modell](#sec-osi-modell) und arbeite mich von
+Bitübertragungsschicht im [OSI-Modell](#sec-osi-modell) und arbeite mich von
 da langsam nach oben über die Sicherungsschicht zur Vermittlungsschicht.
 
 Bei neu gestarteten Systemen kontrolliere ich als erstes die
@@ -11,8 +11,9 @@ Zuordnung der Schnittstellennamen mit `ifconfig` oder `ip addr show`.
 
 Es gibt keine zuverlässige Möglichkeit,
 Netzschnittstellen von vornherein eindeutig zu benennen.
+
 Traditionell heißen Ethernetschnittstellen *eth0*, *eth1*, ...
-Sobald mehrere Schnittstellen eingebaut sind, ist es nicht mehr trivial zu
+Sobald mehrere Schnittstellen eingebaut sind, ist es nicht mehr trivial, zu
 bestimmen, welche physische Schnittstelle *eth0* ist.
 Die Nummerierung kann sich von einer Kernel-Version zur anderen ändern, was
 glücklicherweise eher selten vor kommt.
@@ -22,29 +23,30 @@ Aus diesem Grund wird bei Debian via *udev* beim Systemstart für
 jede bisher unbekannte Ethernet-Karte eine Regel in
 */etc/udev/rules.d/70-persistent-net.rules* generiert, die den nächsten
 freien Namen mit der MAC-Adresse der Karte verknüpft.
-Damit bleibt die Zuordnung immer gleich, unabhängig ob ich Ethernetkarten
-hinzufüge oder ausbaue.
+Damit bleibt die Zuordnung immer gleich, unabhängig davon, ob ich
+Ethernetkarten hinzufüge oder ausbaue.
 
-Wenn ich nun einen Klon dieses Systems in einen Rechner mit anderen
+Wenn ich einen Klon dieses Systems in einen Rechner mit anderen
 MAC-Adressen der Ethernetkarten einbaue, dann ändern sich alle
 Schnittstellennamen.
 Statt *eth0*, *eth1*, *eth2* finde ich dann *eth3*, *eth4*, *eth5* im System
 vor.
-Dann stimmt die alte Schnittstellenkonfiguration in
-*/etc/network/interfaces* nicht mehr.
+Damit stimmt die alte Schnittstellenkonfiguration in
+*/etc/network/interfaces* nicht mehr und der Rechner ist über Netzwerk nicht
+zu erreichen.
 
 Na gut, mag man einwenden, aber wann kommt so etwas denn vor?
-Zum Beispiel, wenn ein System virtualisiert wird, oder wenn ein bereits
-virtualisiertes System geklont wird, oder wenn ein System, welches von
-Flashspeicher betrieben wird, in eine andere Hardware kopiert wird.
+Zum Beispiel, wenn ich ein bestehendes System virtualisiere, oder wenn ich
+ein virtualisiertes System klone, oder wenn ich ein System, welches von
+Flashspeicher betrieben wird, in eine andere Hardware kopiere.
 
 Die Abhilfe ist einfach.
 Ich entferne alle Einträge aus der Datei
 */etc/udev/rules.d/70-persistent-net.rules* und starte das System neu.
 
 Nachdem ich mich von der korrekten Nummerierung der Netzschnittstellen
-überzeugt habe, schaue ich nach, ob das System mit dem Hub, Switch oder
-Rechner am anderen Ende des Kabels verbunden ist.
+überzeugt habe, schaue ich nach, ob die Verbindung mit dem Hub, Switch oder
+Rechner am anderen Ende des Kabels funktioniert.
 
 Dafür brauche ich keinen neuen Befehl aufrufen, das sagt mir ebenfalls `ip`:
 
@@ -80,7 +82,7 @@ ich sicher, dass ich durch Überprüfung der Kabelverbindung und gegebenenfalls
 Austausch defekter Komponenten eine funktionsfähige physische Verbindung
 hergestellt habe.
 
-Meldet der Treiber (und `ip`) eine Kabelverbindung, will ich als nächstes
+Melden Treiber und `ip` eine Kabelverbindung, will ich als nächstes
 sehen, dass auch Daten darüber ankommen.
 Mit dem Befehl `netstat -i` sehe ich, ob Daten über die
 Ethernet-Schnittstelle empfangen oder gesendet wurden:
@@ -94,7 +96,7 @@ Ethernet-Schnittstelle empfangen oder gesendet wurden:
     ...
 
 Hier sehe ich, dass an eth1 Daten ankamen und gesendet wurden.
-Allerdings weiß ich noch nicht, ob die Schnittstellen jeweils am
+Allerdings weiß ich noch nicht, ob die Schnittstellen am
 richtigen Netz angeschlossen sind.
 Mit `ip addr show` lasse ich mir die Adressen anzeigen und vergleiche diese
 mit der erwarteten Konfiguration.
@@ -108,8 +110,8 @@ Das überprüfe ich mit:
     # tcpdump -n -i $if
 
 das mir den Verkehr am betreffenden Interface anzeigt.
-Dabei schaue ich nach Broadcasts und ARP-Anfragen, die mir sagen, in welchem
-Netzsegment das betreffende Interface angeschlossen ist.
+Dabei schaue ich nach Broadcasts und ARP-Anfragen, die mir zeigen, in welchem
+Netzsegment das Interface angeschlossen ist.
 Nötigenfalls tausche ich die Kabel, bis alle Schnittstellen mit dem richtigen
 Netzsegment verbunden sind.
 
@@ -123,8 +125,8 @@ A> betreffenden IP-Adresse einen Rechner erreichen kann.
 A> 
 {line-numbers=off,lang="text"}
 A>     # arp -an
-A>     ? (192.168.1.4) auf <unvollständig> auf eth1
-A>     ? (192.168.1.5) auf 00:01:6c:6f:c5:d6 [ether] auf eth1
+A>     ? (192.168.1.4) at <incomplete> on eth1
+A>     ? (192.168.1.5) at 00:01:6c:6f:c5:d6 [ether] on eth1
 A>     ...
 A> 
 A> Im Beispiel ist der Rechner mit IP-Adresse 192.168.1.4 nicht zu
@@ -139,5 +141,5 @@ kann, habe ich es nicht mehr mit einem totalen Netzausfall des Rechners zu tun.
 Dann schaue ich als nächstes nach, ob ein Gateway definiert ist, ob ich
 dieses erreichen kann und schließlich, ob ich irgend einen Rechner hinter dem
 Gateway erreiche.
-Aber das gehört schon zu einem anderen Themenkreis und wird an anderer Stelle
-in diesem Buch beschrieben.
+Aber das gehört schon zu einem anderen Themenkreis und steht an anderer Stelle
+in diesem Buch.
