@@ -8,9 +8,8 @@ Während ich bei ersterem auf die Kenntnis der Hardware und der unteren
 benötige ich hier detaillierte Kenntnisse der Netzwerktopologie.
 
 Mein erster Blick gilt den Routen.
-Mit `netstat -rn`, `ip route show` oder `route -n` kann ich mir diese
-anzeigen lassen.
-Da in Netzen mit sehr vielen Routen die Ausgabe sehr
+Mit `netstat`, `ip` oder `route` kann ich mir diese anzeigen lassen.
+Da die Ausgabe in Netzen mit sehr vielen Routen sehr
 unübersichtlich ist und die Routen nach anderen Kriterien sortiert sind
 als nach der schnellen Auffindbarkeit eines Netzes, lautet die komplette
 Befehlszeile bei mir meist:
@@ -33,33 +32,28 @@ Und zwar in beide Richtungen, zum ausgefallenen Netzsegment und zurück zu
 dem Segment, von dem aus ich den Fehler suche.
 Mitunter kommen meine Datenpakete im ausgefallenen Netzsegment an, aber die
 Antwort nicht, da die Rückroute fehlt.
-In diesem Fall kann ich mich auch nicht direkt am Gateway mit der
+In diesem Fall kann ich mich nicht direkt am Gateway mit der
 fehlenden Rückroute anmelden.
 Die Anmeldung von Gateway zu Gateway funktioniert aber oft noch, so dass ich
 darüber die Konfiguration und die Routen kontrollieren kann.
 
-Da bei ausgefallenem Routingprotokoll oft noch die Anmeldung von einem
-Gateway zum nächsten möglich ist, ist es sinnvoll, wenn ich auf den
-Gateways immer auch das Client-Programm, `ssh` oder `telnet` zur Verfügung
-habe, um mich am nächsten Gateway anmelden zu können.
-
 Je nachdem, ob ich auf dem Gateway ein Problem mit der physischen Verbindung
 zum nächsten Hop habe, oder ob eine der benötigten Routen
-fehlt, behandle ich den Fall weiter.
+fehlt, arbeite ich jetzt weiter.
 
 Bei Problemen mit der physischen Verbindung untersuche ich das Problem
 bei einem Linux-basierten Router, wie im vorigen Abschnitt beschrieben.
 
-Bei fehlenden Routen muss ich nach den Routing-Protokollen schauen.
+Bei fehlenden Routen muss ich mich näher mit den Routing-Protokollen
+beschäftigen.
 
-In dringenden Notfällen kann ich mir mit einer statischen Route kurzfristig
+In dringenden Notfällen kann ich mir mit einer statischen Route
 weiterhelfen, aber das sollte die Ausnahme sein.
 Wenn im Netz ein Routingprotokoll verwendet wird, so ist es besser, die Routen
 darüber zu verbreiten, weil damit Änderungen im Netz automatisch an alle
 Gateways bekanntgegeben werden.
 Eine vergessene statische Route kann auf sehr subtile Weise zu Netzwerkfehlern
-führen, die manchmal schwer zu finden sind und sich zeitlich nicht mit der
-Topologieänderung verbinden lassen.
+führen, die mitunter schwer zu finden sind.
 
 ### Statische Routen eintragen
 
@@ -87,7 +81,7 @@ Sinnvollerweise bei dem Interface, über das die Verbindung zum Gateway geht:
 Bei Systemen, die auf Fedora oder Redhat basieren, trage ich die Route unter
 */etc/sysconfig/* in die passende Datei ein.
 
-Die andere Möglichkeit, eine statische Route einzutragen geht über das
+Eine andere Möglichkeit, eine statische Route einzutragen, geht über das
 Programm *quagga*.
 Dieses ist auf einem Gateway vermutlich sowieso installiert.
 
