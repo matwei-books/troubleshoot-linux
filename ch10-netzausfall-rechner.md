@@ -85,7 +85,7 @@ hergestellt habe.
 Melden Treiber und `ip` eine Kabelverbindung, will ich als nächstes
 sehen, dass auch Daten darüber ankommen.
 Mit dem Befehl `netstat -i` sehe ich, ob Daten über die
-Ethernet-Schnittstelle empfangen oder gesendet wurden:
+Schnittstelle empfangen oder gesendet wurden:
 
 {line-numbers=off,lang="text"}
     $ netstat -i
@@ -132,7 +132,7 @@ A>
 A> Im Beispiel ist der Rechner mit IP-Adresse 192.168.1.4 nicht zu
 A> erreichen, während der Rechner mit IP-Adresse 192.168.1.5 im Netz erreichbar
 A> ist.
-A> Bekomme ich keine PING-Antwort, so kann ich bei letzterem auf
+A> Bekomme ich keine Antwort auf PING, so kann ich bei letzterem auf
 A> störende Paketfilter schließen.
 
 Sobald ich irgendeinen Rechner im direkt angeschlossenen Netzsegment erreichen

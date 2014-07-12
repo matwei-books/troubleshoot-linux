@@ -199,7 +199,7 @@ einzuschätzen:
     andere Router
 *   Router in Stub Areas und NSSA (not so stubby areas) machen am wenigsten.
 
-Gegebenenfalls setze ich an den entsprechenden Stellen leistungsstärkere
+Gegebenenfalls setze ich an einigen Stellen leistungsstärkere
 Router ein oder sorge dafür, dass ein schwächerer Router nicht DR/BDR wird.
 
 Mit dem Befehl `show ip ospf` bekomme ich heraus, wie oft der
