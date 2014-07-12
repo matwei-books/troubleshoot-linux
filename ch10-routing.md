@@ -34,7 +34,7 @@ A> Fehlerfall nicht am grünen Tisch vorhergesagt werden kann.
 
 Was kann ich tun, wenn ich auf Grund der Komplexität des Netzes ein oder
 mehrere Routingprotokolle einsetze und bei festgestellten Verbindungsabbrüchen
-sicher gehen will, dass diese nicht vom Routing stammen?
+sicher gehen will, dass diese nicht vom Routing verursacht wurden?
 
 An dieser Stelle setze ich einmal mehr auf Monitoring, also lückenlose
 Beobachtung der Routen im Netz.
@@ -56,7 +56,7 @@ teilnehmen lassen, sondern auch über die Debugfunktionen den Zustand der
 Protokolle analysieren und über die Protokollfunktion das Routing überwachen.
 
 Will ich  nur mitbekommen, wann welche Route im Netz hinzukam oder
-verschand, wende ich mich direkt an den Dämon `zebra`.
+verschwand, wende ich mich direkt an den Dämon `zebra`.
 Ich schalte das Logging ein und teile ihm mit, welche Informationen ich haben
 will.
 
@@ -103,7 +103,7 @@ ergänze dieses um die folgenden Zeilen:
         } 
     }
 
-In Zeile 1 lege ich die gewünschten Zeilen anhand des Prozessnamens fest.
+In Zeile 1 lege ich die gewünschten Logzeilen anhand des Prozessnamens fest.
 Zeilen 2 bis 4 definieren reguläre Ausdrücke, die mir die Informationen aus
 den Logzeilen beschaffen. Die Netzadresse der Route landet in der temporären
 Variable `$1`, die ich in den Zeile 9 für die entfernten und Zeile 12 für die
@@ -133,6 +133,8 @@ Konfigurationsbeispiele mit Quagga sehr gut nachvollziehen kann.
 
 RIP-2 ist ein sehr einfaches und robustes Protokoll, das seinem
 Vorgänger RIP vor allem mit der Fähigkeit zu CIDR überlegen ist.
+Es ist in [RFC 2453](#bib-www-ietftools) beschrieben,
+[RFC 4822](#bib-www-ietftools) ergänzt es um kryptographische Authentisierung.
 RIP und RIP-2 nutzen den Distance-Vektor-Algorithmus zur Berechnung der
 Routen.
 Außerdem kann es die Next-Hop-Address zu einer Route angeben, wodurch ich mit
@@ -145,7 +147,7 @@ zufällig im Netz eingesteckten fremden Routern zu übernehmen.
 Gleichzeitig verhindern sie den Austausch der Routen zwischen meinen Routern,
 falls ich die Authentisierungsinformationen falsch eingetragen habe.
 
-Bei Problemen melde ich mich via `telnet` am RIP-Dämon an:
+Bei Problemen melde ich mich am RIP-Dämon an:
 
 {line-numbers=off,lang="text"}
     $ telnet localhost ripd
@@ -160,6 +162,9 @@ anbietet.
 ### OSPF
 
 OSPF ist ein hierarchisches Protokoll.
+[RFC 2328](#bib-www-ietftools) beschreibt die Version 2 für IPv4 und
+[RFC 5340](#bib-www-ietftools) OSPF für IPv6.
+
 Ich teile das Netz in einzelne Areas (Gebiete) auf, die über eine Zentrale
 (Area 0) miteinander verbunden sind.
 Die Router in den Areas müssen lediglich die Routen innerhalb der Area und die
@@ -174,9 +179,9 @@ Dafür ist die Berechnung der neuen Route CPU-intensiv.
 
 #### Fehlersuche bei OSPF
 
-Um das OSPF-Protokoll - genaugenommen seinen Zustand - zu analysieren, melde ich
-mich am *ospfd* von *quagga* an und arbeite überwiegend mit den über `show ip
-ospf` erreichbaren Befehlen.
+Um das OSPF-Protokoll - genau genommen seinen Zustand - zu analysieren, melde
+ich mich am *ospfd* von *quagga* an und arbeite überwiegend mit den über
+`show ip ospf` erreichbaren Befehlen.
 
 Mit `show ip ospf interface` sehe ich, welche Interfaces aktiv sind, am
 OSPF-Protokoll teilnehmen und welche Nachbarn sie kennen.
@@ -189,15 +194,17 @@ Da OSPF sehr prozessorlastig ist, muss ich vielleicht nachsehen, ob ein Router
 Dabei helfen mir die folgenden Faustregeln, um die zu erwartende Last grob
 einzuschätzen:
 
-*   ABR machen mehr als interne Router
-*   DR/BDR machen mehr als andere Router
-*   Router in Stub Areas und NSSA machen am wenigsten.
+*   ABR (area border router) machen mehr als interne Router
+*   DR (designated router) / BDR (backup designated router) machen mehr als
+    andere Router
+*   Router in Stub Areas und NSSA (not so stubby areas) machen am wenigsten.
 
 Gegebenenfalls setze ich an den entsprechenden Stellen leistungsstärkere
 Router ein oder sorge dafür, dass ein schwächerer Router nicht DR/BDR wird.
 
 Mit dem Befehl `show ip ospf` bekomme ich heraus, wie oft der
-OSPF-Algorithmus ausgeführt wurde:
+OSPF-Algorithmus ausgeführt wurde, das heißt, wie oft die Routen neu berechnet
+wurden:
 
 {line-numbers=off,lang="text"}
     ospfd> sh ip ospf
@@ -215,10 +222,10 @@ In diesem Fall kann ich mit den über `debug ospf` erreichbaren Befehlen nach
 dem betreffenden Router fahnden und dann das Problem dort untersuchen.
 Einfacher ist die Ursache manchmal zu finden, wenn ich sowieso alle
 Routingänderungen protokolliere und anhand dieser Protokolle auf die Ursache
-schließe.
+schließen kann.
 
 Suche ich hingegen nach einer relativ stabilen aber falschen Route, dann kann
-ich die LS-Datenbank mit den über `show ip ospf database` erreichbaren
+ich die Topologiedatenbank mit den über `show ip ospf database` erreichbaren
 Befehlen untersuchen.
 
 ### Gemischter Einsatz von statischen und dynamischen Routen
