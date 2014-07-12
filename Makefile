@@ -118,6 +118,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
 	       $(DROPBOXDIR)/code/http-injector.pl \
 	       $(DROPBOXDIR)/code/read-syslog.pl \
 	       $(DROPBOXDIR)/code/strace-invocator.sh \
+               $(DROPBOXDIR)/images/ch10-entfernte-routen.png \
+               $(DROPBOXDIR)/images/ch10-neue-routen.png \
                $(DROPBOXDIR)/images/eb-allgemein-drakon.png \
                $(DROPBOXDIR)/images/eb-allgemein.png \
                $(DROPBOXDIR)/images/eb-allgemein-3-yed.png \
@@ -243,6 +245,8 @@ SOURCES = $(BOOK) \
 	  code/http-injector.pl \
 	  code/read-syslog.pl \
 	  code/strace-invocator.sh \
+          images/ch10-entfernte-routen.png \
+          images/ch10-neue-routen.png \
           images/eb-allgemein-drakon.png \
           images/eb-allgemein.png \
           images/eb-allgemein-3-yed.png \
