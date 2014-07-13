@@ -79,8 +79,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch10-netzausfall-rechner.md \
                $(DROPBOXDIR)/ch10-netzausfall-segment.md \
                $(DROPBOXDIR)/ch10-routing.md \
-               $(DROPBOXDIR)/cha-11.md \
-               $(DROPBOXDIR)/cha-11-ausfall-essentiell.md \
+               $(DROPBOXDIR)/ch11.md \
+               $(DROPBOXDIR)/ch11-ausfall-essentiell.md \
                $(DROPBOXDIR)/cha-11-ausfall-dienst.md \
                $(DROPBOXDIR)/cha-12.md \
                $(DROPBOXDIR)/cha-12-ursachen.md \
@@ -208,8 +208,8 @@ SOURCES = $(BOOK) \
           ch10-netzausfall-rechner.md \
           ch10-netzausfall-segment.md \
           ch10-routing.md \
-          cha-11.md \
-          cha-11-ausfall-essentiell.md \
+          ch11.md \
+          ch11-ausfall-essentiell.md \
           cha-11-ausfall-dienst.md \
           cha-12.md \
           cha-12-ursachen.md \
@@ -330,8 +330,8 @@ CHAPTERS = \
     ch10-netzausfall-rechner.md \
     ch10-netzausfall-segment.md \
     ch10-routing.md \
-    cha-11.md \
-    cha-11-ausfall-essentiell.md \
+    ch11.md \
+    ch11-ausfall-essentiell.md \
     cha-11-ausfall-dienst.md \
     cha-12.md \
     cha-12-ursachen.md \
