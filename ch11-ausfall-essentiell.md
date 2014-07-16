@@ -2,16 +2,13 @@
 ## Ausfall essentieller Dienste im Netz
 
 Der Ausfall essentieller Dienste im Netz erscheint, oberflächlich betrachtet,
-wie ein Totalausfall.
-Da er jedoch oft nur auf einen Dienst auf einem oder wenigen Servern
-beschränkt ist, behandle ich ihn bei der Fehlersuche als Teilausfall im Netz.
+manchmal wie ein Totalausfall.
+Da oft nur ein Dienst auf einem oder wenigen Servern ausgefallen ist,
+behandle ich ihn bei der Fehlersuche als Teilausfall im Netz.
 Wichtig ist für mich, diesen Ausfall eines oder weniger Dienste zu
-identifizieren und vom Totalausfall zu unterscheiden.
-Es kann vorkommen, dass dieser Teilausfall im Netz auf einen Totalausfall
-des Rechners, auf dem der Dienst läuft, oder seiner Anbindung an das Netz
-zurückführt,
+identifizieren und vom Totalausfall des Netzes zu unterscheiden.
 
-Bereits vor dem Ausfall sollte ich mir Gedanken gemacht haben, wie ich die
+Bereits vor dem Ausfall muss ich mir Gedanken machen, wie ich die
 Auswirkungen dieses Ausfalls lindere und wie ich vorgehe, um den Ausfall zu
 beheben.
 
@@ -26,10 +23,10 @@ Dienst wieder zum Laufen zu bringen, bevor alle Clients ohne Konfiguration da
 stehen.
 
 Bei DNS hilft ebenfalls Redundanz, diese ist im Dienst bereits vorgesehen.
-In kleineren Satelliten-Netzen kann ich den Nameserver auf dem
+In kleinen Satelliten-Netzen kann ich den Nameserver auf dem
 Gateway nutzen und für wichtige interne Dienste Einträge in der *hosts* Datei
 vorsehen.
-Dann kann ich davon ausgehen, dass beim Ausfall des DNS oft auch der
+Denn ich kann davon ausgehen, dass beim Ausfall des DNS oft auch der
 Internetzugang betroffen ist und mir der DNS sowieso nichts genutzt hätte.
 Durch die zusätzlichen Einträge in der Datei */etc/hosts* kann ich
 intern weiter arbeiten.
@@ -50,7 +47,7 @@ bleiben, wenn es nur eine Stelle gibt, an der ich die Konfiguration und
 Dokumentation gleichzeitig ändere und wenn mindestens eine der beiden
 automatisch generiert wird.
 
-**Natürlich muss die Dokumentation im Fehlerfall zugänglich sein.**
+**Natürlich muss ich an die Dokumentation im Fehlerfall herankommen.**
 Halte ich diese ausschließlich elektronisch vor, ist eine
 Kopie auf USB-Stick und/oder auf dem Notfall-Laptop manchmal die letzte
 Rettung.
@@ -58,11 +55,10 @@ Rettung.
 ### Wie erkenne ich den Ausfall eines essentiellen Dienstes?
 
 Diese Frage ist insofern wichtig, als sich dieser Ausfall für den Kunden oft
-als Totalausfall des Netzes darstellt, bei der Fehlersuche aber als
-Teilausfall im Netz behandelt wird.
+als Totalausfall des Netzes darstellt, während ich ihn bei der Fehlersuche als
+Teilausfall im Netz behandele.
 Insbesondere, wenn ich noch keine Hinweise vom Monitoring habe, muss ich
-ohne dieses den Totalausfall vom Ausfall essentieller Dienste unterscheiden
-können.
+den Totalausfall vom Ausfall essentieller Dienste unterscheiden können.
 Die Aussagen des Kunden führen mich hier möglicherweise in die Irre, wenn ich
 nicht durch genaue Kenntnis der Netztopologie und der Konfiguration der
 betroffenen Rechner zu den richtigen Schlüssen komme.
@@ -87,9 +83,9 @@ Dann versuche ich, verschiedene Rechner an verschiedenen Stellen im Netz mit
 PING zu erreichen.
 Dabei muss ich immer im Hinterkopf haben, dass manche Rechner nicht auf PING
 antworten, weil Firewall-Regeln das unterbinden.
-Vielleicht auch, weil der Angefragte auf Grund von Routingproblemen die
+Vielleicht auch, weil der angefragte Rechner auf Grund von Routingproblemen die
 Antworten nicht zurückschicken kann.
-Dadurch, dass ich versuche, verschiedene Rechner von verschieden Stellen aus
+Dadurch, dass ich versuche, verschiedene Rechner von verschiedenen Stellen aus
 zu erreichen, kann ich einige dieser Möglichkeiten ausschließen.
 
 Funktioniert die Verbindung mittels IP-Adresse, versuche ich als
@@ -121,20 +117,20 @@ Ansonsten schaue ich direkt auf dem Rechner mit dem DHCP-Server in den
 Protokollen nach.
 
 Falls sich der DHCP-Server in einem anderen Netzsegment befindet wie der
-betroffene Rechner, muss ich mir unter Umständen auch das DHCP-Relay auf dem
-Gateway beim Client-Rechner ansehen.
-Mitunter blockieren auch Firewall-Regeln diesen Dienst.
+betroffene Rechner, muss ich mir unter Umständen auch das DHCP-Relay auf den
+Gateways zwischen DHCP-Server und Client-Rechner ansehen.
+Manchmal blockieren Firewall-Regeln diesen Dienst.
 
 ### DNS
 
 Bei einem Ausfall des DNS funktioniert die Auflösung der Namen zu IP-Adressen
-nicht mehr und scheinbar "funktioniert gar nichts mehr" für den Kunden.
+nicht und für manche Kunden funktioniert scheinbar gar nichts mehr.
 Tests mit IP-Adressen zeigen allerdings, dass das Netz als solches
 funktioniert.
 Natürlich ist es möglich, dass einzelne Namen noch aufgelöst werden.
-Diese finde ich dann oft in der Datei */etc/hosts*.
+Diese finde ich dann meist in der Datei */etc/hosts*.
 
-Bei einem vermuteten Ausfall des DNS überprüfe ich zwei Dinge am betroffenen
+Vermutete ich einen Ausfall des DNS, überprüfe ich zwei Dinge am betroffenen
 Rechner: *welche Nameserver sind konfiguriert* und *antworten diese auf gezielte
 DNS-Anfragen*?
 Bei gezielten DNS-Anfragen verlasse ich mich nicht auf die Resolver-Bibliothek
@@ -161,7 +157,7 @@ das DNS behindern.
 
 ### NTP
 
-Zeitfehler sind sehr subtil, da die Uhrzeit der Rechner meist nur allmählich
+Zeitfehler sind subtil, da die Uhrzeit der Rechner oft nur allmählich
 auseinander driftet.
 Bestimmte Dienste, wie zum Beispiel *Kerberos* für die Authentisierung,
 tolerieren nur geringe Abweichungen der Systemzeit und funktionieren dann
@@ -213,8 +209,8 @@ Diese Funktion könnte zum Beispiel so aussehen:
 Die Datei muss auf einem Webserver liegen und von diesem mit dem MIME-Typ
 `application/x-ns-proxy-autoconfig` ausgeliefert werden.
 Gängige Namen sind *proxy.pac* oder *wpad.dat*.
-Letzterer wird bei der Bestimmung des URL dieser Datei via DNS im
-WPAD-Protokoll verwendet.
+Letzteren verwendet der Browser bei der Bestimmung des URL dieser Datei via
+DNS mit dem WPAD-Protokoll.
 
 Habe ich einen Webserver der diese Datei ausliefert, kann ich deren Funktion
 durch direkte Konfiguration der URL bei den Proxy-Einstellungen des Browsers
@@ -232,7 +228,7 @@ Der Vorteil ist, dass ich keine weitere Infrastruktur dafür vorhalten muss.
 Nachteile sind zum einen, dass ich den URL bei jedem Browser eintragen muss
 und zum anderen, dass ich den URL nicht nachträglich ändern kann, ohne
 wiederum zu jedem Browser zu gehen und sie vor Ort anzupassen.
-Oder kurz: das skaliert nicht.
+Oder kurz: das skaliert nicht mit der Anzahl der Nutzer.
 
 Zum Glück haben sich andere bereits Gedanken über das Problem gemacht und mit
 dem WPAD-Protokoll einen Weg geschaffen, mit dem nahezu jeder Webbrowser
@@ -256,15 +252,15 @@ Um diese Option zu verifizieren, schaue ich auf dem Client in der Datei
 Je nach verwendeter DHCP-Client-Software finde ich die Datei eventuell an
 anderer Stelle.
 
-Mit dieser Methode kann ich verschiedenen Clients verschiedene URL
-übermitteln, indem ich den DHCP-Server verschiedene Strings an unterschiedliche
+Dabei kann ich verschiedenen Clients unterschiedliche URLs übermitteln,
+indem ich den DHCP-Server unterschiedliche Strings an die verschiedenen
 Clients senden lasse.
 
 ##### Bestimmen des URL mit DNS
 
 Diese Methode ist auch für Rechner mit statisch vergebener IP-Adresse
-geeignet, weil der Webbrowser über die Resolver-Bibliothek problemlos
-DNS-Anfragen stellen kann, während es schwierig ist, den DHCP-Client-Dämon
+geeignet, weil der Webbrowser mit der Resolver-Bibliothek problemlos Anfragen
+via DNS stellen kann, während es schwierig ist, den DHCP-Client-Dämon
 zu gezielten Anfragen nach bestimmten Optionen zu bewegen.
 
 Der Webbrowser versucht nach dieser Methode die PAC-Datei von einem URL zu
@@ -274,7 +270,7 @@ Domain-Endungen.
 
 Diese Endungen werden zunächst aus dem Domain-Suffix des FQDN des eigenen
 Rechners gebildet und dann sukzessive von links verkürzt.
-Das heißt, der Webbroswer versucht auf dem Rechner *pc.branch.example.com*
+Das heißt, der Webbrowser versucht auf dem Rechner *pc.branch.example.com*
 nacheinander, bis er Erfolg hat, die folgenden URLs:
 
 *   *http://wpad.branch.example.com/wpad.dat*
