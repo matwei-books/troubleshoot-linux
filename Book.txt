@@ -73,6 +73,7 @@ ch10-netzausfall-segment.md
 ch10-routing.md
 ch11.md
 ch11-ausfall-essentiell.md
+ch11-ausfall-dienst.md
 cha-12.md
 cha-13.md
 anhang.md
