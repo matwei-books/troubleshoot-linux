@@ -252,7 +252,7 @@ Um diese Option zu verifizieren, schaue ich auf dem Client in der Datei
 Je nach verwendeter DHCP-Client-Software finde ich die Datei eventuell an
 anderer Stelle.
 
-Dabei kann ich verschiedenen Clients unterschiedliche URLs übermitteln,
+Dabei kann ich verschiedenen Clients unterschiedliche URLs zuweisen,
 indem ich den DHCP-Server unterschiedliche Strings an die verschiedenen
 Clients senden lasse.
 
@@ -281,10 +281,10 @@ nacheinander, bis er Erfolg hat, die folgenden URLs:
 
 *   *http://wpad/wpad.dat*
 
-Das bringt die Gefahr mit sich, dass der Browser aus der Domain *wpad.com*
+Das birgt die Gefahr, dass der Browser aus der Domain *wpad.com*
 fremdgesteuert werden kann, wenn ich nicht dafür sorge, dass in meiner
-Second-Level-Zone ein *A* oder *CNAME* Eintrag existiert, der auf einen
-Webserver mit ebendieser Datei verweist.
+Second-Level-Zone ein *A* oder *CNAME* Eintrag existiert,
+der auf einen Webserver mit ebendieser Datei verweist.
 
 Zum Überprüfen kann ich die entsprechenden DNS-Anfragen von Hand eingeben und
 mit *wget* oder *curl* versuchen die Datei ohne Verwendung eines Proxy-Servers
