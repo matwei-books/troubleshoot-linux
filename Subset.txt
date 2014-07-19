@@ -74,8 +74,8 @@ ch10-routing.md
 ch11.md
 ch11-ausfall-essentiell.md
 ch11-ausfall-dienst.md
-cha-12.md
-cha-12-ursachen.md
+ch12.md
+ch12-ursachen.md
 cha-12-messen.md
 cha-12-massnahmen.md
 cha-13.md
