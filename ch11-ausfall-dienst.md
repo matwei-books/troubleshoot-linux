@@ -126,8 +126,7 @@ ist.
     Last-Modified: Wed, 11 Jun 2014 08:49:03 GMT
     Date: Fri, 18 Jul 2014 07:35:36 GMT
     
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    ...
+    <!DOCTYPE html PUBLIC ...
 
 Die möglichen Requests sind in den genannten RFC beschrieben.
 Ich verwende für meine Tests meist nur GET und HEAD.
