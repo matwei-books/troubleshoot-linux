@@ -82,9 +82,10 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch11.md \
                $(DROPBOXDIR)/ch11-ausfall-essentiell.md \
                $(DROPBOXDIR)/ch11-ausfall-dienst.md \
+               $(DROPBOXDIR)/ch11-sonstiges.md \
                $(DROPBOXDIR)/ch12.md \
                $(DROPBOXDIR)/ch12-ursachen.md \
-               $(DROPBOXDIR)/cha-12-messen.md \
+               $(DROPBOXDIR)/ch12-messen.md \
                $(DROPBOXDIR)/cha-12-massnahmen.md \
                $(DROPBOXDIR)/cha-13.md \
                $(DROPBOXDIR)/cha-13-arp.md \
@@ -211,9 +212,10 @@ SOURCES = $(BOOK) \
           ch11.md \
           ch11-ausfall-essentiell.md \
           ch11-ausfall-dienst.md \
+          ch11-sonstiges.md \
           ch12.md \
           ch12-ursachen.md \
-          cha-12-messen.md \
+          ch12-messen.md \
           cha-12-massnahmen.md \
           cha-13.md \
           cha-13-arp.md \
@@ -333,9 +335,10 @@ CHAPTERS = \
     ch11.md \
     ch11-ausfall-essentiell.md \
     ch11-ausfall-dienst.md \
+    ch11-sonstiges.md \
     ch12.md \
     ch12-ursachen.md \
-    cha-12-messen.md \
+    ch12-messen.md \
     cha-12-massnahmen.md \
     cha-13.md \
     cha-13-arp.md \
