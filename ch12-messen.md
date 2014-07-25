@@ -2,21 +2,21 @@
 ## Performancemessungen im Netz
 
 Nachdem ich im vorigen Abschnitt auf mögliche Ursachen für Performanceprobleme
-im Netz eingegangen bin, will ich nun etwas detaillierter auf die
-Möglichkeiten eingehen, Netzparameter zu bestimmen.
+im Netz eingegangen bin, will ich nun etwas detaillierter darauf eingehen,
+wie ich Netzparameter bestimmen kann.
 
-Ich bestimme diese Parameter, wenn möglich, vor dem produktiven Einsatz von
+Diese Parameter erfasse ich, wenn möglich, vor dem produktiven Einsatz von
 Netzwerkverbindungen, als Baseline für spätere Vergleichsmessungen wenn ich
 Fehler vermute.
 
 ### Datenübertragungsrate
 
-Auch hier verweise ich wieder auf [[Sloan2001](#bib-sloan2001)].
+Ich verweise hier wieder auf [[Sloan2001](#bib-sloan2001)].
 Dort ist beschrieben, wie ich nur mit `ping` als Werkzeug die Datenübertragungsrate jedes
 einzelnen Netzsegmentes zwischen Sender und Empfänger bestimmen kann.
 Da ich bei Netzen außerhalb meines Einflussbereiches nicht immer damit rechnen
-kann, auf PING eine Antwort zu bekommen, muss ich dann zu anderen Mitteln
-greifen.
+kann, auf PING eine Antwort zu bekommen, muss ich gegebenenfalls zu anderen
+Mitteln greifen.
 Wenn ich jedoch das Prinzip verstanden habe, kann ich auch andere Werkzeuge,
 wie zum Beispiel `traceroute`, einsetzen und die Laufzeit mit `tcpdump` oder
 `wireshark` bestimmen.
@@ -24,7 +24,7 @@ wie zum Beispiel `traceroute`, einsetzen und die Laufzeit mit `tcpdump` oder
 Das Verfahren funktioniert folgendermaßen:
 
 1.  Ich bestimme die Adressen der Router auf dem Pfad, den ich untersuchen
-    will, zum Beispiel mit `traceroute`.
+    will, mit `traceroute`.
 
 2.  Ich sende direkt an die Router PING-Pakete mit 100 Byte und 1100 Byte
     Paketgröße und notiere mir die RTT der Antworten.
@@ -37,8 +37,8 @@ Das Verfahren funktioniert folgendermaßen:
     Damit eliminiere ich den Einfluss des Pfades bis zum vorderen Router.
 
     Es bleiben zwei Zeiten, für das große und das kleine Datenpaket. Die
-    Differenz zwischen diesen Zeiten ist die benötigte Zeit, um 1000 Byte über
-    dieses Segment zu transportieren.
+    Differenz zwischen diesen beiden Zeiten ist die benötigte Zeit, um 1000 Byte
+    über dieses Segment zu transportieren.
 
     Diese Zeit teile ich durch 2, weil mich nur die einfache Zeit für die
     Übertragung interessiert.
@@ -64,15 +64,20 @@ ich für die Berechnung nicht den Durchschnitt sondern die kleinste RTT, weil
 diese der wahren, nicht mit anderen Übertragungen geteilten Datenübertragungsrate am
 nächsten kommt.
 Es versteht sich auch von selbst, dass ich mir für die Messung einen Zeitpunkt
-heraussuche, zu dem möglichst wenig andere Datenverkehr die Messung
+heraussuche, zu dem möglichst wenig anderer Datenverkehr die Messung
 beeinflusst.
 
-Bin ich gezwungen, auf andere Datenpakete auszuweichen, verwende ich `tcpdump`
-zur Messung.
-Dabei muss ich beachten, dass bei gleichbleibenden Antwortpaketen, zum
-Beispiel *ICMP-Unreachable* Nachrichten, die gemessene Zeitdifferenz nicht
-mehr halbiert werden muss, da in einer Richtung die Paketgröße konstant
-bleibt.
+Bin ich gezwungen, auf andere Datenpakete auszuweichen, kann ich auch `tcpdump`
+zur Messung der RTT verwenden.
+Dabei muss ich beachten, dass ich bei konstanter Größe der Antwortpakete, zum
+Beispiel bei  *ICMP-Unreachable* Nachrichten, die gemessene Zeitdifferenz nicht
+halbieren darf.
+
+Da `traceroute` ebenfalls die RTT der einzelnen Hops ausgibt und einige
+Varianten von Traceroute verschieden große Datagramme senden können, kann ich
+mitunter auch dieses direkt für die Messungen einsetzen.
+In diesem Fall ist der konstante Faktor in der Gleichung statt 16 nur 8, da
+die ICMP-Unreachable-Nachrichten eine konstante Größe haben.
 
 ### Latenz
 
@@ -107,12 +112,12 @@ angehängt. Das angezeigte IPG kann ich als Maß verwenden, um abzuschätzen,
 wie effizient die Kombination Betriebssystem, Netzwerkkarte, Netzwerk Daten
 senden kann.
 
-EWMA steht für Exponential Weighted Moving Average. Bei diesem Durchschnitt
-werden die letzten  RTT-Zeiten höher gewichtet als ältere. Im Normalfall
-sollte dieser gleich dem Mittelwert für RTT sein. Weicht er signifikant ab,
-deutet das auf einen Trend hin. Dafür benötigt man aber einen länger
-laufenden Ping und da EWMA am Ende ausgegeben wird, wird der Trend erst am
-Ende dieser Messung offenbar.
+EWMA steht für Exponential Weighted Moving Average.
+Bei diesem Durchschnitt werden die letzten RTT höher gewichtet als ältere.
+Im Normalfall sollte dieser gleich dem Mittelwert für RTT sein.
+Weicht er signifikant ab, deutet das auf einen Trend hin.
+Dafür benötige ich aber einen länger laufenden Ping und da EWMA am Ende
+ausgegeben wird, wird der Trend erst am Ende dieser Messung offenbar.
 
 ### Durchsatz
 
@@ -123,7 +128,7 @@ wobei ich die Charakteristika der beiden Protokolle ausnutzen kann.
 
 Dabei kann ich den Durchsatz entweder in jeweils einer Richtung oder
 gleichzeitig in beiden Richtungen messen.
-Dabei muss ich jedoch immer im Hinterkopf behalten, dass manche Ethernetkarten
+Ich muss jedoch immer im Hinterkopf behalten, dass manche Ethernetkarten
 beziehungsweise die Treiber dafür nicht die volle mögliche Datenübertragungsrate liefern
 können.
 
@@ -144,7 +149,7 @@ Vergleichsdaten aus der Vergangenheit zur Verfügung haben.
 Damit bekomme ich Informationen, wieviele Daten an den einzelnen
 Schnittstellen pro Zeiteinheit übertragen wurden, umgerechnet in eine
 durchschnittliche Auslastung.
-Damit sehe ich zwar nicht jeden einzelnen Burst, aber eine hohe Ausnutzung der
+Ich sehe zwar nicht jeden einzelnen Burst, aber eine hohe Ausnutzung der
 Schnittstelle über fünf Minuten oder länger kann schon signifikant sein für
 die Fehlersuche.
 
@@ -159,7 +164,7 @@ die meiste Datenübertragungsrate benötigte oder die meisten Datenpakete.
 
 Für Netflow benötige ich Sensoren auf den Routern und eine geeignete
 Monitoring-Software, wie zum Beispiel NfSen.
-Als Sensor für Linux ist zum Beispiel `fprobe` geeignet.
+Als Sensor für Linux eignet sich zum Beispiel `fprobe`.
 
 Natürlich  belasten die Sensoren die Router und die verschickten
 Zusammenfassungen erzeugen zusätzlichen Datenverkehr.

@@ -76,6 +76,7 @@ ch11-ausfall-essentiell.md
 ch11-ausfall-dienst.md
 ch12.md
 ch12-ursachen.md
+ch12-messen.md
 cha-13.md
 anhang.md
 glossar.md
