@@ -86,7 +86,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch12.md \
                $(DROPBOXDIR)/ch12-ursachen.md \
                $(DROPBOXDIR)/ch12-messen.md \
-               $(DROPBOXDIR)/cha-12-massnahmen.md \
+               $(DROPBOXDIR)/ch12-massnahmen.md \
                $(DROPBOXDIR)/cha-13.md \
                $(DROPBOXDIR)/cha-13-arp.md \
                $(DROPBOXDIR)/cha-13-bridge-utils.md \
@@ -216,7 +216,7 @@ SOURCES = $(BOOK) \
           ch12.md \
           ch12-ursachen.md \
           ch12-messen.md \
-          cha-12-massnahmen.md \
+          ch12-massnahmen.md \
           cha-13.md \
           cha-13-arp.md \
           cha-13-bridge-utils.md \
@@ -339,7 +339,7 @@ CHAPTERS = \
     ch12.md \
     ch12-ursachen.md \
     ch12-messen.md \
-    cha-12-massnahmen.md \
+    ch12-massnahmen.md \
     cha-13.md \
     cha-13-arp.md \
     cha-13-bridge-utils.md \
