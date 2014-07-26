@@ -74,6 +74,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch09-arp.md \
                $(DROPBOXDIR)/ch09-ipv4-netzmasken.md \
                $(DROPBOXDIR)/ch09-zustaende-tcp.md \
+               $(DROPBOXDIR)/ch09-path-mtu.md \
                $(DROPBOXDIR)/ch09-routing-algorithm.md \
                $(DROPBOXDIR)/ch10.md \
                $(DROPBOXDIR)/ch10-netzausfall-rechner.md \
@@ -121,6 +122,8 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
 	       $(DROPBOXDIR)/code/strace-invocator.sh \
                $(DROPBOXDIR)/images/ch10-entfernte-routen.png \
                $(DROPBOXDIR)/images/ch10-neue-routen.png \
+               $(DROPBOXDIR)/images/ch12-ping-Mdo-s1464.png \
+               $(DROPBOXDIR)/images/ch12-ping-Mdo-s1472.png \
                $(DROPBOXDIR)/images/eb-allgemein-drakon.png \
                $(DROPBOXDIR)/images/eb-allgemein.png \
                $(DROPBOXDIR)/images/eb-allgemein-3-yed.png \
@@ -204,6 +207,7 @@ SOURCES = $(BOOK) \
           ch09-arp.md \
           ch09-ipv4-netzmasken.md \
           ch09-zustaende-tcp.md \
+          ch09-path-mtu.md \
           ch09-routing-algorithm.md \
           ch10.md \
           ch10-netzausfall-rechner.md \
@@ -249,6 +253,8 @@ SOURCES = $(BOOK) \
 	  code/strace-invocator.sh \
           images/ch10-entfernte-routen.png \
           images/ch10-neue-routen.png \
+          images/ch12-ping-Mdo-s1464.png \
+          images/ch12-ping-Mdo-s1472.png \
           images/eb-allgemein-drakon.png \
           images/eb-allgemein.png \
           images/eb-allgemein-3-yed.png \
@@ -327,6 +333,7 @@ CHAPTERS = \
     ch09-arp.md \
     ch09-ipv4-netzmasken.md \
     ch09-zustaende-tcp.md \
+    ch09-path-mtu.md \
     ch09-routing-algorithm.md \
     ch10.md \
     ch10-netzausfall-rechner.md \

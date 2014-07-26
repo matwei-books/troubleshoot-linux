@@ -66,6 +66,7 @@ ch09-osi-modell.md
 ch09-arp.md
 ch09-ipv4-netzmasken.md
 ch09-zustaende-tcp.md
+ch09-path-mtu.md
 ch09-routing-algorithm.md
 ch10.md
 ch10-netzausfall-rechner.md
