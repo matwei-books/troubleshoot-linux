@@ -15,6 +15,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch01-bisektion.md \
                $(DROPBOXDIR)/ch01-korrelation.md \
                $(DROPBOXDIR)/ch01-abkuerzungen.md \
+               $(DROPBOXDIR)/ch01-anti-methoden.md \
                $(DROPBOXDIR)/ch02.md \
                $(DROPBOXDIR)/ch02-problemaufnahme.md \
                $(DROPBOXDIR)/ch02-selber-denken.md \
@@ -148,6 +149,7 @@ SOURCES = $(BOOK) \
           ch01-bisektion.md \
           ch01-korrelation.md \
           ch01-abkuerzungen.md \
+          ch01-anti-methoden.md \
           ch02.md \
           ch02-problemaufnahme.md \
           ch02-selber-denken.md \
@@ -274,6 +276,7 @@ CHAPTERS = \
     ch01-bisektion.md \
     ch01-korrelation.md \
     ch01-abkuerzungen.md \
+    ch01-anti-methoden.md \
     ch02.md \
     ch02-problemaufnahme.md \
     ch02-selber-denken.md \

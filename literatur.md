@@ -236,6 +236,11 @@ Dieser Praxis-Artikel zeigt, wie man mit der Firewall-Appliance IPFire erste
 Erfahrungen mit dem CoDel-Verfahren zum Router-Queue-Management bei
 Bufferbloat machen kann.
 
+#### Gregg2013 {#bib-gregg2013}
+Gregg, Brendan; Thinking Methodically about Performance;
+CACM Vol. 56, No. 2, February 2013, pp 45 ff.;
+ISSN 0001-0782
+
 #### Koenig2012 {#bib-koenig2012}
 König, Harald; strace für Linux-Versteher; UpTimes - Mitgliederzeitschrift
 der German Unix User Group; Ausgabe 2012/1, S. 61ff

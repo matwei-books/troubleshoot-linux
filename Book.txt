@@ -5,6 +5,7 @@ ch01-entscheidungsbaum.md
 ch01-bisektion.md
 ch01-korrelation.md
 ch01-abkuerzungen.md
+ch01-anti-methoden.md
 ch02.md
 ch02-problemaufnahme.md
 ch02-selber-denken.md

@@ -1,5 +1,5 @@
 
-## Problemaufnahme
+## Problemaufnahme {#sec-02-problemaufnahme}
 
 Bei der Aufnahme eines Problems entscheide ich oft schon, wie ich damit
 umgehen werde.
