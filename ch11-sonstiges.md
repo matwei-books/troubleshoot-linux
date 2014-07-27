@@ -51,7 +51,7 @@ nicht sehen, sondern einfach keine Antwort bekommen.
 Dann muss ich dem Datenpfad folgen und sehen, wie weit meine Datagramme
 kommen.
 
-Habe ich schließlich ein Problem mit der Path-MTU-Discovery festgestellt, ist
+Habe ich ein Problem mit der Path-MTU-Discovery festgestellt, ist
 die nächste Frage, wie ich das abstelle.
 
 Die schnellste Lösung ist, die MTU des Senders zu reduzieren.

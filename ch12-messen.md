@@ -99,10 +99,9 @@ sendet Ping Datenpakete, so schnell es geht, zum Zielrechner.
 Dazu benötige ich Superuserrechte.
 Diesen Aufruf kann ich mit der Option `-l $preload` kombinieren, so dass Ping
 so viele Datenpakete sendet, ohne auf Antwort zu warten.
-
-Diesen Aufruf verwende ich, um auf einem Segment Netzwerklast zu erzeugen.
-Zusätzlich zur normalen Statistik (min/avg/max/mdev) zeigt Ping am Ende zwei
-Werte: IPG und EWMA.
+Damit kann ich auf einem Segment Netzwerklast erzeugen.
+Zusätzlich zur normalen Statistik (min/avg/max/mdev) zeigt Ping dann am Ende
+zwei Werte: IPG und EWMA.
 
 IPG (Inter Packet Gap) ist die Zeit zwischen dem Senden zweier Datenpakete.
 Für Ethernet ist die Minimalzeit auf die Zeit festgelegt, in der 96 Bit

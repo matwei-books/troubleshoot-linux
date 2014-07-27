@@ -50,7 +50,7 @@ CoDel-Verfahren.
 Dabei bekommen ankommende Datenpakete einen Zeitstempel.
 Sobald ein Paket zu lange in einer Queue verbleibt, werden nachfolgende Pakete
 verworfen, noch bevor die Queue überfüllt ist.
-Die TCP-Flusskontrolle der betroffenen Verbindungen kann dadurch schneller
+Die TCP-Flusskontrolle der betroffenen Verbindungen kann schneller
 reagieren und drosselt die Transfer-Rate eher, wodurch die Leitung entlastet
 wird.
 
@@ -59,8 +59,8 @@ Queue-Management am Router nichts geändert werden muss.
 Ein weiterer wesentlicher Vorteil ist, dass der Administrator keine Parameter
 bestimmen oder einstellen muss, wodurch eine mögliche Fehlerquelle entfällt.
 
-In [[ctTZ2013a](#bib-ct-tz2013a)] erläutern die Autoren das
-Queue-Management mit CoDel für den Laien verständlich und in
+In [[ctTZ2013a](#bib-ct-tz2013a)] erläutern die Autoren Queue-Management mit
+CoDel für den Laien verständlich und in
 [[ctTZ2013b](#bib-ct-tz2013b)] zeigen sie, wie man mit der Firewall-Appliance
 IPFire erste eigene Erfahrungen damit sammeln kann.
 
