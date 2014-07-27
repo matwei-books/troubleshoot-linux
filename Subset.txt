@@ -81,8 +81,8 @@ ch12.md
 ch12-ursachen.md
 ch12-messen.md
 ch12-massnahmen.md
-cha-13.md
-cha-13-arp.md
+ch13.md
+ch13-arp.md
 cha-13-bridge-utils.md
 cha-13-ethtool.md
 cha-13-ifconfig.md
