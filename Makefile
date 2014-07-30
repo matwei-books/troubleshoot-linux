@@ -125,6 +125,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/images/ch10-neue-routen.png \
                $(DROPBOXDIR)/images/ch12-ping-Mdo-s1464.png \
                $(DROPBOXDIR)/images/ch12-ping-Mdo-s1472.png \
+               $(DROPBOXDIR)/images/ch13-arp-ping.png \
                $(DROPBOXDIR)/images/eb-allgemein-drakon.png \
                $(DROPBOXDIR)/images/eb-allgemein.png \
                $(DROPBOXDIR)/images/eb-allgemein-3-yed.png \
@@ -257,6 +258,7 @@ SOURCES = $(BOOK) \
           images/ch10-neue-routen.png \
           images/ch12-ping-Mdo-s1464.png \
           images/ch12-ping-Mdo-s1472.png \
+          images/ch13-arp-ping.png \
           images/eb-allgemein-drakon.png \
           images/eb-allgemein.png \
           images/eb-allgemein-3-yed.png \

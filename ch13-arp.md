@@ -8,63 +8,49 @@ verwende es
 
 *   um die Zuordnung von IP-Adressen zu Ethernet-Adressen zu verifizieren
 
-*   um zu sehen, ob ein Rechner eine bestimmte IP-Adresse verwendet, auch wenn
+*   um zu sehen, ob ein Rechner eine IP-Adresse verwendet, auch wenn
     ich keine Antwort auf TCP-, UDP- oder ICMP-Verbindungsversuche (Ping)
     bekomme.
 
-*   seltener: um eine bestimmte Zuordnung zwischen IP-Adresse und
+*   seltener: um eine Zuordnung zwischen IP-Adresse und
     Ethernet-Adresse fest vorzugeben.
 
 Der prinzipielle Aufruf ist:
 
 {line-numbers=off,lang="text"}
-    # arp [Optionen] [Rechnername]
+    # arp [Optionen] [$rechnername]
 
-Bei Aufruf ohne Optionen zeigt `arp` die MAC-Adressen an, die *Rechnername*
-zugeordnet sind. Fehlt *Rechnername*, zeigt es alle bekannten
+Bei Aufruf ohne Optionen zeigt `arp` die MAC-Adressen an, die *$rechnername*
+zugeordnet sind. Fehlt *$rechnername*, zeigt es alle bekannten
 Adresszuordnungen an.
-*Rechnername* kann ein Hostname sein, ein FQDN oder eine IP-Adresse.
+*$rechnername* kann ein Hostname sein, ein FQDN oder eine IP-Adresse.
 
 Die für die Fehlersuche wichtigsten Optionen sind:
 
 -n
 : unterlässt die Namensauflösung der IP-Adressen
 
--d Rechnername
-: entfernt alle Einträge für *Rechnername*
+-d $rechnername
+: entfernt alle Einträge für *$rechnername*
 
--s Rechnername Hardwareadresse
-: setzt den Eintrag für *Rechnername* auf *Hardwareadresse*
+-s $rechnername $hardwareadresse
+: setzt den Eintrag für *$rechnername* auf *$hardwareadresse*
 
 Für weitergehende Informationen verweise ich auf die Handbuchseite.
-Nähere Informationen zum ARP-Protokoll sind im
-[Grundlagenkapitel für Netze](#sec-grundlagen-arp) zu finden.
+Nähere Informationen zum ARP-Protokoll stehen im
+[Grundlagenkapitel für Netze](#sec-grundlagen-arp).
 
 Wenn ich `arp` verwende, um mich von der Anwesenheit eines Rechners mit einer
 bestimmten IP-Adresse im Netz zu überzeugen, sieht das wie folgt aus:
 
-{line-numbers=off,lang="text"}
-    $ ping -c1 192.168.1.5
-    PING 192.168.1.5 (192.168.1.5) 56(84) bytes of data.
-    
-    --- 192.168.1.5 ping statistics ---
-    1 packets transmitted, 0 received,\
-     100% packet loss, time 0ms
-    $ ping -c1 192.168.1.6
-    PING 192.168.1.6 (192.168.1.6) 56(84) bytes of data.
-    From 192.168.1.3 icmp_seq=1 Destination Host\
-     Unreachable
-    
-    --- 192.168.1.6 ping statistics ---
-    1 packets transmitted, 0 received, +1 errors,\
-     100% packet loss, time 0ms
+![PING-Test im localen Netz](images/ch13-arp-ping.png)
 
-Ich habe weder von Adresse `192.168.1.5` noch von `192.168.1.6` eine
+Ich habe von keiner der beiden Adressen eine
 Antwort auf die PING-Anfrage bekommen.
-Bei der zweiten Adresse kam jedoch die Meldung *Destination Host Unreachable*,
-die bei der ersten Adresse fehlte.
-Bei der Kontrolle des ARP-Caches zeigt sich, dass für die erste IP-Adresse
-eine MAC-Zuordnung gegeben ist, für die zweite nicht.
+Bei `192.168.1.6` kam jedoch nach kurzer Verzögerung die Meldung
+*Destination Host Unreachable*, die bei `192.168.1.5` fehlte.
+Bei der Kontrolle des ARP-Caches zeigt sich, dass für die eine IP-Adresse
+eine MAC-Zuordnung gegeben ist, für die andere nicht.
 
 {line-numbers=off,lang="text"}
     $ arp -an
@@ -73,4 +59,6 @@ eine MAC-Zuordnung gegeben ist, für die zweite nicht.
     ...
 
 Das lässt vermuten, dass auf dem Rechner mit IP-Adresse `192.168.1.5` PING
-durch Paketfilterregeln blockiert wird.
+durch Paketfilterregeln blockiert wird, während in diesem Netzsegment zu
+diesem Zeitpunkt kein Gerät die IP-Adresse 192.168.1.6 für sich beanspruchte.
+
