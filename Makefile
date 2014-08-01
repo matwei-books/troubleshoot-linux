@@ -92,7 +92,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch12-massnahmen.md \
                $(DROPBOXDIR)/ch13.md \
                $(DROPBOXDIR)/ch13-arp.md \
-               $(DROPBOXDIR)/cha-13-bridge-utils.md \
+               $(DROPBOXDIR)/ch13-bridge-utils.md \
                $(DROPBOXDIR)/cha-13-ethtool.md \
                $(DROPBOXDIR)/cha-13-ifconfig.md \
                $(DROPBOXDIR)/cha-13-iperf.md \
@@ -228,7 +228,7 @@ SOURCES = $(BOOK) \
           ch12-massnahmen.md \
           ch13.md \
           ch13-arp.md \
-          cha-13-bridge-utils.md \
+          ch13-bridge-utils.md \
           cha-13-ethtool.md \
           cha-13-ifconfig.md \
           cha-13-iperf.md \
@@ -357,7 +357,7 @@ CHAPTERS = \
     ch12-massnahmen.md \
     ch13.md \
     ch13-arp.md \
-    cha-13-bridge-utils.md \
+    ch13-bridge-utils.md \
     cha-13-ethtool.md \
     cha-13-ifconfig.md \
     cha-13-iperf.md \
