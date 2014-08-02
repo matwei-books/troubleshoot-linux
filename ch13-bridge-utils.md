@@ -1,8 +1,8 @@
 
 ## bridge-utils {#sec-netz-werkzeuge-bridge-utils}
 
-Es gibt mehrere Szenarien, in denen ich mich bei der Fehlersuche mit der
-Linux-Layer2-Bridge beschäftigen muß. Zum einen, wenn ich einen verdächtigen
+Es gibt mehrere Szenarien, in denen ich mich bei der Fehlersuche mit
+Layer2-Bridges beschäftige. Zum einen, wenn ich einen verdächtigen
 Rechner habe und zur Kontrolle jeglichen Netzverkehrs eine Bridge vor seinen
 Netzanschluß schalten will. Oder, wenn ich den Verkehr auf einer
 Punkt-zu-Punkt-Verbindung kontrollieren will. In diesen Fällen möchte ich
@@ -12,21 +12,21 @@ Bridge bekomme ich allen Datenverkehr an der betreffenden Stelle frei Haus
 geliefert.
 Bis 100 MBit/s eignen sich beispielsweise Einplatinenrechner, wie in
 [[Weidner2012](#bib-weidner2012)] beschrieben, sehr gut dafür.
-Ein anderes Szenario ist eine regulär betriebene Bridge, die scheinbar nicht
+Ein weiteres Szenario ist eine regulär betriebene Bridge, die scheinbar nicht
 funktioniert und die ich mit den bridge-utils untersuchen kann.
 
 Prinzipiell kann ich mit einer Linux-Bridge den Verkehr filtern und
 begrenzen. Dafür verwende ich auf Layer2-Ebene `ebtables` und auf
 Layer3-Ebene `iptables`, bei letzteren benötige ich für eine Bridge
-mindestens einen Kernel ab Version 2.4.
+einen Kernel ab Version 2.4.
 
 Linux-Bridges können das Spanning Tree Protocol (STP) verwenden und ich kann
-sie auch zur Diagnose von STP-Problemen heranziehen, obwohl mir hier sicher
+sie auch zur Diagnose von STP-Problemen heranziehen, obwohl mir hier
 tcpdump oder wireshark genausogut weiterhelfen.
 
 Generell konfiguriere ich eine Bridge mit `brctl`.
 Mit `ipconfig`, `ip` oder einem DHCP-Client kann ich ihr dann eine IP-Adresse
-zuweisen (lassen).
+zuweisen.
 Das Bridge-Forwarding-Delay von circa 30 Sekunden kann bei DHCP-Clients
 Probleme bereiten.
 Wenn gar nichts geht, muss ich das Bridge-Interface mit statischen Adressen
@@ -45,17 +45,17 @@ kann ich abschalten, indem ich eine '0' in die betreffende Datei schreibe:
     # echo 0 \
       > /proc/sys/net/bridge/bridge-nf-call-iptables
 
-Mit dem Program `brctl` bearbeite beziehungsweise inspiziere ich
+Mit dem Program `brctl` inspiziere beziehungsweise bearbeite ich
 die Bridge-Konfiguration im Linux-Kernel.
 
 Dabei verwende ich die folgenden Befehle um eine oder mehrere
 Bridge-Instanzen zu bearbeiten:
 
-brctl addbr $name
-: fügt eine neue Bridge-Instanz namens *$name* hinzu.
+brctl addbr $brname
+: fügt eine neue Bridge-Instanz namens *$brname* hinzu.
 
-brctl delbr $name
-: entfernt die Bridge *$name*.
+brctl delbr $brname
+: entfernt die Bridge *$brname*.
 
 brctl show
 : zeigt alle momentan bekannten Bridges und die ihnen
@@ -120,7 +120,7 @@ brctl setageing $brname $time
   Bridge sie aus der Forwarding-Tabelle austragen.
 
 brctl setgcint $brname $time
-: setzt das Intervall für die Garbage Collection auf *$time* Sekunden.
+: setzt das Intervall für die Garbage Collection auf *$time*.
   Aller *$time* Sekunden kontrolliert die Bridge die Forwarding-Tabelle nach
   veralteten MAC-Adressen.
 
