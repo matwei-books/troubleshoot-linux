@@ -86,7 +86,7 @@ ch12-massnahmen.md
 ch13.md
 ch13-arp.md
 ch13-bridge-utils.md
-cha-13-ethtool.md
+ch13-ethtool.md
 cha-13-ifconfig.md
 cha-13-iperf.md
 cha-13-iproute.md
