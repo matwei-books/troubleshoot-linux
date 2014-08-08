@@ -12,6 +12,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/preface.md \
                $(DROPBOXDIR)/ch01.md \
                $(DROPBOXDIR)/ch01-entscheidungsbaum.md \
+               $(DROPBOXDIR)/ch01-use-methode.md \
                $(DROPBOXDIR)/ch01-bisektion.md \
                $(DROPBOXDIR)/ch01-korrelation.md \
                $(DROPBOXDIR)/ch01-abkuerzungen.md \
@@ -148,6 +149,7 @@ SOURCES = $(BOOK) \
           preface.md \
           ch01.md \
           ch01-entscheidungsbaum.md \
+          ch01-use-methode.md \
           ch01-bisektion.md \
           ch01-korrelation.md \
           ch01-abkuerzungen.md \
@@ -277,6 +279,7 @@ CHAPTERS = \
     preface.md \
     ch01.md \
     ch01-entscheidungsbaum.md \
+    ch01-use-methode.md \
     ch01-bisektion.md \
     ch01-korrelation.md \
     ch01-abkuerzungen.md \

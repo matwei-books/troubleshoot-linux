@@ -2,6 +2,7 @@ preface.md
 part1.md
 ch01.md
 ch01-entscheidungsbaum.md
+ch01-use-methode.md
 ch01-bisektion.md
 ch01-korrelation.md
 ch01-abkuerzungen.md
