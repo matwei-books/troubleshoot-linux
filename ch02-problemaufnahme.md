@@ -14,17 +14,46 @@ richtigen Stelle die richtigen Fragen zu stellen:
 
 *   Funktioniert das gleiche bei anderen noch, wenn es hier nicht mehr geht?
 
-Diese und ähnliche Fragen stelle ich auch, wenn mir ein Kunde ein Problem
+Diese und ähnliche Fragen stelle ich, wenn mir ein Kunde einen Ausfall
 meldet.
-Die nachfolgenden muss ich meist allein beantworten.
 
-*   Was muss alles zusammen spielen?
+Performanceprobleme werden subjektiv oft verschieden wahrgenommen, bei diesen
+frage ich leicht modifiziert:
 
-*   Wie schnell soll es sein?
+*   Wie kommen Sie darauf, dass da ein Performanceproblem vorliegt?
+
+*   Hat dieses System früher performant funktioniert?
+
+*   Was hat sich in der letzten Zeit geändert?
+
+*   Kann die Performanceverschlechterung in Form von Latenz oder Laufzeiten
+    ausgedrückt werden?[^latenzlaufzeit]
+
+*   Betrifft das Problem auch andere Leute oder andere Anwendungen?
+
+[^latenzlaufzeit]: Die Begriffe Latenz und Laufzeit werden die meisten Kunden
+    vermutlich verwirren. Stattdessen kann ich fragen, wie schnell das System
+    auf Tastatureingaben reagiert oder wie lange eine Datenübertragung dauert
+    und wie groß die Datei ist.
+
+Die nachfolgenden Fragen muss ich meist allein beantworten.
+
+*   Wie sieht die Umgebung aus? Was muss alles zusammen spielen?
+
+*   Welche Software und Hardware wird verwendet? Welche Versionen? Welche
+    Konfiguration?
+
+*   Wie schnell soll es laut SLA sein?
 
 *   Wie kriege ich das alles heraus?
 
-Wenn ich ein Problem selbst feststelle, kann ich diese Fragen in meinem
+Manche Probleme lassen sich bereits bei der Problemaufnahme lösen, weil das
+Stellen der richtigen Fragen mitunter direkt zur passenden Antwort und damit
+zur Lösung des Problems führt.
+In allen anderen Fällen hilft eine umfangreiche Problemaufnahme, dass wichtige
+Details bei der Lösungssuche nicht übersehen werden.
+
+Wenn ich ein Problem selbst feststelle, kann ich die Fragen in meinem
 Rhythmus beantworten, mit der nötigen Sorgfalt.
 
 Problematisch kann es werden, wenn andere ihr Problem an mich herantragen.
@@ -36,7 +65,7 @@ seine ganz eigene Vorstellung von der Wichtigkeit, Dringlichkeit und mitunter
 auch von der Lösung des Problems hat.
 Die kann richtig sein oder falsch.
 
-Schwierig wird es, wenn ich mich durch Vorurteile auf eine falsche Fährte
+Schwierig wird es, wenn ich mich auf eine falsche Fährte
 schicken lasse oder wenn ich nicht mehr klar denken kann, durch den
 im Gespräch aufgebauten Druck.
 
