@@ -14,8 +14,8 @@ kann.
 Ist es die falsche Stelle, habe ich meine Zeit mit aufwendigen Messungen
 vergeudet.
 
-Habe ich keine a-priori-Informationen ist es besser, die neuralgischen Punkte
-methodisch auszuwählen, und dabei keine Zeit zu verschwenden.
+Habe ich keine a-priori-Informationen, wähle ich die neuralgischen Punkte
+besser methodisch aus und verschwende dabei keine Zeit.
 
 Dafür eignet sich die USE-Methode, die am besten gleich nach der
 Problemaufnahme eingesetzt wird.
@@ -52,8 +52,8 @@ Sättigung und Fehler.
 
 Dabei meint Auslastung bei einigen Komponenten, wie CPU oder Netzverbindungen,
 die Prozentzahl der Zeit, die die Ressource in einem gegebenen Intervall
-verwendet wird und bei anderen, wie RAM oder Plattenplatz, den Anteil an der
-Gesamtkapazität, der verwendet wird.
+verwendet wird und bei anderen, wie RAM oder Plattenplatz, den Anteil der
+verwendeten Kapazität an der Gesamtkapazität.
 
 Sättigung meint die Arbeit, die in Warteschlangen wartet, während die
 Ressource zu 100 Prozent ausgelastet ist.
@@ -85,8 +85,8 @@ weil manche länger dauernden Aktionen nicht unterbrochen werden können,
 so dass Verzögerungen durch Warteschlangen häufiger werden.
 
 Jeglicher Grad von Sättigung kann ein Problem sein.
-Er kann als Länge der Warteschlange bestimmt werden oder als Zeit, die in der
-Warteschlange verbracht wurde.
+Er kann als Länge der Warteschlange dargestellt werden oder als Zeit, die in
+der Warteschlange verbracht wurde.
 
 Gibt es Zähler, die Fehler anzeigen, sind diese es wert, untersucht zu werden.
 Insbesondere, wenn sie im Laufe der Untersuchung wachsen.

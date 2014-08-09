@@ -25,7 +25,7 @@ Gerade die Möglichkeit, Fehlanpassungen in der Geschwindigkeit oder beim
 Duplexverhalten zu erkennen, kann sich als wertvoll bei der Diagnose
 von Performanceproblemen erweisen.
 
-Bei einer LWL-Verbindung über mehrere Kilometer hatten wir ernste
+Bei einer LWL-Verbindung hatten wir ernste
 Performanceprobleme, bei denen die Transferrate in einer Richtung auf wenige
 KB/s beim beidseitigen Lasttest herunter ging.
 Unser erster Gedanke war eine schlechte Faser, da das Problem nur in einer
