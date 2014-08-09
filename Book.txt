@@ -87,6 +87,7 @@ ch13.md
 ch13-arp.md
 ch13-bridge-utils.md
 ch13-ethtool.md
+ch13-ifconfig.md
 anhang.md
 glossar.md
 literatur.md
