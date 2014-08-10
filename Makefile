@@ -96,7 +96,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch13-bridge-utils.md \
                $(DROPBOXDIR)/ch13-ethtool.md \
                $(DROPBOXDIR)/ch13-ifconfig.md \
-               $(DROPBOXDIR)/cha-13-iperf.md \
+               $(DROPBOXDIR)/ch13-iperf.md \
                $(DROPBOXDIR)/cha-13-iproute.md \
                $(DROPBOXDIR)/cha-13-libtrace.md \
                $(DROPBOXDIR)/cha-13-netcat.md \
@@ -233,7 +233,7 @@ SOURCES = $(BOOK) \
           ch13-bridge-utils.md \
           ch13-ethtool.md \
           ch13-ifconfig.md \
-          cha-13-iperf.md \
+          ch13-iperf.md \
           cha-13-iproute.md \
           cha-13-libtrace.md \
           cha-13-netcat.md \
@@ -363,7 +363,7 @@ CHAPTERS = \
     ch13-bridge-utils.md \
     ch13-ethtool.md \
     ch13-ifconfig.md \
-    cha-13-iperf.md \
+    ch13-iperf.md \
     cha-13-iproute.md \
     cha-13-libtrace.md \
     cha-13-netcat.md \
