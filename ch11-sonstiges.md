@@ -1,6 +1,53 @@
 
 ## Sonstige Probleme
 
+### Mehrere Router im Netzsegment
+
+Dieses Problem hat dazu geführt, dass ich in Netzsegmenten mit Endgeräten,
+die nicht von mir betreut werden, möglichst vermeide,
+mehrere Router zu verschiedenen Netzen einzusetzen.
+
+Üblicherweise kennen Arbeitsstationen und Server, die sich nicht an den
+Routingprotokollen beteiligen, nur ein Gateway in andere Netze. Alle
+Datagramme, die nicht für das lokale Netzsegment bestimmt sind, werden an
+dieses Gateway geschickt und von diesem weitergeleitet.
+
+Oft genug habe ich erlebt, dass mal eben ein weiteres Netz über ein
+zusätzliches Gateway in diesem Netzsegment angeschlossen wird.
+Abgesehen von möglichen Sicherheitsproblemen schicken die Clients ihre
+Datagramme für dieses Netz zum Standardgateway.
+
+Das ist an und für sich kein Beinbruch, da das Standardgateway die Datagramme
+an das richtige Gateway weiterleitet und dem Sender eine ICMP-Nachricht
+schickt, dass dieser das andere Gateway für dieses Netz verwenden soll.
+
+Dieses Verfahren hat nur einen geringen Overhead und funktioniert in vielen
+Fällen problemlos.
+Außer, wenn es nicht funktioniert.
+
+Alle mir bekannten Fälle, in denen dieses Verfahren nicht funktioniert hat,
+betrafen Rechner mit Microsoft Windows als Betriebssystem.
+Wobei das Verhalten abhängig war von der Version des Betriebssystems und den
+Einstellungen des Rechners.
+Mit moderneren Versionen des Betriebssystems traten häufiger Probleme auf, als
+mit älteren.
+Manchmal funktionierte die Verbindung im selben Segment bei einigen
+Arbeitsstationen und bei anderen nicht, ohne dass der zuständige Administrator
+herausfinden konnte, warum.
+
+Die genaue Ursache ist mir nicht bekannt, ich vermute, dass die
+Windows-Firewall die Antwortpakete mit der MAC-Adresse des anderen
+Gateways nicht akzeptiert.
+In allen Fällen, bei denen ich dieses Verhalten feststellen konnte,
+funktionierte die Verbindung zum betreffenden Netz sofort, wenn temporär die
+Windows-Firewall deaktiviert wurde.
+
+Je nachdem, wie gut der Administrator der betroffenen Rechner ist, und wie
+dringend die Windows-Firewall in dem Netz benötigt wird, bleibt
+in manchen Fällen nur, den zweiten Router in einem anderen Netzsegment
+anzuschließen, so dass alle Datagramme wieder über das Standardgateway
+gesendet werden können.
+
 ### Path-MTU
 
 Ein Problem, das zunächst oft falsch interpretiert wird, tritt auf, wenn die
