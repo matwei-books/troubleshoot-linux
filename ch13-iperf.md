@@ -17,15 +17,13 @@ Handbuchseiten da.
 ### iperf
 
 Bei diesem Programm, dass ich als Client und Server einsetzen kann, erzeugt
-der Client den Traffic aus dem Hauptspeicher heraus während der Server die
+der Client den Traffic aus dem Hauptspeicher heraus, während der Server die
 angekommenen Daten verwirft, so dass nur der Durchsatz im Netz und das Handling
-der Pakete im Hauptspeicher gemessen wird.
+der Daten im Hauptspeicher gemessen wird.
 
 Ich kann einseitige Messungen machen und anschließend die Client- und
 Serverrolle tauschen oder zwei Verbindungen in den verschiedenen Richtungen
 gleichzeitig messen.
-Die verschiedenen Messergebnisse lassen Rückschlüsse auf den Zustand des
-Netzes zu.
 
 Normalerweise dauert eine Messung 10 Sekunden, während derer das Programm
 versucht, so viele Daten wie möglich zu versenden und an deren Ende es das
@@ -33,7 +31,7 @@ Ergebnis ausgibt.
 Alternativ kann ich die Datenmenge vorgeben, so dass die Dauer vom Durchsatz
 abhängt.
 Außerdem ist es möglich, die Zeitdauer zu verändern und periodische Berichte
-ausgeben zu lassen anstelle eines Berichts am Ende der Übertragung.
+ausgeben zu lassen, anstelle eines Berichts am Ende der Übertragung.
 
 Bei UDP kann ich die Datenrate vorgeben und damit das Verhalten des
 Netzes bei unterschiedlich starker Auslastung untersuchen.
@@ -71,7 +69,7 @@ empfangen kann.
 Dieser ist insbesondere beim Aufruf via `inetd` nützlich.
 Die Ergebnisse werden beim Client angezeigt.
 
-Eine Besonderheit von `nuttcp` ist, dass es außer dem üblichen
+Eine Besonderheit von `nuttcp` ist, dass es außer
 memory-to-memory-Transfer auch disk-to-memory, memory-to-disk und
 disk-to-disk messen kann.
 Damit ist es möglich Szenarien zu messen, die realistischen Einsatzgebieten
