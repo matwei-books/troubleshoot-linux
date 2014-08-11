@@ -48,6 +48,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch06-dienste.md \
                $(DROPBOXDIR)/ch06-zugriffsrechte.md \
                $(DROPBOXDIR)/ch06-mount-probleme.md \
+               $(DROPBOXDIR)/ch06-sonstige.md \
                $(DROPBOXDIR)/ch07.md \
                $(DROPBOXDIR)/ch07-cpu.md \
                $(DROPBOXDIR)/ch07-ram.md \
@@ -185,6 +186,7 @@ SOURCES = $(BOOK) \
           ch06-dienste.md \
           ch06-zugriffsrechte.md \
           ch06-mount-probleme.md \
+          ch06-sonstige.md \
           ch07.md \
           ch07-cpu.md \
           ch07-ram.md \
@@ -315,6 +317,7 @@ CHAPTERS = \
     ch06-dienste.md \
     ch06-zugriffsrechte.md \
     ch06-mount-probleme.md \
+    ch06-sonstige.md \
     ch07.md \
     ch07-cpu.md \
     ch07-ram.md \
