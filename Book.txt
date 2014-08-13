@@ -91,6 +91,7 @@ ch13-ethtool.md
 ch13-ifconfig.md
 ch13-iperf.md
 ch13-iproute.md
+ch13-libtrace.md
 anhang.md
 glossar.md
 literatur.md
