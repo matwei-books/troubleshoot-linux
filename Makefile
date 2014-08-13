@@ -98,7 +98,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch13-ethtool.md \
                $(DROPBOXDIR)/ch13-ifconfig.md \
                $(DROPBOXDIR)/ch13-iperf.md \
-               $(DROPBOXDIR)/cha-13-iproute.md \
+               $(DROPBOXDIR)/ch13-iproute.md \
                $(DROPBOXDIR)/cha-13-libtrace.md \
                $(DROPBOXDIR)/cha-13-netcat.md \
                $(DROPBOXDIR)/cha-13-netstat.md \
@@ -236,7 +236,7 @@ SOURCES = $(BOOK) \
           ch13-ethtool.md \
           ch13-ifconfig.md \
           ch13-iperf.md \
-          cha-13-iproute.md \
+          ch13-iproute.md \
           cha-13-libtrace.md \
           cha-13-netcat.md \
           cha-13-netstat.md \
@@ -367,7 +367,7 @@ CHAPTERS = \
     ch13-ethtool.md \
     ch13-ifconfig.md \
     ch13-iperf.md \
-    cha-13-iproute.md \
+    ch13-iproute.md \
     cha-13-libtrace.md \
     cha-13-netcat.md \
     cha-13-netstat.md \

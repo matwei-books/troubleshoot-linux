@@ -90,7 +90,7 @@ ch13-bridge-utils.md
 ch13-ethtool.md
 ch13-ifconfig.md
 ch13-iperf.md
-cha-13-iproute.md
+ch13-iproute.md
 cha-13-libtrace.md
 cha-13-netcat.md
 cha-13-netstat.md
