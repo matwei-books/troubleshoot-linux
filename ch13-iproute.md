@@ -3,15 +3,13 @@
 
 Die Programme der iproute-Suite sind moderne Werkzeuge zur Anzeige und
 Konfiguration von Netzwerkschnittstellen, -routen und der Verkehrskontrolle.
-Sie bieten gegenüber den Programmen der net-tools-Suite erweiterte
-Möglichkeiten.
-Mit dem Kernel kommunizieren sie über die (rt)netlink-Schnittstelle.
+Sie bieten gegenüber den Programmen der net-tools-Suite mehr Möglichkeiten.
 
 Die iproute-Suite umfasst unter anderem die folgenden Programme:
 
 ip
 : zum Anzeigen und Konfigurieren von Netzwerkschnittstellen,
-  -adressen, -routen, Policy-Regeln, ARP- und NDISC-Einträgen, IP-Tunneln
+  -adressen, -routen, Policy-Regeln, ARP-Einträgen, IP-Tunneln
   und Multicast
 
 ss
@@ -20,11 +18,8 @@ ss
 tc
 : zur Konfiguration der Netzwerkverkehrskontrolle
 
-arpd
-: ein Userspace-ARP-Daemon
-
-\*stat, rtacct
-: verschiedene Statistikwerkzeuge
+rtmon
+: zur Protokollierung der netlink Schnittstelle des Kernels
 
 Weitere und genauere Informationen stehen in den betreffenden Handbuchseiten
 und der zugehörigen Dokumentation.
@@ -33,7 +28,7 @@ und der zugehörigen Dokumentation.
 
 Das Program ip dient zum Anzeigen und Manipulieren von Routen, Schnittstellen,
 Policy-Routing und Tunneln. Es ist das Programm aus der Suite, das ich am
-häufigsten interaktiv aufrufe.
+häufigsten aufrufe.
 
 Allgemein sieht der Aufruf des Programms wie folgt aus:
 
@@ -41,7 +36,7 @@ Allgemein sieht der Aufruf des Programms wie folgt aus:
     ip [ Optionen ] Objekt [ Befehl [ Argumente ] ]
 
 Die Optionen sind allgemeine Modifikatoren, die das Verhalten des Programms
-ändern, wie zum Beispiel `-4` oder `-6`, die die Adressfamilie auf
+ändern, wie `-4` oder `-6`, welche die Adressfamilie auf
 IPv4 oder IPv6 einschränken.
 
 Das Objekt gibt an, worüber ich Informationen wünsche, beziehungsweise, was
@@ -74,8 +69,8 @@ tunnel
 monitor
 : Nachrichten auf der netlink-Schnittstelle des Kernels
 
-Der darauf folgende Befehl gibt die Aktion an, die wir ausführen wollen und
-wird gegebenenfalls von passenden Argumenten gefolgt.
+Der darauf folgende Befehl gibt die Aktion an, die ich ausführen will.
+Ihm folgen gegebenenfalls die passenden Argumente.
 Befehl und Argumente sind spezifisch für die entsprechenden Objekte.
 
 ### ss
@@ -98,10 +93,10 @@ Die wichtigsten Optionen sind unter anderen:
 : um alle Sockets anzuzeigen
 
 -l
-: um nur die Listening Sockets anzuzeigen (diese werden sonst ausgelassen)
+: um nur die Listening Sockets anzuzeigen, diese lässt es sonst aus
 
 -p
-: um die zugehörigen Prozesse anzuzeigen (dafür benötige ich Rootrechte)
+: um die zugehörigen Prozesse anzuzeigen, dafür benötige ich Rootrechte
 
 -t | -u | -w | -x
 : um TCP-, UDP-, Raw- oder Unix-Sockets auszuwählen
@@ -126,18 +121,18 @@ big
 : für alle außer den Minisockets
 
 connected
-: für verbundenen Sockets
+: für verbundene Sockets
 
 synchronized
 : für alle verbundenen Sockets, die nicht im Zustand SYN-SENT sind
 
 Falls weder ein `state` noch ein `exclude` Statement vorhanden
-ist, ist die Voreinstellung `all` bei Option `-a` und ansonsten
+ist, gilt die Voreinstellung `all` bei Option `-a` und ansonsten
 alle außer `listening`, `syn-recv`, `time-wait` und `closed`.
 
-Mit dem booleschen Ausdruck kann ich nach Adressen und Ports filtern.
+Mit dem Ausdruck kann ich nach Adressen und Ports filtern.
 
-Weitere Optionen und ausführlichere Informationen zur Filterung gibt es in
+Weitere Optionen und Informationen zur Filterung gibt es in
 der Handbuchseite und im Artikel ``SS Utility: Quick Intro'', den ich bei
 der Dokumentation des iproute-Pakets finde.
 
@@ -153,12 +148,11 @@ QDISC
   Warteschlangenverhalten, das heißt, wie und in welcher Reihenfolge
   Datenpakete, die in eine QDISC eingereiht wurden, an den Treiber der
   Netzwerkkarte zum Senden übergeben werden. Wenn ein Datenpaket gesendet
-  werden soll, wird es in die für das Interface konfigurierte QDISC
-  eingereiht. Unmittelbar danach versucht der Kernel, so viele Pakete wie
-  möglich an den Netzwerkadapter zu übergeben.
+  werden soll, wird es zunächst in die für das Interface konfigurierte QDISC
+  eingereiht.
 
 CLASS
-: (Klassen) können in QDISC enthalten sein und wiederum weitere
+: Klassen können in QDISC enthalten sein und selbst wiederum weitere
   QDISC enthalten.
   Datenpakete werden in den inneren QDISC eingereiht.
   Datenpakete, die an den Netzwerkadapter übergeben werden, können
@@ -168,8 +162,7 @@ CLASS
 
 FILTER
 : entscheiden, welcher Klasse ein Datenpaket bei einem
-  klassenbasierten QDISC zugeordnet wird. Alle Filter einer Klasse werden
-  aufgerufen, bis einer eine Entscheidung trifft.
+  klassenbasierten QDISC zugeordnet wird.
 
 #### Klassenlose QDISC
 
@@ -186,8 +179,8 @@ pfifo_fast
 
 red
 : (Random Early Detection) simuliert eine überlastete Leitung,
-  indem zufällig Datenpakete verworfen werden, wenn sich der Durchsatz der
-  konfigurierten Datenübertragungsrate nähert.
+  indem Datenpakete verworfen werden, wenn sich der Durchsatz der
+  konfigurierten Übertragungsrate nähert.
 
 sfq
 : (Stochastic Fairness Queueing) sortiert die wartenden
@@ -196,11 +189,6 @@ sfq
 tbf
 : (Token Bucket Filter) ist geeignet, um den Traffic zu einer
   präzise konfigurierten Datenübertragungsrate zu verlangsamen.
-
-Klassenlose QDISC müssen an der Wurzel installiert werden:
-
-{line-numbers=off,lang="text"}
-    # tc qdisc add dev $device root $disc $params
 
 #### Klassenbasierte QDISC
 
@@ -227,7 +215,7 @@ Die Klassen formen einen Baum, bei dem jede Klasse genau einen Vorfahren hat
 und mehrere Kinder haben kann.
 
 Manche QDISC erlauben zur Laufzeit Klassen hinzuzufügen (CBQ, HTB), andere
-nicht (PRIO). Erstere können beliebig viele (auch keine) Subklassen haben,
+nicht (PRIO). Erstere können beliebig viele oder auch keine Subklassen haben,
 in denen die Datenpakete einsortiert werden.
 
 Jede Klasse enthält genau ein Blatt-QDISC (per Default pfifo), welcher durch
@@ -258,7 +246,7 @@ Klassen. Üblicherweise benennt man QDISC, die Kinder haben, explizit.
 Alle Klassen, die zur selben QDISC gehören, teilen sich die gleiche
 Hauptnummer.
 Jede hat eine separate Nebennummer, die Class-Id genannt wird und sich auf
-die QDISC (nicht die Elternklasse bezieht).
+die QDISC (nicht die Elternklasse) bezieht.
 
 Filter haben eine dreiteilige Filter-Id, die nur bei einer Filter-Hierarchie
 benötigt wird.
@@ -284,12 +272,6 @@ link
 : gleichzeitiges `remove` / `add`, der neue Knoten muss bereits existieren.
 
 Weitere Informationen finden sich in der Handbuchseite von `tc`.
-
-### lnstat / nstat / rtacct
-
-Diese Programme liefern Netzwerkstatistiken.
-Für nähere Informationen siehe
-Handbuchseiten.
 
 ### rtmon
 
