@@ -115,6 +115,33 @@ Das ist insbesondere dadurch vorteilhaft, weil es nur die TCP-Verbindungen
 betrifft, die über den problematischen Abschnitt laufen.
 Außerdem muss ich nichts an den Endpunkten der Verbindung einstellen.
 
-Die sauberste Lösung ist jedoch, die Ursache für die Störung bei der
-Path-MTU-Discovery zu beseitigen.
+A> Einige TCP-Stacks reduzieren automatisch die MTU, wenn die
+A> Gegenstelle auf das erste große TCP-Datagramm nicht antwortet.
+A> Dann kommt es lediglich zu einem kurzen Timeout und die Übertragung geht
+A> mit relativ kleinen Datagrammen weiter.
+A> Manchmal kommt man überhaupt nicht
+A> auf die Idee, dass hier ein Problem mit der Path-MTU-Discovery vorliegen
+A> könnte.
+A> 
+A> In einem konkreten Fall hatte ich einen WAN-Router, den ich zwar über das
+A> Webinterface konfigurieren konnte, bei dem die Verbindung aber sofort
+A> einfror, wenn ich einen VPN-Schlüssel übertragen wollte.
+A> Als ich beim Herstellersupport anrief, fragte dieser nur, ob ich das Gerät
+A> von einem Ubuntu-Rechner (10.04) aus konfiguriert hatte.
+A> 
+A> Ich hatte.
+A> Sein Rat lautete, eine andere Linux-Distribution oder MS Windows zu
+A> verwenden.
+A> Damit funktionierte das Übertragen der Schlüssel.
+A> 
+A> Natürlich war meine Neugierde geweckt, mit Wireshark beobachtete ich die
+A> Übertragung und konnte sehen, dass MS Windows einige Sekunden nachdem es das
+A> erste große Datagramm gesendet hatte, den ersten Teil derselben Daten in
+A> einem kleineren Datagramm von ca 700 Bytes sendete.
+A> Dieses kleinere Datagramm wurde beantwortet und in Folge sendete der Rechner
+A> alles mit dieser reduzierten MTU.
+A> Der Ubuntu-Rechner machte das nicht und seine Verbindung blieb folglich beim
+A> ersten großen Datagramm stecken.
+A> Nachdem ich temporär die MTU um wenige Bytes reduziert hatte, konnte auch
+A> er größere Dateien mit dem WAN-Router austauschen.
 
