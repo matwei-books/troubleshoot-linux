@@ -141,7 +141,7 @@ Zeilenende sendet, wie es im RFC spezifiziert ist.
 
 #### Portscanning
 
-Um festzustellen, welche Ports an einem Rechner erreichbar sind, kann ich
+Um festzustellen, welche TCP-Ports an einem Rechner erreichbar sind, kann ich
 `netcat` mit den Optionen `-z` und `-v` aufrufen:
 
 ![Portscan mit netcat](images/ss13-netcat-1.png)
