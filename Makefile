@@ -102,7 +102,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch13-libtrace.md \
                $(DROPBOXDIR)/ch13-netcat.md \
                $(DROPBOXDIR)/ch13-netstat.md \
-               $(DROPBOXDIR)/cha-13-openssl.md \
+               $(DROPBOXDIR)/ch13-openssl.md \
                $(DROPBOXDIR)/cha-13-perl.md \
                $(DROPBOXDIR)/cha-13-ping.md \
                $(DROPBOXDIR)/cha-13-quagga.md \
@@ -240,7 +240,7 @@ SOURCES = $(BOOK) \
           ch13-libtrace.md \
           ch13-netcat.md \
           ch13-netstat.md \
-          cha-13-openssl.md \
+          ch13-openssl.md \
           cha-13-perl.md \
           cha-13-ping.md \
           cha-13-quagga.md \
@@ -371,7 +371,7 @@ CHAPTERS = \
     ch13-libtrace.md \
     ch13-netcat.md \
     ch13-netstat.md \
-    cha-13-openssl.md \
+    ch13-openssl.md \
     cha-13-perl.md \
     cha-13-ping.md \
     cha-13-quagga.md \
