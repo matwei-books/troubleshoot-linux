@@ -104,9 +104,9 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch13-netstat.md \
                $(DROPBOXDIR)/ch13-openssl.md \
                $(DROPBOXDIR)/ch13-perl.md \
-               $(DROPBOXDIR)/cha-13-ping.md \
-               $(DROPBOXDIR)/cha-13-quagga.md \
-               $(DROPBOXDIR)/cha-13-route.md \
+               $(DROPBOXDIR)/ch13-ping.md \
+               $(DROPBOXDIR)/ch13-quagga.md \
+               $(DROPBOXDIR)/ch13-route.md \
                $(DROPBOXDIR)/cha-13-samba.md \
                $(DROPBOXDIR)/cha-13-tcpdump.md \
                $(DROPBOXDIR)/cha-13-telnet.md \
@@ -242,9 +242,9 @@ SOURCES = $(BOOK) \
           ch13-netstat.md \
           ch13-openssl.md \
           ch13-perl.md \
-          cha-13-ping.md \
-          cha-13-quagga.md \
-          cha-13-route.md \
+          ch13-ping.md \
+          ch13-quagga.md \
+          ch13-route.md \
           cha-13-samba.md \
           cha-13-tcpdump.md \
           cha-13-telnet.md \
@@ -373,9 +373,9 @@ CHAPTERS = \
     ch13-netstat.md \
     ch13-openssl.md \
     ch13-perl.md \
-    cha-13-ping.md \
-    cha-13-quagga.md \
-    cha-13-route.md \
+    ch13-ping.md \
+    ch13-quagga.md \
+    ch13-route.md \
     cha-13-samba.md \
     cha-13-tcpdump.md \
     cha-13-telnet.md \

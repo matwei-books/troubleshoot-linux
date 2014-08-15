@@ -96,6 +96,9 @@ ch13-netcat.md
 ch13-netstat.md
 ch13-openssl.md
 ch13-perl.md
+ch13-ping.md
+ch13-quagga.md
+ch13-route.md
 anhang.md
 glossar.md
 literatur.md

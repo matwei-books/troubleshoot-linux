@@ -96,9 +96,9 @@ ch13-netcat.md
 ch13-netstat.md
 ch13-openssl.md
 ch13-perl.md
-cha-13-ping.md
-cha-13-quagga.md
-cha-13-route.md
+ch13-ping.md
+ch13-quagga.md
+ch13-route.md
 cha-13-samba.md
 cha-13-tcpdump.md
 cha-13-telnet.md
