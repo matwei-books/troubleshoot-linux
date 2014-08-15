@@ -2,17 +2,17 @@
 ## libtrace und libtrace-tools {#sec-netz-werkzeuge-librace}
 
 Mit libtrace kann ich ähnlich wie mit libpcap eigene Analysewerkzeuge
-programmieren. Hier will ich aber mehr auf die mitgelieferten libtrace-tools
+programmieren. Hier will ich aber auf die mitgelieferten libtrace-tools
 eingehen, mit denen ich Mitschnitte anfertigen und weiter bearbeiten kann.
 
-Ein großer Vorteil von libtrace ist, dass diese Bibliothek und die damit
+Ein Vorteil von libtrace ist, dass diese Bibliothek und die damit
 geschriebenen Werkzeuge mit Paketmitschnitten aus unterschiedlichen Quellen
-umgehen können und die verschiedenen Formate ineinander umwandeln können.
+umgehen und die verschiedenen Formate ineinander umwandeln können.
 Dazu verwendet libtrace sogenannte URI um das Format und die Quelle
 beziehungsweise das Ziel anzugeben.
 
 Die folgende Tabelle listet einige der unterstützten Formate auf und gibt an,
-ob libtrace diese auch schreiben kann.
+ob libtrace diese schreiben kann.
 
 {title="Unterstützte Formate für Paketmitschnitte"}
 | Format                      | URI            | Read | Write |
@@ -50,42 +50,41 @@ ob libtrace diese auch schreiben kann.
 | RT Network Protocol         | rt:$host:$port | Ja   | Nein  |
 
 
-Damit genug der Vorrede, kommen wir nun zu den Werkzeugen.
+Genug der Vorrede, kommen wir zu den Werkzeugen.
 
 ### traceanon
 
 Mit `traceanon` kann ich die IP-Adressen von Paketmitschnitten anonymisieren.
-Das ist immer dann wichtig, wenn ein Paketmitschnitt zu einem Problem
-weitergereicht werden, aber möglichst wenig Informationen zur
-Netzwerkstruktur preisgegeben werden soll.
+Das ist wichtig, wenn ich einen Paketmitschnitt zu einem Problem weiterreichen,
+aber möglichst wenig Informationen zur Netzwerkstruktur preisgeben will.
 
 Das Programm `traceanon` ändert die IP-Header der Datenpakete sowie die in ICMP
 eingebetteten IP-Header und repariert die Prüfsummen innerhalb von TCP- und
 UDP-Headern.
 
-Es gibt zwei Schemata, bei dem einen wird ein kompletter Adressblock durch einen
-anderen ersetzt und beim anderen werden die Adressen mit dem
-Cryptopan-Verfahren einzeln ersetzt.
+Es gibt zwei Schemata: bei dem einen ersetzt `traceanon` einen kompletten
+Adressblock durch einen anderen und beim anderen ersetzt es die Adressen mit dem
+Cryptopan-Verfahren einzeln.
 
 Wichtig beim Einsatz von `traceanon` ist, immer im Hinterkopf zu behalten,
-dass IP-Adressen auch auf anderem Weg offenbar werden können. So werden zum
-Beispiel IP-Adressen innerhalb von ARP-Paketen nicht anonymisiert und einige
+dass IP-Adressen auch auf anderem Weg preisgegeben werden können.
+So werden IP-Adressen innerhalb von ARP-Paketen nicht anonymisiert und einige
 Anwendungsprotokolle wie zum Beispiel HTTP, SMTP, OSPF und andere
 Routingprotokolle können in den Anwendungsdaten Informationen über die
-beteiligten Netze preisgeben.
+beteiligten Netze verraten.
 
 Der Aufruf sieht so aus:
 
 {line-numbers=off,lang="text"}
     $ traceanon [options] $sourceuri $desturi
 
-Die Optionen stehen in der Handbuchseite.
+Die Beschreibung der Optionen steht in der Handbuchseite.
 
 ### tracediff
 
 Dieses Werkzeug findet Differenzen zwischen zwei Mitschnitten und gibt diese
-aus. Dabei wird der Inhalt aus den Framingheadern (PCAP oder ERF) nicht
-ausgewertet.
+aus.
+Dabei wertet es den Inhalt der Framingheader (PCAP oder ERF) nicht aus.
 
 Mit der Option `-m $max` kann ich die Ausgabe nach `$max`
 Unterschieden abbrechen lassen.
@@ -96,13 +95,13 @@ Der Aufruf sieht so aus:
     $ tracediff [ -m $maxdiff ] $firsturi $seconduri
 
 
-Tracediff ist zum Beispiel nützlich, wenn ich mehrere Mitschnitte einer
+Tracediff ist nützlich, wenn ich mehrere Mitschnitte einer
 Verbindungssitzung an verschiedenen Stellen aufgenommen habe und diese
 vergleichen will.
 
 ### tracemerge
 
-Mit diesem Werkzeug kann ich zwei oder mehrere Paketmitschnitte zu einer
+Mit diesem Werkzeug kann ich zwei oder mehrere Paketmitschnitte zu einem
 kombinieren, wobei die Reihenfolge der Pakete beibehalten wird.
 
 Der Aufruf sieht so aus:
@@ -119,7 +118,7 @@ Dabei kann ich mit der Option `-f $filter` die Ausgabe auf bestimmte
 Pakete einschränken und mit `-c $count` die Anzahl der angezeigten
 Pakete begrenzen.
 
-Die Ausgabe ist abhängig davon, inwieweit die mitgeschnittenen Protokolle in
+Die Ausgabe ist abhängig davon, inwieweit die Protokolle in
 libtrace bekannt sind und ändert sich folglich von Version zu Version.
 
 Folgender Beispielaufruf mit tracepktdump aus den libtrace-tools Version
@@ -128,8 +127,8 @@ Folgender Beispielaufruf mit tracepktdump aus den libtrace-tools Version
 ![tracepktdump](images/ss13-libtrace-1.png)
 
 In dieser Version ist das OSPF-Protokoll in der Bibliothek noch nicht
-bekannt und wird daher als Hexdump präsentiert.
-Die IP- und Ethernetheader hingegen werden dekodiert und erscheinen nicht
+bekannt und wird als Hexdump präsentiert.
+Die IP- und Ethernet-Header hingegen werden dekodiert und erscheinen nicht
 im Hexdump.
 
 ### tracereplay
@@ -138,18 +137,14 @@ Dieses Werkzeug spielt einen Paketmitschnitt mit den gleichen Zeitabständen
 aus einer URI zu einer anderen.
 Ich kann damit einen Mitschnitt wieder auf das Netz schicken,
 wenn die zweite URI ein Netzwerkinterface bestimmt,
-Prüfsummen werden dabei während des Abspielens neu berechnet.
+Prüfsummen werden während des Abspielens neu berechnet.
 
 Mit der Option `-f $filter` kann ich die zurückgespielten Datenpakete
-einschränken und mit `-b` kann ich als Ziel-Ethernet-Adresse die
-Broadcast-Adresse verwenden.
+einschränken.
 
-Beim Zurückspielen verwendet `tracereplay` sonst die Ethernet-Adressen aus
-dem Mitschnitt, so dass ich das eher im selben Netzsegment einspielen will.
-
-Abhängig vom Switch und dem Verkehr im Netz können die Reaktionen anderer
-Rechner auf die wieder eingespielten Datenpakete auch an dritte Rechner
-gehen, wenn deren Ethernetadresse als Absender im Mitschnitt steht.
+Beim Zurückspielen verwendet `tracereplay` die Ethernet-Adressen aus
+dem Mitschnitt, mit `-b` kann ich als Ziel-Ethernet-Adresse jedoch die
+Broadcast-Adresse angeben.
 
 Der Aufruf sieht so aus:
 
@@ -162,9 +157,9 @@ Die Optionen sind in der Handbuchseite beschrieben.
 
 Dieses Programm kann eine Reihe von Berichten über die Eigenschaften von
 Paketmitschnitten produzieren. Die Berichte landen in Dateien deren Name
-gleich der Langoption gefolgt vom Suffix `.rpt` ist.
+gleich der langen Option gefolgt vom Suffix `.rpt` ist.
 
-Folgende Optionen und Reports stehen unter anderem zur Verfügung:
+Folgende Optionen und Reports sind für mich bei der Fehlersuche interessant:
 
 -e | --error
 : erzeugt einen Bericht über Paketfehler (zum Beispiel
@@ -200,20 +195,19 @@ Mehr Optionen und Berichte beschreibt die Handbuchseite.
 
 Mit diesem Programm bekomme ich eine einfache filter- und zeitbasierte
 Analyse eines Paketmitschnitts.
-Dabei wird der Mitschnitt in Intervalle aufgeteilt und für jedes Intervall
-angegeben, wie viele Datenpakete passend zu den angegebenen Filtern im
-Intervall vorkommen.
+Dabei teilt es den Mitschnitt in Intervalle und gibt für jedes Intervall
+an, wie viele Datenpakete passend zu den angegebenen Filtern vorkommen.
 
 Die möglichen Optionen sind unter anderen:
 
 -f $filter
-: legt die Filter für die Analyse fest, kann auch mehrfach angegeben werden
+: legt die Filter für die Analyse fest, diese Option kann ich mehrfach angeben
 
 -i $interval
 : bestimmt das zugrunde liegende Zeitraster in Sekunden
 
 -m
-: wenn mehrere Paketmitschnitte angegeben werden, sollen diese
+: wenn ich mehrere Paketmitschnitte angebe, sollen diese
   zusammengefasst werden (merge)
 
 -o $format
@@ -228,8 +222,9 @@ für den gesamten Paketmitschnitt und nicht für einzelne Zeitintervalle
 daraus. Mit der Option `-f $filter` kann ich auch hier die Pakete
 angeben, an denen ich interessiert bin.
 
-Das Programm `tracesummary` ist ein Shellwrapper um `tracestats` und gibt eine
-einfache Zusammenfassung für einen Paketmitschnitt an.
+Das Programm `tracesummary`
+gibt eine einfache Zusammenfassung für einen Paketmitschnitt an
+und ist ein Shellwrapper um `tracestats`.
 
 ### tracesplit
 
@@ -242,8 +237,8 @@ Das kann ich unter anderen mit diesen Optionen beeinflussen:
 
 -c $count
 : schreibt maximal `$count` Pakete pro Ausgabedatei.
-  Die Ausgabedateien werden benannt nach dem in outputuri angegeben
-  Basisnamen, an den die Nummer des ersten Paketes in der Datei angehängt
+  Die Ausgabedateien werden nach dem in der Output-URI angegebenen Basisnamen
+  benannt, an den die Nummer des ersten Paketes in der Datei angehängt
   wird.
 
 -b $bytes
@@ -282,22 +277,12 @@ traceconvert
 tracefilter
 : extrahiert Datenpakete anhand von BPF-Filtern aus einem Mitschnitt
 
-### tracesplit_dir
-
-Dieses Programm teilt einen Mitschnitt in zwei Richtungen auf. Die
-Richtungen müssen aus der Inputuri erkennbar sein.
-
-Der Aufruf sieht so aus:
-
-{line-numbers=off,lang="text"}
-    $ tracesplit_dir $input $out_incoming $out_outgoing
-
 ### tracetop
 
-Das Programm zeigt die aktivsten n Datenflüsse in jeder Sekunde an, ähnlich
-wie top für Prozesse oder mytop für MySQL-Verbindungen.
+Das Programm zeigt die aktivsten n Datenflüsse in einem Intervall an, ähnlich
+wie `top` für Prozesse oder `mytop` für MySQL-Verbindungen.
 
-Mit den folgenden Optionen kann ich die Ausgabe beeinflussen:
+Ich kann die Ausgabe mit folgenden Optionen an meine Bedürfnisse anpassen:
 
 -f $filter
 : zählt nur die Pakete, die zu dem Filter passen
