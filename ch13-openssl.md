@@ -1,7 +1,7 @@
 
 ## openssl s_client {#sec-netz-werkzeuge-openssl}
 
-Openssl s_client ist das dritte Werkzeug, welches ich zu Verbindungstests
+Openssls `s_client` ist das dritte Werkzeug, welches ich zu Verbindungstests
 verwende.
 Dabei handelt es sich um einen generischen SSL/TLS Client, mit dem ich
 verschlüsselte Protokolle wie HTTPS oder SSMTP und die
@@ -9,17 +9,17 @@ entsprechenden Server testen kann.
 
 ### Aufruf
 
-Der Grundlegende Aufruf sieht wie folgt aus:
+Der grundlegende Aufruf sieht wie folgt aus:
 
 {line-numbers=off,lang="text"}
-    $ openssl s_client -connect host:port [ options ]
+    $ openssl s_client -connect $host:$port [ options ]
   
 ### Optionen
 
-Die folgenden Optionen verwende ich hin und wieder, weitere gibt es wie
-fast immer in den Handbuchseiten zu finden.
+Die folgenden Optionen verwende ich häufiger, weitere sind, wie fast immer,
+in den Handbuchseiten zu finden.
 
--connect host:port
+-connect $host:$port
 : Baut eine SSL- oder TLS-Verbindung zu dem angegebenen Server und Port auf.
 
 -crlf
@@ -29,28 +29,33 @@ fast immer in den Handbuchseiten zu finden.
 -quiet
 : Unterdrückt die Ausgabe der Zertifikat-Informationen.
 
-starttls proto
+-starttls $proto
 : sendet die protokollspezifischen Befehle um eine
   Verbindung auf TLS umzuschalten.
   Momentan werden die folgenden Protokolle unterstützt:
   `smtp`, `pop3`, `imap`, `ftp`.
 
-Bei Problemen mit der Aushandlung des SSL-Protokolls kann man mit den
+Bei Problemen mit der Aushandlung des SSL-Protokolls kann ich mit den
 Optionen `-bugs`, `-ssl2`, `-ssl3`, `-tls`, `-no_ssl2`, ... experimentieren.
 Details finden sich in der Handbuchseite.
 
 ### HTTPS-Anfrage
 
-Das folgende Beispiel zeigt eine HTTP-Abfrage mit openssl:
+Das folgende Beispiel zeigt eine HTTPS-Anfrage mit openssl:
 
-![HTTP-Abfrage mit OpenSSL](images/ss13-openssl-1.png)
+![HTTPS-Anfrage mit OpenSSL](images/ss13-openssl-1.png)
+
+Nachdem `verify return:1` mir anzeigt, dass die verschlüsselte Verbindung
+steht, gebe ich meine Anfrage an den Webserver genau so ein, wie ich es mit
+`netcat` bei einem unverschlüsselten Server tun würde und bekomme die Antwort
+des Servers angezeigt.
 
 ### SMTP-SASL-Test
 
 Um die Authentisierung bei SMTP mit SASL zu testen, muss ich mir zunächst den
 String für die Credentials berechnen.
 Das PLAIN-SASL-Verfahren ist in RFC4616 beschrieben.
-Bei diesem sendet der Client ein String mit folgendem Aufbau an den Server.
+Bei diesem sendet der Client einen String mit folgendem Aufbau an den Server.
 
 {line-numbers=off,lang="text"}
     authzid \0 authcid \0 passwd
@@ -67,7 +72,7 @@ passwd
 : das Passwort
 
 Der Server überprüft die Gültigkeit von *authcid* und *passwd* und dann, ob
-der Client damit die Rechte der *authzid* ausüben kann.
+der Client damit die Rechte der *authzid* ausüben darf.
 
 Da SMTP ein Plaintext-Protokoll ist, wird der String vor dem Senden mit Base64
 codiert.
@@ -105,3 +110,5 @@ Mailserver auf und melde mich an:
     QUIT
     221 2.0.0 Bye
 
+Die Meldung `235 2.7.0 Authentication successful` zeigt mir, dass die
+Anmeldung erfolgreich war.
