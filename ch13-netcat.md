@@ -1,13 +1,12 @@
 
-## Netcat {#sec-netz-werkzeuge-netcat}
+## netcat {#sec-netz-werkzeuge-netcat}
 
-Ein weiteres Werkzeug um schnell eine Netzwerkverbindung herzustellen,
+Ein weiteres Werkzeug, um schnell eine Netzwerkverbindung herzustellen,
 ähnlich wie `telnet` doch weitaus flexibler, ist `netcat`.
-Damit kann ich nicht nur TCP-, UDP- oder UNIX-Socket-Verbindungen einfach
-aufbauen, sondern auch schnell einen Socket-Server für die genannten
-Protokolle einrichten.
+Damit kann ich nicht nur TCP-, UDP- oder UNIX-Socket-Verbindungen aufbauen,
+sondern auch einen Socket-Server für die genannten Protokolle einrichten.
 
-Netcat ist sehr gut in Skripten einsetzbar und kann auch ein rudimentäres
+Netcat ist sehr gut in Skripten einsetzbar und kann ein rudimentäres
 Port-Scanning für TCP-Ports.
 Außerdem, was in manchen Umgebungen wichtig sein kann: `netcat` kann mit
 Proxy-Servern umgehen und darüber Verbindungen herstellen.
@@ -49,8 +48,7 @@ Einige der wichtigsten Optionen sind:
 
 -s $addr
 : Setzt die Absenderadresse auf `$addr`.
-  Das ist nützlich, wenn der Rechner mehrere Adressen hat und einige davon
-  vielleicht durch Paketfilter gesperrt sind.
+  Das ist nützlich, wenn mein Rechner mehrere Adressen hat.
 
 -U
 : verwendet UNIX-Domain-Sockets
@@ -69,7 +67,8 @@ Einige der wichtigsten Optionen sind:
 -z
 : weist `netcat` an, keine Verbindung aufzubauen, sondern nur
   nachzuschauen, ob der Port oder Portbereich offen ist.
-  Diese Option kombiniere ich sinnvollerweise mit `-v`.
+  Diese Option kombiniere ich sinnvollerweise mit `-v` damit die Ports auch
+  angezeigt werden.
 
 Weitere Optionen finden sich in den Handbuchseiten.
 
@@ -85,7 +84,7 @@ Serverseite ein:
 {line-numbers=off,lang="text"}
     $ netcat -l 1234
 
-Auf der Clientseite dann das folgende:
+und auf der Clientseite das folgende:
 
 {line-numbers=off,lang="text"}
     $ netcat host.example.net 1234
@@ -94,7 +93,7 @@ um mich mit dem Server zu verbinden.
 
 Mit Option `-u` verwende ich UDP statt TCP zur Übertragung.
 
-Mit Option `-U` geht es stattdessen über UNIX-Domain-Sockets.
+Mit Option `-U` geht es über UNIX-Domain-Sockets.
 Dann verwende ich statt der Portnummer den Pfadnamen zur Socketdatei und
 lasse auf Clientseite den Rechnernamen weg.
 Die Socketdatei darf beim Start des Serverprozesses noch nicht existieren.
@@ -107,7 +106,7 @@ Beispiel auf Serverseite wie folgt:
 {line-numbers=off,lang="text"}
     $ netcat -l 1234 > file.out
 
-Und auf Clientseite:
+und auf Clientseite:
 
 {line-numbers=off,lang="text"}
     $ netcat host.example.net 1234 < file.in
@@ -137,8 +136,8 @@ komplexe Protokolle bedienen oder testen:
 Mit diesem kurzen Skript kann ich eine E-Mail einspeisen, um einen
 Mailserver zu testen.
 Das gleiche kann ich auch interaktiv von Hand eingeben.
-Oder ich kann auf einem einem POP3-Server nachsehen,
-ob die E-Mail angekommen ist.
+Die Option `-C` sorgt dafür, dass `netcat` im Netz die Kombination *CRLF* als
+Zeilenende sendet, wie es im RFC spezifiziert ist.
 
 #### Portscanning
 
