@@ -103,7 +103,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch13-netcat.md \
                $(DROPBOXDIR)/ch13-netstat.md \
                $(DROPBOXDIR)/ch13-openssl.md \
-               $(DROPBOXDIR)/cha-13-perl.md \
+               $(DROPBOXDIR)/ch13-perl.md \
                $(DROPBOXDIR)/cha-13-ping.md \
                $(DROPBOXDIR)/cha-13-quagga.md \
                $(DROPBOXDIR)/cha-13-route.md \
@@ -241,7 +241,7 @@ SOURCES = $(BOOK) \
           ch13-netcat.md \
           ch13-netstat.md \
           ch13-openssl.md \
-          cha-13-perl.md \
+          ch13-perl.md \
           cha-13-ping.md \
           cha-13-quagga.md \
           cha-13-route.md \
@@ -372,7 +372,7 @@ CHAPTERS = \
     ch13-netcat.md \
     ch13-netstat.md \
     ch13-openssl.md \
-    cha-13-perl.md \
+    ch13-perl.md \
     cha-13-ping.md \
     cha-13-quagga.md \
     cha-13-route.md \

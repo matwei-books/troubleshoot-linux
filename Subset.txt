@@ -95,7 +95,7 @@ ch13-libtrace.md
 ch13-netcat.md
 ch13-netstat.md
 ch13-openssl.md
-cha-13-perl.md
+ch13-perl.md
 cha-13-ping.md
 cha-13-quagga.md
 cha-13-route.md
