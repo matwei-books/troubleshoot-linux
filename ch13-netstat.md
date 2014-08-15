@@ -1,11 +1,11 @@
 
 ## netstat {#sec-netz-werkzeuge-netstat}
 
-Dieses Programm setze ich auch bei manchen lokalen Problemen auf
+Dieses Programm setze ich auch bei lokalen Problemen auf
 Linux-Rechnern ein.
 Daher habe ich es bereits im [Kapitel Werkzeuge](#sec-lokal-werkzeuge-netstat)
 in Teil 2 dieses Buches beschrieben.
-Hier gehe ich auf einige Aspekte ein, die beim Untersuchen von Netzproblemen
+Hier gehe ich auf Aspekte ein, die beim Untersuchen von Netzproblemen
 von Belang sind.
 
 ### Sockets
@@ -38,10 +38,10 @@ Außerdem verwende ich
 --udp | -u
 : für UDP-Sockets.
 
-Bin ich nur daran interessiert, ob überhaupt ein Prozess an einem bestimmten
+Bin ich nur daran interessiert, ob überhaupt ein Prozess an einem
 Socket wartet, verwende ich die Option `--listening` beziehungsweise
-`-l`. Diese werden bei der normalen Ausgabe weggelassen. Will ich
-hingegen sowohl die aktiven als auch die lauschenden Sockets erfassen,
+`-l`. Diese läßt `netstat` bei der normalen Ausgabe weg.
+Will ich sowohl die aktiven als auch die lauschenden Sockets erfassen,
 verwende ich die Option `--all` beziehungsweise `-a`.
 
 ### Routen
@@ -67,8 +67,8 @@ und empfangenen Datenpakete sowie die Anzahl der Sende- beziehungsweise
 Empfangsfehler.
 
 Kombiniere ich das mit `-e`, bekomme ich die gleiche Ausgabe wie vom
-Program `ifconfig`. Kombiniert mit `-a` werden auch Interfaces
-angezeigt, die nicht aktiviert wurden.
+Programm `ifconfig`. Kombiniert mit `-a` zeigt `netstat` auch Interfaces
+an, die nicht aktiviert sind.
 
 ### Multicast-Gruppen
 
@@ -91,8 +91,8 @@ Informationen an,
 und das beschleunigt insbesondere bei Netzadressen die Anzeige immens,
 weil sonst etliche DNS-Anfragen gestellt werden,
 bevor die Ausgabe angezeigt werden kann.
-Natürlich kann ich auch das selektiv einstellen mit
-`--numeric-hosts`, `--numeric-ports` und `--numeric-users`.
+Das kann ich auch selektiv mit
+`--numeric-hosts`, `--numeric-ports` und `--numeric-users` einstellen.
 
 Mit der Option `--verbose` oder `-v` bekomme ich mehr Informationen,
 insbesondere zu nicht konfigurierten Adressfamilien.

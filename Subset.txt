@@ -93,7 +93,7 @@ ch13-iperf.md
 ch13-iproute.md
 ch13-libtrace.md
 ch13-netcat.md
-cha-13-netstat.md
+ch13-netstat.md
 cha-13-openssl.md
 cha-13-perl.md
 cha-13-ping.md

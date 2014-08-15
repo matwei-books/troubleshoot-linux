@@ -101,7 +101,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch13-iproute.md \
                $(DROPBOXDIR)/ch13-libtrace.md \
                $(DROPBOXDIR)/ch13-netcat.md \
-               $(DROPBOXDIR)/cha-13-netstat.md \
+               $(DROPBOXDIR)/ch13-netstat.md \
                $(DROPBOXDIR)/cha-13-openssl.md \
                $(DROPBOXDIR)/cha-13-perl.md \
                $(DROPBOXDIR)/cha-13-ping.md \
@@ -239,7 +239,7 @@ SOURCES = $(BOOK) \
           ch13-iproute.md \
           ch13-libtrace.md \
           ch13-netcat.md \
-          cha-13-netstat.md \
+          ch13-netstat.md \
           cha-13-openssl.md \
           cha-13-perl.md \
           cha-13-ping.md \
@@ -370,7 +370,7 @@ CHAPTERS = \
     ch13-iproute.md \
     ch13-libtrace.md \
     ch13-netcat.md \
-    cha-13-netstat.md \
+    ch13-netstat.md \
     cha-13-openssl.md \
     cha-13-perl.md \
     cha-13-ping.md \
