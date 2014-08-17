@@ -10,13 +10,14 @@ Bei der Beantwortung dieser Frage kann mir das Programm quagga helfen.
 
 Quagga ist eine Programmsuite, die Protokolldämonen für die
 Routingprotokolle RIP, OSPF, BGP und ISIS enthält. Die Konfigurationssprache
-ist derjenigen von Cisco-Routern sehr ähnlich, so dass jemand, der diese
+ist derjenigen von Cisco-Routern ähnlich, so dass jemand, der diese
 Geräte kennt, sich schnell hineinfindet.
-So lassen sich beispielsweise fast alle Code-Beispiele aus
+Beispielsweise lassen sich fast alle Code-Beispiele aus
 [[Malhotra2002](#bib-malhotra2002)] mit Quagga nachvollziehen, obwohl diese
 für Cisco IOS geschrieben sind.
 
-Konfiguriert werden die Protokolldämonen entweder via `telnet`, über ein
+Ich kann die Protokolldämonen auf drei Arten konfigurieren: via `telnet`,
+über ein
 Programm namens `vtysh` oder durch Editieren der Konfigurationsdateien im
 Verzeichnis */etc/quagga/* und anschließenden Neustart der Protokolldämonen.
 
@@ -31,7 +32,7 @@ Ein `?` an beliebiger Stelle zeigt die möglichen Fortsetzungen. Das
 heißt, ein Fragezeichen am Zeilenanfang listet alle momentan möglichen
 Befehle, ein Fragezeichen nach einem Befehl listet die möglichen nächsten
 Argumente.
-Befehle müssen nur soweit ausgeschrieben werden, dass sie eindeutig sind.
+Befehle muss ich nur soweit ausschreiben, dass sie eindeutig sind.
 Das gleiche gilt für die Argumente.
 
 Mit `<Ctrl-P>` erhalte ich die letzte Zeile, mit `<Ctrl-N>` die
@@ -53,14 +54,16 @@ Der Befehl `exit` im Administrator- oder Operatormodus beendet die
 Sitzung.
 
 Im Konfigurationsmodus kann ich jeden einzelnen Aspekt der Konfiguration
-ändern. Dabei lassen sich einzelne Befehle zurücknehmen, indem sie mit
-vorangestelltem `no` noch einmal eingegeben werden. Finde ich zum
-Beispiel eine statische Route in der Konfiguration:
+ändern.
+Dabei lassen sich einzelne Befehle zurücknehmen, indem ich sie mit
+vorangestelltem `no` noch einmal eingebe.
+Finde ich zum Beispiel eine statische Route in der Konfiguration:
 
 {line-numbers=off,lang="text"}
     zebra# show running-config
     ...
-    zebra# ip route $destination $gateway
+    ip route $destination $gateway
+    ...
 
 dann kann ich diese wie folgt entfernen:
 
@@ -70,10 +73,11 @@ dann kann ich diese wie folgt entfernen:
     zebra# end
 
 Auf die gleiche Weise bearbeite ich auch ACL. Diese werden oft mit einer
-Auffangregel am Ende abgeschlossen. Füge ich eine neue spezielle Regel an,
-ist diese nicht aktiv, weil die Auffangregel nun davor steht. In diesem Fall
-entferne ich die Auffangregel mit vorangestelltem `no` und füge sie
-am Ende wieder an.
+Auffangregel am Ende abgeschlossen.
+Füge ich eine neue spezifische Regel an, ist diese nicht aktiv, weil die
+Auffangregel nun davor steht.
+In diesem Fall entferne ich die Auffangregel mit vorangestelltem `no` und
+füge sie am Ende wieder an.
 
 A> ### Reihenfolge von Routen und ACL
 A> 
@@ -89,7 +93,7 @@ A> Diese ist für alle Fälle gedacht, die nicht von anderen
 A> Regeln/spezifischeren Routen abgedeckt werden.
 A> Im Gegensatz zu einer Defaultroute, die automatisch als unspezifischste
 A> Route zuletzt gewählt werden würde, blockiert eine Auffangregel, die vor
-A> einer speziellen Regel steht, letztere.
+A> einer spezifischen Regel steht, letztere.
 A> Darum muss ich bei einer neuen ACL immer darauf achten, dass die
 A> Auffangregel nicht davor steht.
 
@@ -104,5 +108,5 @@ fest, wohin die Routingdämonen protokollieren und mit den `debug`
 Befehlen, was protokolliert wird. Je nach Routingprotokoll und eingestellter
 Protokollierung können die Logdateien sehr schnell sehr unübersichtlich
 werden. Dann helfen mir ein paar Zeilen Perl-Skript, die relevanten
-Informationen herauszufischen und zusammenzusetzen.
+Informationen herauszusuchen und zusammenzusetzen.
 
