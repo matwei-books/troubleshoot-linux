@@ -4,19 +4,19 @@
 Eines der grundlegenden und vielseitigsten Werkzeuge für das
 Netzwerk-Troubleshooting ist Ping. Mit diesem Programm kann ich:
 
-*   testen, ob eine Maschine überhaupt erreichbar ist,
+*   testen, ob eine Maschine erreichbar ist,
 
 *   sehen, wie lange ein Paketaustausch dauert,
 
 *   analysieren, welche Datenübertragungsrate die Verbindung zu einem Rechner
     hat,
 
-*   die Performance meines Rechners und Netzwerkes einschätzen,
+*   die Performance des Netzwerkes einschätzen,
 
 *   eine hohe Netzlast für andere Tests erzeugen.
 
-Natürlich sind alle mit Ping gewonnen Erkenntnisse mit einer Prise Salz zu
-nehmen, aber das trifft auf jedes Werkzeug zu.
+Natürlich sind alle mit Ping gewonnenen Erkenntnisse mit einer Prise Salz zu
+nehmen.
 
 In [[Sloan2001](#bib-sloan2001)] beschreibt der Autor die Anwendung von Ping
 beim Netzwerk-Troubleshooting sehr gut und ausführlich.
@@ -32,8 +32,7 @@ Die wichtigsten Kommandozeilenoptionen von `ping` sind:
 
 -s $size
 : um die Größe der Datenpakete in Bytes vorzugeben, die
-  Voreinstellung ist 56, hinzu kommen immer noch 8 Byte für den
-  ICMP-Header
+  Voreinstellung ist 56, hinzu kommen immer 8 Byte für den ICMP-Header
 
 -n
 : um die Auflösung von Hostnamen abzuschalten
@@ -55,9 +54,9 @@ Die wichtigsten Kommandozeilenoptionen von `ping` sind:
   warten.
   Für mehr als drei Pakete benötige ich Superuserrechte.
 
-Daneben gibt es sehr viele weitere Optionen, die ich seltener benötige
-und deren genaue Auswirkungen aus den Handbuchseiten erschlossen werden
-können.
+Daneben gibt es sehr viele weitere Optionen, die ich seltener verwende
+und deren genaue Auswirkungen ich nötigenfalls aus den Handbuchseiten
+erschließe.
 
 ### Verbindungstest
 
@@ -76,32 +75,32 @@ Manche Versionen des Programms begnügen sich hier mit der einmaligen Ausgabe:
 Moderne Versionen zeigen nach Beendigung des Programms (nötigenfalls durch
 Abbruch mit `<CTRL>-C`) die Paketlaufzeiten und einige Statistiken an.
 
-Ein Problem, das das Testen der Verbindung mit Ping verhindern kann, sind zu
-restriktive Firewalleinstellungen.
+Restriktive Firewalleinstellungen können das Testen der Verbindung mit Ping
+verhindern.
 Bei etlichen Rechnern habe ich erlebt, dass diese nach der Installation zwar
 am Netzverkehr teilnehmen konnten, aber selbst nicht auf ICMP-Hello-Pakete
 antworteten.
 Das ist, aus meiner Sicht, eine Überreaktion auf die Tatsache, das einige
 DoS-Angriffe das ICMP-Protokoll und insbesondere ICMP-Hello verwendet haben.
 
-Man kann schlecht jedem vorschreiben, was er in seinem Netzwerk erlaubt und was
-nicht. Auf jeden Fall möchte ich bitten, sachlich einen möglichen oder
-eingebildeten Gewinn an Sicherheit gegenüber der Erschwernis der
-Netzwerkdiagnose abzuwägen.
+Man kann nicht jedem vorschreiben, was er in seinem Netzwerk erlaubt und was
+nicht.
+Auf jeden Fall empfehle ich, sachlich einen möglichen oder eingebildeten
+Gewinn an Sicherheit gegenüber der Erschwernis bei der Netzwerkdiagnose
+abzuwägen.
 
 ### Netzwerkperformancemessungen
 
-Ein weiteres Anwendungsgebiet sind Performancemessungen im Netzwerk. Am
-einfachsten geht die Bestimmung der Paketlaufzeit zu einem entfernten
-Rechner und zurück, denn diese gibt Ping selbst aus. Bin ich an der reinen
-Laufzeit interessiert, muss ich mir einen Zeitpunkt suchen, zu dem sehr
-wenig im Netz los ist. Aber auch die Datenübertragungsrate kann ich mit Ping
-bestimmen, sowie Netzwerklast für Lastmessungen erzeugen.
+Ein weiteres Anwendungsgebiet sind Performancemessungen im Netzwerk.
+Am einfachsten geht die Bestimmung der Paketlaufzeit zu einem entfernten
+Rechner und zurück, denn diese gibt Ping selbst aus.
+Aber auch die Datenübertragungsrate kann ich mit Ping bestimmen, sowie
+Netzwerklast für Lastmessungen erzeugen.
+Dazu suche ich mir einen Zeitpunkt aus, zu dem das Netz wenig belastet ist.
 
 ### Probleme mit Ping
 
-Ein paar Sachen gilt es zu beachten, wenn ich Ping beim Troubleshooting
-verwende.
+Einige Dinge gilt es zu beachten, wenn ich Ping beim Troubleshooting einsetze.
 
 Zunächst arbeitet Ping nicht im luftleeren Raum, sondern hängt vom
 Funktionieren anderer Netzwerkelemente ab. Arbeite ich mit Hostnamen statt
@@ -119,8 +118,7 @@ sende und die erste Zeit ignoriere.
 
 Bei der Bestimmung der Datenübertragungsrate eines Links verwende ich ohnehin
 die niedrigste Zeit, da ist dieses Problem bereits berücksichtigt.
-Ich muss lediglich daran denken, immer mehrere gleichartige Ping-Pakete zu
-senden.
+Ich muss nur daran denken, immer mehrere gleichartige Ping-Pakete zu senden.
 
 Ein weiteres mögliches Problem ist, dass das korrekte Funktionieren des
 Netzwerkes von Faktoren abhängen kann, die Ping nicht beeinflussen. So kann
@@ -133,13 +131,12 @@ False Negative führen kann.
 Gerade diese Konstellation trifft man häufig in Netzen, die von paranoiden
 Administratoren konfiguriert werden oder deren Administratoren die
 Auswirkungen der betreffenden Sperren nicht in vollem Maße abschätzen können.
-Trotzdem halte ich es für sinnvoll, die Argumente für und wieder diese
+Ich halte es für sinnvoll, die Argumente für und wieder diese
 Sperren im Einzelfall zu klären und zu dokumentieren, damit es an dieser
 Stelle nicht immer wieder zu Diskussionen kommt, weil die
 Sicherheitseinstellungen das Troubleshooting erschweren.
 Für eine entsprechende Argumentation ist es notwendig, die möglichen
-Sicherheitsprobleme und gegebenenfalls alternative Gegenmaßnahmen genau zu
-kennen.
+Sicherheitsprobleme und gegebenenfalls alternative Gegenmaßnahmen zu kennen.
 
 Einige mögliche Argumente für ein Sperren von ICMP sind:
 
@@ -156,6 +153,7 @@ Ping of Death
 : Es gab Betriebssysteme, die mit übergroßen ICMP-Paketen nicht umgehen
   und dadurch außer Betrieb genommen werden konnten.
   Dieses Problem sollte in allen aktuellen Betriebssystemen behoben sein.
+  Notfalls kann man fragmentierte ICMP-Pakete sperren.
 
 Auskundschaften des Netzes
 : Mit ICMP ist es möglich, die Adressen
@@ -163,12 +161,11 @@ Auskundschaften des Netzes
   das wirklich ein Problem darstellt.
 
 Unerwünschter Traffic
-: Durch ICMP (insbesondere Floodping) kann unnötiger unerwünschter Traffic
+: Durch ICMP, insbesondere Floodping, kann unnötiger unerwünschter Traffic
   erzeugt werden, der legitimen Datenverkehr behindert.
-  Hier kann man das Problem, soweit es geht, mit Rate-Limiting am Router
-  eindämmen.
+  Hier kann ich das Problem, mit Rate-Limiting am Router eindämmen.
 
-Wenn Ping nicht komplett blockiert wird, ist es immerhin noch möglich, dass das
+Wenn Ping nicht komplett blockiert wird, ist es möglich, dass das
 Protokoll eine sehr niedrige Priorität am Router bekommt und allein dadurch,
 insbesondere bei gut ausgelasteten Routern unter den Tisch fällt oder
 zumindest die RTT stark verfälscht wird.
@@ -191,6 +188,6 @@ muss ich auf anderem Wege herausbekommen.
 
 X> Sammle Argumente für und wider das Filtern von ICMP in den von dir betreuten
 X> Netzen.
-X> Dokumentiere die Argumente und mache die dokumentierten Argumenten deinen
+X> Dokumentiere die Argumente und mache die dokumentierten Argumente deinen
 X> Kollegen zugänglich.
 
