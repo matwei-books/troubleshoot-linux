@@ -99,6 +99,7 @@ ch13-perl.md
 ch13-ping.md
 ch13-quagga.md
 ch13-route.md
+ch13-samba.md
 anhang.md
 glossar.md
 literatur.md
