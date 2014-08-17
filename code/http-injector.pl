@@ -7,24 +7,23 @@ my %opt = ( delay => 0 );
 
 GetOptions( \%opt, 'delay=i');
 
-my $server = shift;
+my $serv = shift;
 my $port   = shift || 80;
 
-my $socket = IO::Socket::INET->new(PeerAddr => $server,
-                                   PeerPort => $port,
-                                   Proto    => 'tcp',
-                                   Type     => SOCK_STREAM);
+my $sock = IO::Socket::INET->new(PeerAddr => $serv,
+                                 PeerPort => $port,
+                                 Proto    => 'tcp');
 
 my @in = <>;
 my $del = $opt{delay} / ( 1.0 + scalar @in );
 foreach (@in) {
     s/[\r\n]+$//;
     sleep $del;
-    print $socket $_, "\r\n";
+    print $sock $_, "\r\n";
 }
 sleep $del;
-print $socket "\r\n";
+print $sock "\r\n";
 
-while (my $line = <$socket>) {
+while (my $line = <$sock>) {
     print $line;
 }
