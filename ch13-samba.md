@@ -33,7 +33,7 @@ smbtree
 Aufruf:
 
 {line-numbers=off,lang="text"}
-    $ findsmb [ broadcast_address ]
+    $ findsmb [ $broadcast_address ]
 
 Das Programm listet die IP Adresse, den NetBIOS-Namen, den Namen der
 Arbeitsgruppe, des Betriebssystem und der SMB-Server-Version. Bei einem
