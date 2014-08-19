@@ -108,7 +108,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch13-quagga.md \
                $(DROPBOXDIR)/ch13-route.md \
                $(DROPBOXDIR)/ch13-samba.md \
-               $(DROPBOXDIR)/cha-13-tcpdump.md \
+               $(DROPBOXDIR)/ch13-tcpdump.md \
                $(DROPBOXDIR)/cha-13-telnet.md \
                $(DROPBOXDIR)/cha-13-traceroute.md \
                $(DROPBOXDIR)/cha-13-wireshark.md \
@@ -246,7 +246,7 @@ SOURCES = $(BOOK) \
           ch13-quagga.md \
           ch13-route.md \
           ch13-samba.md \
-          cha-13-tcpdump.md \
+          ch13-tcpdump.md \
           cha-13-telnet.md \
           cha-13-traceroute.md \
           cha-13-wireshark.md \
@@ -377,7 +377,7 @@ CHAPTERS = \
     ch13-quagga.md \
     ch13-route.md \
     ch13-samba.md \
-    cha-13-tcpdump.md \
+    ch13-tcpdump.md \
     cha-13-telnet.md \
     cha-13-traceroute.md \
     cha-13-wireshark.md \
