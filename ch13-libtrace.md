@@ -1,5 +1,5 @@
 
-## libtrace und libtrace-tools {#sec-netz-werkzeuge-librace}
+## libtrace und libtrace-tools {#sec-netz-werkzeuge-libtrace}
 
 Mit libtrace kann ich ähnlich wie mit libpcap eigene Analysewerkzeuge
 programmieren. Hier will ich aber auf die mitgelieferten libtrace-tools
