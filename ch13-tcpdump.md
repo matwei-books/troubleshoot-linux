@@ -2,7 +2,7 @@
 ## tcpdump {#sec-netz-werkzeuge-tcpdump}
 
 Bei schwierigen Netzwerkproblemen verwende ich - quasi als große
-Kanone - tcpdump zum Mitschreiben des Datenverkehrs im Netz.
+Kanone - tcpdump zum Mitschreiben des Datenverkehrs.
 Dabei setze ich tcpdump vorzugsweise auf Servern, die keine grafische
 Benutzeroberfläche haben, oder auf Routern/Bridges mit Linux oder BSD als
 Betriebssystem, ein.
@@ -135,14 +135,15 @@ Die Optionen, die ich am häufigsten verwende, sind:
   Details finden sich in der Handbuchseite.
 
 -x | -X
-: um die Header und Daten als Hexadezimal- und ASCII-Werte ausgeben zu lassen.
+: um die Header und Nutzdaten als Hexadezimal- und ASCII-Werte ausgeben zu
+lassen.
 
 ### Filter
 
 Ein wesentlicher Punkt ist die Möglichkeit, zu bestimmen,
 welche Datenpakete tcpdump mitschreibt und welche nicht.
 Dazu verwende ich Filterausdrücke, die ich am Ende der Kommandozeile anfüge
-oder in einer Datei sammele und mit der Option `-F dateiname` übergebe.
+oder in einer Datei sammele und mit der Option `-F $dateiname` übergebe.
 Detaillierte Informationen zu
 den Filtermöglichkeiten von tcpdump oder libpcap im Allgemeinen finden sich
 in der Handbuchseite *pcap-filter*.
@@ -168,9 +169,9 @@ können:
 Typqualifizierer
 : geben an, worum es sich bei der ID handelt.
   Mögliche Typen sind `host` (ein einzelner Rechner), `net` (ein
-  ganzes Netz, Netznamen können zum Beispiel in /etc/networks definiert
+  ganzes Netz, Netznamen können zum Beispiel in */etc/networks* definiert
   werden), `port` (ein TCP- oder UDP-Port, Portnamen werden in
-  /etc/services definiert) oder `portrange` (ein Portbereich, zwei
+  */etc/services* definiert) oder `portrange` (ein Portbereich, zwei
   Ports verbunden mit Bindestrich).
 
 Richtungsqualifizierer
