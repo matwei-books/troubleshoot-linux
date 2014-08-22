@@ -181,7 +181,10 @@ Als nächstes kann ich systematisch die verschiedenen hardwarerelevanten
 Kernelparameter durchprobieren. Dann genauso die BIOS-Einstellungen und
 schließlich die Kombination beider.
 
-### Kernel Panic
+Im folgenden gehe ich kurz auf einige Meldungen ein, die bei Problemen beim
+Start des Kernels auftreten können.
+
+#### Kernel Panic
 
 Nach Ausgabe einiger Zeilen bleibt der Kernel mit der Meldung
 'Kernel panic' stehen.
@@ -332,10 +335,6 @@ Ein Neustart mit `<CTRL>-D` wird mir nicht weiterhelfen, da ich es hier mit
 einem schwerwiegenden Problem im Dateisystem zu tun habe und beim nächsten
 Start genauso weit kommen würde.
 
-Ich brauche also das Kennwort oder eine andere Möglichkeit, eine
-Root-Shell auf dem Rechner zu bekommen, wie zum Beispiel die Option
-`init=/bin/sh`.
-
 A> #### Der erste Prozess: init
 A> 
 A> Bei der Erläuterung des [UNIX-Prozessmodelles](#sec-unix-prozessmodell) hatte
@@ -359,19 +358,18 @@ A> In Notfällen, wenn *init* beschädigt ist, oder ich das Kennwort von *root*
 A> nicht weiß, kann ich aber die nötigen Initialisierungen selbst vornehmen
 A> und damit das System wieder benutzbar machen.
 
+Ich brauche also das Kennwort oder eine andere Möglichkeit, eine
+Root-Shell auf dem Rechner zu bekommen, wie zum Beispiel die Option
+`init=/bin/sh`.
+
 Dann starte ich die Dateisystemüberprüfung von Hand für alle
 benötigten Dateisysteme und starte den Rechner anschließend neu.
 Läuft der Rechner wieder, muss ich nun noch schauen, welche
 Dateien ich aus dem Backup ersetzen muss.
 
-Problem erkannt, Problem gelöst. 
-Oder?
-
-Habe ich den Rechner selbst aufgesetzt und mir notiert, welche Partitionen mit
-welchem Dateisystem wo eingehängt werden, dann ist es wirklich so einfach.
 Bei einem fremden Rechner, oder wenn es ein älteres Gerät ist, zu dem ich keine
-Aufzeichnungen habe, muss ich erst herausfinden, welche Partitionen ich
-mit `fsck` überprüfen muss.
+Aufzeichnungen habe, muss ich allerdings erst herausfinden, welche Partitionen
+ich mit `fsck` überprüfen muss.
 
 In der Bildschirmmeldung steht, bei welcher Partition die automatische
 Überprüfung aufgegeben hat. Nötigenfalls kann ich mit `<Shift>-<PgUp>` nach oben
@@ -410,25 +408,10 @@ Alternativ kann ich die Gerätedateien mit `findfs` bestimmen:
     # findfs UUID=f779141e-...-9dde9de0b64f
     /dev/sda1
 
-Habe ich keines dieser Programme, aber file, hilft das folgende Vorgehen
-(Umbruch ist von mir eingefügt):
+Habe ich keines dieser Programme, stattdessen `file`, hilft das folgende
+Vorgehen:
 
-{line-numbers=off,lang="text"}
-    # dd if=/dev/sda1 of=sda1 bs=4096 count=1
-    1+0 records in
-    1+0 records out
-    4096 bytes (4.1 kB) copied, 0.00.. s, 14.9 MB/s
-    # dd if=/dev/sda5 of=sda5 bs=4096 count=1
-    1+0 records in
-    1+0 records out
-    4096 bytes (4.1 kB) copied, 0.00.. s, 39.5 MB/s
-    # file sda1 sda5
-    sda1: Linux rev 1.0 ext3 filesystem data, \
-    UUID=f77...0b64f (needs journal recovery) \
-    (large files)
-    sda5: Linux/i386 swap file (new style), \
-    version 1 (4K pages), size 1319329 pages, \
-    LABEL=swap, UUID=bc3aa59f-...-cf72ce99b70b
+![Partitionen mit file untersuchen](images/ch05-file-partitions.png)
 
 Da `file` bei der direkten Abfrage der Gerätedateien nur deren Typ angeben
 würde, kopiere ich den ersten Block des Dateisystems in eine Datei und lasse

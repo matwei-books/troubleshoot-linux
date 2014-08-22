@@ -159,7 +159,14 @@ EWMA
   Zeitreihen, bei denen ältere Datenpunkte geringer gewichtet werden als
   neuere.
 
-## Firmware
+## FIFO - Firmware
+
+FIFO
+: *First In - First Out* bezeichnet Verfahren zur Speicherung, bei denen die
+  Elemente, die zuerst gespeichert wurden, auch zuerst entnommen werden.
+  Beispiele sind Named Pipes und Sockets in der Interprozesskommunikation,
+  Warteschlangen in Gateways oder Puffer in Bausteinen von seriellen
+  Schnittstellen.
 
 {#glossar-firmware}
 Firmware

@@ -206,5 +206,17 @@ X> Übungen sind mit diesem Symbol gekennzeichnet.
 
 ## Danksagung
 
-Mein Dank gebührt Stefan Naumann und Knut Schmädt, die sich die Mühe gemacht
-haben, frühe Versionen dieses Buches zu lesen und mir Feedback dazu gaben.
+Ohne die vielen Autoren der freien Software, die ich in meiner täglichen Arbeit
+nutze, wäre dieses Buch nicht möglich gewesen. Ich würde meine Arbeit auch
+nicht so ausüben können, wie ich es heute tue.
+
+Auch der Gemeinschaft, die das Internet möglich gemacht hat und die es täglich
+aufs Neue mit Ideen, Anregungen und Problemlösungen füllt, die es nur zur
+rechten Zeit zu finden gilt, hätte ich viele der hier vorgestellten Kenntnisse
+selbst nicht erwerben können.
+
+Mein besonderer Dank gebührt Denise Betzendörfer, die mir etliche Hinweise zu
+diesem Buch gab und mich auf Dinge aufmerksam machte, die ich im Laufe der
+langen Beschäftigung mit dem Text gar nicht mehr wahrgenommen hatte.
+Auch Stefan Naumann und Knut Schmädt, haben sich die Mühe gemacht, frühe
+Versionen dieses Buches zu lesen und gaben mir Feedback dazu.

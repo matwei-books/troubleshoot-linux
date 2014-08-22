@@ -8,7 +8,7 @@ Zugriffsrechte, erschließen.
 Bevor ich auf dieses eingehe, will ich kurz die Begriffe Programm und Prozess
 erläutern, da diese im allgemeinen Sprachgebrauch oft vermischt werden.
 
-Ein *Programm* ist nicht mehr als eine Reihe von Anweisungen für den
+Ein **Programm** ist nicht mehr als eine Reihe von Anweisungen für den
 Prozessor eines Rechners, die so angeordnet sind, dass deren Abarbeitung mehr
 oder weniger sinnvolles Verhalten des Rechners ermöglicht.
 Das Programm im Sinne des hier besprochenen Prozessmodels ist immer auf den
@@ -17,13 +17,19 @@ Zwar spricht man auch bei Shell-, Perl- oder sonstigen Skripten
 von Programmen, im Sinne des UNIX-Prozessmodells sind jedoch die entsprechenden
 Interpreter die Programme, welche von eben jenen Skripten nur gesteuert werden.
 
-Ein *Prozess* demgegenüber ist ein komplexeres Konstrukt, das über spezielle
+Ein **Prozess** demgegenüber ist ein komplexeres Konstrukt, das über spezielle
 Datenstrukturen im Kernel identifiziert wird, Zugang zu bestimmten Dateien im
 Dateisystem hat, Rechenzeit und Hauptspeicher zugeteilt bekommt und ein
 Programm abarbeitet.
 Ein Prozess wird immer durch eine PID identifiziert, über die
 Benutzeridentität (UID) und zugeordnete Gruppen (GID) werden seine
 Zugriffsrechte auf Ressourcen bestimmt.
+
+Mitunter sind Prozesse unterteilt in Threads (Fäden), die nur Teile des
+Programms abarbeiten, weniger Kontextinformationen enthalten und daher
+schnelleres Umschalten erlauben und zum Teil auch parallel ausgeführt werden
+können.
+Für die Betrachtung des UNIX-Prozessmodells sind diese hier nicht relevant.
 
 Wenn jemand sagt, Programm *xyz* startet, ist damit gemeint, ein Prozess führt
 Programm *xyz* aus.

@@ -41,33 +41,39 @@ In allen drei Fällen hat das Programm `dd` dieselbe Operation mit zwei Dateien
 gemacht, das Ergebnis ist aber völlig verschieden.
 
 Kommen wir zurück zu den verschieden Arten von Dateien.
-Da gibt es zunächst die regulären Dateien, die ich auf einer Festplatte als
-Muster in der Magnetisierung lokalisieren könnte, auf einer CD-ROM als optisches
-Muster und in Flash-Speicher als Ladung in Halbleitern.
-Diese kommen noch am ehesten dem nahe, was ich mir unter einer Datei vorstelle.
+Da gibt es zunächst die **regulären Dateien**, die noch am ehesten dem nahe
+kommen, was ich mir unter einer Datei vorstelle.
+
+Diese könnte ich auf einer Festplatte als Muster in der Magnetisierung, auf
+einer CD-ROM als optisches Muster und in Flash-Speicher als Ladung in
+Halbleitern lokalisieren.
 Die Daten, die hinein geschrieben wurden, sind in codierter Form in dem
 Bereich vorhanden, der die Datei ausmacht und können unverändert wieder
 ausgelesen werden, solange nichts kaputt geht.
+
 Um eine reguläre Datei anzulegen, kann ich den Befehl `touch` verwenden, in der
 Shell die Standardausgabe umleiten oder mit einem der unzähligen Programme,
 welche mit Dateien arbeiten, eine neue Datei anlegen.
 
-Neben den regulären Dateien gibt es Gerätedateien.
+Neben den regulären Dateien gibt es **Gerätedateien**.
 Diese kann ich genau wie reguläre Dateien verwenden, die Daten gehen
 jedoch an das mit der Datei verknüpfte Gerät.
-Gerätedateien finde ich üblicherweise unterhalb von */dev/*, sie belegen
+
+Ich finde Gerätedateien üblicherweise unterhalb von */dev/*, sie belegen
 außer dem Inode keinen weiteren Speicherplatz auf dem Datenträger.
 Auf modernen Systemen gibt es spezielle Dateisysteme, wie *devfs*, in denen
 der Kernel die Gerätedateien dynamisch zur Verfügung stellt, wenn die
 entsprechende Hardware verfügbar ist.
-Gerätedateien unterteilt man in blockorientierte Dateien, wie zum Beispiel
+
+Gerätedateien unterteilt man in *blockorientierte Geräte*, wie zum Beispiel
 */dev/hda* für die rohen Daten der ersten Festplatte im Rechner, und
-zeichenorientierte Dateien, wie zum Beispiel */dev/ttyS0* für die erste
+*zeichenorientierte Geräte*, wie zum Beispiel */dev/ttyS0* für die erste
 serielle Leitung.
 Der wesentliche Unterschied zwischen beiden ist, dass ich bei
 blockorientierten Geräten wahlfrei an beliebigen Stellen lesen und schreiben
 kann, während ich bei zeichenorientierten Geräten immer nur ein Zeichen nach
 dem anderen lesen oder schreiben kann.
+
 Im Kernel werden die Gerätedateien mit Hauptnummern (major number) unterteilt,
 die den Typ des Gerätes bestimmen, und Nebennummern (minor number),
 die gleichartige Geräte untereinander differenzieren.
@@ -90,13 +96,14 @@ A>
 A> /dev/urandom
 A> : gibt Pseudozufallszahlen aus, ohne zu blockieren.
 
-Die nächste Art von Dateien sind FIFOs oder Named Pipes.
+Die nächste Art von Dateien sind **FIFO** oder **Named Pipes**.
 Diese sind Endpunkte für die Interprozesskommunikation (IPC).
 Wenn ein Prozess etwas in eine FIFO schreibt, kann ein anderer das lesen.
 Der Kernel speichert die geschriebenen Daten zwischen und blockiert den
 schreibenden Prozess bis ein anderer Prozess die Daten gelesen hat.
 Genauso blockiert er einen lesenden Prozess, bis ein anderer Prozess Daten in
 die FIFO geschrieben hat.
+
 Dieser Umstand wird unter anderem vom Init-Programm `systemd` verwendet, um
 verschiedene parallel gestartete Dienste zu synchronisieren.
 UNIX-Sockets sind in gewisser Weise den FIFOs ähnlich, der Hauptunterschied
@@ -114,7 +121,7 @@ werden, gibt es verschiedene Spezial-Dateisysteme, wie *proc*, *sysfs*,
 bei denen die Daten auf anderen Rechnern liegen.
 
 In den Dateisystemen finde ich eine weitere spezielle Art von Dateien, die
-Verzeichnisse.
+**Verzeichnisse**.
 Diese werden zwar genauso wie reguläre Dateien im Dateisystem gespeichert,
 jedoch kann ich nicht beliebige Daten hineinschreiben.
 Verzeichnisse enthalten strukturierte Einträge, die jeweils den Namen einer
@@ -138,14 +145,17 @@ den Typ und die Eigenschaften der Datei und notiert den Platz,
 den die Datei auf dem Medium einnimmt.
 Inodes sind fest mit einer Datei verknüpft, Verzeichniseinträge hingegen
 nicht.
+
 Ich kann mehrere Namen für dieselbe Datei, das heißt denselben Inode vergeben.
 Diese Namen werden Links genannt.
 Durch das Anlegen eines Links, also eines neuen Namens für eine Datei ändern
 sich die Eigenschaften der Datei nicht.
+
 Der letzte Satz stimmt nicht ganz für den Inode, da in diesem die Anzahl der
 Links, die auf die Datei verweisen, mitgezählt wird.
 Sobald diese Anzahl 0 wird, gibt der Kernel den Inode und den von der Datei
 belegten Speicher frei.
+
 Außer den Einträgen in Verzeichnissen des Dateisystems geht allerdings noch die
 Anzahl der Prozesse, die eine Datei geöffnet halten in diese Linkzahl mit ein.
 Dadurch ist es möglich, alle Verzeichniseinträge einer Datei

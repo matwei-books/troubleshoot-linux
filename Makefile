@@ -124,6 +124,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
 	       $(DROPBOXDIR)/code/http-injector.pl \
 	       $(DROPBOXDIR)/code/read-syslog.pl \
 	       $(DROPBOXDIR)/code/strace-invocator.sh \
+               $(DROPBOXDIR)/images/ch05-file-partitions.png \
                $(DROPBOXDIR)/images/ch10-entfernte-routen.png \
                $(DROPBOXDIR)/images/ch10-neue-routen.png \
                $(DROPBOXDIR)/images/ch12-ping-Mdo-s1464.png \
@@ -260,6 +261,7 @@ SOURCES = $(BOOK) \
 	  code/http-injector.pl \
 	  code/read-syslog.pl \
 	  code/strace-invocator.sh \
+          images/ch05-file-partitions.png \
           images/ch10-entfernte-routen.png \
           images/ch10-neue-routen.png \
           images/ch12-ping-Mdo-s1464.png \
