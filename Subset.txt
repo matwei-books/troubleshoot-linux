@@ -102,7 +102,7 @@ ch13-route.md
 ch13-samba.md
 ch13-tcpdump.md
 ch13-telnet.md
-cha-13-traceroute.md
+ch13-traceroute.md
 cha-13-wireshark.md
 anhang.md
 glossar.md

@@ -110,7 +110,7 @@ DROPBOXFILES = $(DROPBOXDIR)/$(BOOK) \
                $(DROPBOXDIR)/ch13-samba.md \
                $(DROPBOXDIR)/ch13-tcpdump.md \
                $(DROPBOXDIR)/ch13-telnet.md \
-               $(DROPBOXDIR)/cha-13-traceroute.md \
+               $(DROPBOXDIR)/ch13-traceroute.md \
                $(DROPBOXDIR)/cha-13-wireshark.md \
                $(DROPBOXDIR)/glossar.md \
                $(DROPBOXDIR)/literatur.md \
@@ -248,7 +248,7 @@ SOURCES = $(BOOK) \
           ch13-samba.md \
           ch13-tcpdump.md \
           ch13-telnet.md \
-          cha-13-traceroute.md \
+          ch13-traceroute.md \
           cha-13-wireshark.md \
           glossar.md \
           literatur.md \
@@ -379,7 +379,7 @@ CHAPTERS = \
     ch13-samba.md \
     ch13-tcpdump.md \
     ch13-telnet.md \
-    cha-13-traceroute.md \
+    ch13-traceroute.md \
     cha-13-wireshark.md \
     glossar.md \
     literatur.md \
