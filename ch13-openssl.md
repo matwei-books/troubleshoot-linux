@@ -1,7 +1,7 @@
 
-## openssl s_client {#sec-netz-werkzeuge-openssl}
+## OpenSSL s_client {#sec-netz-werkzeuge-openssl}
 
-Openssls `s_client` ist das dritte Werkzeug, welches ich zu Verbindungstests
+OpenSSLs `s_client` ist das dritte Werkzeug, welches ich zu Verbindungstests
 verwende.
 Dabei handelt es sich um einen generischen SSL/TLS Client, mit dem ich
 verschlüsselte Protokolle wie HTTPS oder SSMTP und die

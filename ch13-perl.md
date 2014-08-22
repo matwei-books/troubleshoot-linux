@@ -1,5 +1,5 @@
 
-## perl {#sec-netz-werkzeuge-perl}
+## Perl {#sec-netz-werkzeuge-perl}
 
 Für knifflige Probleme, die ich mit den spezialisierten Werkzeugen nicht zu
 fassen kriege und denen mit einfacher Shell-Programmierung auch nicht
