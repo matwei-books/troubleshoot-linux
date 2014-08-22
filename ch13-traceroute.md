@@ -2,24 +2,26 @@
 ## traceroute {#sec-netz-werkzeuge-traceroute}
 
 Mit `traceroute` untersuche ich Netzwerkpfade.
+Außerdem kann ich damit die maximale Datenübertragungsrate der Netzsegmente
+bestimmen, wie in [Kapitel 12](#sec-messung-kanalkapazitaet) beschrieben.
 
 Bei Problemen mit der Erreichbarkeit eines Rechners oder Netzwerkes kann ich
-es dazu verwenden, das letzte erreichbare Netzsegment zu bestimmen und dann
+es dazu verwenden, das letzte erreichbare Netzsegment zu bestimmen um
 meine nächsten Schritte auf dieses zu fokussieren.
 Manchmal kann es bereits einen Hinweis auf die Art des Problems geben.
 Zum Beispiel deuten in der Ausgabe mehrfach auftretende IP-Adressen auf eine
 Schleife im Routing hin.
 
-Die grundlegende Arbeitsweise von `traceroute` ist, Datenpakete zum
-Zielrechner zu senden, deren IP-time-to-live-Feld (TTL) mit 0 beginnt und
-sukzessive erhöht wird, bis der Zielhost erreicht ist.
-Wenn ein Host oder Router ein Datenpaket mit einer TTL von 0 erhält,
+Wenn aufgerufen, sendet `traceroute` Datenpakete zum Zielrechner, deren
+IP-time-to-live-Feld (TTL) es zunächst auf 0 setzt und
+dann sukzessive erhöht, bis sie den Zielhost erreichen.
+Erhält ein Host oder Router ein Datenpaket mit einer TTL von 0,
 verwirft er das Datenpaket und schickt an den Absender eine ICMP-Nachricht,
 dass die TTL abgelaufen war.
 Diese ICMP-Nachricht enthält die ersten Bytes des verworfenen Datenpaketes,
 um dem Empfänger die Zuordnung zu erleichtern.
 
-In der ursprünglichen Variante sendet traceroute UDP-Pakete ab einer
+In der ursprünglichen Variante sendet `traceroute` UDP-Pakete ab einer
 bestimmten Portnummer und erhöht beim Senden nicht nur die TTL, sondern
 gleichzeitig auch die Portnummer.
 Das erleichtert, die zurückkehrenden ICMP-Nachrichten über den Port den
@@ -30,7 +32,7 @@ quasi-parallel zu versenden und die Messzeit zu verkürzen.
 Wenn eine UDP-Nachricht am Zielhost angekommen ist, sendet dieser keine
 ICMP-ttl-exceeded-Nachricht, sondern stattdessen ICMP-port-unreachable, wenn
 an dem betreffenden Port kein Prozess lauscht.
-Darum ist es wichtig für `traceroute` via UDP einen Bereich zu verwenden,
+Darum ist es wichtig, für `traceroute` via UDP einen Bereich zu verwenden,
 in dem auf dem Zielhost kein UDP-Port in Verwendung ist.
 Zwar kann der Zielhost auch an der IP-Adresse erkannt werden, aber gerade bei
 multihomed Hosts oder Routern kann das Datenpaket an einem anderen Interface
@@ -60,6 +62,7 @@ Einige IP-Stacks senden ICMP-unreachable-Nachrichten mit einer TTL, die
 gleich der ist, mit der das Datenpaket ankam.
 Diese erscheinen dann als Zielhost bei symmetrischem Routing erst bei der
 doppelten TTL, also viel weiter weg als sie in Wirklichkeit sind.
+Die Hops davor sind dann alle mit `*` markiert.
 
 Wenn auf dem Weg der Daten zum Zielhost eine Adressumsetzung (NAT) erfolgt,
 dann gehen die ICMP-Nachrichten nach der NAT an die umgesetzte Adresse und
@@ -71,10 +74,10 @@ Traceroute-Pakete einfach stillschweigend verwirft. In diesem Fall kann es
 sinnvoll sein, `traceroute` mit anderen Protokollen zu wiederholen und die
 Ergebnisse zu vergleichen.
 
-Abgesehen von diesen Problemen ist es möglich, mit `traceroute` eine
+Abgesehen davon ist es möglich, mit `traceroute` eine
 relativ genaue Karte der erreichbaren Netze zu erstellen.
 
 Da es etliche Implementierungen von `traceroute` gibt, deren
 Kommandozeilenoptionen zum Teil erheblich voneinander abweichen, verweise
-ich auf die Dokumentation des auf dem Rechner installierten Programmes.
+ich auf die Dokumentation des installierten Programmes.
 

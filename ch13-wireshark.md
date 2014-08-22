@@ -1,15 +1,15 @@
 
 ## Wireshark {#sec-netz-werkzeuge-wireshark}
 
-Neben `tcpdump` verwende ich sehr gern `wireshark` zur Auswertung von
-Paketmitschnitten.
+Neben `tcpdump` und den `libtrace-tools` arbeite ich oft mit `wireshark` zur
+Auswertung von Paketmitschnitten.
 Da dieses Werkzeug mit einer grafischen Benutzeroberfläche daherkommt, habe
-ich es zwar auf kaum einem Server installiert, wegen der bequemen
-Handhabung setze ich es aber gern zur Auswertung von Paketmitschnitten auf
-meiner Arbeitsstation ein.
+ich es auf kaum einem Server installiert, wegen der bequemen
+Handhabung verwende ich es aber gern zur Auswertung von Paketmitschnitten auf
+meiner Arbeitsstation.
 Und, wenn es sich ergibt, auch zum Mitschneiden der Datenpakete.
 
-Im Netz finden sich einige Tutorials zum Einsatz von Wireshark, darum gehe
+Im Internet finden sich etliche Tutorials zum Einsatz von Wireshark, darum gehe
 ich hier nur kurz auf die Menüpunkte ein, die ich am häufigsten einsetze.
 
 ### Analyze > Expert Info Composite
@@ -24,7 +24,7 @@ mit der Priorisierung entsprechend dem zugehörigen Reiter.
 Im Panel *Details* finde ich noch einmal alle Bemerkungen in der
 Reihenfolge, in der sie im Paketmitschnitt vorkommen.
 Praktisch ist, das beim Anklicken einer Notiz das zugehörige Datenpaket
-im Hauptfenster ebenfalls gleich ausgewählt wird.
+im Hauptfenster gleich ausgewählt wird.
 
 ### Statistics > Conversations
 
@@ -43,8 +43,8 @@ Displayfilter für das Hauptfenster hinzufügen oder einfärben.
   
 Bei TCP und UDP kann ich auch *Follow Stream* anwählen um in einem
 weiteren Fenster die Nutzdaten der Verbindung zu sehen und zu speichern.
-Dieses Feature von Wireshark ist vor allem dadurch praktisch, weil
-Paketwiederholungen automatisch heraus gerechnet werden und ich so bequem an
+Dieses Feature von Wireshark ist vor allem dadurch praktisch, weil es
+Paketwiederholungen automatisch heraus rechnet und ich so bequem an
 die Nutzdaten herankomme.
 
 ### Statistics > IO Graphs
@@ -58,8 +58,8 @@ Hier kann ich mit Filtern einzelne Aspekte farblich hervorheben.
 Bleibt schließlich die Paketliste im Hauptfenster.
 
 Mit Displayfiltern kann ich die angezeigten Datenpakete einschränken.
-Außerdem kann ich Zeitreferenzpunkte für eine genauere Analyse des
-Zeitverhaltens setzen.
+Außerdem kann ich Zeitreferenzpunkte setzen, für eine Analyse des
+Zeitverhaltens.
 
 Auch hier habe ich die Möglichkeit, über das Kontextmenü und
 *Follow Stream* an die Nutzdaten heranzukommen.

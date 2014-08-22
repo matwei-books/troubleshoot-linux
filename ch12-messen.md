@@ -9,10 +9,11 @@ Diese Parameter erfasse ich, wenn möglich, vor dem produktiven Einsatz von
 Netzwerkverbindungen, als Baseline für spätere Vergleichsmessungen wenn ich
 Fehler vermute.
 
-### Datenübertragungsrate
+### Maximale Datenübertragungsrate {#sec-messung-kanalkapazitaet}
 
 Ich verweise hier wieder auf [[Sloan2001](#bib-sloan2001)].
-Dort ist beschrieben, wie ich nur mit `ping` als Werkzeug die Datenübertragungsrate jedes
+Dort ist beschrieben, wie ich nur mit `ping` als Werkzeug die
+maximale Datenübertragungsrate jedes
 einzelnen Netzsegmentes zwischen Sender und Empfänger bestimmen kann.
 Da ich bei Netzen außerhalb meines Einflussbereiches nicht immer damit rechnen
 kann, auf PING eine Antwort zu bekommen, muss ich gegebenenfalls zu anderen
