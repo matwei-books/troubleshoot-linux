@@ -85,7 +85,7 @@ Der Aufruf ist wie folgt:
 {line-numbers=off,lang="text"}
     ss [ Optionen ] [ Filter ]
 
-Dabei zeigt ss ohne Optionen die verbundenen TCP-Sockets an.
+Ohne Optionen zeigt ss die verbundenen TCP-Sockets an.
 
 Die wichtigsten Optionen sind unter anderen:
 
@@ -271,7 +271,7 @@ replace
 link
 : gleichzeitiges `remove` / `add`, der neue Knoten muss bereits existieren.
 
-Weitere Informationen finden sich in der Handbuchseite von `tc`.
+Weitere Informationen finden sich in der Handbuchseite.
 
 ### rtmon
 

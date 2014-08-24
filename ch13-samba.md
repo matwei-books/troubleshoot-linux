@@ -1,5 +1,5 @@
 
-## samba, smbclient {#sec-netz-werkzeuge-smbclient}
+## Samba, smbclient {#sec-netz-werkzeuge-smbclient}
 
 Die Programme der Samba-Suite, insbesondere die zum Paket smbclient
 zusammengefassten, können bei der Fehlersuche in Zusammenhang mit MS Windows
@@ -29,11 +29,6 @@ smbtree
 : ist eine Art textbasierter SMB Netzwerkbrowser
 
 ### findsmb
-
-Aufruf:
-
-{line-numbers=off,lang="text"}
-    $ findsmb [ $broadcast_address ]
 
 Das Programm listet die IP Adresse, den NetBIOS-Namen, den Namen der
 Arbeitsgruppe, des Betriebssystem und der SMB-Server-Version. Bei einem

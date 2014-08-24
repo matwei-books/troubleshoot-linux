@@ -171,6 +171,15 @@ ausführlicher.
 
 ## Artikel in Zeitschriften, Proceedings, ...
 
+#### acmqFM2005 {#bib-acmqfm2005}
+Fall, Kevin, McCanne, Steve; You Don't Know Jack About Network Performance;
+ACM Queue, Volume 3 Issue 4, May 2005, Pages 54-59  
+<http://queue.acm.org/detail.cfm?id=1066069>
+
+Die Autoren gehen in diesem Artikel vor allem auf die Performance von TCP ein,
+insbesondere auf den Einfluss von Bandbreite, Latenz und Window Size auf die
+Übertragungsgeschwindigkeit.
+
 #### Bartsch2013 {#bib-bartsch2013}
 Bartsch, Michael; Service Level Agreements - rechtliche Aspekte;
 Informatik-Spektrum, Volume 36, Ausgabe 5, Oktober 2013, S. 449ff;  
@@ -303,6 +312,19 @@ Aufgerufen: 2014-05-03
 Autoren und Herausgeben können Leanpub nutzen im fertige Bücher und Bücher in
 Bearbeitung zu veröffentlichen.
 Dieses Buch selbst ist bei und mit Leanpub entstanden.
+
+#### Performance Analysis Methodology
+Verschiedene Methoden zur Performanceanalyse  
+<http://www.brendangregg.com/methodology.html>  
+Aufgerufen: 2014-08-24
+
+Brendan Gregg stellt hier verschiedene Methoden und Anti-Methoden für die
+Performanceanalyse vor.
+Neben diesen finden sich auf seiner Website ausführliche Vorstellungen einiger
+Visualisierungstechniken nebst ihrer Anwendung bei der Performanceanalyse.
+Für die Performanceanalyse von Linuxsystemen sind vor allem die
+Grundlagenartikel unter *Linux Perf* sowie die Checkliste für die USE-Methode
+bei Linux hilfreich.
 
 #### Perf Wiki {#bib-www-perfwiki}
 Perf Wiki  

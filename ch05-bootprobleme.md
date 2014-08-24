@@ -4,7 +4,7 @@
 Zwar treten Bootprobleme selten auf, wenn sie aber erstmal da sind, bekommen
 sie die volle Konzentration, weil eben wirklich "nichts mehr geht".
 
-Um die Bootprobleme eines Systems diagnostizieren und beheben zu
+Um die Bootprobleme eines Systems analysieren und beheben zu
 können, muss ich das Verhalten eines gesunden Systems beim Startvorgang
 kennen. Dieses zeichnet sich durch verschiedene Phasen mit unterschiedlicher
 Zuständigkeit und dementsprechend unterschiedlicher Herangehensweise aus.
@@ -181,8 +181,8 @@ Als nächstes kann ich systematisch die verschiedenen hardwarerelevanten
 Kernelparameter durchprobieren. Dann genauso die BIOS-Einstellungen und
 schließlich die Kombination beider.
 
-Im folgenden gehe ich kurz auf einige Meldungen ein, die bei Problemen beim
-Start des Kernels auftreten können.
+Nachfolgend gehe ich kurz auf einige Meldungen ein, die mir bei Problemen
+während des Starts des Kernels begegnen können.
 
 #### Kernel Panic
 

@@ -23,7 +23,16 @@ am System.
 Und der Fehler sollte so schnell wie möglich gemeldet werden, damit der
 Zeitraum, den ich in Betracht ziehe, nicht zu groß wird.
 
+Eine weitere Abkürzung passiert implizit, wenn ich ähnliche Probleme bereits
+hatte.
+Dann konzentriere ich mich automatisch auf die Punkte, die beim letzten Mal
+zur Lösung geführt hatten.
+Natürlich muss ich mich fragen, ob die gleichen Voraussetzungen zutreffen.
+
 ### Umwege
+
+Und damit bin ich schon bei den Umwegen, weil ich, anstatt sofort auf die
+Lösung zuzustürmen, erst einmal die genauen Umstände prüfe.
 
 Man sagt, Umwege verbessern die Ortskenntnis.
 Ich interpretiere das so, dass ein Umweg eine Investition in die Zukunft ist,

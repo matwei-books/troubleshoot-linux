@@ -165,7 +165,7 @@ FIFO
 : *First In - First Out* bezeichnet Verfahren zur Speicherung, bei denen die
   Elemente, die zuerst gespeichert wurden, auch zuerst entnommen werden.
   Beispiele sind Named Pipes und Sockets in der Interprozesskommunikation,
-  Warteschlangen in Gateways oder Puffer in Bausteinen von seriellen
+  Warteschlangen in Gateways oder die Puffer in Bausteinen von seriellen
   Schnittstellen.
 
 {#glossar-firmware}

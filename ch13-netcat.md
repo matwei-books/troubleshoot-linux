@@ -4,7 +4,7 @@
 Ein weiteres Werkzeug, um schnell eine Netzwerkverbindung herzustellen,
 ähnlich wie `telnet` doch weitaus flexibler, ist `netcat`.
 Damit kann ich nicht nur TCP-, UDP- oder UNIX-Socket-Verbindungen aufbauen,
-sondern auch einen Socket-Server für die genannten Protokolle einrichten.
+sondern auch einen einfachen Server für die genannten Protokolle einrichten.
 
 Netcat ist sehr gut in Skripten einsetzbar und kann ein rudimentäres
 Port-Scanning für TCP-Ports.

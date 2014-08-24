@@ -40,6 +40,12 @@ Datei *rechner1-hda.img* ab.
 In allen drei Fällen hat das Programm `dd` dieselbe Operation mit zwei Dateien
 gemacht, das Ergebnis ist aber völlig verschieden.
 
+Wir haben mit dem Dateimodell eine Schnittstelle, die es uns erlaubt uns bei
+der Betrachtung eines Vorgangs auf einen Aspekt zu konzentrieren und andere
+temporär auszublenden.
+Wann immer ich es bei einem Problem mit einem komplexen System zu tun habe,
+erlauben mir Schnittstellen, das Problem in einfachere Teilprobleme zu zerlegen und diese zuerst zu bearbeiten.
+
 Kommen wir zurück zu den verschieden Arten von Dateien.
 Da gibt es zunächst die **regulären Dateien**, die noch am ehesten dem nahe
 kommen, was ich mir unter einer Datei vorstelle.

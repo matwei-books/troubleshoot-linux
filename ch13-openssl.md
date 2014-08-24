@@ -45,7 +45,7 @@ Das folgende Beispiel zeigt eine HTTPS-Anfrage mit openssl:
 
 ![HTTPS-Anfrage mit OpenSSL](images/ss13-openssl-1.png)
 
-Nachdem `verify return:1` mir anzeigt, dass die verschlüsselte Verbindung
+Nachdem die verschlüsselte Verbindung
 steht, gebe ich meine Anfrage an den Webserver genau so ein, wie ich es mit
 `netcat` bei einem unverschlüsselten Server tun würde und bekomme die Antwort
 des Servers angezeigt.

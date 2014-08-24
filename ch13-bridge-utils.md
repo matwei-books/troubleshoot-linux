@@ -32,10 +32,10 @@ Probleme bereiten.
 Wenn gar nichts geht, muss ich das Bridge-Interface mit statischen Adressen
 konfigurieren.
 
-Falls eine Bridge keinen Traffic durchlässt, kann ich in
-*/proc/sys/net/bridge/* nach Dateien mit Namen wie `bridge-nf-*`
-suchen. Diese legen fest, ob die betreffende Bridge Verkehr filtert. Das
-kann ich abschalten, indem ich eine '0' in die betreffende Datei schreibe:
+Lässt eine Bridge keinen Traffic durch, suche ich in
+*/proc/sys/net/bridge/* nach Dateien mit Namen wie `bridge-nf-*`.
+Diese legen fest, ob die betreffende Bridge Verkehr filtert.
+Das kann ich abschalten, indem ich eine '0' in die betreffende Datei schreibe:
 
 {line-numbers=off,lang="text"}
     # echo 0 \
@@ -45,7 +45,7 @@ kann ich abschalten, indem ich eine '0' in die betreffende Datei schreibe:
     # echo 0 \
       > /proc/sys/net/bridge/bridge-nf-call-iptables
 
-Mit dem Program `brctl` inspiziere beziehungsweise bearbeite ich
+Mit dem Program `brctl` inspiziere und bearbeite ich
 die Bridge-Konfiguration im Linux-Kernel.
 
 Dabei verwende ich die folgenden Befehle um eine oder mehrere

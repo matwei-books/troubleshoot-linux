@@ -64,9 +64,9 @@ Diese erscheinen dann als Zielhost bei symmetrischem Routing erst bei der
 doppelten TTL, also viel weiter weg als sie in Wirklichkeit sind.
 Die Hops davor sind dann alle mit `*` markiert.
 
-Wenn auf dem Weg der Daten zum Zielhost eine Adressumsetzung (NAT) erfolgt,
+Wenn auf dem Weg der Daten zum Zielhost Adressen umgesetzt werden (NAT),
 dann gehen die ICMP-Nachrichten nach der NAT an die umgesetzte Adresse und
-erreichen dadurch vielleicht nicht den Rechner, auf dem ich `traceroute`
+erreichen vielleicht nicht den Rechner, auf dem ich `traceroute`
 gestartet habe.
 
 Schließlich ist es möglich, dass eine sehr restriktive Firewall die
@@ -77,7 +77,7 @@ Ergebnisse zu vergleichen.
 Abgesehen davon ist es möglich, mit `traceroute` eine
 relativ genaue Karte der erreichbaren Netze zu erstellen.
 
-Da es etliche Implementierungen von `traceroute` gibt, deren
+Da es unterschiedliche Implementierungen von `traceroute` gibt, deren
 Kommandozeilenoptionen zum Teil erheblich voneinander abweichen, verweise
 ich auf die Dokumentation des installierten Programmes.
 
