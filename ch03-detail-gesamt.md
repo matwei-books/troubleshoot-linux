@@ -63,9 +63,9 @@ Diesen Umgang und das Umschalten zwischen beiden Modi zu trainieren ist mit
 dem genannten Buch sehr gut möglich.
 
 Aktiv zwischen beiden Modi umschalten zu können, ist wichtig, weil ich nur im
-R-Modus in der Lage bin, eine Beobachtung so wahrzunehmen, wie sie ist.
+R-Modus in der Lage bin, Beobachtungen so wahrzunehmen, wie sie sind.
 Der L-Modus mit seinem Hang zum Bewerten und Kategorisieren verfälscht oft
-genug meine Beobachtungen, weil sie nicht in das selbstgemachte Bild passen.
+genug meine Wahrnehmungen, weil sie nicht in das selbstgemachte Bild passen.
 Das funktioniert genau dann nicht, wenn ich es mit einem Problem zu
 tun habe, das mir nie zuvor begegnet ist.
 Dann muss ich unvoreingenommen beobachten können und jegliche Bewertung auf

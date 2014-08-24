@@ -32,8 +32,8 @@ Probleme bereiten.
 Wenn gar nichts geht, muss ich das Bridge-Interface mit statischen Adressen
 konfigurieren.
 
-Lässt eine Bridge keinen Traffic durch, suche ich in
-*/proc/sys/net/bridge/* nach Dateien mit Namen wie `bridge-nf-*`.
+Lässt eine Bridge keinen Traffic durch, suche ich im Verzeichnis
+*/proc/sys/net/bridge/* nach Dateien mit Namen die mit `bridge-nf-*` beginnen.
 Diese legen fest, ob die betreffende Bridge Verkehr filtert.
 Das kann ich abschalten, indem ich eine '0' in die betreffende Datei schreibe:
 
