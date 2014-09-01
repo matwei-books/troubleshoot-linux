@@ -4,22 +4,25 @@
 ### Falsche Absenderadresse
 
 Die Diskriminierung von Rechnern anhand ihrer IP-Adresse hat den Vorteil, dass
-ich Ressourcen Spare, weil bestimmte Verbindungen, die ich nicht haben will,
+ich Ressourcen spare, weil bestimmte Verbindungen, die ich nicht haben will,
 gar nicht erst zustande kommen.
-Ich spare Rechenzeit, weil der Prozess, der den teilweise gesperrten Dienst
-anbietet, nichts tun muss.
-Ich spare Datenverkehr, weil der Server nicht erst die Verbindung annimmt und
-dann irgendwann wieder schließt.
-Und ich spare Plattenplatz, weil ich keine Einträge im Log bekomme, wodurch
-ich zusätzlich noch Zeit spare, wenn ich die Logs durchsuchen muss.
+Ich spare
+
+*   Rechenzeit, weil der Prozess, der den teilweise gesperrten Dienst
+    anbietet, nichts tun muss,
+*   Datenverkehr, weil der Server nicht erst die Verbindung annimmt und
+    dann irgendwann wieder schließt,
+*   Plattenplatz, weil ich keine Einträge im Log bekomme,
+*   Zeit, wenn ich die Logs durchsuchen muss.
+
 Alles in allem also eine gute Sache, wenn es richtig funktioniert.
 
-Schief gehen kann es aus den unterschiedlichsten Gründen.
-Hier betrachte ich nur den Fall, dass ein Rechner, der eine zugelassene
+Schief gehen kann das aus den unterschiedlichsten Gründen.
+Hier betrachte ich den Fall, dass ein Rechner, der eine zugelassene
 Adresse besitzt, nicht durchkommt, weil er eine andere IP-Adresse benutzt.
 
-Das zu erkennen dauert manchmal schon sehr lange, weil es oft nur ein winziger
-Unterschied in der Absenderadresse ist.
+Allein das zu erkennen dauert manchmal schon sehr lange, weil es oft nur ein
+winziger Unterschied in der Absenderadresse ist.
 Und wenn es scheinbar von einem auf den anderen Tag kommt, rechne ich auch
 nicht gleich mit so etwas.
 
@@ -28,14 +31,8 @@ und die Schnittstelle zusätzlich via Hot Plug konfiguriert wird, kann ich
 nicht vorhersagen, welche IP-Adresse zur primären wird und welche zur
 sekundären.
 
-Bei abgehenden Verbindungen nimmt der Kernel automatisch die primäre
-IP-Adresse entsprechend den Informationen aus der Routingtabelle, wenn
-der Socket nicht mit `bind()` eine spezifische Adresse zugewiesen bekommt.
-Details finden sich in den Handbuchseiten der Sektion 2 zu den Funktionen
-`bind()`, `connect()`, `getaddrinfo()` und `socket()`.
-
-Bei vielen Programmen kann ich Vorgaben in den Konfigurationsdateien oder beim
-Aufruf des Programmes geben.
+Bei vielen Programmen kann ich die Absenderadresse in der Konfiguration
+oder beim Aufruf des Programmes vorgeben.
 Bei `netcat` zum Beispiel mit der Option `-s $absenderadresse`.
 
 Wenn das Programm keine Vorgaben zulässt oder ich aus anderen Gründen keine
@@ -47,13 +44,14 @@ Wie das geht hängt von der Linux-Distribution ab und wie bei dieser die
 Schnittstellen konfiguriert werden.
 Das Programm `ip` von *iproute* kennt Argumente, mit denen ich das einstellen
 kann.
-Es ist jedoch sehr mühsam und ich muss das unter verschiedenen Konstellationen
+Es ist jedoch mühsam und fehleranfällig.
+Ich muss das unter verschiedenen Konstellationen
 testen, bevor ich mich darauf verlassen kann.
 
 Eine andere, flexiblere Möglichkeit besteht darin, die Absenderadresse mit
 `iptables` zu modifizieren.
 Solange ich es mit keinem Protokoll zu tun habe, das explizit auf die
-IP-Adressen Bezug nimmt (IPSEC ohne NAT wäre ein Beispiel), macht diese Lösung
+IP-Adressen Bezug nimmt (IPSEC ist ein Beispiel dafür), macht diese Lösung
 keine Probleme und erlaubt sogar, dass ich zu verschiedenen IP-Adressen oder
 Ports Kontakt mit unterschiedlichen Absenderadressen aufnehmen kann.
 
@@ -62,10 +60,10 @@ Der Aufruf von `iptables` lautet:
 {line-numbers=off,lang="text"}
     iptables -t nat -I POSTROUTING \
              -o $dev               \
-	     -d $server            \
-	     ! -s $wanted_ip       \
-	     -j SNAT               \
-	     --to-source $wanted_ip
+             -d $server            \
+             ! -s $wanted_ip       \
+             -j SNAT               \
+             --to-source $wanted_ip
 
 Hierbei ist `$dev` die Schnittstelle, über die das Datagramm gesendet wird,
 `$server` die IP-Adresse des Servers, zu dem es geht und `$wanted_ip` ist die
@@ -75,11 +73,11 @@ abweichen.
 Mit weiteren Selektoren kann ich die Regel noch weiter einschränken, zum
 Beispiel auf den Port oder nur auf TCP.
 
-Diese Lösung ist sehr flexibel und macht mich unabhängig von der aktuell
+Diese Lösung ist flexibel und macht mich unabhängig von der aktuell
 eingestellten primären IP-Adresse.
 
-Der Nachteil ist die komplexere Konfiguration der Firewall und ein etwas
-erhöhter Aufwand im Kernel, weil die Adresse für jedes Datagramm, das zur
+Der Nachteil ist die komplexere Konfiguration der Firewall und ein
+erhöhter Aufwand im Kernel, weil die Adresse in jedem Datagramm, das zur
 Regel passt, umgeschrieben werden muss.
 
 ### Mehrere Router im Netzsegment
