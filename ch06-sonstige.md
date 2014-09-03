@@ -59,11 +59,12 @@ Trotzdem bekomme ich einen Fehler, wenn ich die Datei im Browser laden will.
 Und, wo wir gerade bei Webservern sind: auch die Namen auf einfachen
 Formularbuttons sind IDs und Umlaute können den Button unbenutzbar machen.
 Zum Beispiel, wenn ein Proxy zwischen Webserver und Browser liegt, der die
-ausgelieferten Webseiten umkodiert.
+ausgelieferten Webseiten umkodiert, ein Problem, das mich bereits einmal
+längere Zeit beschäftigt hatte..
 
-Ich hatte den Fall, dass ein Benutzer Datenbanktabellen mit Umlauten im
-Tabellen oder Spaltennamen angelegt hatte und sich wunderte, dass er auf einem
-System problemlos damit arbeiten konnte und auf einem anderen gar nicht.
+Einmal hatte ich den Fall, dass ein Benutzer Datenbanktabellen mit Umlauten
+im Tabellen- oder Spaltennamen angelegt hatte und sich wunderte, dass er auf
+einem System problemlos damit arbeiten konnte und auf einem anderen gar nicht.
 Auch das sind IDs und das Problem lag an der unterschiedlichen Kodierung der
 Umlaute.
 
