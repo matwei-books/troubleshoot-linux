@@ -309,7 +309,7 @@ Leanpub - Publish Early, Publish Often
 <https://leanpub.com/>  
 Aufgerufen: 2014-05-03
 
-Autoren und Herausgeben können Leanpub nutzen im fertige Bücher und Bücher in
+Autoren und Herausgeben können Leanpub nutzen, um fertige Bücher und Bücher in
 Bearbeitung zu veröffentlichen.
 Dieses Buch selbst ist bei und mit Leanpub entstanden.
 
