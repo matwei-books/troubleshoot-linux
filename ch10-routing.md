@@ -159,6 +159,73 @@ Insbesondere schaue ich nach, welche Nachbarn der Router kennt, wann er die
 letzten Informationen von diesen bekommen hat und welcher Nachbar welche Route
 anbietet.
 
+#### Probleme mit RIP
+
+Ich gehe hier nicht auf die in der Literatur zu findenden Probleme
+von RIP mit der Konvergenz bei bestimmten Netzwerkkonstellationen ein.
+Diese setze ich als bekannt voraus, ein Netzwerkadministrator wird mit
+diesen umzugehen wissen.
+
+Stattdessen gehe ich auf Probleme ein, die mich einiges an Zeit und
+Nerven gekostet haben.
+Vielfach hatten diese mit proprietären Routern zu tun und haben dazu
+beigetragen, dass ich in meiner Arbeit lieber Open Source Systeme
+einsetze.
+
+Vor einigen Jahren kam es in unregelmäßigen Abständen zu Totalausfällen
+des Netzwerks, die durch das Routing verursacht wurden und sich binnen weniger
+Minuten von allein erledigten.
+Das passierte relativ selten, so dass wir es zunächst nicht weiter verfolgten.
+
+Mit Hilfe von Quagga konnte ich schließlich herausfinden, dass ein Router im
+zentralen Netz dann alle Routen auf sich zog und die Pakete nicht weiterleitete.
+Durch die Beobachtung der Lognachrichten von Quagga kam ich überhaupt erst auf
+diesen Router.
+Im Laufe der Zeit stellte sich heraus, dass das Problem immer dann auftrat, wenn
+die Konfiguration dieses Routers neu geladen wurde.
+
+Damit hatte ich einen Hebel, mit dem ich das Problem gezielt hervorrufen und
+dann genau betrachten konnte.
+
+Es stellte sich heraus, dass der Router beim Neuladen der Konfiguration alle
+Routen mit der Metrik 0 verbreitete.
+Diese war kleiner als alle anderen Metriken und der Router zog praktisch alle
+Routen auf sich.
+Da die anderen Router nun ihn als Gateway für die betreffenden Routen
+verwendeten, speisten sie die korrekten Routen nicht mehr im zentralen Netz
+ein.
+Nach Ablauf der RIP-Timeouts setzte der problematische Router die Metrik
+auf 16, der normale Konvergenzprozess begann und die Routen wurden wieder
+korrekt im Netz verteilt.
+In der Zwischenzeit waren aktive TCP-Verbindungen, die über das zentrale Netz
+liefen, beendet.
+
+Es dauerte einige Zeit, bis ich diesen Fehler gefunden und verstanden hatte.
+Der Hersteller, den ich über das Problem informierte, schickte zwar einige
+Updates, von denen jedoch keines das Problem löste.
+
+Im Endeffekt begannen wir damals, das Routing auf OSPF umzustellen - das konnten
+diese Router - und haben sie schließlich ganz ersetzt.
+
+Ein anderes, nicht ganz so gravierendes Problem trat während der Umstellung
+des Routings auf OSPF auf.
+Einer der Router, die noch RIP2 verwendeten, wählte das falsche Gateway für
+die Route mit dem meisten Verkehr aus.
+Anstelle die Datagramme direkt an das korrekte Gateway zu senden, welches
+nur OSPF verwendete, schickte er die Datagramme an das Gateway, welches
+die Routen aus dem OSPF nach RIP2 umsetzte, obwohl dieses für jede Route das
+korrekte Gateway in seinen RIP2-Nachrichten angab.
+
+Das Problem führte zu keinem Verbindungsausfall, aber zu einer erhöhten Netzlast
+auf dem Gateway, welches die Routen von OSPF nach RIP2 übertrug.
+Nachdem ich den problematischen Router ebenfalls auf OSPF umgestellt hatte,
+ging diese unnötige Netzlast um eine Größenordnung - also um den Faktor 10 -
+zurück.
+
+Auch, wenn scheinbar alles funktioniert, ist es besser, ab und zu genauer in
+die Logs zu schauen beziehungsweise nach Anomalien im Netzverkehr Ausschau zu
+halten.
+
 ### OSPF
 
 OSPF ist ein hierarchisches Protokoll.
