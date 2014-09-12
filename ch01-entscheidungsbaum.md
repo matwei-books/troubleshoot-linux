@@ -16,7 +16,7 @@ Probleme erfasst der Entscheidungsbaum nicht.
 
 ![Allgemeiner Entscheidungsbaum](images/eb-allgemein-3-yed.png)
 
-Meine erste Frage geht danach, ob überhaupt noch etwas funktioniert oder ob
+Die erste Frage geht danach, ob überhaupt noch etwas funktioniert oder ob
 es sich um einen Totalausfall handelt.
 Diese Frage erscheint vielleicht trivial, aber das ist letztendlich der
 Zweck eines Entscheidungsbaumes: das die richtigen Fragen im richtigen Moment
@@ -31,7 +31,7 @@ stellt sich heraus, dass nur die Startseite des Browsers betroffen ist.
 Darum versuche ich mit den ersten Fragen herauszufinden, ob es sich um einen
 Totalausfall handelt, den ich anders behandeln muß als einen Teilausfall.
 
-Wenn ich einen Totalausfall ausgeschlossen habe, frage ich als nächstes, ob
+Liegt kein Totalausfall vor, frage ich als nächstes, ob
 alle für das Problem relevanten Dienste funktionieren.
 Es erfordert schon einige Detailkenntnisse zur Problemzone, um zu entscheiden,
 ob ein Dienst für das Problem relevant ist oder nicht.
@@ -46,8 +46,8 @@ Software auszuprobieren, verschiedene Netzdienste und Netzziele zu testen.
 Hierbei kann ein Monitoringsystem wie Nagios gute Dienste leisten, wenn es
 entsprechend aufgesetzt ist.
 
-Habe ich mich davon überzeugt, dass alle notwendigen Dienste prinzipiell
-funktionieren, kann ich die nächste Frage stellen: ob es schnell genug ist.
+Funktionieren alle notwendigen Dienste prinzipiell,
+kann ich die nächste Frage stellen: ob es schnell genug ist.
 Diese Frage ist nicht leicht zu beantworten, da jeder seine eigene
 Vorstellung von schnell genug hat.
 Gibt es SLA, können diese vielleicht bei der Beantwortung der Frage helfen.

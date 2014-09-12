@@ -293,6 +293,14 @@ Kernel Panic
   weiter zu betreiben.
   Bei einer Kernel Panic wird das System angehalten.
 
+Key Performance Indicator, KPI
+: KPI bezeichnen in der Netzwerktechnik aufbereitete Basisdaten des
+  Performance-Managements und in der Betriebswirtschaftslehre Kennzahlen,
+  anhand derer der Fortschritt oder Erfüllungsgrad wichtiger Zielsetzungen
+  gemessen werden kann.
+  Diese sind mitunter wichtig für schnelle einfache Entscheidungen und bei
+  Verhandlungen mit dem Management.
+
 {#glossar-kommandozeile}
 Kommandozeile
 : Jedes UNIX-Programm erhält beim Aufruf eine Reihe von positionsabhängigen

@@ -1,14 +1,24 @@
 
-## Probleme verhindern
+## Probleme verhindern?
 
-Habe ich mich soweit mit dem System und diesem speziellen Fehler vertraut
+Habe ich mich mit dem System und diesem speziellen Fehler vertraut
 gemacht, kann ich überlegen, wie ich das Auftreten dieses Fehlers hätte
 vorhersehen und verhindern können.
-Natürlich ohne dabei die Funktionalität des Gesamtsystems zu beeinträchtigen.
-Falls möglich, schaffe ich die Voraussetzungen dafür.
+
+Wir kommen hier in den Bereich Systemarchitektur und Qualitätssicherung, der
+weit über das Thema dieses Buches hinausgeht.
+Ich will mich daher auf einige Anregungen beschränken.
+
+Anhand der mit der [5-W-Methode](#ch3-sec-5warum) erhaltenen Erkenntnisse
+überlege ich, ob ich durch technische oder organisatorische Maßnahmen entlang
+der Fragenkette das Auftreten dieses Fehlers verhindern will oder durch
+Monitoring der ermittelten KPI eine Art Frühwarnsystem einrichte, um
+rechtzeitig vor Auftreten des Fehlers Gegenmaßnahmen einleiten zu können.
 
 Wie bereits im Abschnitt über das Vertiefen der Erkenntnis erwähnt, muss ich
 hier eine Balance finden.
+Wo diese Balance liegt, hängt von der Auswirkung des Fehlers ab und von den
+Mitteln, die mir zur Verfügung stehen.
 
 An einem Ende der Skala habe ich relativ chaotische Systeme mit mehr oder
 weniger regelmäßig auftretenden kleinen Problemen, die ich üblicherweise im

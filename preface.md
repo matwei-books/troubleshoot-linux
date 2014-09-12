@@ -47,8 +47,8 @@ ich mir selbst bei der Lösung eines Problems im Weg stehe:
 
 Allein diese Hindernisse zu überwinden ist eine Aufgabe für ein ganzes Leben.
 
-In diesem Buch lege ich meine über die Jahre gesammelten Erfahrungen mit
-der Fehlersuche bei Linux-Servern und in IP-Netzwerken nieder.
+In diesem Buch bereite ich meine in mehr als zwanzig Jahren gesammelten
+Erfahrungen mit der Fehlersuche bei Linux-Servern und in IP-Netzwerken auf.
 
 Ich habe diese beiden Themen kombiniert, weil einerseits Linux-Server fast
 immer über IP-Netzwerke angesprochen werden und daher auf ein gut
@@ -103,9 +103,6 @@ Dieses Buch soll Anfängern in der Systemadministration über die ersten Hürden
 bei der Fehlersuche helfen und sie bei ihren ersten Schritten begleiten.
 Gestandene Administratoren werden vielleicht die eine oder andere Anregung
 entnehmen können.
-
-Ich habe in diesem Buch meine Erfahrungen aus über 20 Jahren Fehlersuche bei
-Linux und UNIX-Systemen und in IP-Netzwerken zusammengefasst.
 
 ## Wie ist das Buch aufgebaut
 

@@ -47,9 +47,8 @@ Das sagt zwar nichts aus über die Ursache, es gibt mir aber die Möglichkeit,
 das Problem kurzfristig temporär aus dem Weg zu schaffen und, wenn die Zeit
 geeignet ist, das Problem hervorzurufen, um es gründlich zu studieren.
 
-Eine Klasse von Problemen, bei denen mir Korrelationen weiterhelfen
-können, sind intermittierende Probleme, die sich dem andersartigen Zugang
-entziehen.
+Intermittierende Probleme, die sich dem Zugang entziehen,
+sind eine Klasse von Problemen, bei welchen Korrelationen hilfreich sind.
 Bei diesen Problemen hilft mir am Anfang nur, so viele Daten wie möglich über
 das betroffene Gesamtsystem zu sammeln.
 Bei der Analyse dieser Daten hilft mir dann die Kovarianzanalyse, das heisst,
@@ -63,7 +62,7 @@ entweder im Vorfeld für gleichlaufende Uhren, oder ich muss den Zeitoffset
 bestimmen und heraus rechnen.
 
 Ein Programm, das sehr hilfreich für die Kovarianzanalyse ist, wurde in
-[WSA2011](#bib-wsa2011) beschrieben.
+[[WSA2011](#bib-wsa2011)] beschrieben.
 
 Wichtig bei Korrelationsanalysen ist, sich vor Augen zu halten, dass
 unabhängige Merkmale eine Kovarianz nahe 0 haben.
