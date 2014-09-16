@@ -35,8 +35,8 @@ sowohl bei der Quelle als auch beim Ziel einträgt.
 Diese sollten normalerweise nicht beantwortet werden.
 Eine Antwort auf Gratuitous ARP ist ein Indiz für eine Fehlkonfiguration.
 Gratuitous ARP werden manchmal beim Booten eines Rechners versendet,
-in HA-Konfigurationen, wenn eine IP-Adresse auf eine andere MAC-Adresse
-umgeschaltet werden soll, sowie bei Mobile-IP-Lösungen.
+in Hochverfügbarkeitsszenarien, wenn eine IP-Adresse auf eine andere
+MAC-Adresse umgeschaltet werden soll, sowie bei Mobile-IP-Lösungen.
 
 Schließlich ist ARP Bestandteil bei Zero Configuration Networking, speziell bei
 *Dynamic Configuration of IPv4 Link-Local Addresses* (RFC 3927), um dynamisch

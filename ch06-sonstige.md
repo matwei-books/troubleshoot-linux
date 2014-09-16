@@ -75,7 +75,7 @@ Systemzeit reagieren.
 
 Das betrifft vor allem Systeme, die über mehrere Rechner synchron gehalten
 werden müssen, wie zum Beispiel Failoversysteme, oder kryptographische
-Protokolle, die die Systemzeit verwenden um Replay-Attacken zu vermeiden.
+Protokolle, die die Systemzeit verwenden, um Replay-Attacken zu vermeiden.
 
 Neben diesen gibt es Programme, die auf eine monoton ansteigende Zeit
 angewiesen sind. Zum Beispiel, weil sie die Systemzeit zur Sortierung von

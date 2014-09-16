@@ -113,7 +113,7 @@ konzentriere mich auf das Problem von heute und antworte in neutralem Ton:
 
 Je nach dem, wer gerade da ist, höre ich dann oft:
 
-> "Das wusste ich, das er das jetzt sagt."
+> "Das wusste ich, dass er das jetzt sagt."
 
 Ich habe mich von den Gedanken meines Kollegen und von dem Druck, den er
 bewusst oder unbewusst aufbauen wollte, befreit und ihm den Wind aus den

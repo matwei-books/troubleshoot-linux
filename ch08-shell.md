@@ -16,7 +16,7 @@ einmal auszuführen. Die Kommandozeilenergänzung beschleunigt den Zusammenbau
 von neuen Befehlen, indem die Shell, meist nach Eingabe von `<TAB>`,
 die Zeile komplettiert oder die nächsten Argumente vorschlägt, wenn mehrere
 Vervollständigungen möglich sind.
-Das halte ich für unverzichtbar um den Gedankenflug nicht
+Das halte ich für unverzichtbar, um den Gedankenflug nicht
 abreißen zu lassen.
 Ich bin an die Bash gewöhnt, aber andere Shells können das ebensogut.
 

@@ -13,7 +13,7 @@ sollen und nicht das komplette Programm.
 Das gleiche Programm, wenn es in verschiedenen Prozessen abläuft,
 wird nur einmal kopiert, lediglich den Stack und
 den Heap hat jeder Prozess für sich allein.
-Ein Programm, wie *busybox*, dass viele andere Programme ersetzen kann,
+Ein Programm, wie `busybox`, dass viele andere Programme ersetzen kann,
 spart Speicherplatz im RAM und im Dateisystem.
 
 Für Overlay-Dateisysteme, *tmpfs* oder *loopback*-Mounts benötige ich

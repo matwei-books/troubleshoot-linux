@@ -15,7 +15,7 @@ das Dateisystem ist beschäftigt.
 Wenn ich das Dateisystem aushängen will, reicht ein Prozess, der auf
 irgendeine Art auf das Dateisystem zugreift. Will ich es read-only umhängen,
 muss ich nach Prozessen suchen, die Dateien zum Schreiben geöffnet haben.
-In [Weidner2012](#bib-weidner2012) habe ich einen solchen Fall detailliert
+In [[Weidner2012](#bib-weidner2012)] habe ich einen solchen Fall detailliert
 beschrieben, hier gehe ich nur kurz auf die Schritte ein um die
 betreffenden Prozesse und die geöffneten Dateien zu finden.
 

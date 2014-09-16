@@ -68,8 +68,7 @@ Länge zu kurz wähle.
 Die Optionen, die ich am häufigsten verwende, sind:
 
 -n
-: um die Namensauflösung abzuschalten. Diese Option benötige ich
-  nicht, wenn ich den Mitschnitt lediglich in eine Datei schreibe.
+: um die Namensauflösung abzuschalten.
 
 -l
 : um die Daten während des Mitschnitts zu beobachten.

@@ -74,7 +74,7 @@ Crypto-PAn
   Dabei werden die IP-Adressen einzeln umgesetzt, Netzwerk-Präfixe bleiben
   erhalten.
   Das Verfahren nutzt kryptographische Pseudo-Zufallszahlen, die mit einem
-  Schlüssel initialisiert werden, und erlaubt dadurch die Umsetzungen
+  Schlüssel initialisiert werden, und erlaubt dadurch, die Umsetzungen
   konsistent über verschiedene Mitschnitte zu halten.
 
 ## DAC - DRM
@@ -373,7 +373,7 @@ LWL
 MAC, Mandatory Access Control
 : Wenn in einem System die Regeln für die Zugangsrechte zentral und zwingend
   vorgegeben werden, spricht man von Mandatory Access Control (deutsch:
-  zwingend erforderliche Zugangskontrolle). Dem gegen über steht die
+  zwingend erforderliche Zugangskontrolle). Dem gegenüber steht die
   benutzerbestimmbare Zugangskontrolle (DAC), die dem Nutzer
   selbst das Festlegen der Zugangsregeln zu Dateien und Verzeichnissen
   erlaubt.
@@ -435,6 +435,11 @@ Mount-Point
   Ein Dateisystem kann nur bei einem Verzeichnis eingehängt werden, enthält
   dieses Verzeichnis Einträge, werden diese vom eingehängten Dateisystem
   verdeckt.
+
+MSL
+: Die Maximum Segment Lifetime ist die maximale Zeit, die ein TCP-Segment im
+  Netz verbringen kann, bevor es verworfen wird.
+  In RFC 793 wird eine MSL von 2 Minuten festgelegt.
 
 Multicast
 : Eine Multicast-Nachricht wird an eine Gruppe von Teilnehmern in einem Netz
@@ -571,9 +576,9 @@ QoS
 
 RAID
 : Ein *Redundant Array of Independent Disks* ist eine Kombination von mehreren
-  Festplatten zu einem logischen Laufwerk um eine bessere Datenverfügbarkeit
-  bei Ausfall einzelner Platten und/oder einen größeren Datendurchsatz zu
-  erreichen.
+  Festplatten zu einem logischen Laufwerk, mit der eine bessere
+  Datenverfügbarkeit bei Ausfall einzelner Platten und/oder ein größerer
+  Datendurchsatz erreicht werden kann.
 
 {#glossar-regulaere-datei}
 reguläre Datei
@@ -652,6 +657,14 @@ Signal
   Signal zu senden.
   Im Rahmen des UNIX-Prozessmodells gehe ich in
   Kapitel 4 näher auf Signale ein.
+
+SLA
+: Ein Service-Level-Agreement (deutsch: Dienstgütevereinbarung) beschreibt die
+  Schnittstelle zwischen Auftraggeber und Dienstleister bei wiederkehrenden
+  Dienstleistungen.
+  In ihm werden zugesicherte Eigenschaften einer Leistung, wie
+  Leistungsumfang, Reaktionszeit und Schnelligkeit der Bearbeitung genau
+  beschrieben, um die Kontrolle durch den Auftraggeber zu vereinfachen.
 
 SMTP
 : Das *Simple Mail Transfer Protocol* dient dem Versenden und Weiterleiten

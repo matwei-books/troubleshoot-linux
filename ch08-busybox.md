@@ -74,7 +74,7 @@ Da die in Busybox implementierten Versionen der UNIX-Befehle von den
 täglich benutzten in Details abweichen, muss ich die genauen Optionen wissen.
 Neben der Handbuchseite, die ich in einer kleinen Umgebung oft
 nicht zur Verfügung habe, hilft mir Busybox selbst.
-Ich rufe den Befehl mit der Option `--help` auf, die die meisten der
+Ich rufe den Befehl mit der Option `--help` auf, welche die meisten der
 implementierten Befehle verstehen:
 
 {line-numbers=off,lang="text"}

@@ -156,7 +156,8 @@ Die Optionen sind in der Handbuchseite beschrieben.
 ### tracereport
 
 Dieses Programm kann eine Reihe von Berichten über die Eigenschaften von
-Paketmitschnitten produzieren. Die Berichte landen in Dateien deren Name
+Paketmitschnitten produzieren.
+Die Berichte landen in Dateien, deren Name
 gleich der langen Option gefolgt vom Suffix `.rpt` ist.
 
 Folgende Optionen und Reports sind für mich bei der Fehlersuche interessant:

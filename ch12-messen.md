@@ -6,7 +6,7 @@ im Netz eingegangen bin, will ich nun etwas detaillierter darauf eingehen,
 wie ich Netzparameter bestimmen kann.
 
 Diese Parameter erfasse ich, wenn möglich, vor dem produktiven Einsatz von
-Netzwerkverbindungen, als Baseline für spätere Vergleichsmessungen wenn ich
+Netzwerkverbindungen, als Baseline für spätere Vergleichsmessungen, wenn ich
 Fehler vermute.
 
 ### Maximale Datenübertragungsrate {#sec-messung-kanalkapazitaet}

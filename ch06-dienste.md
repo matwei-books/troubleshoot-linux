@@ -13,7 +13,7 @@ darauf bin ich im vorigen Abschnitt eingegangen.
 A> Es gab eine Zeit in der es unter Administratoren als
 A> verdienstvoll galt, eine hohe Systemlaufzeit zu erreichen.
 A> Laufzeiten von **x** mal hundert Betriebstagen waren keine Seltenheit.
-A> Ich gebe zu, das ich mich daran beteiligt habe.
+A> Ich gebe zu, dass ich mich daran beteiligt habe.
 A> Für Einzelsysteme, die ständig benötigte Dienste anbieten, halte ich das
 A> noch heute für sinnvoll.
 A> 
@@ -88,10 +88,7 @@ A> startet, weil er keinen UDP-Socket für Port 123 bekommen kann.
 A> Diesen Socket verwendet in diesem Moment gerade `ntpdate` um die
 A> Systemzeit zu setzen.
 A> 
-A> In diesem Fall habe ich die Möglichkeit, `ntpdate` zu entfernen.
-A> Wenn der Rechner eine batteriegestützte Uhr hat, ist das sinnvoll.
-A> 
-A> Alternativ lasse ich `ntpdate` mit der Option `-u` starten, so dass er
+A> In diesem Fall lasse ich `ntpdate` mit der Option `-u` starten, so dass er
 A> einen unprivilegierten Port nimmt und Port 123 für `ntpd` verfügbar
 A> bleibt.
 
@@ -107,9 +104,19 @@ begrenzten Zeitabschnitt untersuchen.
 Finde ich trotzdem nichts, so greife ich auf die Shell und auf `strace`
 als Werkzeuge zurück.
 
-Die Shell, mit der Option `-x` gestartet, zeigt jeden aufgerufenen Befehl, 
-und jede gesetzte Variable an.
+Starte ich ein Shellscript nicht einfach über seinen Namen, sondern mit
+
+{line-numbers=off,lang="text"}
+    $ sh -x /$path/$to/$script
+
+zeigt die Shell jeden aufgerufenen Befehl, und jede gesetzte Variable an.
 In den meisten Fällen sehe ich dann schon, was den Fehler verursacht.
+
+Bei Skripts für die Bourn Again Shell, die deren Erweiterungen nutzen,
+muss ich `bash` als Interpreter angeben.
+
+{line-numbers=off,lang="text"}
+    $ bash -x /$path/$to/$script
 
 Reicht auch das nicht und ich weiß nur, welches Binärprogramm nicht
 richtig arbeitet, aber nicht warum, dann setze ich `strace` ein.

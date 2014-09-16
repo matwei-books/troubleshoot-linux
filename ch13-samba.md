@@ -9,24 +9,24 @@ Davon sind vor allem die folgenden bei der Fehlersuche für mich interessant:
 
 findsmb
 : liefert Informationen über Maschinen, die auf SMB
-  Namensanfragen in einem Netz antworten
+  Namensanfragen in einem Netz antworten,
 
 rpcclient
-: führt MS-RPC-Funktionen aus
+: führt MS-RPC-Funktionen aus,
 
 smbclient
-: ist ein Programm um auf SMB/CIFS-Ressourcen auf Servern, ähnlich FTP,
-  zuzugreifen
+: ist ein Programm, mit dem ich auf SMB/CIFS-Ressourcen auf Servern, ähnlich
+  FTP, zugreifen kann,
 
 smbget
-: kann, ähnlich `wget` für HTTP, Dateien mit dem SMB-Protokoll herunterladen
+: kann, ähnlich `wget` für HTTP, Dateien mit dem SMB-Protokoll herunterladen,
 
 smbtar
 : ist ein Shellskript, mit dem SMB/CIFS-Freigaben direkt auf
-  UNIX Bandlaufwerke gesichert werden können
+  UNIX Bandlaufwerke gesichert werden können,
 
 smbtree
-: ist eine Art textbasierter SMB Netzwerkbrowser
+: ist eine Art textbasierter SMB Netzwerkbrowser.
 
 ### findsmb
 

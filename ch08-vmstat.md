@@ -56,7 +56,7 @@ Die Ausgabe von `vmstat` in diesem Modus bedeutet folgendes:
   aktiven und inaktiven Speicher an.
 
 *IO*
-: Unter des Spalte `bi` finde ich die Anzahl der von
+: Unter der Spalte `bi` finde ich die Anzahl der von
   Blockdevices gelesenen Blöcke (blocks in) und unter `bo` die
   geschriebenen (blocks out).
 

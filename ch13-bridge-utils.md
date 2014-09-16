@@ -7,9 +7,9 @@ Rechner habe und zur Kontrolle jeglichen Netzverkehrs eine Bridge vor seinen
 Netzanschluß schalten will. Oder, wenn ich den Verkehr auf einer
 Punkt-zu-Punkt-Verbindung kontrollieren will. In diesen Fällen möchte ich
 das restliche Netzwerk möglichst unverändert lassen und keinen anderen
-Rechner umkonfigurieren um das Problem beobachten zu können. Mit einer
-Bridge bekomme ich allen Datenverkehr an der betreffenden Stelle frei Haus
-geliefert.
+Rechner umkonfigurieren, um das Problem beobachten zu können.
+Mit einer Bridge bekomme ich allen Datenverkehr an der betreffenden Stelle
+frei Haus geliefert.
 Bis 100 MBit/s eignen sich beispielsweise Einplatinenrechner, wie in
 [[Weidner2012](#bib-weidner2012)] beschrieben, sehr gut dafür.
 Ein weiteres Szenario ist eine regulär betriebene Bridge, die scheinbar nicht

@@ -41,7 +41,7 @@ zugehörigen Parametern zu sehen.
 Über das Kontextmenü kann ich die entsprechende Konversation als
 Displayfilter für das Hauptfenster hinzufügen oder einfärben.
   
-Bei TCP und UDP kann ich auch *Follow Stream* anwählen um in einem
+Bei TCP und UDP kann ich auch *Follow Stream* anwählen, um in einem
 weiteren Fenster die Nutzdaten der Verbindung zu sehen und zu speichern.
 Dieses Feature von Wireshark ist vor allem dadurch praktisch, weil es
 Paketwiederholungen automatisch heraus rechnet und ich so bequem an

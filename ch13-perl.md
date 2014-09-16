@@ -18,7 +18,7 @@ ein unentbehrliches Werkzeug für die Fehlersuche.
 
 Das Perl Kochbuch [[CT2000](#bib-ct2000)] hatte ich bereits erwähnt.
 Mit dessen Hilfe und den darin beschriebenen Modulen von CPAN war
-es mir möglich in sehr kurzer Zeit ein spezielles Testprogramm für
+es mir möglich, in sehr kurzer Zeit ein spezielles Testprogramm für
 ein Timing-Problem bei einem Webservice zu schreiben.
 
 ### HTTP Injector

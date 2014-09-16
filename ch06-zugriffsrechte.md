@@ -63,7 +63,7 @@ Dafür braucht er kein Leserecht, wenn er den Namen der Datei kennt.
 
 Zusätzlich zu den Standardrechten gibt es drei Bits für Sonderrechte.
 
-Bei einer ausführbaren Datei mit gesetztem  *setuid* Bit ändert sich die UID
+Ist bei einer ausführbaren Datei das *setuid* Bit gesetzt, ändert sich die UID
 des ausführenden Prozesses zu der der Datei.
 
 Das *setgid* Bit bei einem Verzeichnis bewirkt, dass in diesem Verzeichnis

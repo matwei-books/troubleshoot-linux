@@ -93,7 +93,7 @@ Dadurch werden die Paketverluste viel später wahrgenommen, als sie auftreten.
 
 Wenn ungeregelte Datenströme die Überlast hervorrufen,
 hilft nur die Datenübertragungsrate zu erhöhen, oder den
-Datenstrom umzuleiten beziehungsweise gezielt zu reduzieren.
+Datenstrom umzuleiten, beziehungsweise gezielt zu reduzieren.
 
 Geregelte Datenströme, wie TCP, passen normalerweise ihre Sendegeschwindigkeit
 so an, dass die zur Verfügung stehende Datenübertragungsrate möglichst
@@ -124,7 +124,7 @@ Datenverkehr belastet.
 
 Hierbei ist es nicht einfach, zu entscheiden, welcher Datenverkehr unnötig ist
 und welcher nicht.
-Zudem ist es auch nicht trivial die Auslastung anteilig einzelnen Datenströmen
+Zudem ist es auch nicht trivial, die Auslastung anteilig einzelnen Datenströmen
 zuzuordnen.
 Mit Netflow lässt sich dass zumindest ansatzweise einschätzen.
 

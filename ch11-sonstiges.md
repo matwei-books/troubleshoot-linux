@@ -142,10 +142,10 @@ Trotzdem kann ein anderer SMTP-Server diesem einige E-Mail nicht zustellen,
 obwohl mein Test vom selben Rechner aus kein Problem anzeigte.
 
 Beim manuellen Testen des Protokolls entsteht meist kein großes Datenpaket,
-das nicht durch alle Netzsegmente unfragmentiert gesendet werden kann.
+welches nicht durch alle Netzsegmente unfragmentiert gesendet werden kann.
 Das gleiche passiert bei kleinen E-Mails von wenigen hundert Bytes.
 
-Wenn die zu versendende Nachricht jedoch größer ist als die Path-MTU,
+Sobald die zu versendende Nachricht jedoch größer ist als die Path-MTU,
 sendet der Server mindestens ein zu großes Datagramm.
 Da die ICMP-Unreachable-Nachricht nicht bis zu ihm durchdringt, weiß der
 Sender nicht, dass das Datagramm nicht ankommt.
