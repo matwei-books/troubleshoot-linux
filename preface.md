@@ -212,8 +212,9 @@ aufs Neue mit Ideen, Anregungen und Problemlösungen füllt, die es nur zur
 rechten Zeit zu finden gilt, hätte ich viele der hier vorgestellten Kenntnisse
 selbst nicht erwerben können.
 
-Mein besonderer Dank gebührt Denise Betzendörfer, die mir etliche Hinweise zu
-diesem Buch gab und mich auf Dinge aufmerksam machte, die ich im Laufe der
-langen Beschäftigung mit dem Text gar nicht mehr wahrgenommen hatte.
-Auch Stefan Naumann und Knut Schmädt, haben sich die Mühe gemacht, frühe
-Versionen dieses Buches zu lesen und gaben mir Feedback dazu.
+Mein besonderer Dank gebührt Denise Betzendörfer und Stefan Naumann, die mir
+etliche Hinweise zu diesem Buch gaben und mich auf Dinge aufmerksam machten,
+die ich im Laufe der langen Beschäftigung mit dem Text gar nicht mehr
+wahrgenommen hatte.
+Auch Knut Schmädt, hat sich die Mühe gemacht, frühe
+Versionen dieses Buches zu lesen und gab mir Feedback dazu.
