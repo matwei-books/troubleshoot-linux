@@ -141,8 +141,8 @@ testen und zum Beispiel einen SMTP-Server als völlig in Ordnung identifizieren.
 Trotzdem kann ein anderer SMTP-Server diesem einige E-Mail nicht zustellen,
 obwohl mein Test vom selben Rechner aus kein Problem anzeigte.
 
-Beim manuellen Testen des Protokolls entsteht meist kein großes Datenpaket,
-welches nicht durch alle Netzsegmente unfragmentiert gesendet werden kann.
+Beim manuellen Testen des Protokolls entstehen meist nur kleine Datenpakete,
+die in einem Stück durch alle Netzsegmente gesendet werden können.
 Das gleiche passiert bei kleinen E-Mails von wenigen hundert Bytes.
 
 Sobald die zu versendende Nachricht jedoch größer ist als die Path-MTU,

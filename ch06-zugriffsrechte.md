@@ -65,14 +65,28 @@ Zusätzlich zu den Standardrechten gibt es drei Bits für Sonderrechte.
 
 Ist bei einer ausführbaren Datei das *setuid* Bit gesetzt, ändert sich die UID
 des ausführenden Prozesses zu der der Datei.
+Ich erkenne das *setuid* Bit in der Ausgabe von `ls` daran, dass
+das `x` bei den Benutzerrechten durch ein `s` ersetzt ist:
+
+{line-numbers=off,lang="text"}
+    $ ls -l /bin/su
+    -rwsr-xr-x 1 root root 36832 Sep 13 2012 /bin/su
 
 Das *setgid* Bit bei einem Verzeichnis bewirkt, dass in diesem Verzeichnis
 neu angelegte Dateien automatisch der Gruppe des Verzeichnisses anstelle der
 aktiven Gruppe des erzeugenden Prozesses zugeordnet werden.
+Dieses erkenne ich in der Ausgabe von `ls` daran, dass das `x` bei den
+Gruppenrechten durch ein `s` ersetzt ist:
+
+{line-numbers=off,lang="text"}
+    $  ls -ld /var/mail/
+    drwxrwsr-x 2 root mail 4096 Jul 2 2008 /var/mail/
 
 In Verzeichnissen mit gesetztem  *sticky* Bit dürfen nur *root* oder der
 Eigentümer einer Datei diese löschen.
-Dieses Bit ist üblicherweise beim */tmp/* Verzeichnis gesetzt:
+Dieses Bit ist üblicherweise beim */tmp/* Verzeichnis gesetzt.
+In der Ausgabe von `ls` erkenne ich dieses Bit daran, dass das `x` bei den
+Rechten für alle durch `t` ersetzt ist:
 
 {line-numbers=off,lang="text"}
     $ ls -ld /tmp/
@@ -272,6 +286,22 @@ deutlich:
 {line-numbers=off,lang="text"}
      $ strace ping -c1 localhost 2>&1|grep EPERM
      socket(PF_INET, SOCK_RAW, IPPROTO_ICMP) = -1 EPERM
+
+Hier habe ich die Ausgabe von `strace` nach `EPERM` gefiltert, welches mir
+Probleme mit den Zugriffsrechten anzeigt.
+Die ausgegebene Zeile besagt, dass der `socket()` Systemaufruf mit den
+Parametern `PF_INET`, `SOCK_RAW` und `IPPROT_ICMP` einen Fehler zurückgab
+(Rückgabewert -1) und die Variable `errno` auf *EPERM* gesetzt war, was
+"Operation not permitted" bedeutet.
+
+Details zum Programm `strace` finden sich in
+[Kapitel 8](#sec-lokal-werkzeuge-strace), Informationen zum `socket()`
+Systemaufruf und zur globalen Variable `errno` finden sich in den
+entsprechenden Handbuchseiten.
+
+{line-numbers=off,lang="text"}
+    $ man 2 socket
+    $ man 3 errno
 
 Mit dem Programm *setcap* kann ich *ping* die benötigte Capability verleihen:
 
