@@ -257,6 +257,15 @@ der German Unix User Group; Ausgabe 2012/1, S. 61ff
 Harald König zeigt in seinem Artikel welche Informationen über ein
 Linux-Programm er mit *strace* gewinnen kann.
 
+#### Shepard1991 {#bib-shepard1991}
+Shepard, Timothy Jason; TCP Packet Trace Analysis; MIT/LCS/TR-494
+
+Die Masterarbeit von Tim Shepard geht ausführlich auf die Analyse des
+Verhaltens von TCP-Verbindungen ein.
+Er zeigt darin die Vorzüge von Sequenz-Zeit-Diagrammen für die Analyse und
+stellt das Programm `xplot` vor, welches die interaktive Analyse dieser
+Diagramme erleichtert.
+
 #### WSA2011 {#bib-wsa2011}
 Weigend, Johannes and Siedersleben, Johannes and Adersberger, Josef;
 Dynamische Analyse mit dem Software-EKG; Informatik-Spektrum, Volume 34,

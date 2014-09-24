@@ -144,6 +144,11 @@ Monitoring erhalten kann.
 Natürlich muss ich es vorher aufgesetzt haben und sollte möglichst schon
 Vergleichsdaten aus der Vergangenheit zur Verfügung haben.
 
+Habe ich keine Monitoringdaten oder helfen diese mir nicht weiter bei der
+Analyse, dann habe ich als letzte Möglichkeit immer noch, den Datenverkehr an
+verschiedenen Stellen im Netzwerk mit `tcpdump`, `wireshark` oder ähnlichen
+Werkzeugen mitzuschneiden und anschließend die Mitschnitte zu analysieren.
+
 #### MRTG, Cacti und ähnliche
 
 Damit bekomme ich Informationen, wieviele Daten an den einzelnen
@@ -169,3 +174,23 @@ Als Sensor für Linux eignet sich zum Beispiel `fprobe`.
 Natürlich  belasten die Sensoren die Router und die verschickten
 Zusammenfassungen erzeugen zusätzlichen Datenverkehr.
 Darum setze ich Netflow nur auf strategisch wichtigen Routern ein.
+
+#### Analyse von Paketmitschnitten
+
+Wenn ich zu einem Performanceproblem keine Erklärung finde, greife ich zum
+letzten Mittel und schneide die einzelnen Datagramme der betreffenden
+Verbindung mit, wenn möglich an verschiedenen Stellen im Netzwerk.
+
+Die anschließende Analyse der Mitschnitte ist ziemlich aufwendig und benötigt
+einiges an Zeit.
+
+Als Hilfsmittel stehen mir die verschiedenen Analysen und Statistiken von
+Wireshark zur Verfügung.
+
+Außerdem ist eine gute Visualisierung hilfreich.
+Für die Analyse von TCP-Paketmitschnitten haben sich Sequenz-Zeit-Diagramme
+bewährt, bei denen die Sequenznummern der Daten- und Ack-Pakete über die Zeit
+aufgetragen werden.
+Hierfür gibt die Masterarbeit von Tim Shepard, [Shepard1991](#bib-shepard1991)
+hilfreiche Anregungen.
+
