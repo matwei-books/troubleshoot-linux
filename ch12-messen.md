@@ -180,17 +180,92 @@ Darum setze ich Netflow nur auf strategisch wichtigen Routern ein.
 Wenn ich zu einem Performanceproblem keine Erklärung finde, greife ich zum
 letzten Mittel und schneide die einzelnen Datagramme der betreffenden
 Verbindung mit, wenn möglich an verschiedenen Stellen im Netzwerk.
-
 Die anschließende Analyse der Mitschnitte ist ziemlich aufwendig und benötigt
 einiges an Zeit.
 
-Als Hilfsmittel stehen mir die verschiedenen Analysen und Statistiken von
-Wireshark zur Verfügung.
+TCP-Übertragungen werden gesteuert durch die Parameter, die der Empfänger in
+den Bestätigungsdatagrammen (Ack-Paketen) macht, durch das Timing der
+Ack-Pakete und durch Paketverluste.
+Letztendlich ist es aber der TCP-Stack des Senders, der entscheidet, wann er
+ein Datenpaket sendet und welches, das heißt, ob er das nächste ungesendete
+schickt oder ein bereits gesendetes wiederholt.
 
-Außerdem ist eine gute Visualisierung hilfreich.
-Für die Analyse von TCP-Paketmitschnitten haben sich Sequenz-Zeit-Diagramme
-bewährt, bei denen die Sequenznummern der Daten- und Ack-Pakete über die Zeit
-aufgetragen werden.
-Hierfür gibt die Masterarbeit von Tim Shepard, [Shepard1991](#bib-shepard1991)
-hilfreiche Anregungen.
+Generell interessieren mich bei der Auswertung von TCP-Verbindungsmitschnitten
+
+*   die Sequenznummer,
+*   die Acknowledgenummer,
+*   das Receive-Window,
+*   die Anzahl der gesendeten Oktetts (die Länge des Pakets),
+*   die Richtung und
+*   der Zeitpunkt, zu dem das Datagramm aufgezeichnet wurde.
+
+Diese sechs Angaben lassen sich gut in einem Sequenz-Zeit-Diagramm
+visualisieren, was die Auswertung sehr beschleunigt.
+Tim Shepard geht in seiner Master Thesis, [Shepard1991](#bib-shepard1991),
+ausführlich darauf ein.
+
+Wichtig bei der Auswertung eines Mitschnitts als Sequenz-Zeit-Diagramm
+ist, das ich schnell an interessante Stellen heran zoomen und diese von nahem
+betrachten kann.
+Das Programm `xplot` eignet sich sehr gut für diese Aufgabe, mit `tcptrace`
+kann ich den Paketmitschnitt dafür aufbereiten.
+
+Wenn ich eine TCP-Verbindung anhand eines Mitschnitts analysieren will, muss
+ich zwischen verschiedenen Szenarien unterscheiden und die dadurch gesetzten
+Rahmenbedingungen berücksichtigen.
+
+1.  Sender und Empfänger sind im gleichen LAN-Segment, die Übertragungszeiten
+    liegen unter 1 ms. In diesem Fall ist es fast egal, ob der Mitschnitt beim
+    Sender, Empfänger oder einem dritten Rechner im gleichen Segment
+    aufgezeichnet wird.
+
+    Hier brauche ich mir im Allgemeinen keine Gedanken über Paketverluste
+    machen.
+    Falls ich doch den Verdacht hege, kann ich das an den Zählern der
+    Interfaces der beteiligten Rechner oder des Switches sehen, falls
+    letzterer diese auslesen läßt.
+
+2.  Sender und Empfänger befinden sich in verschiedenen Netzsegmenten, die
+    Übertragungszeiten liegen deutlich über 1 ms, oft über 10 ms und manchmal
+    über 100 ms.
+    Ich muss mit Paketverlusten und variablen Paketlaufzeiten rechnen.
+
+    Hier muss ich bei der Analyse eines Mitschnitts die Position des
+    Proberechners berücksichtigen, der den Mitschnitt anfertigt.
+
+    Ist der Proberechner im selben LAN-Segment wie der Sender, dann "sehe"
+    ich die Daten genau wie der sendende TCP-Stack, kann dessen Entscheidungen
+    nachvollziehen und an Hand der Ack-Pakete und deren Timing auf den Zustand
+    des Netzes und des Empfängers schließen.
+
+    Ist der Proberechner im selben LAN-Segment wie der Empfänger, dann "sehe"
+    ich die Verbindung genau wie deer Empfänger und kann dessen Entscheidungen
+    nachvollziehen.
+    Hier schließe ich aus der Reihenfolge und dem Timing der Datenpakete auf
+    den Zustand des Netzes und des Senders.
+
+    Ist der Proberechner irgendwo zwischen dem LAN-Segment des Senders und dem
+    des Empfängers positioniert, so muss ich bei der Interpretation der Daten-
+    und Ack-Pakete berücksichtigen, dass bei beiden variable Laufzeiten und
+    Paketverluste auftreten können.
+    Dann konzentriere ich mich in erste Linie um fehlende und doppelt
+    gesendete Pakete und messe der Reihenfolge und dem Timing geringeres
+    Gewicht bei.
+
+    Habe ich nur einen Mitschnitt zur Verfügung, dann konzentriere ich mich
+    auf das oben gesagte.
+    Stehen mir Mitschnitte ein und derselben Verbindung von verschiedenen
+    Stellen des Netzes zur Verfügung, dann kann ich durch Vergleich der
+    einzelnen Mitschnitte bessere Aussagen zum Zustand des Übertragungskanals
+    machen.
+
+X> #### Mache dich mit der Analyse von Verbindungsmitschnitten vertraut
+X> 
+X> Nimm dir dafür zwei Rechner in verschiedenen Netzsegmenten.
+X> 
+X> *   Starte `iperf -s` auf einem der Rechner.
+X> *   Protokolliere den Datenverkehr auf beiden Rechnern mit `tcpdump`.
+X> *   Starte eine Clientverbindung mit `iperf` zu dem ersten Rechner
+X> *   Bereite die Mitschnitte jeweils mit `tcptrace -G` auf.
+X> *   Untersuche die erzeugten Diagramme mit `xplot`.
 
