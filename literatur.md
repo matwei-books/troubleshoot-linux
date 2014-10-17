@@ -171,6 +171,15 @@ ausführlicher.
 
 ## Artikel in Zeitschriften, Proceedings, ...
 
+#### acmqCM2010 {#bib-acmqcm2010}
+Millsap, Cary; Thinking Clearly about Performance;
+ACM Queue, Volume 8 Issue 9, September 2010,  
+<http://queue.acm.org/detail.cfm?id=1854041>
+
+Der Autor geht in diesem Artikel auf die praktische Performanceanalyse von
+Programmen ein und erläutert den Zusammenhang von Antwortzeit, Durchsatz
+sowie den Einfluss der Auslastung bei der Nutzung paralleler Ressourcen.
+
 #### acmqFM2005 {#bib-acmqfm2005}
 Fall, Kevin, McCanne, Steve; You Don't Know Jack About Network Performance;
 ACM Queue, Volume 3 Issue 4, May 2005, Pages 54-59  
