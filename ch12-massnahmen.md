@@ -38,15 +38,15 @@ angehen.
 Manchmal bleibt mir nur, den Datenverkehr einzuschränken und zu priorisieren.
 Dabei muss ich einige Dinge beachten:
 
-*   Wenn ich den Datenverkehr beschränken will, muss ich sicherstellen, dass
+1.  Wenn ich den Datenverkehr beschränken will, muss ich sicherstellen, dass
     ich den Flaschenhals kontrolliere.
     Das ist meist der Übergang von einer schnellen auf eine langsame Leitung
     oder ein Gateway, an dem mehrere ankommende Leitungen auf eine abgehende
     Leitung treffen.
-*   Ich kann nur den abgehenden Verkehr direkt beeinflussen.
+2.  Ich kann nur den abgehenden Verkehr direkt beeinflussen.
     Das heißt, wenn ich mich um ein langsames Datensegment kümmere, begrenze
-    ich von beiden Seiten den abgehenden Verkehr.
-*   Wenn ich gezielt nur einen Teil des Datenverkehrs begrenzen will, mache
+    ich von beiden Seiten den in das Segment gehenden Verkehr.
+3.  Wenn ich gezielt nur einen Teil des Datenverkehrs begrenzen will, mache
     ich das so nah wie möglich an der Quelle.
 
 Das [Linux Advanced Routing & Traffic Control](http://lartc.org/) HowTo
@@ -73,7 +73,7 @@ Die Angabe `r2q 65` dient der Berechnung des Quantums, mit welchem
 bestimmt wird, wie der Datenverkehr aufzuteilen ist,
 der zwischen dem konfigurierten Minimum und der Obergrenze liegt.
 Weitergehende Erläuterungen dazu finden sich in den
-[FAQ des LARTC]([lartc-faq-31]: http://www.docum.org/faq/cache/31.html).
+[FAQ des LARTC](http://www.docum.org/faq/cache/31.html).
 
 Zu dieser HTB Qdisc füge ich eine Klasse für den gesamten Traffic am
 Interface:
@@ -83,7 +83,7 @@ Interface:
        rate 99mbit ceil 99mbit burst 1200kb cburst 1200kb
 
 An dieser Stelle habe ich die Möglichkeit, die Datenrate des gesamten Verkehrs
-beschränken, wenn ich zum Beispiel ein langsames Modem über Ethernet
+zu beschränken, wenn ich zum Beispiel ein langsames Modem über Ethernet
 angeschlossen habe.
 Dann wähle ich einen Wert für `rate` und `ceil`, der etwas niedriger
 als die Übertragungsgeschwindigkeit ist und stelle somit sicher, dass sich die
@@ -125,7 +125,7 @@ Dazu füge ich einen Filter ein:
     tc filter add dev $DEV parent 1:0 prio 0 protocol ip \
        handle 10 fw flowid 1:10
 
-Dieser Filter verwendet Markierungen an den Datagrammen, die ich mit
+Dieser Filter verwendet Markierungen an den Datagrammen, die
 `iptables` anbringt.
 
 {line-numbers=off,lang="text"}
@@ -135,7 +135,8 @@ Dieser Filter verwendet Markierungen an den Datagrammen, die ich mit
              -j MARK --set-xmark 0xa/0xffffffff
 
 Damit ist die Auswahl, des beschränkten Datenverkehres entkoppelt von der
-eigentlichen Beschränkung.
+eigentlichen Beschränkung und ich kann alle Möglichkeiten von
+`iptables` und `ip6tables` zur Selektion nutzen.
 
 ### Bufferbloat
 
