@@ -5,13 +5,13 @@ Wenn ich auf ein neues Problem treffe, versuche ich es so schnell wie
 möglich zu charakterisieren, um die nächsten Schritte zu seiner Behebung
 herauszufinden.
 Dabei helfen mir Entscheidungsbäume.
-Programmierer kennen so etwas als Programmablaufplan.
+Programmierer kennen so etwas auch als Programmablaufplan.
 
-Mein grundlegender Entscheidungsbaum bei der Fehlersuche sieht immer so aus,
+Mein grundlegender Entscheidungsbaum bei der Fehlersuche sieht so aus,
 wie im folgenden Bild.
 Grundsätzlich werde ich nur tätig, wenn eine der Fragen mit nein beantwortet
 wird.
-Damit habe ich fast alle Probleme abgedeckt, lediglich intermittierende
+Damit decke ich fast alle Probleme ab, lediglich intermittierende
 Probleme erfasst der Entscheidungsbaum nicht.
 
 ![Allgemeiner Entscheidungsbaum](images/eb-allgemein-3-yed.png)

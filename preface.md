@@ -169,7 +169,7 @@ Im nächsten Kapitel gehe ich auf Teilausfälle im Netzwerk ein.
 Dabei unterscheide ich, ob ganze Netzsegmente nicht erreichbar sind oder
 nur einzelne Dienste.
 
-Das darauf folgende Kapitel behandelt Performance-Probleme im Netzwerk.
+Danach geht es um Performance-Probleme im Netzwerk.
 Wie analysiere ich diese?
 Welche möglichen Abhilfen gibt es?
 
@@ -188,6 +188,8 @@ Aus diesem Grund habe ich einige Übungen im Buch eingestreut.
 Bei diesen kommt es nicht immer auf das konkrete Ergebnis an, sondern
 dass man sie in einer freien Minute ausführt und beobachtet, was passiert.
 
+X> Übungen sind mit diesem Symbol gekennzeichnet.
+
 ### Zur Schreibweise
 
 Für Programmbeispiele und Eingaben auf der Kommandozeile verwende ich eine
@@ -198,8 +200,6 @@ Beispiel `$gateway`, für variable Angaben, die je nach Kontext ersetzt werden
 müssen.
 
 Ansonsten verwende ich einen *kursiven Font* für Hervorhebungen.
-
-X> Übungen sind mit diesem Symbol gekennzeichnet.
 
 ## Danksagung
 
@@ -216,5 +216,5 @@ Mein besonderer Dank gebührt Denise Betzendörfer und Stefan Naumann, die mir
 etliche Hinweise zu diesem Buch gaben und mich auf Dinge aufmerksam machten,
 die ich im Laufe der langen Beschäftigung mit dem Text gar nicht mehr
 wahrgenommen hatte.
-Auch Knut Schmädt, hat sich die Mühe gemacht, frühe
-Versionen dieses Buches zu lesen und gab mir Feedback dazu.
+Auch Knut Schmädt, hat sich die Mühe gemacht, eine frühe
+Version dieses Buches zu lesen und gab mir Feedback dazu.
