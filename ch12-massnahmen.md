@@ -38,8 +38,8 @@ angehen.
 Manchmal bleibt mir nur, den Datenverkehr einzuschränken und zu priorisieren.
 Dabei muss ich einige Dinge beachten:
 
-1.  Wenn ich den Datenverkehr beschränken will, muss ich sicherstellen, dass
-    ich den Flaschenhals kontrolliere.
+1.  Will ich den Datenverkehr kontrollieren, muss ich sicherstellen, dass
+    ich diesen am Flaschenhals steuere.
     Das ist meist der Übergang von einer schnellen auf eine langsame Leitung
     oder ein Gateway, an dem mehrere ankommende Leitungen auf eine abgehende
     Leitung treffen.
@@ -74,6 +74,10 @@ bestimmt wird, wie der Datenverkehr aufzuteilen ist,
 der zwischen dem konfigurierten Minimum und der Obergrenze liegt.
 Weitergehende Erläuterungen dazu finden sich in den
 [FAQ des LARTC](http://www.docum.org/faq/cache/31.html).
+Das Quantum wird berechnet als *rate* geteilt durch *r2q*.
+Es sollte größer als die MTU sein, damit mindestens ein vollständiges
+Datenpaket gesendet werden kann.
+Die obere Grenze liegt bei 60000.
 
 Zu dieser HTB Qdisc füge ich eine Klasse für den gesamten Traffic am
 Interface:
