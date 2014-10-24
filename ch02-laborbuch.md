@@ -33,7 +33,7 @@ einem Gerichtsverfahren, an dem meine Firma beteiligt war.
 Schließlich habe ich einige der in diesem Buch beschriebenen Dinge alten
 Laborbüchern entnommen.
 
-Was und wieviel man in ein Laborbuch schreibt ist jedem selbst überlassen.
+Was und wieviel man in ein Laborbuch schreibt, ist jedem selbst überlassen.
 Ich notiere meist alle notwendigen Informationen mit Ausnahme von Kennworten
 und Zugangsinformationen.
 Dadurch kann ich jederzeit Seiten aus dem Laborbuch kopieren und weitergeben.

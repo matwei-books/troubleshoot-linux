@@ -92,7 +92,6 @@ ergänze dieses um die folgenden Zeilen:
     my $ip4 = qr|(\d{1,3}(?:\.\d{1,3}){3}/\d{1,2})|;
     my $del = qr|^rib_process: $ip4: Removing existing|;
     my $add = qr|^rib_process: $ip4: Adding route|;
-
     sub process_line {
         my ($time,$host,$name,$pid,$text) = @_;
         if ($text =~ /$del/) {
@@ -106,7 +105,7 @@ ergänze dieses um die folgenden Zeilen:
 In Zeile 1 lege ich die gewünschten Logzeilen anhand des Prozessnamens fest.
 Zeilen 2 bis 4 definieren reguläre Ausdrücke, die mir die Informationen aus
 den Logzeilen beschaffen. Die Netzadresse der Route landet in der temporären
-Variable `$1`, die ich in den Zeile 9 für die entfernten und Zeile 12 für die
+Variable `$1`, die ich in den Zeile 8 für die entfernten und Zeile 11 für die
 zugefügten Routen ausgebe.
 
 Damit sieht die Ausgabe dann so aus:

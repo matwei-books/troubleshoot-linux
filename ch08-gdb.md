@@ -124,7 +124,7 @@ oder andere Programm im Debugger zu beobachten und zu analysieren, damit es
 im Ernstfall einfacher von der Hand geht.
 
 X> Installiere die Debug-Informationen (Paket mit Endung `-dbg`) für ein
-X> einfaches Programm oder kompiliere ein Programm selbst mit
+X> einfaches Programm wie `ls` oder kompiliere ein Programm selbst mit
 X> Debug-Informationen.
 X> 
 X> Verfolge anschließend den Ablauf des Programms mit `gdb` oder `gdbtui`.

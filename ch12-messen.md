@@ -205,11 +205,7 @@ Diese sechs Angaben lassen sich gut in einem Sequenz-Zeit-Diagramm
 visualisieren, was die Auswertung beschleunigt.
 Tim Shepard ist in seiner Masterarbeit, [[Shepard1991](#bib-shepard1991)],
 ausführlich darauf eingegangen.
-
-Wichtig bei der Auswertung eines Mitschnitts als Sequenz-Zeit-Diagramm
-ist, dass ich an interessante Stellen heran zoomen und diese von nahem
-betrachten kann.
-Das Programm `xplot` eignet sich gut für diese Aufgabe, mit `tcptrace`
+Das Programm `xplot` eignet sich gut für die Auswertung, mit `tcptrace`
 kann ich den Paketmitschnitt dafür aufbereiten.
 
 Will ich eine TCP-Verbindung anhand eines Mitschnitts analysieren, muss
@@ -248,12 +244,11 @@ Rahmenbedingungen berücksichtigen.
     und Ack-Pakete berücksichtigen, dass bei beiden variable Laufzeiten und
     Paketverluste auftreten können.
 
-    Habe ich nur einen Mitschnitt zur Verfügung, konzentriere ich mich
-    auf das oben gesagte.
-    Stehen mir Mitschnitte derselben Verbindung von verschiedenen
-    Stellen des Netzes zur Verfügung, dann kann ich durch Vergleich der
-    einzelnen Mitschnitte bessere Aussagen zum Zustand des Netzes
-    machen.
+Habe ich nur einen Mitschnitt zur Verfügung, konzentriere ich mich
+auf das oben gesagte.
+Stehen mir Mitschnitte derselben Verbindung von verschiedenen
+Stellen des Netzes zur Verfügung, dann kann ich durch Vergleich der
+einzelnen Mitschnitte bessere Aussagen zum Zustand des Netzes machen.
 
 X> #### Mache dich mit der Analyse von Verbindungsmitschnitten vertraut
 X> 

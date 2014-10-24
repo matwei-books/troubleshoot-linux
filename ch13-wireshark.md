@@ -7,7 +7,6 @@ Da dieses Werkzeug mit einer grafischen Benutzeroberfläche daherkommt, habe
 ich es auf kaum einem Server installiert, wegen der bequemen
 Handhabung verwende ich es aber gern zur Auswertung von Paketmitschnitten auf
 meiner Arbeitsstation.
-Und, wenn es sich ergibt, auch zum Mitschneiden der Datenpakete.
 
 Im Internet finden sich etliche Tutorials zum Einsatz von Wireshark, darum gehe
 ich hier nur kurz auf die Menüpunkte ein, die ich am häufigsten einsetze.
@@ -43,9 +42,7 @@ Displayfilter für das Hauptfenster hinzufügen oder einfärben.
   
 Bei TCP und UDP kann ich auch *Follow Stream* anwählen, um in einem
 weiteren Fenster die Nutzdaten der Verbindung zu sehen und zu speichern.
-Dieses Feature von Wireshark ist vor allem dadurch praktisch, weil es
-Paketwiederholungen automatisch heraus rechnet und ich so bequem an
-die Nutzdaten herankomme.
+Damit komme ich sehr bequem an die Nutzdaten heran.
 
 ### Statistics > IO Graphs
 

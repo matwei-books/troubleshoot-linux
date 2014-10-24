@@ -32,7 +32,9 @@ Mit Hilfe des Kochbuches kam ich zu folgendem kurzen Programm:
 
 <<[http-injector.pl](code/http-injector.pl)
 
-In den Zeilen 2-4 lädt das Skript die benötigten Module.
+In den Zeilen 2-4 lädt das Skript die benötigten Module. Die hier verwendeten
+sind Core-Module, das heißt bei der Installation von Perl automatisch mit
+installiert.
 
 `Getopt::Long`
 : ist für die Verarbeitung der Kommandozeilenoptionen und sichert ab,
